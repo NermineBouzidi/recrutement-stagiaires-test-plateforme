@@ -1,0 +1,73 @@
+<!-- component -->
+<div class="min-h-screen bg-gray-900 py-6 flex flex-col justify-center sm:py-12">
+	<div class="relative py-3 sm:max-w-xl sm:mx-auto">
+		<div
+			class="absolute inset-0 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+		</div>
+		<div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+			<div class="max-w-md mx-auto">
+				<div>
+					<h1 class="text-2xl font-semibold">Login Form with Floating Labels</h1>
+				</div>
+				<div class="divide-y divide-gray-200">
+					<div class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+						 <div class="flex -mx-3">
+						<div class="w-1/2 px-3 ">
+						<div class="relative">
+							<input autocomplete="off" id="firstname" name="firstname" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="First Name" />
+							<label for="firstname" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">First Name</label>
+						</div>
+						</div>
+						 <div class="w-1/2 px-3 ">
+						<div class="relative">
+							<input autocomplete="off" id="lastname" name="lastname" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Last Name" />
+							<label for="lastname" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Last Name</label>
+						</div>
+						</div>
+						</div>
+						
+						
+						<div class="relative">
+							<input autocomplete="off" id="email" name="email" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
+							<label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
+						</div>
+							<div class="relative">
+							<input autocomplete="off" id="number" name="number" type="number" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Phone Number" />
+							<label for="number" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Phone Number</label>
+						</div>
+						<div class="relative">
+
+							<select class=" block appearance-none h-10 w-full border-b-2 border-gray-300 text-gray-600 text-base ">
+								<option value="" disabled selected hidden>Education level</option>
+								<option> Bac+3 </option>
+								<option>Bac+5</option>
+							</select>
+						</div>
+						
+                        <div class="relative">
+							<label for="uploadFile1"
+  class="bg-white text-black text-base rounded w-80 h-22 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed mx-auto font-[sans-serif]">
+  <svg xmlns="http://www.w3.org/2000/svg" class="w-8 mb-2 fill-black" viewBox="0 0 32 32">
+    <path
+      d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
+      data-original="#000000" />
+    <path
+      d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
+      data-original="#000000" />
+  </svg>
+  Upload file
+  <input type="file" id='uploadFile1' class="hidden" />
+  <p class="text-xs text-gray-400 mt-2">PNG, JPG SVG, WEBP, and GIF are Allowed.</p>
+</label>
+				
+						</div>
+                        
+						<div class="flex justify-center">
+							<button class="bg-blue-500 text-white rounded-md px-2 py-1">Submit</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
