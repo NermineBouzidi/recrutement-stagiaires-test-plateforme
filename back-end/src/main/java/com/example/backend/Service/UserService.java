@@ -1,5 +1,7 @@
 package com.example.backend.Service;
 
+import com.example.backend.DTO.AdminDTO;
+import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.User;
 
@@ -7,10 +9,12 @@ import java.util.List;
 
 public interface UserService {
 
-    User addUser(User user);
+    String addUser(UserDTO userDTO);
     void deleteUser(long id);
     void updateUser(long id);
     List<User> getUsers ();
     User getUser(long id);
+    String login (LoginDTO loginDTO);
+    String adminLogin(AdminDTO adminDTO);
 
 }

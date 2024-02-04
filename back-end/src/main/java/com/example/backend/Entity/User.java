@@ -20,13 +20,13 @@ public class User {
     public User() {
     }
 
-    public User(String firstname, String lastName, String email, int number, String educationLevel, String password) {
+    public User(String firstname, String lastName, String email, int number, String educationLevel ){
         this.firstname = firstname;
         this.lastName = lastName;
         this.email = email;
         this.number = number;
         this.educationLevel = educationLevel;
-        this.password = password;
+        this.password = PasswordGenerator.generateRandomPassword();
     }
 
     public String getPassword() {
@@ -44,7 +44,7 @@ public class User {
     }
 
     public void setEducationLevel(String educationLevel) {
-        educationLevel = educationLevel;
+        this.educationLevel = educationLevel;
     }
 
     public long getId() {

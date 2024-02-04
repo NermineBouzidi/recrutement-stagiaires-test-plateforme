@@ -1,9 +1,13 @@
 package com.example.backend.Controller;
 
+import com.example.backend.DTO.AdminDTO;
+import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,33 +17,51 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-    @PostMapping("/add")
-    public void add (@RequestBody User user) {
-        userService.addUser(user);
+     @PostMapping("/reg")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<String> register (@RequestBody UserDTO userDTO) {
+        String s= userService.addUser(userDTO);
+        if(s.equals("Registration successful")) {
+            return ResponseEntity.ok("Registration successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userService.addUser(userDTO));
+
+        }
 
     }
-
     @DeleteMapping("/delete/{id}")
-    public void delete (@PathVariable long id) {
-         userService.deleteUser(id);
+    public void delete(@PathVariable long id) {
+        userService.deleteUser(id);
     }
+
     @PutMapping("/update")
-    public void update (@PathVariable long id){
+    public void update(@PathVariable long id) {
 
     }
 
     @GetMapping("/hi")
-    public String s(){
+    public String s() {
         return "hello";
     }
+
     @GetMapping("/getUsers")
-    public List <User> getUsers (){
-       return userService.getUsers();
+    public List<User> getUsers() {
+        return userService.getUsers();
     }
+
     @GetMapping("/getUser")
-    public User getUser (long id){
+    public User getUser(long id) {
         return userService.getUser(id);
     }
 
+    @PostMapping("/login")
+    public String Log(@RequestBody LoginDTO loginDTO) {
+        return userService.login(loginDTO);
+    }
 
+    @PostMapping("/loginAdmin")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public String Logadmin (@RequestBody AdminDTO adminDTO){
+        return userService.adminLogin(adminDTO);
+    }
 }

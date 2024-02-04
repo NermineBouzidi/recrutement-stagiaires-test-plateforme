@@ -1,18 +1,30 @@
 package com.example.backend.DTO;
 
+import com.example.backend.Entity.PasswordGenerator;
+
 public class UserDTO {
     String firstname ;
     String lastName ;
     String email;
     int number ;
     String educationLevel;
+    String password;
 
-    public UserDTO(String firstname, String lastName, String email, int number, String educationLevel) {
+    public UserDTO(String firstname, String lastName, String email, int number, String educationLevel ){
         this.firstname = firstname;
         this.lastName = lastName;
         this.email = email;
         this.number = number;
         this.educationLevel = educationLevel;
+        this.password = PasswordGenerator.generateRandomPassword();
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public UserDTO() {
