@@ -2,3 +2,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+    font-family: brazil;
+    src: url('./app/fonts/Bottom\ Brazil.otf');
+}

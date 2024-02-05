@@ -8,9 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/auth")
 public class AuthController {
 
@@ -20,24 +22,26 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> register (@RequestBody UserDTO userDTO) {
        String s= userService.addUser(userDTO);
         if(s.equals("Registration successful")) {
             return ResponseEntity.ok("Registration successful");
         } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userService.addUser(userDTO));
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
         }
 
     }
 
     @PostMapping("/login")
-    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> login (@RequestBody LoginDTO loginDTO){
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(),loginDTO.getPassword());
-        authenticationManager.authenticate(token);
-        return ResponseEntity.ok("login successfful");
+        try {
+            UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
+            authenticationManager.authenticate(token);
+            return ResponseEntity.ok("login successfful");
+        }catch (AuthenticationException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Login failed");
+        }
     }
 
 

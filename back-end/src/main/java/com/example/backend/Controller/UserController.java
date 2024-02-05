@@ -17,18 +17,7 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
-     @PostMapping("/reg")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<String> register (@RequestBody UserDTO userDTO) {
-        String s= userService.addUser(userDTO);
-        if(s.equals("Registration successful")) {
-            return ResponseEntity.ok("Registration successful");
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(userService.addUser(userDTO));
 
-        }
-
-    }
     @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable long id) {
         userService.deleteUser(id);

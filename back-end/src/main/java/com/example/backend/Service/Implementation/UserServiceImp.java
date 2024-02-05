@@ -29,17 +29,21 @@ public class UserServiceImp implements UserService {
 
 
     public String addUser (UserDTO userDTO){
-        User use = new User(
-                userDTO.getFirstname(),
-                userDTO.getLastName(),
-                userDTO.getEmail(),
-                userDTO.getNumber(),
-                userDTO.getEducationLevel()
-        );
-        use.setPassword(passwordEncoder.encode(use.getPassword()));
-        userRepository.save(use);
-        return "Registration successful";
-
+        if (userRepository.findByEmail(userDTO.getEmail())!=null){
+            return "user already exists ";
+        }else {
+            User use = new User(
+                    userDTO.getFirstname(),
+                    userDTO.getLastName(),
+                    userDTO.getEmail(),
+                    userDTO.getNumber(),
+                    userDTO.getEducationLevel(),
+                    passwordEncoder.encode(userDTO.getPassword())
+            );
+            //use.setPassword(passwordEncoder.encode(use.getPassword()));
+            userRepository.save(use);
+            return "Registration successful";
+        }
     }
     public void deleteUser (long id){
         User user = userRepository.findById(id);

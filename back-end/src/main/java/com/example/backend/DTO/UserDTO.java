@@ -19,6 +19,15 @@ public class UserDTO {
         this.password = PasswordGenerator.generateRandomPassword();
     }
 
+    public UserDTO(String firstname, String lastName, String email, int number, String educationLevel, String password) {
+        this.firstname = firstname;
+        this.lastName = lastName;
+        this.email = email;
+        this.number = number;
+        this.educationLevel = educationLevel;
+        this.password = password;
+    }
+
     public String getPassword() {
         return password;
     }

@@ -4,29 +4,45 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import org.springframework.lang.NonNull;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id ;
+    @NonNull
     String firstname ;
+    @NonNull
     String lastName ;
+    @NonNull
     String email;
+    @NonNull
     int number ;
+    @NonNull
     String educationLevel;
+    @NonNull
     String password;
 
     public User() {
     }
 
-    public User(String firstname, String lastName, String email, int number, String educationLevel ){
+    /*public User(String firstname, String lastName, String email, int number, String educationLevel ){
         this.firstname = firstname;
         this.lastName = lastName;
         this.email = email;
         this.number = number;
         this.educationLevel = educationLevel;
         this.password = PasswordGenerator.generateRandomPassword();
+    }*/
+
+    public User( String firstname, String lastName, String email, int number, String educationLevel, String password) {
+        this.firstname = firstname;
+        this.lastName = lastName;
+        this.email = email;
+        this.number = number;
+        this.educationLevel = educationLevel;
+        this.password = password;
     }
 
     public String getPassword() {

@@ -1,47 +1,100 @@
 <!-- component -->
-<div class="min-h-screen bg-gray-900 py-6 flex flex-col justify-center sm:py-12">
+<app-navbar></app-navbar>
+
+<div class="min-h-screen bg-[#e6eaed] py-6 flex flex-col justify-center sm:py-12">
 	<div class="relative py-3 sm:max-w-xl sm:mx-auto">
 		<div
-			class="absolute inset-0 bg-gradient-to-r from-green-300 via-blue-500 to-purple-600 shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+			class="absolute inset-0 bg-gradient-to-r  shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
 		</div>
 		<div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
 			<div class="max-w-md mx-auto">
 				<div>
-					<h1 class="text-2xl font-semibold">Login Form with Floating Labels</h1>
+					<h1 class="text-2xl font-semibold [#1d2736]">Login Form with Floating Labels</h1>
 				</div>
 				<div class="divide-y divide-gray-200">
-					<form (ngSubmit)="onRegister()" class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+					<form (ngSubmit)="onRegister()" [formGroup]="userForm" class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
 						 <div class="flex -mx-3">
 						<div class="w-1/2 px-3 ">
 						<div class="relative">
-							<input autocomplete="off" id="firstname" [(ngModel)]="userObj.firstname" name="firstname" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="First Name" />
+							<input id="firstname"  name="firstname" type="text"
+							formControlName="firstname"
+							class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"  placeholder="First Name" required/>
 							<label for="firstname" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">First Name</label>
+							@if (userForm.get('firstname')?.invalid && (userForm.get('firstname')?.touched || userForm.get('firstname')?.dirty)|| isSubmitted ) {
+								<p class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</p>
+							  }
 						</div>
+						
 						</div>
 						 <div class="w-1/2 px-3 ">
 						<div class="relative">
-							<input autocomplete="off" id="lastname" [(ngModel)]="userObj.lastName" name="lastname" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Last Name" />
+							<input autocomplete="off" id="lastname" [(ngModel)]="userObj.lastName" name="lastname" type="text"
+							formControlName="lastName"
+							 class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"  placeholder="Last Name" />
 							<label for="lastname" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Last Name</label>
+							@if (userForm.get('lastName')?.invalid && (userForm.get('lastName')?.touched || userForm.get('lastName')?.dirty) || isSubmitted)  {
+								<p class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</p>
+							  }
 						</div>
+						
 						</div>
 						</div>
 						
 						
 						<div class="relative">
-							<input autocomplete="off" id="email" [(ngModel)]="userObj.email" name="email" type="text" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Email address" />
+							<input autocomplete="off" id="email" [(ngModel)]="userObj.email" name="email" type="text"
+							formControlName="email" 
+							class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"  placeholder="Email address" />
 							<label for="email" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
+							@if (userForm.get('email')?.invalid && (userForm.get('email')?.touched || userForm.get('email')?.dirty) || isSubmitted ) {
+								@if(userForm.get('email')?.errors?.['required']){
+									<p class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</p>
+								}
+								@if(userForm.get('email')?.errors?.['email']){
+									<p class="mt-2 text-sm text-red-600 dark:text-red-500"> Invalid email</p>
+								}
+
+							  }
 						</div>
 							<div class="relative">
-							<input autocomplete="off" id="number" [(ngModel)]="userObj.number" name="number" type="number" class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Phone Number" />
+							<input autocomplete="off" id="number" [(ngModel)]="userObj.number" name="number" type="number"
+							formControlName="number"
+							class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" maxlength="8"   placeholder="Phone Number" />
 							<label for="number" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Phone Number</label>
+							@if (userForm.get('number')?.invalid && (userForm.get('number')?.touched || userForm.get('number')?.dirty)|| isSubmitted) {
+								@if(userForm.get('number')?.errors?.['required']){
+									<p class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</p>
+								}
+								@if(userForm.get('number')?.errors?.['minlength']){
+								<p class="mt-2 text-sm text-red-600 dark:text-red-500"> Min length 8</p>
+								}
+								
+								
+							  }
 						</div>
 						<div class="relative">
 
-							<select [(ngModel)]="userObj.educationLevel" name="educationLevel" id="educationLevel"class=" block appearance-none h-10 w-full border-b-2 border-gray-300 text-gray-600 text-base ">
+							<select [(ngModel)]="userObj.educationLevel" name="educationLevel" id="educationLevel"
+							formControlName="educationLevel"
+							
+							class=" block appearance-none h-10 w-full border-b-2 border-gray-300 text-gray-600 text-base "  >
 								<option value="" disabled selected hidden>Education level</option>
 								<option> Bac+3 </option>
 								<option>Bac+5</option>
 							</select>
+							@if (userForm.get('educationLevel')?.invalid && (userForm.get('educationLevel')?.touched || userForm.get('educationLevel')?.dirty)|| isSubmitted) {
+								<p class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</p>
+							  }
+							
+						</div>
+						<div class="relative">
+							<input autocomplete="off" id="password" [(ngModel)]="userObj.password" name="password" type="password" 
+							formControlName="password"
+							class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="Password"   required />
+							<label for="password" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
+							@if (userForm.get('password')?.invalid && (userForm.get('password')?.touched || userForm.get('password')?.dirty)|| isSubmitted) {
+								<p class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</p>
+							  }
 						</div>
 						
                         <div class="relative">
@@ -62,8 +115,8 @@
 				
 						</div>
                         
-						<div class="flex justify-center">
-							<button class="bg-blue-500 text-white rounded-md px-2 py-1" type="submit">Submit</button>
+						<div class="flex justify-center ">
+							<button class="rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] focus:outline-none focus:ring active:text-opacity-75 sm:w-auto text-white rounded-md px-12 py-1" type="submit">Submit</button>
 						</div>
 					</form>
 				</div>

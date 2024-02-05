@@ -1,0 +1,12 @@
+<p>test-interface works!</p>
+<form [formGroup]="userF" (ngSubmit)="onSubmit()">
+
+    <input type="email" 
+     formControlName="email" placeholder="First Name"
+      />
+      @if(userF.get('email')?.invalid && userF.get('email')?.touched){
+     <span>this field is required </span>
+      }
+   <input type="text" formControlName="age" [class.invalid]="userF.get('age')?.invalid"/>
+    <button type="submit">valider</button>
+</form>
