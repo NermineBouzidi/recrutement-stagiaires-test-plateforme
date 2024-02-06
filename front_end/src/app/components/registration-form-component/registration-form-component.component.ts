@@ -26,9 +26,10 @@ export class RegistrationFormComponentComponent {
         email: new FormControl("",[Validators.required,Validators.email]),
       number: new FormControl("",[Validators.required ,Validators.minLength(8)]),
       educationLevel:new FormControl("",[Validators.required]),
-      password:new FormControl("",[Validators.required])
+      password:new FormControl("",[Validators.required]),
     })
     isSubmitted =false;
+    userExist=false;
  
   
 
@@ -50,7 +51,8 @@ export class RegistrationFormComponentComponent {
         console.error("Error:", error);
   
         if (error.status === 400 && error.error === "user already exists ") {
-          alert("user already exists");
+          this.userExist=true;
+          //alert("user already exists wi");
         } else {
           alert("An error occurred during registration");
         }

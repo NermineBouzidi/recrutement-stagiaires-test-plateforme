@@ -15,12 +15,16 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class SecurityConfig  {
+    JwtSecurityFilter jwtSecurityFilter;
     @Autowired
     CustomDetailService customDetailService;
+
+
   @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
@@ -33,7 +37,10 @@ public class SecurityConfig  {
                 .anyRequest()
                 .authenticated()
                 .and()
+              //  .addFilterBefore(new JwtSecurityFilter(), UsernamePasswordAuthenticationFilter.class )
                 .authenticationProvider(daoAuthenticationProvider())
+
+
                 ;
         return http.build();
     }

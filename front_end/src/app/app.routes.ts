@@ -7,6 +7,10 @@ import { TestInterfaceComponent } from './components/test-interface/test-interfa
 import { UsersListComponent } from './components/users-list/users-list.component';
 
 export const routes: Routes = [
+        {
+        path:"*",
+        redirectTo:'home'
+        },
     
         {
             path:'home',
