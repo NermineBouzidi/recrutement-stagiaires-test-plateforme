@@ -1,26 +1,29 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { HttpResponse } from '@angular/common/http';
+import { HttpResponse,HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { NgFor } from '@angular/common';
+
 
 @Component({
   selector: 'app-users-list',
   standalone: true,
-  imports: [FormsModule,HttpClientModule],
+  imports: [FormsModule,HttpClientModule,NgFor],
   templateUrl: './users-list.component.html',
   styleUrl: './users-list.component.css'
 })
-export class UsersListComponent {
+export class UsersListComponent implements OnInit {
   data :any []=[];
   constructor (private http: HttpClient ){
-      this.data;
+  }
+  ngOnInit(){
+     this.loadUsers()
   }
 
   loadUsers(){
-    this.http.get("http://localhost:8080/api/user/getUsers", { observe: 'response' }).subscribe(
+    this.http.get("http://localhost:8080/api/user/getUsers" ).subscribe(
       (data : any) => {
-          console.log(data);
-          this.data=data;
+          this.data=data
   })
 
 }
