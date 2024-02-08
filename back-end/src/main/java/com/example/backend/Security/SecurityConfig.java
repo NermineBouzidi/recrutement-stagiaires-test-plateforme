@@ -10,6 +10,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -19,29 +20,40 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
+@EnableWebSecurity
 public class SecurityConfig  {
-    JwtSecurityFilter jwtSecurityFilter;
+    private final JwtSecurityFilter jwtSecurityFilter;
     @Autowired
     CustomDetailService customDetailService;
 
+    public SecurityConfig(JwtSecurityFilter jwtSecurityFilter) {
+        this.jwtSecurityFilter = jwtSecurityFilter;
+    }
 
-  @Bean
+    @Bean
     protected SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/api/auth/register").permitAll()
-                .requestMatchers("/api/auth/login").permitAll()
+               .requestMatchers("/api/auth/register").permitAll()
+               .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/api/user/getUsers").permitAll()
+                .requestMatchers("/api/test/addTest").permitAll()
+                .requestMatchers("/api/test/getTests").permitAll()
                 .anyRequest()
                 .authenticated()
                 .and()
-              //  .addFilterBefore(new JwtSecurityFilter(), UsernamePasswordAuthenticationFilter.class )
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
                 .authenticationProvider(daoAuthenticationProvider())
+                .addFilterBefore(jwtSecurityFilter, UsernamePasswordAuthenticationFilter.class )
 
 
-                ;
+
+
+        ;
         return http.build();
     }
   @Bean

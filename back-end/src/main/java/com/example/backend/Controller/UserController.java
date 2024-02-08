@@ -19,13 +19,13 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable long id) {
+    @DeleteMapping("/delete")
+    public void delete(@RequestBody long id) {
         userService.deleteUser(id);
     }
 
     @PutMapping("/update")
-    public void update(@PathVariable long id) {
+    public void update(@RequestBody long id) {
 
     }
 
@@ -44,14 +44,5 @@ public class UserController {
         return userService.getUser(id);
     }
 
-    @PostMapping("/login")
-    public String Log(@RequestBody LoginDTO loginDTO) {
-        return userService.login(loginDTO);
-    }
 
-    @PostMapping("/loginAdmin")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public String Logadmin (@RequestBody AdminDTO adminDTO){
-        return userService.adminLogin(adminDTO);
-    }
 }

@@ -14,11 +14,11 @@ import java.util.Date;
 
 @Service
 public class JwtUtils {
-    private static final int expireInMs = 300 * 1000;
+    private static final int expireInMs = 60*300 * 1000;
 
     private final static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
-    public String generate(UserDTO user) {
+    public String generate(User user) {
         return Jwts.builder()
                 .setSubject(user.getEmail())
                 .setIssuedAt(new Date(System.currentTimeMillis()))

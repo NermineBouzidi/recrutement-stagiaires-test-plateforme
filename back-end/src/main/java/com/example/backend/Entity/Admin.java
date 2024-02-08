@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
+import javax.management.relation.Role;
+
 @Entity
 public class Admin {
     @Id
@@ -12,6 +14,7 @@ public class Admin {
     long id ;
     String email;
     String password;
+    Role role;
 
     public String getEmail() {
         return email;

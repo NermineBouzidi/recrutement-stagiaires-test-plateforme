@@ -2,6 +2,7 @@ package com.example.backend.Controller;
 
 import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.UserDTO;
+import com.example.backend.Entity.User;
 import com.example.backend.Security.JwtUtils;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +26,10 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register (@RequestBody UserDTO userDTO) {
-       String s= userService.addUser(userDTO);
+    public ResponseEntity<String> register (@RequestBody User user) {
+       String s= userService.addUser(user);
         if(s.equals("Registration successful")) {
-            return ResponseEntity.ok(jwtUtils.generate(userDTO));
+            return ResponseEntity.ok(jwtUtils.generate(user));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 

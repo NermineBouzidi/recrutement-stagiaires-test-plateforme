@@ -10,14 +10,14 @@ public class UserDTO {
     String educationLevel;
     String password;
 
-    public UserDTO(String firstname, String lastName, String email, int number, String educationLevel ){
+   /* public UserDTO(String firstname, String lastName, String email, int number, String educationLevel ){
         this.firstname = firstname;
         this.lastName = lastName;
         this.email = email;
         this.number = number;
         this.educationLevel = educationLevel;
         this.password = PasswordGenerator.generateRandomPassword();
-    }
+    }*/
 
     public UserDTO(String firstname, String lastName, String email, int number, String educationLevel, String password) {
         this.firstname = firstname;

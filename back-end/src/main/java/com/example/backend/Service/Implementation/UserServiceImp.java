@@ -28,17 +28,17 @@ public class UserServiceImp implements UserService {
     //private AuthenticationManager authenticationManager;
 
 
-    public String addUser (UserDTO userDTO){
-        if (userRepository.findByEmail(userDTO.getEmail())!=null){
+    public String addUser (User user){
+        if (userRepository.findByEmail(user.getEmail())!=null){
             return "user already exists ";
         }else {
             User use = new User(
-                    userDTO.getFirstname(),
-                    userDTO.getLastName(),
-                    userDTO.getEmail(),
-                    userDTO.getNumber(),
-                    userDTO.getEducationLevel(),
-                    passwordEncoder.encode(userDTO.getPassword())
+                    user.getFirstname(),
+                    user.getLastName(),
+                    user.getEmail(),
+                    user.getNumber(),
+                    user.getEducationLevel(),
+                    passwordEncoder.encode(user.getPassword())
             );
             //use.setPassword(passwordEncoder.encode(use.getPassword()));
             userRepository.save(use);
@@ -62,49 +62,9 @@ public class UserServiceImp implements UserService {
         return userRepository.findById(id);
 
     }
-    public String login(LoginDTO loginDTO) {
 
-        User user = userRepository.findByEmail(loginDTO.getEmail());
 
-        if (user != null) {
-            String enteredPassword = loginDTO.getPassword();
 
-            if (enteredPassword != null) {
-                String passwordBD = user.getPassword();
-
-                if (passwordEncoder.matches(enteredPassword, passwordBD)) {
-                    return "Login successful";
-                } else {
-                    return "Incorrect password";
-                }
-            } else {
-                return "Password is null";
-            }
-        } else {
-            return "User not found";
-        }
-    }
-   public String adminLogin(AdminDTO adminDTO){
-        Admin admin = adminRepository.findByEmail(adminDTO.getEmail());
-
-        if (admin != null) {
-            String enteredPassword = adminDTO.getPassword();
-
-            if (enteredPassword != null) {
-                String passwordBD = admin.getPassword();
-
-                if (enteredPassword.equals(passwordBD)) {
-                    return "Login successful";
-                } else {
-                    return "Incorrect password";
-                }
-            } else {
-                return "Password is null";
-            }
-        } else {
-            return "User not found";
-        }
-    }
 
 
 
