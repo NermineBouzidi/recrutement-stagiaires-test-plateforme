@@ -2,13 +2,13 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { RegistrationFormComponentComponent } from './components/registration-form-component/registration-form-component.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { DashboardComponent } from './components/dashboard/dashboard.component';
+import { DashboardComponent } from './components/Dadh/dashboard/dashboard.component';
 import { TestInterfaceComponent } from './components/test-interface/test-interface.component';
-import { UsersListComponent } from './components/users-list/users-list.component';
+import { UsersListComponent } from './components/Dadh/users-list/users-list.component';
 
 export const routes: Routes = [
         {
-        path:"*",
+        path:'*',
         redirectTo:'home'
         },
     

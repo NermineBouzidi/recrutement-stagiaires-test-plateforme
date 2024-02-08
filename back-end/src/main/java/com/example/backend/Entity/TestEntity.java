@@ -13,14 +13,16 @@ public class TestEntity {
     String title ;
     String Description ;
     String Category;
+    String Difficulty ;
 
     public TestEntity() {
     }
 
-    public TestEntity(String title, String description, String category) {
+    public TestEntity(String title, String description, String category, String difficulty) {
         this.title = title;
         Description = description;
         Category = category;
+        Difficulty = difficulty;
     }
 
     public long getId() {
@@ -53,5 +55,13 @@ public class TestEntity {
 
     public void setCategory(String category) {
         Category = category;
+    }
+
+    public String getDifficulty() {
+        return Difficulty;
+    }
+
+    public void setDifficulty(String difficulty) {
+        Difficulty = difficulty;
     }
 }
