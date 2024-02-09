@@ -3,6 +3,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { HttpResponse,HttpErrorResponse } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { NgFor } from '@angular/common';
+import { DashboardSidebarComponent } from '../dashboard-sidebar/dashboard-sidebar.component';
 
 
 @Component({
