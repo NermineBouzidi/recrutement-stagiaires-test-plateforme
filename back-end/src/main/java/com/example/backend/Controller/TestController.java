@@ -15,22 +15,29 @@ import java.util.List;
 public class TestController {
     @Autowired
     private TestService testService;
-   @GetMapping("/getTest")
-    public TestEntity getTest (@RequestBody long id){
-      return testService.getTest(id);
+
+    @GetMapping("/getTest")
+    public TestEntity getTest(@RequestBody long id) {
+        return testService.getTest(id);
     }
+
     @PostMapping("/addTest")
-    public ResponseEntity<String> addTest(@RequestBody TestEntity testEntity){
-       String s= testService.addTest(testEntity);
-               if (s.equals("test added successfully")){
-                   return ResponseEntity.ok("test added successfully");
-               }else
-                   return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
+    public ResponseEntity<String> addTest(@RequestBody TestEntity testEntity) {
+        String s = testService.addTest(testEntity);
+        if (s.equals("test added successfully")) {
+            return ResponseEntity.ok("test added successfully");
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
     }
 
     @GetMapping("/getTests")
-    public List<TestEntity> getTests (){
+    public List<TestEntity> getTests() {
         return testService.getTests();
+    }
+
+    @DeleteMapping("/deleteTest/{id}")
+    public ResponseEntity<Void> deleteUser(@PathVariable Long testId) {
+
     }
 }

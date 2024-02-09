@@ -1,5 +1,4 @@
-<div class="min-h-screen bg-[#e6eaed] py-6 flex flex-col justify-center sm:py-12">
-	<div class="relative py-3 sm:max-w-xl sm:mx-auto">
+	<div class=" py-3 sm:max-w-xl sm:mx-auto">
 		<div
 			class="absolute inset-0 bg-gradient-to-r  shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
 		</div>
@@ -39,7 +38,12 @@
 							}
 						</div>
                         <div class="relative">
-
+							<label for="editor" class="sr-only">Publish post</label>
+							<textarea id="editor" rows="8" class="block w-full px-0 text-sm text-gray-800 bg-white border-0 dark:bg-gray-800 focus:ring-0 dark:text-white dark:placeholder-gray-400" placeholder="Write an article..." required></textarea>
+						</div>
+						<div class="flex -mx-3">
+							<div class="w-1/2 px-3 ">
+                        <div class="relative">
 							<select  name="category" id="category"
 							formControlName="category"
 							
@@ -55,16 +59,18 @@
 							}
 							
 						</div>
-                        <div class="relative">
+							</div>
+						<div class="w-1/2 px-3 ">
 
+                        <div class="relative">
 							<select  name="difficulty" id="difficulty"
 							formControlName="difficulty"
 							
 							class=" block appearance-none h-10 w-full border-b-2 border-gray-300 text-gray-600 text-base "  >
 								<option value="" disabled selected hidden>Difficulty</option>
-								<option> Easy </option>
-								<option>Medium</option>
-                                <option>Hard</option>
+								<option> easy </option>
+								<option>medium</option>
+                                <option>hard</option>
 
 							</select>
 							@if (testForm.get('difficulty')?.invalid && (testForm.get('difficulty')?.touched || testForm.get('difficulty')?.dirty)|| isSubmitted) {
@@ -73,6 +79,8 @@
 								}
 							}
 							
+						</div>
+						</div>
 						</div>
 						
 						
@@ -84,4 +92,3 @@
 			</div>
 		</div>
 	</div>
-</div>

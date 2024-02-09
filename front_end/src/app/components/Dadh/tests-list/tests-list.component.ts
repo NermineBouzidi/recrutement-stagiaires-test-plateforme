@@ -4,10 +4,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgFor } from '@angular/common';
 import { DashboardSidebarComponent } from '../dashboard-sidebar/dashboard-sidebar.component';
 import { RouterModule } from '@angular/router';
+import { MatIconModule } from '@angular/material/icon';
 @Component({
   selector: 'app-tests-list',
   standalone: true,
-  imports: [HttpClientModule,NgFor,RouterModule],
+  imports: [HttpClientModule,NgFor,RouterModule,MatIconModule],
   templateUrl: './tests-list.component.html',
   styleUrl: './tests-list.component.css'
 })

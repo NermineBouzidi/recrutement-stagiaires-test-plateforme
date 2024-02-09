@@ -6,3 +6,6 @@
     font-family: brazil;
     src: url('./app/fonts/Bottom\ Brazil.otf');
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
