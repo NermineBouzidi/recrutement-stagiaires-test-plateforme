@@ -33,7 +33,7 @@
                     <div class="flex items-center justify-end">
                     <button><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="update"></mat-icon>
                     </button>
-                    <button><mat-icon aria-hidden="false" aria-label="Example home icon" fontIcon="delete"></mat-icon>
+                    <button (click)="deleteTest(test)"><mat-icon aria-hidden="false"fontIcon="delete"></mat-icon>
                     </button>
                     </div>
                     <div class="font-bold text-xl mb-2">{{test.title}}</div>

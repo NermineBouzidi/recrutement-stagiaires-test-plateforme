@@ -8,7 +8,7 @@ import java.util.List;
 public interface TestService {
     TestEntity getTest(long id);
     String addTest (TestEntity testEntity);
-    void deleteTest(long id);
+    String deleteTest(long id);
     void updateTest(long id);
     List <TestEntity> getTests();
 }

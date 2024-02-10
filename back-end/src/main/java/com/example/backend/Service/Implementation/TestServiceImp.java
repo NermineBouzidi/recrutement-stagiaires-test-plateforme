@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TestServiceImp implements TestService {
@@ -27,9 +28,15 @@ public class TestServiceImp implements TestService {
         }
     }
 
-    public void deleteTest(long id) {
+    public String deleteTest(long id) {
         TestEntity test =testRepository.findById(id);
-        testRepository.delete(test);
+        if (test == null) {
+            return "user not found";
+        }else {
+            testRepository.deleteById(id);
+            return "succes";
+
+        }
     }
 
     public void updateTest(long id) {

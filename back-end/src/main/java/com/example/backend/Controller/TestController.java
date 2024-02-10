@@ -1,6 +1,7 @@
 package com.example.backend.Controller;
 
 import com.example.backend.Entity.TestEntity;
+import com.example.backend.Repository.TestRepository;
 import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +38,16 @@ public class TestController {
     }
 
     @DeleteMapping("/deleteTest/{id}")
-    public ResponseEntity<Void> deleteUser(@PathVariable Long testId) {
-
+    public ResponseEntity<Void> deleteUser(@PathVariable long id) {
+        if (id == 0 || id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        String s = testService.deleteTest(id);
+        if (s.equals("succes")) {
+            return ResponseEntity.noContent().build();
+        } else {
+           return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
+
 }

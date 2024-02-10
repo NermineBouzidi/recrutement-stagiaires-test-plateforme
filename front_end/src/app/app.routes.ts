@@ -2,11 +2,11 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './components/home/home.component';
 import { RegistrationFormComponentComponent } from './components/registration-form-component/registration-form-component.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
-import { DashboardComponent } from './components/Dadh/dashboard/dashboard.component';
+import { DashboardComponent } from './components/Dashboard/dashboard/dashboard.component';
 import { TestInterfaceComponent } from './components/test-interface/test-interface.component';
-import { UsersListComponent } from './components/Dadh/users-list/users-list.component';
-import { TestsListComponent } from './components/Dadh/tests-list/tests-list.component';
-import { CreateTestComponent } from './components/Dadh/create-test/create-test.component';
+import { UsersListComponent } from './components/Dashboard/users-list/users-list.component';
+import { TestsListComponent } from './components/Dashboard/tests-list/tests-list.component';
+import { CreateTestComponent } from './components/Dashboard/create-test/create-test.component';
 
 export const routes: Routes = [
         {
