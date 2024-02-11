@@ -1,0 +1,71 @@
+<!-- component -->
+
+<div class="min-h-screen bg-[#e6eaed] py-6 flex flex-col justify-center sm:py-12">
+    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+        <div
+            class="absolute inset-0 bg-gradient-to-r  shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+        </div>
+        <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+            <div class="max-w-md mx-auto">
+                <div>
+                    <h1 class="text-2xl font-semibold  text-[#1d2736]">Register</h1>
+                </div>
+                <div class="divide-y divide-gray-200">
+
+                    <div class="flex -mx-3">
+                        <div class="w-1/2 px-3 ">
+                            <div class="relative">
+                                <input id="firstname" name="firstname" type="text" [(ngModel)]="userObj.firstname"
+                                    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                                    placeholder="First Name" required />
+                                <label for="firstname"
+                                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">First
+                                    Name</label>
+                                <p *ngIf="userForm.controls['firstname'].invalid && (userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty || isSubmitted)">
+                                    <span *ngIf="userForm.controls['firstname'].errors?.required" class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</span>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="w-1/2 px-3 ">
+                            <div class="relative">
+                                <input autocomplete="off" id="lastname" [(ngModel)]="userObj.lastName" name="lastname"
+                                    type="text" 
+                                    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                                    placeholder="Last Name" />
+                                <label for="lastname"
+                                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Last
+                                    Name</label>
+                                <p *ngIf="userForm.controls['lastName'].invalid && (userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty || isSubmitted)">
+                                    <span *ngIf="userForm.controls['lastName'].errors?.required" class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="relative">
+                        <input autocomplete="off" id="email" [(ngModel)]="userObj.email" name="email" type="text"
+                            class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                            placeholder="Email address" />
+                        <label for="email"
+                            class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email
+                            Address</label>
+                        <p *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].touched || userForm.controls['email'].dirty || isSubmitted)">
+                            <span *ngIf="userForm.controls['email'].errors?.required" class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</span>
+                        </p>
+                        <p *ngIf="userExist" class="mt-2 text-sm text-red-600 dark:text-red-500"> User exists with the same email </p>
+                    </div>
+                    
+                    <!-- The rest of your form fields go here -->
+
+                    <div class="flex justify-center ">
+                        <button class="rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] focus:outline-none focus:ring active:text-opacity-75 sm:w-auto text-white rounded-md px-12 py-1" type="submit">Submit</button>
+                    </div>
+                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                        Already have an account? <a routerLink="/signup" routerLinkActive="active" class="font-medium text-[#1d2736] hover:underline dark:text-primary-500">Login here</a>
+                    </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

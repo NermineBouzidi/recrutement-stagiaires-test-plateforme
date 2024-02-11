@@ -4,6 +4,7 @@ import com.example.backend.DTO.AdminDTO;
 import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.Admin;
+import com.example.backend.Entity.Role;
 import com.example.backend.Repository.AdminRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Entity.User;
@@ -40,6 +41,8 @@ public class UserServiceImp implements UserService {
                     user.getEducationLevel(),
                     passwordEncoder.encode(user.getPassword())
             );
+            use.setRole(Role.USER);
+
             //use.setPassword(passwordEncoder.encode(use.getPassword()));
             userRepository.save(use);
             return "Registration successful";

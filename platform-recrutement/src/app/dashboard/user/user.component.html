@@ -1,0 +1,152 @@
+<!-- 
+<div class="relative overflow-x-auto shadow-md sm:rounded-lg">
+    <div class="flex flex-column sm:flex-row flex-wrap space-y-4 sm:space-y-0 items-center justify-between pb-4">
+        <label for="table-search" class="sr-only">Search</label>
+        <div class="relative">
+            <div class="absolute inset-y-0 left-0 rtl:inset-r-0 rtl:right-0 flex items-center ps-3 pointer-events-none">
+                <svg class="w-5 h-5 text-gray-500 dark:text-gray-400" aria-hidden="true" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
+            </div>
+            <input type="text" id="table-search" class="block p-2 ps-10 text-sm text-gray-900 border border-gray-300 rounded-lg w-80 bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search for items">
+        </div>
+    </div>
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <tr >
+                <th scope="col" class="p-4">
+                    <div class="flex items-center">
+                        <input id="checkbox-all-search" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="checkbox-all-search" class="sr-only">checkbox</label>
+                    </div>
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    FirstName
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    LastName
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Email
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Number
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    EducationLevel
+                </th>
+                <th scope="col" class="px-6 py-3">
+                    Action
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600"
+            *ngFor="let user of data"
+            >
+                <td class="w-4 p-4">
+                    <div class="flex items-center">
+                        <input id="checkbox-table-search-1" type="checkbox" class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 dark:focus:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
+                        <label for="checkbox-table-search-1" class="sr-only">checkbox</label>
+                    </div>
+                </td>
+                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {{user.firstname}}
+                </th>
+                <td class="px-6 py-4">
+                    {{user.lastName}}
+                </td>
+                <td class="px-6 py-4">
+                    {{user.email}}
+                </td>
+                <td class="px-6 py-4">
+                    {{user.number}}
+                </td>
+                <td class="px-6 py-4">
+                    {{user.educationLevel}}
+                </td>
+                <td class="px-6 py-4">
+                    <a href="#" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
+                </td>
+            </tr>
+           
+        </tbody>
+    </table>
+</div>
+
+
+     ---------------------------->
+<body class="flex items-center justify-center">
+	<div class="container">
+		<table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+			<thead class="text-white">
+				<tr class="bg-[#d97a07] flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+					<th class="p-3 text-left">FirstName</th>
+                    <th class="p-3 text-left">LastName</th>
+					<th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Number</th>
+					<th class="p-3 text-left">EducationLevel</th>
+					<th class="p-3 text-left" width="110px">Actions</th>
+				</tr>
+				<tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+					<th class="p-3 text-left">FirstName</th>
+                    <th class="p-3 text-left">LastName</th>
+					<th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Number</th>
+					<th class="p-3 text-left">EducationLevel</th>
+					<th class="p-3 text-left" width="110px">Actions</th>
+				</tr>
+                <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                    <th class="p-3 text-left">FirstName</th>
+                    <th class="p-3 text-left">LastName</th>
+					<th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Number</th>
+					<th class="p-3 text-left">EducationLevel</th>
+					<th class="p-3 text-left" width="110px">Actions</th>
+              </tr>
+                <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                    <th class="p-3 text-left">FirstName</th>
+                    <th class="p-3 text-left">LastName</th>
+					<th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Number</th>
+					<th class="p-3 text-left">EducationLevel</th>
+					<th class="p-3 text-left" width="110px">Actions</th>
+              </tr>
+			</thead>
+			<tbody class="flex-1 sm:flex-none" >
+				<tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 "*ngFor="let user of data">
+					<td class="border-grey-light border hover:bg-gray-100 p-3">{{user.firstname}}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.lastName}}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{user.email}}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.number}}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.educationLevel}}</td>
+					<td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">Delete</td>
+				</tr>
+				
+			</tbody>
+		</table>
+	</div>
+</body>
+
+<style>
+  html,
+  body {
+    height: 100%;
+  }
+
+  @media (min-width: 640px) {
+    table {
+      display: inline-table !important;
+    }
+
+    thead tr:not(:first-child) {
+      display: none;
+    }
+  }
+
+  td:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  th:not(:last-child) {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+  }
+</style>
