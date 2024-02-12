@@ -21,25 +21,16 @@ public class JwtUtils {
     public String generate(User user) {
         return Jwts.builder()
                 .setSubject(user.getEmail())
-                .claim("role",user.getRole())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireInMs))
                 .signWith(key)
                 .compact();
     }
-    public boolean validate(String token ,User user) {
-        if (getUsername(token) != null && isExpired(token)) {
-            return true;
-        }
-        return false;
-    }
+
     public boolean isValid(String token , UserDetails user){
-        if(getUsername(token).equals(user.getUsername())){
-            return true;
-        }else{
-            return false ;
-        }
+       return getUsername(token).equals(user.getUsername()) ;
     }
+
 
     public String getUsername(String token) {
         Claims claims = getClaims(token);
@@ -51,7 +42,14 @@ public class JwtUtils {
         return claims.getExpiration().after(new Date(System.currentTimeMillis()));
     }
 
-    private Claims getClaims(String token) {
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody();
+    public Claims getClaims(String token) {
+
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(key)
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
+
 }

@@ -1,5 +1,6 @@
 package com.example.backend.Security;
 
+import com.example.backend.Entity.Role;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -40,7 +41,8 @@ public class SecurityConfig  {
                 .requestMatchers("/api/user/getUsers").permitAll()
                 .requestMatchers("/api/user/getUsers").permitAll()
                 .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/api/test/**").permitAll()
+                .requestMatchers("/api/auth/hi").hasRole("USER")
+                .requestMatchers("/api/test/**").hasRole("ADMIN")
                 .requestMatchers("/api/user/**").permitAll()
                 .anyRequest()
                 .authenticated()
@@ -48,8 +50,8 @@ public class SecurityConfig  {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authenticationProvider(daoAuthenticationProvider())
                 .addFilterBefore(jwtSecurityFilter, UsernamePasswordAuthenticationFilter.class )
+                .authenticationProvider(daoAuthenticationProvider())
 
 
 

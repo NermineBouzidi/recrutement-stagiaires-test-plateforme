@@ -41,8 +41,7 @@ public class UserServiceImp implements UserService {
                     user.getEducationLevel(),
                     passwordEncoder.encode(user.getPassword())
             );
-            use.setRole(Role.USER);
-
+            use.setRole(Role.ROLE_USER);
             //use.setPassword(passwordEncoder.encode(use.getPassword()));
             userRepository.save(use);
             return "Registration successful";

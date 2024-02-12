@@ -27,11 +27,11 @@ export class SigninComponent {
     this.loginObj.email= this.userForm.value.email;
     this.loginObj.password= this.userForm.value.password;
     this.http.login(this.userForm.value.email, this.userForm.value.password).subscribe((res: any) => {
-      if ((res.includes("login successfful")) || (res.role=='user')) {
+      if (res.role=='ROLE_USER') {
         alert("login successful");
-        this.router.navigateByUrl("/test");
+        this.router.navigateByUrl("/register");
       } else {
-        if ((res.includes("login successfful")) || (res.role=='admin')) {
+        if  (res.role=='ROLE_ADMIN') {
           alert("login successful");
           this.router.navigateByUrl("/dashboard");
         } else {

@@ -19,8 +19,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 @Component
 public class JwtSecurityFilter extends OncePerRequestFilter {
-    private JwtUtils jwtUtils;
-    CustomDetailService customDetailService;
+    private final JwtUtils jwtUtils;
+    private final CustomDetailService customDetailService;
 
     public JwtSecurityFilter(JwtUtils jwtUtils, CustomDetailService customDetailService) {
         this.jwtUtils = jwtUtils;
@@ -34,7 +34,30 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
             @NonNull FilterChain filterChain)
             throws ServletException, IOException {
         String authHeader = request.getHeader("Authorization");
-      /*    if (authHeader != null && authHeader.startsWith("Bearer")){
+
+        if (authHeader == null || !authHeader.startsWith("Bearer ") ) {
+            filterChain.doFilter(request, response);
+            return;  // Exit the filter chain if "Authorization" header is not present
+        }
+        String token = authHeader.substring(7);
+        String userEmail = jwtUtils.getUsername(token);
+        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+            UserDetails user = customDetailService.loadUserByUsername(userEmail);
+            if (jwtUtils.isValid(token, user)) {
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        user, null,user.getAuthorities());
+                authToken.setDetails(
+                        new WebAuthenticationDetailsSource().buildDetails(request)
+                );
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        }
+
+        // Continue with the filter chain
+        filterChain.doFilter(request, response);
+    }
+}
+  /*    if (authHeader != null && authHeader.startsWith("Bearer")){
               filterChain.doFilter(request,response);
           }
               String token = authHeader.substring(7);
@@ -52,27 +75,3 @@ public class JwtSecurityFilter extends OncePerRequestFilter {
 
           }
           filterChain.doFilter(request,response);*/
-        if (authHeader == null) {
-            filterChain.doFilter(request, response);
-            return;  // Exit the filter chain if "Authorization" header is not present
-        }
-
-        String token = authHeader.substring(7);
-        String userEmail = jwtUtils.getUsername(token);
-
-        if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-            UserDetails user = customDetailService.loadUserByUsername(userEmail);
-            if (jwtUtils.isValid(token, user)) {
-                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                        user, null);
-                authToken.setDetails(
-                        new WebAuthenticationDetailsSource().buildDetails(request)
-                );
-                SecurityContextHolder.getContext().setAuthentication(authToken);
-            }
-        }
-
-        // Continue with the filter chain
-        filterChain.doFilter(request, response);
-    }
-}

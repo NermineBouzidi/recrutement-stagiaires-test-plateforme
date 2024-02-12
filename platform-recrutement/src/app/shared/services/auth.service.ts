@@ -41,8 +41,8 @@ logout() {
 }
 
 register(user: User) {
-    console.log(user)
-    return this.http.post(this.baseURI + `/api/v1/auth/register`, user);
+   console.log(user)
+    return this.http.post(this.baseURI + `/api/auth/register`, user,{ observe: 'response' ,responseType: 'text'});
 }
 
 getAll() {
