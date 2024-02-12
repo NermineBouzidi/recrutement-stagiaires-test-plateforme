@@ -32,7 +32,7 @@ public class AuthController {
     @PostMapping("/register")
     public ResponseEntity<String> register (@RequestBody User user) {
        String s= userService.addUser(user);
-       
+
         if(s.equals("Registration successful")) {
             return ResponseEntity.ok(jwtUtils.generate(user));
         } else {
@@ -48,7 +48,8 @@ public class AuthController {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
             authenticationManager.authenticate(token);
             User user = userRepository.findByEmail(loginDTO.getEmail());
-            return ResponseEntity.ok(jwtUtils.generate(user));
+            //return ResponseEntity.ok(jwtUtils.generate(user));
+            return ResponseEntity.ok("login successfful");
         }catch (AuthenticationException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Login failed");
         }

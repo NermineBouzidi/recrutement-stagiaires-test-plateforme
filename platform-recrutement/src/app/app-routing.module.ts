@@ -15,7 +15,7 @@ const routes: Routes = [
   { path: 'login', component: SigninComponent },
   { path: 'register', component: SignupComponent }, 
   {
-    path: 'dashboard', 
+    path: 'dashboard', canActivate:[UserGuard],
     component: UidashboardComponent,
     children: [
       { path: '', redirectTo: 'uidash', pathMatch: 'full' },

@@ -1,71 +1,244 @@
-<!-- component -->
+<!-- 
+<app-navbar></app-navbar>
 
 <div class="min-h-screen bg-[#e6eaed] py-6 flex flex-col justify-center sm:py-12">
-    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div
-            class="absolute inset-0 bg-gradient-to-r  shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
+  <div class="relative py-3 sm:max-w-xl sm:mx-auto">
+    <div class="absolute inset-0 bg-gradient-to-r  shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl"></div>
+    <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
+      <div class="max-w-md mx-auto">
+        <div>
+          <h1 class="text-2xl font-semibold text-[#1d2736]">Register</h1>
         </div>
-        <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-            <div class="max-w-md mx-auto">
-                <div>
-                    <h1 class="text-2xl font-semibold  text-[#1d2736]">Register</h1>
+        <div class="divide-y divide-gray-200">
+          <form (ngSubmit)="Register()" [formGroup]="userForm" class="py-8 text-base leading-6 space-y-4 text-gray-700 sm:text-lg sm:leading-7">
+            <div class="flex -mx-3">
+              <div class="w-1/2 px-3">
+                <div class="relative">
+                  <input id="firstname" name="firstname" type="text" formControlName="firstname" [(ngModel)]="userObj.firstname"
+                    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600" placeholder="First Name" required />
+                  <label for="firstname"
+                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">First Name</label>
+                  <div *ngIf="userForm.get('firstname')?.invalid && (userForm.get('firstname')?.touched || userForm.get('firstname')?.dirty) || isSubmitted">
+                    <div *ngIf="userForm.get('firstname')?.errors?.['required']">
+                      <p class="mt-2 text-sm text-red-600 dark:text-red-500">This field is required</p>
+                    </div>
+                  </div>
                 </div>
-                <div class="divide-y divide-gray-200">
-
-                    <div class="flex -mx-3">
-                        <div class="w-1/2 px-3 ">
-                            <div class="relative">
-                                <input id="firstname" name="firstname" type="text" [(ngModel)]="userObj.firstname"
-                                    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                                    placeholder="First Name" required />
-                                <label for="firstname"
-                                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">First
-                                    Name</label>
-                                <p *ngIf="userForm.controls['firstname'].invalid && (userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty || isSubmitted)">
-                                    <span *ngIf="userForm.controls['firstname'].errors?.required" class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="w-1/2 px-3 ">
-                            <div class="relative">
-                                <input autocomplete="off" id="lastname" [(ngModel)]="userObj.lastName" name="lastname"
-                                    type="text" 
-                                    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                                    placeholder="Last Name" />
-                                <label for="lastname"
-                                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Last
-                                    Name</label>
-                                <p *ngIf="userForm.controls['lastName'].invalid && (userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty || isSubmitted)">
-                                    <span *ngIf="userForm.controls['lastName'].errors?.required" class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</span>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="relative">
-                        <input autocomplete="off" id="email" [(ngModel)]="userObj.email" name="email" type="text"
-                            class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                            placeholder="Email address" />
-                        <label for="email"
-                            class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email
-                            Address</label>
-                        <p *ngIf="userForm.controls['email'].invalid && (userForm.controls['email'].touched || userForm.controls['email'].dirty || isSubmitted)">
-                            <span *ngIf="userForm.controls['email'].errors?.required" class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</span>
-                        </p>
-                        <p *ngIf="userExist" class="mt-2 text-sm text-red-600 dark:text-red-500"> User exists with the same email </p>
-                    </div>
-                    
-                    <!-- The rest of your form fields go here -->
-
-                    <div class="flex justify-center ">
-                        <button class="rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] focus:outline-none focus:ring active:text-opacity-75 sm:w-auto text-white rounded-md px-12 py-1" type="submit">Submit</button>
-                    </div>
-                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                        Already have an account? <a routerLink="/signup" routerLinkActive="active" class="font-medium text-[#1d2736] hover:underline dark:text-primary-500">Login here</a>
-                    </p>
-
+              </div>
+              <div class="w-1/2 px-3">
+                <div class="relative">
+                  <input autocomplete="off" id="lastname" [(ngModel)]="userObj.lastName" name="lastname" type="text" formControlName="lastName"
+                    class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                    placeholder="Last Name" />
+                  <label for="lastname"
+                    class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Last Name</label>
+                  <ng-container *ngIf="userForm.get('lastName')?.invalid && (userForm.get('lastName')?.touched || userForm.get('lastName')?.dirty) || isSubmitted">
+                    <ng-container *ngIf="userForm.get('lastName')?.errors?.['required']">
+                      <p class="mt-2 text-sm text-red-600 dark:text-red-500">This field is required</p>
+                    </ng-container>
+                  </ng-container>
                 </div>
+              </div>
             </div>
+
+            <div class="relative">
+              <input autocomplete="off" id="email" [(ngModel)]="userObj.email" name="email" type="text" formControlName="email"
+                class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                placeholder="Email address" />
+              <label for="email"
+                class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Email Address</label>
+              <ng-container *ngIf="userForm.get('email')?.invalid && (userForm.get('email')?.touched || userForm.get('email')?.dirty) || isSubmitted">
+                <ng-container *ngIf="userForm.get('email')?.errors?.['required']">
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">This field is required</p>
+                </ng-container>
+                <ng-container *ngIf="userForm.get('email')?.errors?.['email']">
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">Invalid email</p>
+                </ng-container>
+                <ng-container *ngIf="userExist">
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">User exists with the same email</p>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="relative">
+              <input autocomplete="off" id="number" [(ngModel)]="userObj.number" name="number" type="number" formControlName="number"
+                class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                maxlength="8" placeholder="Phone Number" />
+              <label for="number"
+                class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Phone Number</label>
+              <ng-container *ngIf="userForm.get('number')?.invalid && (userForm.get('number')?.touched || userForm.get('number')?.dirty) || isSubmitted">
+                <ng-container *ngIf="userForm.get('number')?.errors?.['required']">
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">This field is required</p>
+                </ng-container>
+                <ng-container *ngIf="userForm.get('number')?.errors?.['minlength']">
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">Min length 8</p>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="relative">
+              <select [(ngModel)]="userObj.educationLevel" name="educationLevel" id="educationLevel" formControlName="educationLevel"
+                class="block appearance-none h-10 w-full border-b-2 border-gray-300 text-gray-600 text-base">
+                <option value="" disabled selected hidden>Education level</option>
+                <option>Bac+3</option>
+                <option>Bac+5</option>
+              </select>
+              <ng-container *ngIf="userForm.get('educationLevel')?.invalid && (userForm.get('educationLevel')?.touched || userForm.get('educationLevel')?.dirty) || isSubmitted">
+                <ng-container *ngIf="userForm.get('educationLevel')?.errors?.['required']">
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">This field is required</p>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="relative">
+              <input autocomplete="off" id="password" [(ngModel)]="userObj.password" name="password" type="password" formControlName="password"
+                class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
+                placeholder="Password" required />
+              <label for="password"
+                class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
+              <ng-container *ngIf="userForm.get('password')?.invalid && (userForm.get('password')?.touched || userForm.get('password')?.dirty) || isSubmitted">
+                <ng-container *ngIf="userForm.get('password')?.errors?.['required']">
+                  <p class="mt-2 text-sm text-red-600 dark:text-red-500">This field is required</p>
+                </ng-container>
+              </ng-container>
+            </div>
+            <div class="relative">
+              <label for="uploadFile1"
+                class="bg-white text-black text-base rounded w-80 h-22 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 border-dashed mx-auto font-[sans-serif]">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 mb-2 fill-black" viewBox="0 0 32 32">
+                  <path
+                    d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
+                    data-original="#000000" />
+                  <path
+                    d="M20.293 19.707a1 1 0 0 0 1.414-1.414l-5-5a1 1 0 0 0-1.414 0l-5 5a1 1 0 0 0 1.414 1.414L15 16.414V29a1 1 0 0 0 2 0V16.414z"
+                    data-original="#000000" />
+                </svg>
+                Upload file
+                <input type="file" id='uploadFile1' class="hidden" />
+                <p class="text-xs text-gray-400 mt-2">PNG, JPG SVG, WEBP, and GIF are Allowed.</p>
+              </label>
+            </div>
+
+            <div class="flex justify-center ">
+              <button
+                class="rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] focus:outline-none focus:ring active:text-opacity-75 sm:w-auto text-white rounded-md px-12 py-1"
+                type="submit">Submit</button>
+            </div>
+            <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+              Already have an account? <a routerLink="/signup" routerLinkActive="active"
+                class="font-medium text-[#1d2736] hover:underline dark:text-primary-500">Login here</a>
+            </p>
+          </form>
         </div>
+      </div>
     </div>
-</div>
+  </div>
+</div> -->
+<section class="bg-[#e6eaed] dark:bg-gray-900 ">
+  <div class="flex flex-col items-center min-h-screen justify-center px-6 py-12 mx-auto  lg:py-0">
+
+    <div
+      class="w-full bg-white rounded-lg  shadow dark:border md:mt-12 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
+      <div class="p-6 space-y-4 md:space-y-0 sm:p-8">
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          Sign Up
+        </h1>
+        <form class="space-y-4 md:space-y-2" action="#" [formGroup]="userForm" (ngSubmit)=" Register() ">
+          <div class="flex -mx-3">
+          <div class="w-1/2 px-3">
+            <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your firstname</label>
+            <input type="text" name="firstname" id="firstname" formControlName="firstname"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="firstname" required="">
+            <div *ngIf="userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['firstname'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+              
+            </div>
+          </div>
+          <div class="w-1/2 px-3">
+            <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your lastName</label>
+            <input type="text" name="lastName" id="lastName" formControlName="lastName"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="lastname" required="">
+            <div *ngIf="userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['lastName'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+            
+            </div>
+          </div>
+          </div>
+          <div>
+            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+            <input type="email" name="email" id="email" formControlName="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="name@company.com" required="">
+            <div *ngIf="userForm.controls['email'].touched || userForm.controls['email'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['email'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+              <div *ngIf="userForm.controls['email'].hasError('email')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> Invalid email</div>
+            </div>
+          </div>
+          <div>
+            <label for="number" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your number</label>
+            <input type="text" name="number" id="number" formControlName="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="123456789" required="">
+            <div *ngIf="userForm.controls['number'].touched || userForm.controls['number'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['number'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+              <div *ngIf="userForm.controls['number'].hasError('number')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> Invalid email</div>
+            </div>
+          </div>
+          <div>
+            <label for="educationLevel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your educationLevel</label>
+      
+              <select name="educationLevel" id="educationLevel" formControlName="educationLevel"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option disabled selected hidden>Education level</option>
+              <option>Bac+3</option>
+              <option>Bac+5</option>
+            </select>
+            <div *ngIf="userForm.controls['educationLevel'].touched || userForm.controls['educationLevel'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['educationLevel'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+             
+            </div>
+          </div>
+          <div>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+            <input type="password" name="password" id="password" placeholder="••••••••" formControlName="password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required="">
+            <div *ngIf="userForm.controls['password'].touched || userForm.controls['password'].dirty || isSubmitted">
+              <div *ngIf="userForm.controls['password'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+
+            </div>
+          </div>
+          <div class="flex items-center justify-between">
+            <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input id="remember" aria-describedby="remember" type="checkbox"
+                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
+                  required="">
+
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
+              </div>
+            </div>
+            <a href="#" class="text-sm font-medium text-[#d97a07] hover:underline dark:text-primary-500">Forgot
+              password?</a>
+          </div>
+          <button type="submit"
+            class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
+            in</button>
+          <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+            Don’t have an account yet? <a routerLink="/login" routerLinkActive="active"
+              class="font-medium text-[#d97a07] hover:underline dark:text-primary-500">Sign in</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
