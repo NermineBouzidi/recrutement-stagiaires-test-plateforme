@@ -18,8 +18,8 @@ public class TestController {
     @Autowired
     private TestService testService;
 
-    @GetMapping("/getTest")
-    public TestEntity getTest(@RequestBody long id) {
+    @GetMapping("/getTest/{id}")
+    public TestEntity getTest(@PathVariable long id) {
         return testService.getTest(id);
     }
 
@@ -49,6 +49,14 @@ public class TestController {
         } else {
            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    @PutMapping("/updateTest/{id}")
+    public ResponseEntity<String> updateTest(@PathVariable long id,@RequestBody TestEntity testEntity) {
+        String s = testService.updateTest(id,testEntity);
+        if (s.equals("test updated successfully")) {
+            return ResponseEntity.ok("test updated successfully");
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
     }
 
 }

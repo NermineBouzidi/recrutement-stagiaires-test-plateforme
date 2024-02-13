@@ -41,6 +41,16 @@ login(email, password) {
             return response;
         }));
 }
+/*
+login(email, password) {
+    return this.http.post<User>(this.baseURI + `/api/auth/login`, { email, password })
+        .pipe(map(user => {
+            // store user details and jwt token in local storage to keep user logged in between page refreshes
+            sessionStorage.setItem('user', JSON.stringify(user));
+            this.userSubject.next(user);
+            return user;
+        }));
+}*/
 
 logout() {
     // remove user from local storage and set current user to null
@@ -55,7 +65,7 @@ register(user: UserDTO) {
 }
 
 getAll() {
-    return this.http.get<User[]>(this.baseURI + `/api/test/getTests`);
+    return this.http.get<User[]>(this.baseURI + `/api/user/getUsers`);
 }
 
 getById(id: string) {

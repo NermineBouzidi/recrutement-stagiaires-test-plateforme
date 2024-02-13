@@ -7,6 +7,7 @@ import { TestComponent } from './dashboard/test/test.component';
 import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { UserGuard } from './shared/services/user.guard';
+import { UserHomeComponent } from './userspace/user-home/user-home.component';
 
 
 const routes: Routes = [
@@ -23,6 +24,9 @@ const routes: Routes = [
       { path: 'user', component: UserComponent },
       { path: 'test', component: TestComponent }
     ]
+  },
+  {
+    path:"user" , component:UserHomeComponent
   }
 
 ]

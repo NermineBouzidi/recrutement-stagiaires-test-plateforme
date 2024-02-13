@@ -11,6 +11,7 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
 import { JwtInterceptor } from './shared/services/jwt.interceptor.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { JwtInterceptor } from './shared/services/jwt.interceptor.service';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
 
   ],
   providers: [{

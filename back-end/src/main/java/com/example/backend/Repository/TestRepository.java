@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TestRepository extends JpaRepository<TestEntity, Long> {
     public TestEntity findByTitle(String title);
-    public TestEntity  findById(long id);
+    //public TestEntity  findById(long id);
 
 }

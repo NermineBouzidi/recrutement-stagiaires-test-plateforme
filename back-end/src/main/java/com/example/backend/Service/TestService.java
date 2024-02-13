@@ -9,6 +9,6 @@ public interface TestService {
     TestEntity getTest(long id);
     String addTest (TestEntity testEntity);
     String deleteTest(long id);
-    void updateTest(long id);
     List <TestEntity> getTests();
+    String updateTest(long id,TestEntity testEntity);
 }

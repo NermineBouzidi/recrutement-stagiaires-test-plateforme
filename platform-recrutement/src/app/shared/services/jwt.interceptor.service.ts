@@ -10,19 +10,17 @@ import { AuthService } from './auth.service';
 export class JwtInterceptor implements HttpInterceptor {
     constructor(private accountService: AuthService) { }
     intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {      
-        const token = this.accountService.loginValue.token;
-      //  const isLoggedIn = user && user.token;
-      //  const isApiUrl = request.url.startsWith(this.accountService.baseURI);
-      //  if (isLoggedIn && isApiUrl) {
-
-        if (token) {
+        const userlogin = this.accountService.loginValue;
+        const isLoggedIn = userlogin && userlogin.token ;
+        const isApiUrl = request.url.startsWith(this.accountService.baseURI);
+        if (isLoggedIn && isApiUrl) {
             request = request.clone({
                 setHeaders: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${userlogin.token}`
                 }
             });
         }
-        return next.handle(request);
 
+        return next.handle(request);
     }
 }

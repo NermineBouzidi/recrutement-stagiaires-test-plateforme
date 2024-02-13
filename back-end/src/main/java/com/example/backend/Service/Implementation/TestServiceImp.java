@@ -8,43 +8,65 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class TestServiceImp implements TestService {
     @Autowired
     TestRepository testRepository;
+
     public TestEntity getTest(long id) {
-        TestEntity test =testRepository.findById(id);
-        return  test;
+        Optional<TestEntity> test = testRepository.findById(id);
+        if (test.isPresent()) {
+            return test.get();
+        } else {
+            throw new NoSuchElementException("Test with ID " + id + " not found");
+
+        }
+
     }
 
     public String addTest(TestEntity testEntity) {
-        if (testRepository.findByTitle(testEntity.getTitle()) !=null){
+        if (testRepository.findByTitle(testEntity.getTitle()) != null) {
             return "test existe";
-        }else {
+        } else {
             testRepository.save(testEntity);
-            return  "test added successfully";
+            return "test added successfully";
         }
     }
 
     public String deleteTest(long id) {
-        TestEntity test =testRepository.findById(id);
-        if (test == null) {
+        Optional<TestEntity> test = testRepository.findById(id);
+        if (!test.isPresent()) {
             return "user not found";
-        }else {
+        } else {
             testRepository.deleteById(id);
             return "succes";
 
         }
     }
 
-    public void updateTest(long id) {
 
+
+    public List<TestEntity> getTests() {
+        List<TestEntity> liste = testRepository.findAll();
+        return liste;
     }
 
-    public List <TestEntity> getTests() {
-        List <TestEntity> liste =testRepository.findAll();
-        return liste ;
+    @Override
+    public String updateTest(long id, TestEntity testEntity) {
+        Optional<TestEntity> existingTest = testRepository.findById(id);
+        if (existingTest.isPresent()) {
+            TestEntity test = existingTest.get();
+            test.setTitle(testEntity.getTitle());
+            test.setDescription(testEntity.getDescription());
+            test.setCategory(testEntity.getCategory());
+            test.setDifficulty(testEntity.getDifficulty());
+            TestEntity savedTest = testRepository.save(test);
+            return "test updated successfully";
+        } else {
+            return "update failed";
+        }
     }
 }

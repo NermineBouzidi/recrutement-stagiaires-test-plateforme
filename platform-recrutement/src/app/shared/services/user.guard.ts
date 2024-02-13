@@ -13,7 +13,8 @@ export class UserGuard implements CanActivate {
 
 canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
   const user = this.accountService.userValue;
-  if (user ) {
+  const login = this.accountService.loginValue;
+  if (login ) {
      
       return true;
   }

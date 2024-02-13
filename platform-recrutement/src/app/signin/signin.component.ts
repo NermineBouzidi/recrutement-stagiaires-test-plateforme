@@ -29,7 +29,7 @@ export class SigninComponent {
     this.http.login(this.userForm.value.email, this.userForm.value.password).subscribe((res: any) => {
       if (res.role=='ROLE_USER') {
         alert("login successful");
-        this.router.navigateByUrl("/register");
+        this.router.navigateByUrl("/user");
       } else {
         if  (res.role=='ROLE_ADMIN') {
           alert("login successful");

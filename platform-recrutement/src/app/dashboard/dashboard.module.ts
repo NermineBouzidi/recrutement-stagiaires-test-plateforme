@@ -8,6 +8,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { UidashboardComponent } from './uidashboard/uidashboard.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '../shared/services/jwt.interceptor.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -19,7 +20,7 @@ import { JwtInterceptor } from '../shared/services/jwt.interceptor.service';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule
+    DashboardRoutingModule,ReactiveFormsModule
   ]
 })
 export class DashboardModule { }

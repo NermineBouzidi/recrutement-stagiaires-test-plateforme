@@ -21,10 +21,7 @@ export class SignupComponent {
       firstname: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      number: new FormControl('', [
-        Validators.required,
-        Validators.minLength(8),
-      ]),
+      number: new FormControl('', [ Validators.required,Validators.minLength(8),]),
       educationLevel: new FormControl('', [Validators.required]),
       password: new FormControl('', [Validators.required]),
     });

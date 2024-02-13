@@ -1,29 +1,209 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<button (click)="openDialog()"
+  class=" text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
 
-    <div class="px-6 py-4 max-w-sm rounded overflow-hidden shadow-lg"         
-     *ngFor="let test of data"
-     >   
-         <div class="flex items-center justify-end">
-         <button>
-         </button>
-         <button >
-         </button>
-         </div>
-         <div class="font-bold text-xl mb-2">{{test.title}}</div>
-          <p class="text-gray-700 text-base">
-         {{test.description}}
-           </p>
-           <div class="flex items-center justify-between mt-8">
-             <div class="flex items-center -space-x-3">
-             <p>{{test.category}} </p>    
-             </div>
-             <p class="block font-sans text-base antialiased  leading-relaxed text-inherit font-bold"
-             [class.text-green-500]="test.difficulty === 'easy'"
-             [class.text-yellow-500]="test.difficulty === 'medium'"
-             [class.text-red-500]="test.difficulty === 'hard'">
-                 {{test.difficulty}}
-               </p>
-             </div>
-             
-   </div>
-</div>    
+  Add Test
+</button>
+
+
+<!--
+<div class="grid grid-cols-1 sm:grid-cols-2 justify-between ">
+  <div class="px-6 py-4 max-w-sm rounded overflow-hidden shadow-lg" *ngFor="let test of data">
+    <div class="flex items-center justify-end space-x-2">
+      <button (click)="openUpdateDialog(test.id)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+          fill="currentColor" class="w-5 h-5">
+          <path
+            d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" />
+          <path
+            d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" />
+        </svg>
+
+      </button>
+      <button (click)="deleteTest(test.id)">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+          <path fill-rule="evenodd"
+            d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
+            clip-rule="evenodd" />
+        </svg>
+      </button>
+    </div>
+    <div class="font-bold text-xl mb-2">{{test.title}}</div>
+    <p class="text-gray-700 text-base">
+      {{test.description}}
+    </p>
+    <div class="flex items-center justify-between mt-8">
+      <div class="flex items-center -space-x-3">
+        <p>{{test.category}} </p>
+      </div>
+      <p class=" font-bold" [class.text-green-500]="test.difficulty === 'easy'"
+        [class.text-yellow-500]="test.difficulty === 'medium'" [class.text-red-500]="test.difficulty === 'hard'">
+        {{test.difficulty}}
+      </p>
+    </div>
+
+  </div>
+</div>-->
+<!--table-->
+<body class="flex items-center justify-center ">
+  <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+    <thead class="text-[#1d2736]">
+      <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
+        *ngFor="let test of data">
+        <th class="p-3 text-left">Title</th>
+        <th class="p-3 text-left">Difficulty</th>
+        <th class="p-3 text-left">Category</th>
+        <th class="p-3 text-left" width="110px">Actions</th>
+      </tr>
+
+    </thead>
+    <tbody class="flex-1 sm:flex-none">
+      <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 " *ngFor="let test of data">
+        <td class="border-grey-light border hover:bg-gray-100 p-3">{{test.title}}</td>
+        <td class="border-grey-light border hover:bg-gray-100 p-3" [class.text-green-500]="test.difficulty === 'easy'"
+          [class.text-yellow-500]="test.difficulty === 'medium'" [class.text-red-500]="test.difficulty === 'hard'">
+          {{test.difficulty}}</td>
+        <td class="border-grey-light border hover:bg-gray-100 p-3 ">{{test.category}}</td>
+
+        <td
+          class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
+            <button (click)="openShowDialog(test.id)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+                fill="currentColor" class="w-5 h-5">
+                <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                <path fill-rule="evenodd"
+                  d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
+          
+          <button (click)="openUpdateDialog(test)"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+              fill="currentColor" class="w-5 h-5">
+              <path
+                d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" />
+              <path
+                d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" />
+            </svg>
+
+          </button>
+          <button (click)="deleteTest(test.id)">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+              <path fill-rule="evenodd"
+                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
+                clip-rule="evenodd" />
+            </svg>
+          </button>
+
+
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+
+</body>
+
+
+
+
+<!-- Dialog  Form -->
+<div *ngIf="isDialogOpen" class="dialog-overlay">
+  <div
+    class="dialog-content w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
+    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <div class="flex items-center justify-end">
+        <button (click)="closeDialog()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-x">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+
+      </div>
+      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+        Add Test
+      </h1>
+      <form class="space-y-4 md:space-y-6" action="#" [formGroup]="testForm" (submit)="addTest()">
+        <div>
+          <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+          <input type="text" name="title" id="title" formControlName="title"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="title" required="">
+          <div *ngIf="testForm.controls['title'].touched || testForm.controls['title'].dirty ">
+            <div *ngIf="testForm.controls['title'].hasError('required')"
+              class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+          </div>
+        </div>
+        <div>
+          <label for="description"
+            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+          <textarea type="text" name="description" id="description" formControlName="description"
+            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="description" ></textarea>
+          <div *ngIf="testForm.controls['description'].touched || testForm.controls['description'].dirty ">
+            <div *ngIf="testForm.controls['description'].hasError('required')"
+              class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+          </div>
+        </div>
+        <div class="flex -mx-3">
+          <div class="w-1/2 px-3">
+            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+
+            <select name="category" id="category" formControlName="category"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option>DataBase</option>
+              <option>Algorithm</option>
+            </select>
+            <div *ngIf="testForm.controls['category'].touched || testForm.controls['category'].dirty ">
+              <div *ngIf="testForm.controls['category'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+
+            </div>
+          </div>
+          <div class="w-1/2 px-3">
+            <label for="difficulty"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
+
+            <select name="difficulty" id="difficulty" formControlName="difficulty"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+              <option>easy</option>
+              <option>medium</option>
+              <option>hard</option>
+            </select>
+            <div *ngIf="testForm.controls['difficulty'].touched || testForm.controls['difficulty'].dirty ">
+              <div *ngIf="testForm.controls['difficulty'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+
+            </div>
+          </div>
+        </div>
+        <button type="submit"
+          class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Add</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!--Dialog Show-->
+<div *ngIf="isShowDialog" class="dialog-overlay">
+  <div
+    class="dialog-content w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
+    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+      <div class="flex items-center justify-end">
+        <button (click)="closeShowDialog()">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-x">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div>
+        <h1>{{testShow.title}}</h1>
+        <h1>{{testShow.difficulty}}</h1>
+        <pre style="white-space: pre-line;">{{testShow.description}}</pre>
+        <h1>{{testShow.category}}</h1>
+      </div>
+
+    </div>
+  </div>
+</div>
