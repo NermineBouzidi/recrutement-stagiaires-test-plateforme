@@ -1,1 +1,29 @@
-<p>test works!</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+    <div class="px-6 py-4 max-w-sm rounded overflow-hidden shadow-lg"         
+     *ngFor="let test of data"
+     >   
+         <div class="flex items-center justify-end">
+         <button>
+         </button>
+         <button >
+         </button>
+         </div>
+         <div class="font-bold text-xl mb-2">{{test.title}}</div>
+          <p class="text-gray-700 text-base">
+         {{test.description}}
+           </p>
+           <div class="flex items-center justify-between mt-8">
+             <div class="flex items-center -space-x-3">
+             <p>{{test.category}} </p>    
+             </div>
+             <p class="block font-sans text-base antialiased  leading-relaxed text-inherit font-bold"
+             [class.text-green-500]="test.difficulty === 'easy'"
+             [class.text-yellow-500]="test.difficulty === 'medium'"
+             [class.text-red-500]="test.difficulty === 'hard'">
+                 {{test.difficulty}}
+               </p>
+             </div>
+             
+   </div>
+</div>    

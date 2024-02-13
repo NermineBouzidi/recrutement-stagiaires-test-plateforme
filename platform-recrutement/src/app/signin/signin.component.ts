@@ -34,6 +34,7 @@ export class SigninComponent {
         if  (res.role=='ROLE_ADMIN') {
           alert("login successful");
           this.router.navigateByUrl("/dashboard");
+
         } else {
         alert("Login failed");
       }

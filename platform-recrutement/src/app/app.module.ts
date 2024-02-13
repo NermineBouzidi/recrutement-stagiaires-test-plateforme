@@ -8,8 +8,9 @@ import { SignupComponent } from './signup/signup.component';
 import { SigninComponent } from './signin/signin.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DashboardModule } from './dashboard/dashboard.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NavbarComponent } from './navbar/navbar.component';
+import { JwtInterceptor } from './shared/services/jwt.interceptor.service';
 
 @NgModule({
   declarations: [
@@ -24,11 +25,13 @@ import { NavbarComponent } from './navbar/navbar.component';
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    DashboardModule,
     HttpClientModule
 
   ],
-  providers: [],
+  providers: [{
+    provide :HTTP_INTERCEPTORS , useClass:JwtInterceptor,
+    multi:true
+  }],
   bootstrap: [AppComponent]
 
 })

@@ -6,6 +6,6 @@ export class User {
     educationLevel:String;
     password:String
     id: string;
-   // token: string ;
+    token: string ;
     
 }

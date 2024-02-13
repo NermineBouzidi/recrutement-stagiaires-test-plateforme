@@ -35,14 +35,13 @@ export class SignupComponent {
   Register() {
     this.isSubmitted = true;
     if (this.userForm.valid) {
-      const user: User = {
+      const user: UserDTO = {
         firstname: this.userForm.get('firstname').value,
         lastName: this.userForm.get('lastName').value, // Corrected property name
         email: this.userForm.get('email').value,
         number: this.userForm.get('number').value,
         educationLevel: this.userForm.get('educationLevel').value,
-        password: this.userForm.get('password').value,
-        id:''
+        password: this.userForm.get('password').value
       };
       this.http.register(user).subscribe(
         (response: HttpResponse<any>) => {
@@ -71,4 +70,12 @@ export class SignupComponent {
       );
     }
   }
+}
+export class UserDTO {
+  firstname:String ;
+  lastName:String ;
+  email:String;
+  number :String;
+  educationLevel:String;
+  password:String;
 }

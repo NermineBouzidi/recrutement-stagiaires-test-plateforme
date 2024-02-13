@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { User } from 'src/app/models/Users';
+import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
   selector: 'app-user',
@@ -8,14 +10,14 @@ import { Component } from '@angular/core';
 })
 export class UserComponent {
   data :any []=[];
-  constructor (private http: HttpClient ){
+  constructor (private http: AuthService ){
   }
   ngOnInit(){
      this.loadUsers()
   }
 
   loadUsers(){
-    this.http.get("http://localhost:8080/api/user/getUsers" ).subscribe(
+    this.http.getAll().subscribe(
       (data : any) => {
           this.data=data
   })
