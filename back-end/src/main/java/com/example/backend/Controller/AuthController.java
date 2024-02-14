@@ -17,6 +17,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -32,7 +33,7 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
 
     @PostMapping("/register")
-    public ResponseEntity<String> register (@RequestBody User user) {
+    public ResponseEntity<String> register (@RequestBody User user ) {
        String s= userService.addUser(user);
 
         if(s.equals("Registration successful")) {
@@ -41,7 +42,22 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
         }
+    }
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup (@RequestBody User user ,@RequestParam MultipartFile file) {
+        String s= userService.signup(user,file);
 
+        if(s.equals("Registration successful")) {
+            return ResponseEntity.ok("Registration successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
+
+        }
+    }
+
+    @PostMapping("/addFile")
+    public String addFile (@RequestParam MultipartFile file){
+        return userService.addFile(file);
     }
     @GetMapping("/hi")
     public String hi (){

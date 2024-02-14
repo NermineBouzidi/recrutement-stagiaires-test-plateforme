@@ -21,9 +21,10 @@ export class SignupComponent {
       firstname: new FormControl('', [Validators.required]),
       lastName: new FormControl('', [Validators.required]),
       email: new FormControl('', [Validators.required, Validators.email]),
+      linkedinUrl: new FormControl('', [Validators.required]),
       number: new FormControl('', [ Validators.required,Validators.minLength(8),]),
       educationLevel: new FormControl('', [Validators.required]),
-      password: new FormControl('', [Validators.required]),
+     // password: new FormControl('', [Validators.required]),
     });
   }
 
@@ -36,9 +37,10 @@ export class SignupComponent {
         firstname: this.userForm.get('firstname').value,
         lastName: this.userForm.get('lastName').value, // Corrected property name
         email: this.userForm.get('email').value,
+        linkedinUrl: this.userForm.get('linkedinUrl').value,
         number: this.userForm.get('number').value,
         educationLevel: this.userForm.get('educationLevel').value,
-        password: this.userForm.get('password').value
+        //password: this.userForm.get('password').value
       };
       this.http.register(user).subscribe(
         (response: HttpResponse<any>) => {
@@ -61,6 +63,7 @@ export class SignupComponent {
             this.userExist = true;
             //alert("user already exists wi");
           } else {
+            console.log(error);
             alert('An error occurred during registration');
           }
         }
@@ -72,7 +75,8 @@ export class UserDTO {
   firstname:String ;
   lastName:String ;
   email:String;
+  linkedinUrl:String;
   number :String;
   educationLevel:String;
-  password:String;
+  //password:String;
 }

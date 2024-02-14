@@ -1,5 +1,5 @@
 <button (click)="openDialog()"
-  class="text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+  class="text-white mt-12 border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
   Add Test
 </button>
 
@@ -8,8 +8,9 @@
 <body class="flex items-center justify-center">
   <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
     <thead class="text-[#1d2736]">
-      <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
-        *ngFor="let test of data">
+      <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0" *ngFor="
+      let test of data 
+    ">
         <th class="p-3 text-left">Title</th>
         <th class="p-3 text-left">Difficulty</th>
         <th class="p-3 text-left">Category</th>
@@ -65,100 +66,103 @@
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 
 <!-- Dialog  Form -->
-<div *ngIf="isDialogOpen" class="dialog-overlay">
-  <div
-    class="dialog-content w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
-    <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-      <div class="flex items-center justify-end">
-        <button (click)="closeDialog()">
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
-            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
-            class="feather feather-x">
-            <line x1="18" y1="6" x2="6" y2="18" />
-            <line x1="6" y1="6" x2="18" y2="18" />
-          </svg>
-        </button>
-      </div>
-      <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-        Add Test
-      </h1>
-      <form class="space-y-4 md:space-y-6" action="#" [formGroup]="testForm" (submit)="addTest()">
-        <div>
-          <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-          <input type="text" name="title" id="title" formControlName="title"
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="title" required="" />
-          <div *ngIf="
+<div *ngIf="isDialogOpen" class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">
+  <div class="flex flex-col items-center min-h-screen justify-center ml-14  px-6 py-12 mx-auto  lg:py-0">
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div class="flex items-center justify-end">
+          <button (click)="closeDialog()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+              class="feather feather-x">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+          Add Test
+        </h1>
+        <form class="space-y-4 md:space-y-6" action="#" [formGroup]="testForm" (submit)="addTest()">
+          <div>
+            <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+            <input type="text" name="title" id="title" formControlName="title"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="title" required="" />
+            <div *ngIf="
               testForm.controls['title'].touched ||
               testForm.controls['title'].dirty
             ">
-            <div *ngIf="testForm.controls['title'].hasError('required')"
-              class="mt-2 text-sm text-red-600 dark:text-red-500">
-              This field is required
+              <div *ngIf="testForm.controls['title'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500">
+                This field is required
+              </div>
             </div>
           </div>
-        </div>
-        <div>
-          <label for="description"
-            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-          <textarea type="text" name="description" id="description" formControlName="description"
-            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            placeholder="description"></textarea>
-          <div *ngIf="
+          <div>
+            <label for="description"
+              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+            <textarea type="text" name="description" id="description" formControlName="description"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="description"></textarea>
+            <div *ngIf="
               testForm.controls['description'].touched ||
               testForm.controls['description'].dirty
             ">
-            <div *ngIf="testForm.controls['description'].hasError('required')"
-              class="mt-2 text-sm text-red-600 dark:text-red-500">
-              This field is required
+              <div *ngIf="testForm.controls['description'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500">
+                This field is required
+              </div>
             </div>
           </div>
-        </div>
-        <div class="flex -mx-3">
-          <div class="w-1/2 px-3">
-            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
+          <div class="flex -mx-3">
+            <div class="w-1/2 px-3">
+              <label for="category"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
 
-            <select name="category" id="category" formControlName="category"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option>DataBase</option>
-              <option>Algorithm</option>
-            </select>
-            <div *ngIf="
+              <select name="category" id="category" formControlName="category"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option>DataBase</option>
+                <option>Algorithm</option>
+              </select>
+              <div *ngIf="
                 testForm.controls['category'].touched ||
                 testForm.controls['category'].dirty
               ">
-              <div *ngIf="testForm.controls['category'].hasError('required')"
-                class="mt-2 text-sm text-red-600 dark:text-red-500">
-                This field is required
+                <div *ngIf="testForm.controls['category'].hasError('required')"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  This field is required
+                </div>
               </div>
             </div>
-          </div>
-          <div class="w-1/2 px-3">
-            <label for="difficulty"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
+            <div class="w-1/2 px-3">
+              <label for="difficulty"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
 
-            <select name="difficulty" id="difficulty" formControlName="difficulty"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option>easy</option>
-              <option>medium</option>
-              <option>hard</option>
-            </select>
-            <div *ngIf="
+              <select name="difficulty" id="difficulty" formControlName="difficulty"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <option>easy</option>
+                <option>medium</option>
+                <option>hard</option>
+              </select>
+              <div *ngIf="
                 testForm.controls['difficulty'].touched ||
                 testForm.controls['difficulty'].dirty
               ">
-              <div *ngIf="testForm.controls['difficulty'].hasError('required')"
-                class="mt-2 text-sm text-red-600 dark:text-red-500">
-                This field is required
+                <div *ngIf="testForm.controls['difficulty'].hasError('required')"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500">
+                  This field is required
+                </div>
               </div>
             </div>
           </div>
-        </div>
-        <button type="submit"
-          class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-          Add
-        </button>
-      </form>
+          <button type="submit"
+            class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
+            Add
+          </button>
+        </form>
+      </div>
     </div>
   </div>
 </div>
@@ -188,34 +192,39 @@
 </div>
 ---------------------------------------------->
 <div *ngIf="isShowDialog" class="dialog-overlay">
-<div    class="fixed z-50 inset-0 flex items-center justify-center">
-  <div class="relative w-full max-w-2xl max-h-full">
+  <div class="fixed z-50 inset-0 flex items-center justify-center">
+    <div class="relative w-full max-w-2xl max-h-full">
       <!-- Modal content -->
       <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-          <!-- Modal header -->
-          <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-              <h3 class="text-xl font-medium text-gray-900 dark:text-white">
-                {{ testShow.title }}
-              </h3>
-              <button (click)="closeShowDialog()" type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="top-right-modal">
-                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                      <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                  </svg>
-                  <span class="sr-only">Close modal</span>
-              </button>
-          </div>
-          <!-- Modal body -->
-          <div class="p-4 md:p-5 space-y-4">
-              <pre class="text-base leading-relaxed text-gray-500 dark:text-gray-400" style="white-space: pre-line;">{{testShow.description }}</pre>
-             
-          </div>
-          <!-- Modal footer -->
-          <div class="flex items-center p-4 md:p-5 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
-              <p class="text-black  ">#{{ testShow.category }}</p>
-              <p class="text-black  ">#{{ testShow.difficulty }}</p>
+        <!-- Modal header -->
+        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
+          <h3 class="text-xl font-medium text-gray-900 dark:text-white">
+            {{ testShow.title }}
+          </h3>
+          <button (click)="closeShowDialog()" type="button"
+            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
+            data-modal-hide="top-right-modal">
+            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
+            </svg>
+            <span class="sr-only">Close modal</span>
+          </button>
+        </div>
+        <!-- Modal body -->
+        <div class="p-4 md:p-5 space-y-4">
+          <pre class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
+            style="white-space: pre-line;">{{testShow.description }}</pre>
 
-          </div>
+        </div>
+        <!-- Modal footer -->
+        <div
+          class="flex items-center p-4 md:p-5 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
+          <p class="text-black  ">#{{ testShow.category }}</p>
+          <p class="text-black  ">#{{ testShow.difficulty }}</p>
+
+        </div>
       </div>
+    </div>
   </div>
-</div>
 </div>

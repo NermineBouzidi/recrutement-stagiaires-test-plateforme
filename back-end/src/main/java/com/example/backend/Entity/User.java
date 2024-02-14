@@ -22,10 +22,30 @@ public class User implements UserDetails {
     String email;
     @NonNull
     int number ;
-    @NonNull
+
     String educationLevel;
     @NonNull
     String password;
+
+    String linkedinUrl;
+    String resumePath;
+
+
+    public String getLinkedinUrl() {
+        return linkedinUrl;
+    }
+
+    public void setLinkedinUrl(String linkedinUrl) {
+        this.linkedinUrl = linkedinUrl;
+    }
+
+    public String getResumePath() {
+        return resumePath;
+    }
+
+    public void setResumePath(String resumePath) {
+        this.resumePath = resumePath;
+    }
 
     @Enumerated(EnumType.STRING)
     Role role ;
@@ -41,23 +61,26 @@ public class User implements UserDetails {
     public User() {
     }
 
-    /*public User(String firstname, String lastName, String email, int number, String educationLevel ){
+    public User(String firstname, String lastName, String email, int number, String educationLevel,String linkedinUrl ){
         this.firstname = firstname;
         this.lastName = lastName;
         this.email = email;
         this.number = number;
         this.educationLevel = educationLevel;
         this.password = PasswordGenerator.generateRandomPassword();
-    }*/
+        this.linkedinUrl=linkedinUrl;
 
-    public User( String firstname, String lastName, String email, int number, String educationLevel, String password) {
+    }
+
+ /*   public User( String firstname, String lastName, String email, int number, String educationLevel, String password,String linkedinUrl ) {
         this.firstname = firstname;
         this.lastName = lastName;
         this.email = email;
         this.number = number;
         this.educationLevel = educationLevel;
         this.password = password;
-    }
+        this.linkedinUrl=linkedinUrl;
+    }*/
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

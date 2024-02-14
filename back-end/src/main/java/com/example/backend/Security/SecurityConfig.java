@@ -38,6 +38,7 @@ public class SecurityConfig  {
                 .authorizeRequests()
                 .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/api/auth/register").permitAll()
+                .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/user/**").hasRole("ADMIN")
                 .requestMatchers("/api/auth/login").permitAll()
                 .requestMatchers("/api/auth/hi").hasRole("USER")
@@ -63,6 +64,7 @@ public class SecurityConfig  {
   {
       return new BCryptPasswordEncoder();
   }
+
   @Bean
   public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
     return configuration.getAuthenticationManager();
