@@ -10,7 +10,7 @@ import java.util.List;
 public interface UserService {
 
     String addUser(User user);
-    void deleteUser(long id);
+    String deleteUser(long id);
     void updateUser(long id);
     List<User> getUsers ();
     User getUser(long id);

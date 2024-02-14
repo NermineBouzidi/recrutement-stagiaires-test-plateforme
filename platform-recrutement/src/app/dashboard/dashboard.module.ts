@@ -9,6 +9,7 @@ import { UidashboardComponent } from './uidashboard/uidashboard.component';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '../shared/services/jwt.interceptor.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -20,7 +21,9 @@ import { ReactiveFormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    DashboardRoutingModule,ReactiveFormsModule
+    DashboardRoutingModule,
+    ReactiveFormsModule,
+    NgxPaginationModule
   ]
 })
 export class DashboardModule { }

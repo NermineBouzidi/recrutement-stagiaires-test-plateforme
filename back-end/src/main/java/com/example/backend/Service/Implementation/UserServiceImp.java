@@ -47,9 +47,15 @@ public class UserServiceImp implements UserService {
             return "Registration successful";
         }
     }
-    public void deleteUser (long id){
+    public String deleteUser (long id){
         User user = userRepository.findById(id);
-        userRepository.delete(user);
+        if (user !=null) {
+            userRepository.deleteById(id);
+            return "succes";
+        } else {
+            return "user not found";
+
+        }
     }
 
     @Override

@@ -39,7 +39,7 @@ public class TestServiceImp implements TestService {
     public String deleteTest(long id) {
         Optional<TestEntity> test = testRepository.findById(id);
         if (!test.isPresent()) {
-            return "user not found";
+            return "test not found";
         } else {
             testRepository.deleteById(id);
             return "succes";

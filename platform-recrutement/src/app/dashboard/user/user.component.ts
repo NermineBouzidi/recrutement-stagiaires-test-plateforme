@@ -9,8 +9,14 @@ import { AuthService } from 'src/app/shared/services/auth.service';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent {
-  data :any []=[];
+  p:any =0;
+  data: any[] = [];
+  user :User;
+  isDialogOpen :boolean=false;
   constructor (private http: AuthService ){
+    for(let i:number=1; i<=100;i++){
+      this.data.push(i as never);
+    }
   }
   ngOnInit(){
      this.loadUsers()
@@ -21,5 +27,25 @@ export class UserComponent {
       (data : any) => {
           this.data=data
   })
+  }
+  openDialog(id:any){
+     this.isDialogOpen=true;
+     this.http.getById(id).subscribe((data:any)=>{
+      this.user=data;
+      })
+  }
+  closeDialog() {
+    this.isDialogOpen = false;
+   
+
+  }
+  deleteUser(id:any){
+    this.http.delete(id).subscribe(
+      ()=>{
+        alert("test deleted successfully")
+        this.loadUsers();
+      }
+
+    )
   }
 }

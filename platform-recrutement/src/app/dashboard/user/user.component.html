@@ -74,56 +74,80 @@
 
 
      ---------------------------->
+
 <body class="flex items-center justify-center">
-	<div class="container">
-		<table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
-			<thead class="text-[#d97a07]">
-				<tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"*ngFor="let user of data">
-					<th class="p-3 text-left">FirstName</th>
+    <div class="container">
+        <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+            <thead class="text-[#1d2736]">
+                <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
+                    *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
+                    <th class="p-3 text-left">FirstName</th>
                     <th class="p-3 text-left">LastName</th>
-					<th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">Number</th>
-					<th class="p-3 text-left">EducationLevel</th>
-					<th class="p-3 text-left" width="110px">Actions</th>
-				</tr>
-			
-			</thead>
-			<tbody class="flex-1 sm:flex-none" >
-				<tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 "*ngFor="let user of data">
-					<td class="border-grey-light border hover:bg-gray-100 p-3">{{user.firstname}}</td>
+                    <th class="p-3 text-left">EducationLevel</th>
+                    <th class="p-3 text-left" width="110px">Actions</th>
+                </tr>
+
+            </thead>
+            <tbody class="flex-1 sm:flex-none">
+                <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 "
+                    *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
+                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.firstname}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.lastName}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{user.email}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.number}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.educationLevel}}</td>
-					<td class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">Delete</td>
-				</tr>
-				
-			</tbody>
-		</table>
-	</div>
+                    <td
+                        class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
+                        <button (click)="openDialog(user.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                class="w-5 h-5">
+                                <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                                <path fill-rule="evenodd"
+                                    d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+
+                        <button (click)="deleteUser(user.id)">
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                                class="w-5 h-5">
+                                <path fill-rule="evenodd"
+                                    d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
 </body>
+<pagination-controls (pageChange)="p = $event"></pagination-controls>
 
-<style>
-  html,
-  body {
-    height: 100%;
-  }
 
-  @media (min-width: 640px) {
-    table {
-      display: inline-table !important;
-    }
-
-    thead tr:not(:first-child) {
-      display: none;
-    }
-  }
-
-  td:not(:last-child) {
-    border-bottom: 0;
-  }
-
-  th:not(:last-child) {
-    border-bottom: 2px solid rgba(0, 0, 0, .1);
-  }
-</style>
+<div *ngIf="isDialogOpen" class="dialog-overlay">
+    <div
+        class="dialog-content w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
+        <div class="bg-[#e6eaed] dark:bg-gray-900 ">
+            <div class="flex items-center justify-end">
+                <button (click)="closeDialog()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div>
+                <h1>{{ user.firstname }}</h1>
+                <h1>{{ user.lastName }}</h1>
+                <pre style="white-space: pre-line">{{ user.email }}</pre>
+                <h1>{{ user.educationLevel}}</h1>
+            </div>
+        </div>
+    </div>
+</div>

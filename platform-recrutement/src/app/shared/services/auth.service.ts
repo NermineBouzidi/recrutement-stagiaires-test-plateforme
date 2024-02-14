@@ -69,7 +69,7 @@ getAll() {
 }
 
 getById(id: string) {
-    return this.http.get<User>(this.baseURI + `/users/${id}`);
+    return this.http.get<User>(this.baseURI + `/api/user/getUser/${id}`);
 }
 
 update(id, params) {
@@ -89,14 +89,7 @@ update(id, params) {
 }
 
 delete(id: string) {
-    return this.http.delete(this.baseURI + `/users/${id}`)
-        .pipe(map(x => {
-            // auto logout if the logged in user deleted their own record
-            if (id == this.userValue.id) {
-                this.logout();
-            }
-            return x;
-        }));
+    return this.http.delete(this.baseURI + `/api/user/deleteUser/${id}`)
 }
 }
 export interface LoginResponse {

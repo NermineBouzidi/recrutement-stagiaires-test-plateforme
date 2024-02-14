@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./test.component.scss'],
 })
 export class TestComponent {
+  p:any =0;
   data: any[] = [];
   test :Test;
   testShow :Test;
@@ -18,7 +19,11 @@ export class TestComponent {
   isDialogOpen: boolean = false;
   isShowDialog :boolean=false;
   testForm :FormGroup
-  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {}
+  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {
+    for(let i:number=1; i<=100;i++){
+      this.data.push(i as never);
+    }
+  }
   ngOnInit() {
     this.testForm=this.fb.group(
       {title:new FormControl("",[Validators.required]),

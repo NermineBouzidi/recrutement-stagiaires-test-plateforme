@@ -19,9 +19,17 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @DeleteMapping("/delete")
-    public void delete(@RequestBody long id) {
-        userService.deleteUser(id);
+    @DeleteMapping("/deleteUser/{id}")
+    public ResponseEntity<Void> delete(@PathVariable long id) {
+        if (id == 0 || id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+       String s= userService.deleteUser(id);
+        if (s.equals("succes")) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
     @PutMapping("/update")
@@ -39,8 +47,9 @@ public class UserController {
         return userService.getUsers();
     }
 
-    @GetMapping("/getUser")
-    public User getUser(long id) {
+    @GetMapping("/getUser/{id}")
+    public User getUser(@PathVariable long id) {
+
         return userService.getUser(id);
     }
 
