@@ -1,8 +1,5 @@
 package com.example.backend.Service;
 
-import com.example.backend.DTO.AdminDTO;
-import com.example.backend.DTO.LoginDTO;
-import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.User;
 import org.springframework.web.multipart.MultipartFile;
 

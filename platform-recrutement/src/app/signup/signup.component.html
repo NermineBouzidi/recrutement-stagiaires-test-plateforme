@@ -1,5 +1,4 @@
 <app-navbar></app-navbar>
-
 <!-- 
 <app-navbar></app-navbar>
 
@@ -114,7 +113,7 @@
                 </svg>
                 Upload file
                 <input type="file" id='uploadFile1' class="hidden" />
-                <p class="text-xs text-gray-400 mt-2">PNG, JPG SVG, WEBP, and GIF are Allowed.</p>
+                <p class="text-xs text-gray-400 mt-2">PDF ,TXT are Allowed.</p>
               </label>
             </div>
 
@@ -133,39 +132,43 @@
     </div>
   </div>
 </div> -->
-<section class="bg-[#e6eaed] dark:bg-gray-900 ">
-  <div class="flex flex-col items-center min-h-screen justify-center px-6 py-12 mx-auto  lg:py-0">
-
-    <div
-      class="w-full bg-white rounded-lg  shadow dark:border md:mt-12 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
-      <div class="p-6 space-y-4 md:space-y-0 sm:p-8">
-        <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-          Sign Up
-        </h1>
-        <form class="space-y-4 md:space-y-2" action="#" [formGroup]="userForm" (ngSubmit)=" Register() ">
+<section class="bg-[#e6eaed] dark:bg-gray-900 "style="padding-top: 80px;">
+  <div class="flex flex-col items-center min-h-screen justify-center px-6 py-12 mx-auto"> 
+      
+    <div class="w-full bg-white rounded-lg shadow sm:max-w-xl  container">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 class="text-xl text-[#0D2E4D] poppins-regular  leading-tight tracking-tight  md:text-2xl ">
+                  Register
+              </h1>
+        <form class="space-y-4 md:space-y-6 text-[#0D2E4D] poppins-regular" action="#" [formGroup]="userForm" (ngSubmit)=" Register() ">
           <div class="flex -mx-3">
-          <div class="w-1/2 px-3">
-            <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your firstname</label>
-            <input type="text" name="firstname" id="firstname" formControlName="firstname"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="firstname" required="">
-            <div *ngIf="userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty ||isSubmitted">
-              <div *ngIf="userForm.controls['firstname'].hasError('required')"
-                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
-              
+            <div class="w-1/2 px-3 ">
+              <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                firstname</label>
+              <input type="text" name="firstname" id="firstname" formControlName="firstname"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="firstname" required="">
+              <div *ngIf="userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty ||isSubmitted">
+                <div *ngIf="userForm.controls['firstname'].hasError('required')"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+                <div *ngIf="userForm.controls['firstname'].hasError('pattern')"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500">Please enter only letters and spaces.</div>
+
+              </div>
             </div>
-          </div>
-          <div class="w-1/2 px-3">
-            <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your lastName</label>
-            <input type="text" name="lastName" id="lastName" formControlName="lastName"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="lastname" required="">
+            <div class="w-1/2 px-3">
+              <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+                lastname</label>
+              <input type="text" name="lastName" id="lastName" formControlName="lastName"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="lastname" required="">
               <div *ngIf="userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty ||isSubmitted">
-              <div *ngIf="userForm.controls['lastName'].hasError('required')"
-                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
-            
+                <div *ngIf="userForm.controls['lastName'].hasError('required')"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+                <div *ngIf="userForm.controls['lastName'].hasError('pattern')"
+                  class="mt-2 text-sm text-red-600 dark:text-red-500">Please enter only letters and spaces.</div>
+              </div>
             </div>
-          </div>
           </div>
           <div>
             <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
@@ -177,19 +180,21 @@
                 class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
               <div *ngIf="userForm.controls['email'].hasError('email')"
                 class="mt-2 text-sm text-red-600 dark:text-red-500"> Invalid email</div>
-                <div *ngIf="userExist"
-								class="mt-2 text-sm text-red-600 dark:text-red-500"> User exist with the same email </div>
+              <div *ngIf="userExist" class="mt-2 text-sm text-red-600 dark:text-red-500"> User exist with the same email
+              </div>
             </div>
           </div>
           <div>
-            <label for="linkedinUrl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your linkedinUrl</label>
+            <label for="linkedinUrl" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+              linkedin Profile</label>
             <input type="text" name="linkedinUrl" id="linkedinUrl" formControlName="linkedinUrl"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="http/linkedin-profile" required="">
-            <div *ngIf="userForm.controls['linkedinUrl'].touched || userForm.controls['linkedinUrl'].dirty ||isSubmitted">
+              placeholder="http://www.linkedin.com/in/yourusername" required="">
+            <div
+              *ngIf="userForm.controls['linkedinUrl'].touched || userForm.controls['linkedinUrl'].dirty ||isSubmitted">
               <div *ngIf="userForm.controls['linkedinUrl'].hasError('required')"
                 class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
-    
+
             </div>
           </div>
           <div>
@@ -202,27 +207,30 @@
                 class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
               <div *ngIf="userForm.controls['number'].hasError('minlength')"
                 class="mt-2 text-sm text-red-600 dark:text-red-500"> Number should contains 8</div>
-               
+
             </div>
           </div>
           <div>
-            <label for="educationLevel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your educationLevel</label>
-      
-              <select name="educationLevel" id="educationLevel" formControlName="educationLevel"
+            <label for="educationLevel" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your
+              educationLevel</label>
+
+            <select name="educationLevel" id="educationLevel" formControlName="educationLevel"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
               <option>Bac+3</option>
               <option>Bac+5</option>
             </select>
-            <div *ngIf="userForm.controls['educationLevel'].touched || userForm.controls['educationLevel'].dirty ||isSubmitted">
+            <div
+              *ngIf="userForm.controls['educationLevel'].touched || userForm.controls['educationLevel'].dirty ||isSubmitted">
               <div *ngIf="userForm.controls['educationLevel'].hasError('required')"
                 class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
-             
+
             </div>
           </div>
-          <!--
+
+
           <div>
             <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
-            <input type="password" name="password" id="password" placeholder="••••••••" formControlName="password"
+            <input type="password" name="password" id="password" placeholder="••••••••••" formControlName="password"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               required="">
             <div *ngIf="userForm.controls['password'].touched || userForm.controls['password'].dirty || isSubmitted">
@@ -230,8 +238,20 @@
                 class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
 
             </div>
-          </div>-->
-         
+          </div>
+          <div>
+            <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
+            <input type="password" name="password" id="password" placeholder="••••••••••" formControlName="password"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              required="">
+            <div *ngIf="userForm.controls['password'].touched || userForm.controls['password'].dirty || isSubmitted">
+              <div *ngIf="userForm.controls['password'].hasError('required')"
+                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+
+            </div>
+          </div>
+
+          
           <button type="submit"
             class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign
             up</button>

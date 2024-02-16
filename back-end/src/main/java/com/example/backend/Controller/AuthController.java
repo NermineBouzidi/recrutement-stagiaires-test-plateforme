@@ -44,7 +44,7 @@ public class AuthController {
         }
     }
     @PostMapping("/signup")
-    public ResponseEntity<String> signup (@RequestBody User user ,@RequestParam MultipartFile file) {
+    public ResponseEntity<String> signup (@RequestPart("user") User user ,@RequestPart("file") MultipartFile file) {
         String s= userService.signup(user,file);
 
         if(s.equals("Registration successful")) {

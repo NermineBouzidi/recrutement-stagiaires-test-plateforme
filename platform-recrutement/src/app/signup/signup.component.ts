@@ -16,18 +16,26 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 })
 export class SignupComponent {
   userForm: FormGroup;
+
   constructor(private http: AuthService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
-      firstname: new FormControl('', [Validators.required]),
-      lastName: new FormControl('', [Validators.required]),
+      firstname: new FormControl('', [Validators.required ,Validators.pattern(/^[a-zA-Z ]+$/)]),
+      lastName: new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]+$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       linkedinUrl: new FormControl('', [Validators.required]),
       number: new FormControl('', [ Validators.required,Validators.minLength(8),]),
       educationLevel: new FormControl('', [Validators.required]),
-     // password: new FormControl('', [Validators.required]),
+      resume : new FormControl(''),
+      password: new FormControl('', [Validators.required]),
     });
   }
-
+  onFileChange(event: any): void {
+    const file = event.target.files[0];
+    if (file) {
+      this.userForm.controls['resume'].setValue(file.name); // Set filename for display
+    }
+  }
+  
   isSubmitted: boolean = false;
   userExist: boolean = false;
   Register() {
@@ -40,8 +48,9 @@ export class SignupComponent {
         linkedinUrl: this.userForm.get('linkedinUrl').value,
         number: this.userForm.get('number').value,
         educationLevel: this.userForm.get('educationLevel').value,
-        //password: this.userForm.get('password').value
+        password: this.userForm.get('password').value
       };
+    //  const file :File =this.userForm.get('resume').value;
       this.http.register(user).subscribe(
         (response: HttpResponse<any>) => {
           console.log('Response:', response); // Log the entire response for debugging
@@ -78,5 +87,5 @@ export class UserDTO {
   linkedinUrl:String;
   number :String;
   educationLevel:String;
-  //password:String;
+  password:String;
 }

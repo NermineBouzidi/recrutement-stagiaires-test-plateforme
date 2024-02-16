@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
@@ -59,9 +59,16 @@ logout() {
     this.router.navigate(['/login']);
 }
 
-register(user: UserDTO) {
-   console.log(user)
-    return this.http.post(this.baseURI + `/api/auth/register`, user,{ observe: 'response' ,responseType: 'text'});
+/*signup(user :UserDTO, file :File) {
+  // console.log(user)
+  const formData = new FormData();
+  formData.append('user', JSON.stringify(user));
+  formData.append('file', file);
+    return this.http.post(this.baseURI + `/api/auth/signup`, formData,{headers: new HttpHeaders({ 'multipart/form-data; boundary=<calculated when request is sent>' }),observe: 'response' ,responseType: 'text'});
+}*/
+register(user :UserDTO){
+    return this.http.post(this.baseURI + `/api/auth/register`, user,{observe: 'response' ,responseType: 'text'});
+
 }
 
 getAll() {

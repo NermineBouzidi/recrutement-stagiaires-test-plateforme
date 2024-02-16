@@ -1,17 +1,10 @@
 package com.example.backend.Service.Implementation;
 
-import com.example.backend.DTO.AdminDTO;
-import com.example.backend.DTO.LoginDTO;
-import com.example.backend.DTO.UserDTO;
-import com.example.backend.Entity.Admin;
 import com.example.backend.Entity.Role;
-import com.example.backend.Repository.AdminRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -24,8 +17,7 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
-    @Autowired
-    private AdminRepository adminRepository;
+
     @Autowired
     private PasswordEncoder passwordEncoder;
 
@@ -57,11 +49,11 @@ public class UserServiceImp implements UserService {
                     user.getEmail(),
                     user.getNumber(),
                     user.getEducationLevel(),
-                   // passwordEncoder.encode(user.getPassword()),
+                    passwordEncoder.encode(user.getPassword()),
                     user.getLinkedinUrl()
             );
             use.setRole(Role.ROLE_USER);
-            use.setPassword(passwordEncoder.encode(use.getPassword()));
+            //use.setPassword(passwordEncoder.encode(use.getPassword()));
             userRepository.save(use);
             return "Registration successful";
         }
@@ -103,11 +95,12 @@ public class UserServiceImp implements UserService {
                     user.getEmail(),
                     user.getNumber(),
                     user.getEducationLevel(),
-                    // passwordEncoder.encode(user.getPassword()),
+                    passwordEncoder.encode(user.getPassword()),
                     user.getLinkedinUrl()
             );
+
             use.setRole(Role.ROLE_USER);
-            use.setPassword(passwordEncoder.encode(use.getPassword()));
+           // use.setPassword(passwordEncoder.encode(use.getPassword()));
             use.setResumePath(filePath);
             userRepository.save(use);
 
