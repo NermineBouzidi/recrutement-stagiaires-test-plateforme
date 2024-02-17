@@ -16,18 +16,24 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 })
 export class SignupComponent {
   userForm: FormGroup;
-
+  isSubmitted: boolean = false;
+  userExist: boolean = false;
   constructor(private http: AuthService, private fb: FormBuilder) {
     this.userForm = this.fb.group({
       firstname: new FormControl('', [Validators.required ,Validators.pattern(/^[a-zA-Z ]+$/)]),
       lastName: new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]+$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
       linkedinUrl: new FormControl('', [Validators.required]),
-      number: new FormControl('', [ Validators.required,Validators.minLength(8),]),
+      number: new FormControl('', [ Validators.required,Validators.minLength(8),Validators.maxLength(8)]),
       educationLevel: new FormControl('', [Validators.required]),
       resume : new FormControl(''),
-      password: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required,Validators.minLength(8)]),
+      confirmpassword: new FormControl('')
+    },{
+      validators: this.passwordMatchValidator
+
     });
+    
   }
   onFileChange(event: any): void {
     const file = event.target.files[0];
@@ -36,8 +42,11 @@ export class SignupComponent {
     }
   }
   
-  isSubmitted: boolean = false;
-  userExist: boolean = false;
+ 
+  passwordMatchValidator(g: FormGroup) {
+    return g.get('password').value === g.get('confirmpassword').value
+      ? null : { 'mismatch': true };
+  }
   Register() {
     this.isSubmitted = true;
     if (this.userForm.valid) {

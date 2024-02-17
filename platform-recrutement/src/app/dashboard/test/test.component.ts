@@ -19,20 +19,43 @@ export class TestComponent {
   isDialogOpen: boolean = false;
   isShowDialog :boolean=false;
   testForm :FormGroup
+  selectedCategory: string = 'QUIZ';
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {
     for(let i:number=1; i<=100;i++){
       this.data.push(i as never);
     }
   }
   ngOnInit() {
-    this.testForm=this.fb.group(
-      {title:new FormControl("",[Validators.required]),
-      description:new FormControl("",[Validators.required]),
-      category: new FormControl("",[Validators.required]),
-      difficulty: new FormControl("",[Validators.required ])}
-    )
+    this.testForm = this.fb.group({
+      sharedField: this.fb.group({
+        title: ['', [Validators.required]],
+        category: ['', [Validators.required]]
+      }),
+      quizFields: this.fb.group({
+        question: [''],
+        questionType: [''],
+        choices: this.fb.array([]),
+        answers: this.fb.array([])
+      }),
+      codeFields: this.fb.group({
+        difficulty: [''],
+        examples: this.fb.array([])
+      })
+    });
+    
     this.loadTest();
     
+  }
+  onSelectCategory(category: string) {
+    this.selectedCategory = category;
+  
+    if (category === 'QUIZ') {
+      this.testForm.get('quizFields')?.addValidators(Validators.required);
+      this.testForm.get('codeFields')?.clearValidators();
+    } else {
+      this.testForm.get('codeFields')?.addValidators(Validators.required);
+      this.testForm.get('quizFields')?.clearValidators();
+    }
   }
   loadTest() {
     this.http.getAll().subscribe((data: any) => {

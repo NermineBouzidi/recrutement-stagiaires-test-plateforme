@@ -60,9 +60,7 @@ public class TestServiceImp implements TestService {
         if (existingTest.isPresent()) {
             TestEntity test = existingTest.get();
             test.setTitle(testEntity.getTitle());
-            test.setDescription(testEntity.getDescription());
             test.setCategory(testEntity.getCategory());
-            test.setDifficulty(testEntity.getDifficulty());
             TestEntity savedTest = testRepository.save(test);
             return "test updated successfully";
         } else {

@@ -29,7 +29,8 @@ public class User implements UserDetails {
 
     String linkedinUrl;
     String resumePath;
-
+    @Enumerated(EnumType.STRING)
+    Role role ;
 
     public String getLinkedinUrl() {
         return linkedinUrl;
@@ -46,9 +47,6 @@ public class User implements UserDetails {
     public void setResumePath(String resumePath) {
         this.resumePath = resumePath;
     }
-
-    @Enumerated(EnumType.STRING)
-    Role role ;
 
     public Role getRole() {
         return role;
