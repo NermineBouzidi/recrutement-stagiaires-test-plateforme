@@ -1,10 +1,13 @@
 package com.example.backend.Service.Implementation;
 
+import com.example.backend.Entity.PasswordGenerator;
 import com.example.backend.Entity.Role;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -17,9 +20,10 @@ import java.util.List;
 public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+   private JavaMailSender javaMailSender;
 
     private final String FOLDER_PATH="C:/Users/nermi/Documents/CVs/";
   //  @Autowired
@@ -49,7 +53,7 @@ public class UserServiceImp implements UserService {
                     user.getEmail(),
                     user.getNumber(),
                     user.getEducationLevel(),
-                    passwordEncoder.encode(user.getPassword()),
+                  //  passwordEncoder.encode(user.getPassword()),
                     user.getLinkedinUrl()
             );
             use.setRole(Role.ROLE_USER);
@@ -95,7 +99,7 @@ public class UserServiceImp implements UserService {
                     user.getEmail(),
                     user.getNumber(),
                     user.getEducationLevel(),
-                    passwordEncoder.encode(user.getPassword()),
+                    //passwordEncoder.encode(user.getPassword()),
                     user.getLinkedinUrl()
             );
 
@@ -114,5 +118,37 @@ public class UserServiceImp implements UserService {
             }
 
         }
+    }
+
+    public void acceptUser (long id ){
+        User user = userRepository.findById(id);
+        String email = user.getEmail();
+        user.setPassword(passwordEncoder.encode(PasswordGenerator.generateRandomPassword()));
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setSubject("Application Update: Internship at [Your Company]");
+
+       
+    }
+    public void rejectUser (long id ){
+        User user = userRepository.findById(id);
+        String email = user.getEmail();
+        String firstName =user.getFirstname();
+        String lastName=user.getLastName();
+        String rejectionMessage = String.format(
+                "Dear %s %s,%n%n"
+                        + "Thank you for applying for the internship position at [Your Company].%n%n"
+                        + "After careful consideration, we regret to inform you that your application has not been selected for further consideration. We received many qualified applications, and the decision was a difficult one.%n%n"
+                        + "We appreciate your interest in joining our team and encourage you to apply for future opportunities. Your skills and experience are commendable, and we wish you the best in your future endeavors.%n%n"
+                        + "If you have any questions or would like feedback on your application, please feel free to contact us at [Your Contact Email].%n%n"
+                        + "Thank you for your understanding.%n%n"
+                        + "Best regards,%n"
+                        + "The [Your Company] Team",
+                firstName, lastName);
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(email);
+        message.setSubject("Application Update: Internship at [Your Company]");
+        message.setText(rejectionMessage);
+        javaMailSender.send(message);
+
     }
 }

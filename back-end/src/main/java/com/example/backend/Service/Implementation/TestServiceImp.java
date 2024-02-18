@@ -1,7 +1,6 @@
 package com.example.backend.Service.Implementation;
 
-import com.example.backend.Entity.TestEntity;
-import com.example.backend.Entity.User;
+import com.example.backend.Entity.Test;
 import com.example.backend.Repository.TestRepository;
 import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +15,8 @@ public class TestServiceImp implements TestService {
     @Autowired
     TestRepository testRepository;
 
-    public TestEntity getTest(long id) {
-        Optional<TestEntity> test = testRepository.findById(id);
+    public Test getTest(long id) {
+        Optional<Test> test = testRepository.findById(id);
         if (test.isPresent()) {
             return test.get();
         } else {
@@ -27,17 +26,17 @@ public class TestServiceImp implements TestService {
 
     }
 
-    public String addTest(TestEntity testEntity) {
-        if (testRepository.findByTitle(testEntity.getTitle()) != null) {
+    public String addTest(Test test) {
+        if (testRepository.findByTitle(test.getTitle()) != null) {
             return "test existe";
         } else {
-            testRepository.save(testEntity);
+            testRepository.save(test);
             return "test added successfully";
         }
     }
 
     public String deleteTest(long id) {
-        Optional<TestEntity> test = testRepository.findById(id);
+        Optional<Test> test = testRepository.findById(id);
         if (!test.isPresent()) {
             return "test not found";
         } else {
@@ -49,19 +48,19 @@ public class TestServiceImp implements TestService {
 
 
 
-    public List<TestEntity> getTests() {
-        List<TestEntity> liste = testRepository.findAll();
+    public List<Test> getTests() {
+        List<Test> liste = testRepository.findAll();
         return liste;
     }
 
     @Override
-    public String updateTest(long id, TestEntity testEntity) {
-        Optional<TestEntity> existingTest = testRepository.findById(id);
+    public String updateTest(long id, Test test) {
+        Optional<Test> existingTest = testRepository.findById(id);
         if (existingTest.isPresent()) {
-            TestEntity test = existingTest.get();
-            test.setTitle(testEntity.getTitle());
-            test.setCategory(testEntity.getCategory());
-            TestEntity savedTest = testRepository.save(test);
+            Test testE = existingTest.get();
+            testE.setTitle(test.getTitle());
+            testE.setCategory(test.getCategory());
+            Test savedTest = testRepository.save(testE);
             return "test updated successfully";
         } else {
             return "update failed";

@@ -4,7 +4,7 @@ import jakarta.persistence.ElementCollection;
 
 import java.util.List;
 
-public class Quiz  extends TestEntity{
+public class Quiz  extends Test{
     private String question ;
     private String questionType ;
     @ElementCollection
@@ -19,15 +19,12 @@ public class Quiz  extends TestEntity{
         this.correctAnswers = correctAnswers;
     }
 
-    public Quiz(String title, TestCategory category, String question, String questionType, List<String> choices, List<String> correctAnswers) {
-        super(title, category);
+    public Quiz(long id, String title, TestCategory category, String question, String questionType, List<String> choices, List<String> correctAnswers) {
+        super(id, title, category);
         this.question = question;
         this.questionType = questionType;
         this.choices = choices;
         this.correctAnswers = correctAnswers;
-    }
-
-    public Quiz() {
     }
 
     public String getQuestion() {

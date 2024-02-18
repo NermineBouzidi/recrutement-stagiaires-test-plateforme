@@ -1,9 +1,9 @@
 package com.example.backend.Entity;
 
 import jakarta.persistence.*;
-import org.springframework.lang.NonNull;
+
 @Entity
-public class TestEntity {
+public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id ;
@@ -11,10 +11,10 @@ public class TestEntity {
     @Enumerated(EnumType.STRING)
     TestCategory Category;
 
-    public TestEntity() {
-    }
+    public Test() {}
 
-    public TestEntity(String title, TestCategory category) {
+    public Test(long id, String title, TestCategory category) {
+        this.id = id;
         this.title = title;
         Category = category;
     }

@@ -1,12 +1,10 @@
 package com.example.backend.Controller;
 
-import com.example.backend.Entity.TestEntity;
-import com.example.backend.Repository.TestRepository;
+import com.example.backend.Entity.Test;
 import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -19,13 +17,13 @@ public class TestController {
     private TestService testService;
 
     @GetMapping("/getTest/{id}")
-    public TestEntity getTest(@PathVariable long id) {
+    public Test getTest(@PathVariable long id) {
         return testService.getTest(id);
     }
 
     @PostMapping("/addTest")
-    public ResponseEntity<String> addTest(@RequestBody TestEntity testEntity) {
-        String s = testService.addTest(testEntity);
+    public ResponseEntity<String> addTest(@RequestBody Test test) {
+        String s = testService.addTest(test);
         if (s.equals("test added successfully")) {
             return ResponseEntity.ok("test added successfully");
         } else
@@ -34,7 +32,7 @@ public class TestController {
     }
 
     @GetMapping("/getTests")
-    public List<TestEntity> getTests() {
+    public List<Test> getTests() {
         return testService.getTests();
     }
 
@@ -51,8 +49,8 @@ public class TestController {
         }
     }
     @PutMapping("/updateTest/{id}")
-    public ResponseEntity<String> updateTest(@PathVariable long id,@RequestBody TestEntity testEntity) {
-        String s = testService.updateTest(id,testEntity);
+    public ResponseEntity<String> updateTest(@PathVariable long id,@RequestBody Test test) {
+        String s = testService.updateTest(id,test);
         if (s.equals("test updated successfully")) {
             return ResponseEntity.ok("test updated successfully");
         } else

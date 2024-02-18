@@ -70,13 +70,13 @@ public class User implements UserDetails {
 
     }*/
 
-   public User( String firstname, String lastName, String email, int number, String educationLevel, String password,String linkedinUrl ) {
+   public User( String firstname, String lastName, String email, int number, String educationLevel, String linkedinUrl ) {
        this.firstname = firstname;
        this.lastName = lastName;
        this.email = email;
        this.number = number;
        this.educationLevel = educationLevel;
-       this.password = password;
+     //  this.password = password;
        this.linkedinUrl = linkedinUrl;
 
    }

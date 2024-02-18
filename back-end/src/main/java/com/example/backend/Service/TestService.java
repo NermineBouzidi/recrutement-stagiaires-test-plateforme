@@ -1,14 +1,13 @@
 package com.example.backend.Service;
 
-import com.example.backend.Entity.TestEntity;
-import com.example.backend.Entity.User;
+import com.example.backend.Entity.Test;
 
 import java.util.List;
 
 public interface TestService {
-    TestEntity getTest(long id);
-    String addTest (TestEntity testEntity);
+    Test getTest(long id);
+    String addTest (Test test);
     String deleteTest(long id);
-    List <TestEntity> getTests();
-    String updateTest(long id,TestEntity testEntity);
+    List <Test> getTests();
+    String updateTest(long id,Test test);
 }
