@@ -16,7 +16,7 @@ public class User implements UserDetails {
     long id ;
     @NonNull
     String firstname ;
-    @NonNull
+    @NonNull    
     String lastName ;
     @NonNull
     String email;

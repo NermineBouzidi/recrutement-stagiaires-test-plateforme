@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { AdminService } from '../shared/services/admin.service';
 import { SigninComponent } from 'src/app/signin/signin.component';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Test } from 'src/app/models/Test';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
@@ -19,7 +19,6 @@ export class TestComponent {
   isDialogOpen: boolean = false;
   isShowDialog :boolean=false;
   testForm :FormGroup
-  selectedCategory: string = 'QUIZ';
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {
     for(let i:number=1; i<=100;i++){
       this.data.push(i as never);
@@ -27,36 +26,21 @@ export class TestComponent {
   }
   ngOnInit() {
     this.testForm = this.fb.group({
-      sharedField: this.fb.group({
         title: ['', [Validators.required]],
-        category: ['', [Validators.required]]
-      }),
-      quizFields: this.fb.group({
+        category: ['', [Validators.required]],
         question: [''],
         questionType: [''],
         choices: this.fb.array([]),
-        answers: this.fb.array([])
-      }),
-      codeFields: this.fb.group({
-        difficulty: [''],
+        answers: this.fb.array([]),
+        description: [''],
         examples: this.fb.array([])
-      })
     });
     
-    this.loadTest();
-    
+    this.loadTest(); 
+    this.addAnswer();
+    this.addChoice();
   }
-  onSelectCategory(category: string) {
-    this.selectedCategory = category;
-  
-    if (category === 'QUIZ') {
-      this.testForm.get('quizFields')?.addValidators(Validators.required);
-      this.testForm.get('codeFields')?.clearValidators();
-    } else {
-      this.testForm.get('codeFields')?.addValidators(Validators.required);
-      this.testForm.get('quizFields')?.clearValidators();
-    }
-  }
+ // return tests
   loadTest() {
     this.http.getAll().subscribe((data: any) => {
       this.data = data;
@@ -104,6 +88,37 @@ export class TestComponent {
   closeShowDialog() {
     this.isShowDialog= false;
   }
+  get choices() {
+    return this.testForm.get('choices') as FormArray;
+  }
+
+  // Getter for easier access in the template
+  get answers() {
+    return this.testForm.get('answers') as FormArray;
+  }
+
+  addChoice() {
+    if (this.choices.length < 4){
+    this.choices.push(this.fb.group({ text: [''] }));
+    }
+  }
+  
+  removeChoice(index: number) {
+    this.choices.removeAt(index);
+  }
+  
+  addAnswer() {
+    const answerCount = this.answers.length;
+    if (answerCount <= this.choices.length ) {
+      this.answers.push(this.fb.group({ text: [''] }));
+    }
+  }
+  removeAnswer(index: number) {
+    this.answers.removeAt(index);
+  }
+  
+
+
 
   addTest(){
     if (this.testForm.valid){

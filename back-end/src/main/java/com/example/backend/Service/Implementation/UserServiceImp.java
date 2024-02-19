@@ -6,6 +6,7 @@ import com.example.backend.Repository.UserRepository;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -15,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -24,6 +26,9 @@ public class UserServiceImp implements UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
    private JavaMailSender javaMailSender;
+
+    @Value("${spring.mail.username}")
+    private String fromEmail;
 
     private final String FOLDER_PATH="C:/Users/nermi/Documents/CVs/";
   //  @Autowired
@@ -63,8 +68,7 @@ public class UserServiceImp implements UserService {
         }
     }
     public String deleteUser (long id){
-        User user = userRepository.findById(id);
-        if (user !=null) {
+        if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
             return "succes";
         } else {
@@ -81,7 +85,8 @@ public class UserServiceImp implements UserService {
         List <User> liste =userRepository.findAll();
         return liste;
     }
-    public User getUser(long id){
+    public Optional<User> getUser(long id){
+
         return userRepository.findById(id);
 
     }
@@ -120,35 +125,76 @@ public class UserServiceImp implements UserService {
         }
     }
 
-    public void acceptUser (long id ){
-        User user = userRepository.findById(id);
-        String email = user.getEmail();
-        user.setPassword(passwordEncoder.encode(PasswordGenerator.generateRandomPassword()));
-        SimpleMailMessage message = new SimpleMailMessage();
-        message.setSubject("Application Update: Internship at [Your Company]");
+    public String acceptUser (long id ){
 
-       
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+
+            if (userOptional.isPresent()) {
+                User user =userOptional.get();
+                String email = user.getEmail();
+                String generatedPassword = PasswordGenerator.generateRandomPassword();
+                user.setPassword(passwordEncoder.encode(generatedPassword));
+                userRepository.save(user);
+                SimpleMailMessage message = new SimpleMailMessage();
+                String acceptanceMessage = String.format(
+                        "Dear %s %s,%n%n"
+                                + "Congratulations! We are pleased to inform you that your application at Testing Intern Platform has been accepted.%n%n"
+                                + "You are now a part of our internship program. Below are the details to access your account and start taking the tests:%n%n"
+                                + "Username: %s %n"
+                                + "Password: %s%n"
+                                + "Please log in to our platform using the provided credentials and follow the instructions to begin your journey with us.%n%n"
+                                + "If you have any questions or need assistance, feel free to contact us at .%n%n"
+                                + "We look forward to having you on board!%n%n"
+                                + "Best regards,%n"
+                                + "The Testing Intern Platform Team",
+                        user.getFirstname(), user.getLastName(), email, generatedPassword);
+                message.setTo(email);
+                message.setSubject("Application Update: Internship at Testing Intern Platform");
+                message.setText(acceptanceMessage);
+                message.setFrom(fromEmail);
+                javaMailSender.send(message);
+                return "email send successfully";
+            } else {
+                return "User not found with id ";
+
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
     }
-    public void rejectUser (long id ){
-        User user = userRepository.findById(id);
-        String email = user.getEmail();
-        String firstName =user.getFirstname();
-        String lastName=user.getLastName();
-        String rejectionMessage = String.format(
+    public String rejectUser (long id ){
+
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+
+            if (userOptional.isPresent()) {
+                User user =userOptional.get();
+                String email = user.getEmail();
+                String rejectionMessage = String.format(
                 "Dear %s %s,%n%n"
-                        + "Thank you for applying for the internship position at [Your Company].%n%n"
+                        + "Thank you for applying for the internship position at Testing Intern Platform.%n%n"
                         + "After careful consideration, we regret to inform you that your application has not been selected for further consideration. We received many qualified applications, and the decision was a difficult one.%n%n"
                         + "We appreciate your interest in joining our team and encourage you to apply for future opportunities. Your skills and experience are commendable, and we wish you the best in your future endeavors.%n%n"
                         + "If you have any questions or would like feedback on your application, please feel free to contact us at [Your Contact Email].%n%n"
                         + "Thank you for your understanding.%n%n"
                         + "Best regards,%n"
-                        + "The [Your Company] Team",
-                firstName, lastName);
+                        + "The Testing Intern Platform Team",
+                        user.getFirstname(), user.getLastName());
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
-        message.setSubject("Application Update: Internship at [Your Company]");
+        message.setFrom(fromEmail);
+        message.setSubject("Application Update: Internship at Testing Intern Platform");
         message.setText(rejectionMessage);
         javaMailSender.send(message);
+                return "email send successfully";
+            } else {
+                return "User not found with id ";
+
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
 
     }
 }

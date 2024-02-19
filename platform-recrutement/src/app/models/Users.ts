@@ -4,6 +4,7 @@ export class User {
     email:String;
     number :String;
     educationLevel:String;
+    linkedinUrl:String;
     password:String
     id: string;
     token: string ;

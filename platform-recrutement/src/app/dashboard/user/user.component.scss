@@ -20,3 +20,15 @@
     th:not(:last-child) {
         border-bottom: 2px solid rgba(0, 0, 0, .1);
     }
+    .initials-circle {
+        width: 50px;
+        height: 50px;
+        background-color: #4285f4; /* Set your desired background color */
+        color: #ffffff; /* Set your desired text color */
+        font-size: 20px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      

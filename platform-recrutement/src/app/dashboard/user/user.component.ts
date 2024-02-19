@@ -48,4 +48,26 @@ export class UserComponent {
 
     )
   }
+
+  acceptUser(id : any){
+    this.http.accept(id).subscribe(
+      ()=>{
+        alert("email send suuccesssfully")
+        this.loadUsers();
+
+      }
+    )
+  }
+  rejectUser(id : any){
+    this.http.reject(id).subscribe(
+      ()=>{
+        alert("email send suuccesssfully")
+        this.loadUsers();
+
+      }
+    )
+  }
+  getInitials(firstName: String, lastName: String): string {
+    return `${firstName.charAt(0)}${lastName.charAt(0)}`;
+  }
 }

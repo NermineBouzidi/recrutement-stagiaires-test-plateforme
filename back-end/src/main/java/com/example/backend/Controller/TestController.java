@@ -1,5 +1,6 @@
 package com.example.backend.Controller;
 
+import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Test;
 import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,8 @@ public class TestController {
     }
 
     @PostMapping("/addTest")
-    public ResponseEntity<String> addTest(@RequestBody Test test) {
-        String s = testService.addTest(test);
+    public ResponseEntity<String> addTest(@RequestBody Quiz test) {
+        String s = testService.addQuiz(test);
         if (s.equals("test added successfully")) {
             return ResponseEntity.ok("test added successfully");
         } else

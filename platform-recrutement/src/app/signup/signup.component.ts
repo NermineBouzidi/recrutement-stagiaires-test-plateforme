@@ -27,11 +27,7 @@ export class SignupComponent {
       number: new FormControl('', [ Validators.required,Validators.minLength(8),Validators.maxLength(8)]),
       educationLevel: new FormControl('', [Validators.required]),
       resume : new FormControl(''),
-      password: new FormControl('', [Validators.required,Validators.minLength(8)]),
-      confirmpassword: new FormControl('')
-    },{
-      validators: this.passwordMatchValidator
-
+  
     });
     
   }
@@ -43,10 +39,7 @@ export class SignupComponent {
   }
   
  
-  passwordMatchValidator(g: FormGroup) {
-    return g.get('password').value === g.get('confirmpassword').value
-      ? null : { 'mismatch': true };
-  }
+ 
   Register() {
     this.isSubmitted = true;
     if (this.userForm.valid) {
@@ -57,7 +50,6 @@ export class SignupComponent {
         linkedinUrl: this.userForm.get('linkedinUrl').value,
         number: this.userForm.get('number').value,
         educationLevel: this.userForm.get('educationLevel').value,
-        password: this.userForm.get('password').value
       };
     //  const file :File =this.userForm.get('resume').value;
       this.http.register(user).subscribe(
@@ -96,5 +88,4 @@ export class UserDTO {
   linkedinUrl:String;
   number :String;
   educationLevel:String;
-  password:String;
 }

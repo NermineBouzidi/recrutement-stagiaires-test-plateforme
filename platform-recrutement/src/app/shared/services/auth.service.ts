@@ -98,6 +98,13 @@ update(id, params) {
 delete(id: string) {
     return this.http.delete(this.baseURI + `/api/user/deleteUser/${id}`)
 }
+
+accept(id:String){
+    return this.http.put(this.baseURI + `/api/user/accept/${id}`,{});
+}
+reject(id:String){
+    return this.http.put(this.baseURI + `/api/user/reject/${id}`,{});
+}
 }
 export interface LoginResponse {
     token: string;

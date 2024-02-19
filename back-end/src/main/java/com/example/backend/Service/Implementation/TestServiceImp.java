@@ -1,5 +1,6 @@
 package com.example.backend.Service.Implementation;
 
+import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Test;
 import com.example.backend.Repository.TestRepository;
 import com.example.backend.Service.TestService;
@@ -27,6 +28,14 @@ public class TestServiceImp implements TestService {
     }
 
     public String addTest(Test test) {
+        if (testRepository.findByTitle(test.getTitle()) != null) {
+            return "test existe";
+        } else {
+            testRepository.save(test);
+            return "test added successfully";
+        }
+    }
+    public String addQuiz(Quiz test) {
         if (testRepository.findByTitle(test.getTitle()) != null) {
             return "test existe";
         } else {

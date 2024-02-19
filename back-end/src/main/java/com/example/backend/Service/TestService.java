@@ -1,5 +1,6 @@
 package com.example.backend.Service;
 
+import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Test;
 
 import java.util.List;
@@ -10,4 +11,5 @@ public interface TestService {
     String deleteTest(long id);
     List <Test> getTests();
     String updateTest(long id,Test test);
+    String addQuiz(Quiz test);
 }

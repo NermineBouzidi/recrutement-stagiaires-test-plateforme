@@ -45,9 +45,36 @@ public class UserController {
     }
 
     @GetMapping("/getUser/{id}")
-    public User getUser(@PathVariable long id) {
+    public ResponseEntity<User> getUser(@PathVariable long id) {
 
-        return userService.getUser(id);
+        return userService.getUser(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/accept/{id}")
+    public ResponseEntity<Void> accept(@PathVariable long id) {
+        if (id == 0 || id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        String s= userService.acceptUser(id);
+        if (s.equals("email send successfully")) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+    @PutMapping("/reject/{id}")
+    public ResponseEntity<Void> reject(@PathVariable long id) {
+        if (id == 0 || id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        String s= userService.rejectUser(id);
+        if (s.equals("email send successfully")) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 
 

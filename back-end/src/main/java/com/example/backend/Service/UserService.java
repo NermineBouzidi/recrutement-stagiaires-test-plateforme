@@ -4,6 +4,7 @@ import com.example.backend.Entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface UserService {
 
@@ -12,8 +13,8 @@ public interface UserService {
     String deleteUser(long id);
     void updateUser(long id);
     List<User> getUsers ();
-    User getUser(long id);
+    Optional<User> getUser(long id);
     String signup (User user ,MultipartFile file );
-
-
+    String acceptUser (long id );
+    String rejectUser (long id );
 }
