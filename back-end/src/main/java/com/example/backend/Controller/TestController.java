@@ -24,7 +24,7 @@ public class TestController {
 
     @PostMapping("/addTest")
     public ResponseEntity<String> addTest(@RequestBody Quiz test) {
-        String s = testService.addQuiz(test);
+        String s = testService.addTest(test);
         if (s.equals("test added successfully")) {
             return ResponseEntity.ok("test added successfully");
         } else

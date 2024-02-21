@@ -3,13 +3,17 @@ package com.example.backend.Controller;
 import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.LoginResponse;
 import com.example.backend.DTO.UserDTO;
+import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Role;
+import com.example.backend.Entity.Test;
 import com.example.backend.Entity.User;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
+import com.example.backend.Service.TestService;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -19,6 +23,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/auth")
@@ -27,6 +33,8 @@ public class AuthController {
     JwtUtils jwtUtils;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    private TestService testService;
     @Autowired
     private UserService userService;
     @Autowired
@@ -59,6 +67,8 @@ public class AuthController {
     public String addFile (@RequestParam MultipartFile file){
         return userService.addFile(file);
     }
+
+
     @GetMapping("/hi")
     public String hi (){
         return "hello";
@@ -78,7 +88,15 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
+    @PostMapping("/addTest")
+    public ResponseEntity<String> addTest(@RequestBody Quiz test) {
+        String s = testService.addTest(test);
+        if (s.equals("test added successfully")) {
+            return ResponseEntity.ok("test added successfully");
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
+    }
 
 }
 

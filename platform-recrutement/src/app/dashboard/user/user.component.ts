@@ -11,6 +11,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class UserComponent {
   p:any =0;
   data: any[] = [];
+  file :any;
   user :User;
   isDialogOpen :boolean=false;
   constructor (private http: AuthService ){
@@ -68,6 +69,15 @@ export class UserComponent {
     )
   }
   getInitials(firstName: String, lastName: String): string {
-    return `${firstName.charAt(0)}${lastName.charAt(0)}`;
+    return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
+  }
+
+  getResume(id :any){
+    this.http.getResume(id).subscribe(
+      (file :any)=>{
+        const url = window.URL.createObjectURL(file);
+        window.open(url, '_blank');      }
+    )
+
   }
 }

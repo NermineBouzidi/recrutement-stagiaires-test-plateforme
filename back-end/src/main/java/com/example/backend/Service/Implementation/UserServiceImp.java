@@ -15,8 +15,10 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class UserServiceImp implements UserService {
@@ -83,7 +85,10 @@ public class UserServiceImp implements UserService {
     }
     public List<User> getUsers (){
         List <User> liste =userRepository.findAll();
-        return liste;
+        List<User> listeUser = liste.stream()
+                .filter(user -> user.getRole() == Role.ROLE_USER)
+                .collect(Collectors.toList());
+        return listeUser;
     }
     public Optional<User> getUser(long id){
 
@@ -144,11 +149,11 @@ public class UserServiceImp implements UserService {
                                 + "Username: %s %n"
                                 + "Password: %s%n"
                                 + "Please log in to our platform using the provided credentials and follow the instructions to begin your journey with us.%n%n"
-                                + "If you have any questions or need assistance, feel free to contact us at .%n%n"
+                                + "If you have any questions or need assistance, feel free to contact us at %s .%n%n"
                                 + "We look forward to having you on board!%n%n"
                                 + "Best regards,%n"
                                 + "The Testing Intern Platform Team",
-                        user.getFirstname(), user.getLastName(), email, generatedPassword);
+                        user.getFirstname(), user.getLastName(), email, generatedPassword,fromEmail);
                 message.setTo(email);
                 message.setSubject("Application Update: Internship at Testing Intern Platform");
                 message.setText(acceptanceMessage);
@@ -176,11 +181,11 @@ public class UserServiceImp implements UserService {
                         + "Thank you for applying for the internship position at Testing Intern Platform.%n%n"
                         + "After careful consideration, we regret to inform you that your application has not been selected for further consideration. We received many qualified applications, and the decision was a difficult one.%n%n"
                         + "We appreciate your interest in joining our team and encourage you to apply for future opportunities. Your skills and experience are commendable, and we wish you the best in your future endeavors.%n%n"
-                        + "If you have any questions or would like feedback on your application, please feel free to contact us at [Your Contact Email].%n%n"
+                        + "If you have any questions or would like feedback on your application, please feel free to contact us at %s .%n%n"
                         + "Thank you for your understanding.%n%n"
                         + "Best regards,%n"
                         + "The Testing Intern Platform Team",
-                        user.getFirstname(), user.getLastName());
+                        user.getFirstname(), user.getLastName() ,fromEmail);
         SimpleMailMessage message = new SimpleMailMessage();
         message.setTo(email);
         message.setFrom(fromEmail);
@@ -196,5 +201,15 @@ public class UserServiceImp implements UserService {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public byte[] getResume (long id) throws IOException{
+        Optional<User> user= userRepository.findById(id);
+        if(user.isPresent()){
+            String resumePath = user.get().getResumePath();
+            byte[] resume = Files.readAllBytes(new File(resumePath).toPath());
+            return resume;
+        } else
+            throw new IOException("user not found");
     }
 }

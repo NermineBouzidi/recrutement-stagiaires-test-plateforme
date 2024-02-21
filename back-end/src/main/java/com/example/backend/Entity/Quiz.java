@@ -1,9 +1,11 @@
 package com.example.backend.Entity;
 
 import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-
+@Entity
 public class Quiz  extends Test{
     private String question ;
     private String questionType ;
@@ -17,6 +19,9 @@ public class Quiz  extends Test{
         this.questionType = questionType;
         this.choices = choices;
         this.correctAnswers = correctAnswers;
+    }
+
+    public Quiz() {
     }
 
     public Quiz(long id, String title, TestCategory category, String question, String questionType, List<String> choices, List<String> correctAnswers) {
@@ -59,3 +64,4 @@ public class Quiz  extends Test{
         this.correctAnswers = correctAnswers;
     }
 }
+

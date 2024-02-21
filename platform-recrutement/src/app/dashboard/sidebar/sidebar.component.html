@@ -9,7 +9,8 @@
             </li>
             <li>
                 <a href="#"
-                    class="text-[#1d2736] relative flex flex-row items-center h-11 focus:outline-none hover:text-[#d97a07]    border-l-4 border-transparent hover:border-[#d97a07]  pr-6">
+                    class="text-[#1d2736] relative flex flex-row items-center h-11 focus:outline-none hover:text-[#d97a07]    border-l-4 border-transparent hover:border-[#d97a07]  pr-6"
+                    routerLink="/dashboard/uidash" routerLinkActive="active">
                     <span class="inline-flex justify-center items-center ml-4">
                         <svg class="w-6 h-6 fill-current inline-block" fill="currentColor" viewBox="0 0 20 20"
                             xmlns="http://www.w3.org/2000/svg">
@@ -50,7 +51,7 @@
                 </a>
             </li>
             <li>
-                <a  (click)="logout()"
+                <a  
                     class="text-[#1d2736] relative flex flex-row items-center h-11 focus:outline-none hover:text-[#d97a07]    border-l-4 border-transparent hover:border-[#d97a07]  pr-6">
                     <span class="inline-flex justify-center items-center ml-4">
                         <svg class="w-6 h-6 fill-current inline-block" fill="currentColor" viewBox="0 0 20 20"
@@ -87,8 +88,8 @@
             </li>
             <li>
                 <a href="#"
-                    class="text-[#1d2736] relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
-                    <span class="inline-flex justify-center items-center ml-4">
+                class="text-[#1d2736] relative flex flex-row items-center h-11 focus:outline-none hover:text-[#d97a07]    border-l-4 border-transparent hover:border-[#d97a07]  pr-6">
+                <span class="inline-flex justify-center items-center ml-4">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -100,7 +101,7 @@
             </li>
             <li>
                 <a href="#"
-                    class="text-[#1d2736] relative flex flex-row items-center h-11 focus:outline-none hover:bg-blue-800 dark:hover:bg-gray-600 text-white-600 hover:text-white-800 border-l-4 border-transparent hover:border-blue-500 dark:hover:border-gray-800 pr-6">
+                class="text-[#1d2736] relative flex flex-row items-center h-11 focus:outline-none hover:text-[#d97a07]    border-l-4 border-transparent hover:border-[#d97a07]  pr-6">
                     <span class="inline-flex justify-center items-center ml-4">
                         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg">
@@ -113,6 +114,15 @@
                     </span>
                     <span class="ml-2 text-sm tracking-wide truncate">Settings</span>
                 </a>
+            </li>
+            <li>
+                <a  (click)="logout()" href="">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="#000000" class="w-5 h-5">
+                        <path fill-rule="evenodd" d="M17 4.25A2.25 2.25 0 0 0 14.75 2h-5.5A2.25 2.25 0 0 0 7 4.25v2a.75.75 0 0 0 1.5 0v-2a.75.75 0 0 1 .75-.75h5.5a.75.75 0 0 1 .75.75v11.5a.75.75 0 0 1-.75.75h-5.5a.75.75 0 0 1-.75-.75v-2a.75.75 0 0 0-1.5 0v2A2.25 2.25 0 0 0 9.25 18h5.5A2.25 2.25 0 0 0 17 15.75V4.25Z" clip-rule="evenodd" />
+                        <path fill-rule="evenodd" d="M14 10a.75.75 0 0 0-.75-.75H3.704l1.048-.943a.75.75 0 1 0-1.004-1.114l-2.5 2.25a.75.75 0 0 0 0 1.114l2.5 2.25a.75.75 0 1 0 1.004-1.114l-1.048-.943h9.546A.75.75 0 0 0 14 10Z" clip-rule="evenodd" />
+                      </svg>
+                      
+                    </a>
             </li>
         </ul>
         <p class="mb-14 px-5 py-3 hidden md:block text-center text-xs">Copyright @2021</p>

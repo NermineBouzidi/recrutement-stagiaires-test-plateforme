@@ -2,6 +2,7 @@ package com.example.backend.Service.Implementation;
 
 import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Test;
+import com.example.backend.Repository.QuizRepository;
 import com.example.backend.Repository.TestRepository;
 import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,8 @@ import java.util.Optional;
 public class TestServiceImp implements TestService {
     @Autowired
     TestRepository testRepository;
+    @Autowired
+    QuizRepository quizRepository;
 
     public Test getTest(long id) {
         Optional<Test> test = testRepository.findById(id);
@@ -35,11 +38,11 @@ public class TestServiceImp implements TestService {
             return "test added successfully";
         }
     }
-    public String addQuiz(Quiz test) {
-        if (testRepository.findByTitle(test.getTitle()) != null) {
+    public String addQuiz(Quiz quiz) {
+        if (quizRepository.findByTitle(quiz.getTitle()) != null) {
             return "test existe";
         } else {
-            testRepository.save(test);
+            quizRepository.save(quiz);
             return "test added successfully";
         }
     }
@@ -73,6 +76,16 @@ public class TestServiceImp implements TestService {
             return "test updated successfully";
         } else {
             return "update failed";
+        }
+    }
+
+    @Override
+    public String addTest(Quiz test) {
+        if (testRepository.findByTitle(test.getTitle()) != null) {
+            return "test existe";
+        } else {
+            testRepository.save(test);
+            return "test added successfully";
         }
     }
 }

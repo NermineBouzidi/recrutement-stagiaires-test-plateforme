@@ -11,5 +11,5 @@ public interface TestService {
     String deleteTest(long id);
     List <Test> getTests();
     String updateTest(long id,Test test);
-    String addQuiz(Quiz test);
+    String addTest(Quiz test);
 }

@@ -24,7 +24,6 @@ public class User implements UserDetails {
     int number ;
 
     String educationLevel;
-    @NonNull
     String password;
 
     String linkedinUrl;

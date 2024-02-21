@@ -36,13 +36,10 @@ public class SecurityConfig  {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/api/auth/register").permitAll()
                 .requestMatchers("/api/auth/**").permitAll()
-                .requestMatchers("/api/user/**").hasRole("ADMIN")
-                .requestMatchers("/api/auth/login").permitAll()
-                .requestMatchers("/api/auth/hi").hasRole("USER")
                 .requestMatchers("/api/test/**").hasRole("ADMIN")
+                .requestMatchers("/api/user/**").hasRole("ADMIN")
+
                 //.requestMatchers("/api/user/**").permitAll()
                 .anyRequest()
                 .authenticated()

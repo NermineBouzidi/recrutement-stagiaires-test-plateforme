@@ -105,6 +105,10 @@ accept(id:String){
 reject(id:String){
     return this.http.put(this.baseURI + `/api/user/reject/${id}`,{});
 }
+getResume (id :any){
+   return this.http.get(this.baseURI + `/api/user/getFile/${id}`, { responseType: 'blob' });
+}
+
 }
 export interface LoginResponse {
     token: string;
