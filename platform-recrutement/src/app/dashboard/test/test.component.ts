@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@ang
 import { Test } from 'src/app/models/Test';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Quiz } from 'src/app/models/Quiz';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -13,54 +14,53 @@ import { Router } from '@angular/router';
 export class TestComponent {
   p:any =0;
   data: any[] = [];
-  test :Test;
-  testShow :Test;
-  selectedTestId :string = null;
+  quiz :Quiz;
+  quizShow :Quiz;
+  selectedQuizId :string = null;
   isDialogOpen: boolean = false;
   isShowDialog :boolean=false;
-  testForm :FormGroup
+  quizForm :FormGroup
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {
     for(let i:number=1; i<=100;i++){
       this.data.push(i as never);
     }
   }
   ngOnInit() {
-    this.testForm = this.fb.group({
-        title: ['', [Validators.required]],
-        category: ['', [Validators.required]],
-        question: [''],
-        questionType: [''],
-        choices: this.fb.array([]),
-        answers: this.fb.array([]),
-        description: [''],
-        examples: this.fb.array([])
-    });
-    
-    this.loadTest(); 
-    this.addAnswer();
-    this.addChoice();
+    this.quizForm = this.fb.group({
+      title: ['', [Validators.required]],
+      question: [''],
+      questionType: [''],
+      choices: this.fb.array([this.fb.control('')]),
+      answers: this.fb.array([this.fb.control('')]),
+  
+    //  description: [''],
+    //  examples: this.fb.array([])
+  });
+    this.loadQuiz()
+   
   }
- // return tests
-  loadTest() {
-    this.http.getAll().subscribe((data: any) => {
+  loadQuiz() {
+    this.http.getAllQuiz().subscribe((data: any) => {
       this.data = data;
     });
   }
+ // return tests
+ 
   openDialog() {
     this.isDialogOpen = true;
   }
 
   closeDialog() {
     this.isDialogOpen = false;
-    this.testForm.reset();
-    this.selectedTestId=null;
+    this.quizForm.reset();
+    this.selectedQuizId=null;
 
   }
-  deleteTest(id :any){
-    this.http.delete(id).subscribe(
+  deleteQuiz(id :any){
+    this.http.deleteQuiz(id).subscribe(
       ()=>{
-        alert("test deleted successfully")
-        this.loadTest();
+        alert("quiz deleted successfully")
+        this.loadQuiz();
       }
 
     )
@@ -73,33 +73,33 @@ export class TestComponent {
     this.testForm.patchValue(selectedTest);
 
   })*/
-  openUpdateDialog(test :any){
-    this.selectedTestId = test.id;
+  openUpdateDialog(quiz :any){
+    this.selectedQuizId = quiz.id;
     this.isDialogOpen = true;
-      const selectedTest =test;
-      this.testForm.patchValue(selectedTest);
+      const selectedTest =quiz;
+      this.quizForm.patchValue(selectedTest);
   }
   openShowDialog(id :any){
     this.isShowDialog=true;
-    this.http.getById(id).subscribe((data:any)=>{
-    this.testShow=data;
+    this.http.getQuizById(id).subscribe((data:any)=>{
+    this.quizShow=data;
     })
   }
   closeShowDialog() {
     this.isShowDialog= false;
   }
   get choices() {
-    return this.testForm.get('choices') as FormArray;
+    return this.quizForm.get('choices') as FormArray;
   }
 
   // Getter for easier access in the template
   get answers() {
-    return this.testForm.get('answers') as FormArray;
+    return this.quizForm.get('answers') as FormArray;
   }
 
   addChoice() {
-    if (this.choices.length < 4){
-    this.choices.push(this.fb.group({ text: [''] }));
+    if (this.choices.length < 3){
+      this.choices.push(this.fb.control(''));
     }
   }
   
@@ -109,8 +109,8 @@ export class TestComponent {
   
   addAnswer() {
     const answerCount = this.answers.length;
-    if (answerCount <= this.choices.length ) {
-      this.answers.push(this.fb.group({ text: [''] }));
+    if (answerCount < this.choices.length ) {
+      this.answers.push(this.fb.control(''));
     }
   }
   removeAnswer(index: number) {
@@ -120,38 +120,37 @@ export class TestComponent {
 
 
 
-  addTest(){
-    if (this.testForm.valid){
-      const test :Test ={
-        title :this.testForm.get('title')?.value,
-        description: this.testForm.get('description')?.value,
-        category :this.testForm.get('category')?.value,
-        difficulty :this.testForm.get('difficulty')?.value,
-        id:"",
-    }
-    if(this.selectedTestId){
-      this.http.update(this.selectedTestId,test).subscribe(
+  addQuiz(quizForm){
+    if (quizForm.valid){
+      const quiz: Quiz = {
+        title: quizForm.get('title').value,
+        question: quizForm.get('question').value,
+        questionType: quizForm.get('questionType').value,
+        choices: quizForm.get('choices').value,
+        answers: quizForm.get('answers').value,
+      };
+    if(this.selectedQuizId){
+      this.http.updateQuiz(this.selectedQuizId,quiz).subscribe(
         (response: HttpResponse<any>) => {
         console.log("Response:", response); // Log the entire response for debugging
-  
-        if (response.body && response.body.includes("test updated successfully")) {
-          alert("test updated successfully");
+        if (response.body && response.body.includes("quiz updated successfully")) {
+          alert("quiz updated successfully");
           this.closeDialog();
-          this.loadTest();
+          this.loadQuiz();
           // Redirect to a new page or perform any other actions after successful registration
         } else {
           alert("failed");
         }
       })
      }else{
-    this.http.add(test).subscribe(
+      this.http.addQuiz(quiz).subscribe(
       (response: HttpResponse<any>) => {
         console.log("Response:", response); // Log the entire response for debugging
   
-        if (response.body && response.body.includes("test added successfully")) {
-          alert("test added successfully");
+        if (response.body && response.body.includes("quiz added successfully")) {
+          alert("quiz added successfully");
           this.closeDialog();
-          this.loadTest();
+          this.loadQuiz();
           // Redirect to a new page or perform any other actions after successful registration
         } else {
           alert("failed");
@@ -160,7 +159,7 @@ export class TestComponent {
       (error: HttpErrorResponse) => {
         console.error("Error:", error);
   
-        if (error.status === 400 && error.error === "test existe") {
+        if (error.status === 400 && error.error === "quiz existe") {
           alert("user already exists wi");
         } else {
           alert("An error occurred ");
@@ -170,5 +169,8 @@ export class TestComponent {
     )}
 
   }
+}
+submit(formdata :any){
+  console.log(formdata);
 }
 }

@@ -1,35 +1,41 @@
 package com.example.backend.Entity;
 
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import lombok.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 @Entity
-public class Quiz  extends Test{
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+public class Quiz  {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    long id ;
+    String title ;
     private String question ;
     private String questionType ;
     @ElementCollection
     private List<String> choices;
     @ElementCollection
-    private  List<String> correctAnswers;
+    private  List<String> answers;
 
-    public Quiz(String question, String questionType, List<String> choices, List<String> correctAnswers) {
-        this.question = question;
-        this.questionType = questionType;
-        this.choices = choices;
-        this.correctAnswers = correctAnswers;
+    public long getId() {
+        return id;
     }
 
-    public Quiz() {
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public Quiz(long id, String title, TestCategory category, String question, String questionType, List<String> choices, List<String> correctAnswers) {
-        super(id, title, category);
-        this.question = question;
-        this.questionType = questionType;
-        this.choices = choices;
-        this.correctAnswers = correctAnswers;
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getQuestion() {
@@ -56,12 +62,12 @@ public class Quiz  extends Test{
         this.choices = choices;
     }
 
-    public List<String> getCorrectAnswers() {
-        return correctAnswers;
+    public List<String> getAnswers() {
+        return answers;
     }
 
-    public void setCorrectAnswers(List<String> correctAnswers) {
-        this.correctAnswers = correctAnswers;
+    public void setAnswers(List<String> answers) {
+        this.answers = answers;
     }
 }
 

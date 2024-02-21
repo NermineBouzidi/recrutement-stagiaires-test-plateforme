@@ -16,8 +16,7 @@ import java.util.Optional;
 public class TestServiceImp implements TestService {
     @Autowired
     TestRepository testRepository;
-    @Autowired
-    QuizRepository quizRepository;
+
 
     public Test getTest(long id) {
         Optional<Test> test = testRepository.findById(id);
@@ -38,14 +37,7 @@ public class TestServiceImp implements TestService {
             return "test added successfully";
         }
     }
-    public String addQuiz(Quiz quiz) {
-        if (quizRepository.findByTitle(quiz.getTitle()) != null) {
-            return "test existe";
-        } else {
-            quizRepository.save(quiz);
-            return "test added successfully";
-        }
-    }
+
 
     public String deleteTest(long id) {
         Optional<Test> test = testRepository.findById(id);
@@ -79,13 +71,7 @@ public class TestServiceImp implements TestService {
         }
     }
 
-    @Override
-    public String addTest(Quiz test) {
-        if (testRepository.findByTitle(test.getTitle()) != null) {
-            return "test existe";
-        } else {
-            testRepository.save(test);
-            return "test added successfully";
-        }
-    }
+
+
+
 }

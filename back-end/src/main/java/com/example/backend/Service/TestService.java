@@ -7,9 +7,13 @@ import java.util.List;
 
 public interface TestService {
     Test getTest(long id);
-    String addTest (Test test);
+   // String addTest (Test test);
     String deleteTest(long id);
     List <Test> getTests();
     String updateTest(long id,Test test);
-    String addTest(Quiz test);
+
+
+
+
+
 }

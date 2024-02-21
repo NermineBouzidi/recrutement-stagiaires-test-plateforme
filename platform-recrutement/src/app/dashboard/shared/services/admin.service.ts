@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Quiz } from 'src/app/models/Quiz';
 import { Test } from 'src/app/models/Test';
 import { environment } from 'src/environments/environment';
 
@@ -25,6 +26,25 @@ export class AdminService {
 }
   update(id:any ,test:Test){
     return this.http.put(this.baseURI + `/api/test/updateTest/${id}`, test,{ observe: 'response' ,responseType: 'text'});
+
+  }
+  // quiz
+  addQuiz(quiz :Quiz){
+    return this.http.post(this.baseURI + `/api/quiz/addQuiz`, quiz,{ observe: 'response' ,responseType: 'text'});
+
+  }
+  getAllQuiz(){
+    return this.http.get<any[]>(this.baseURI + `/api/quiz/getAllQuiz`);
+
+  }
+  updateQuiz(id:any ,quiz :Quiz){
+    return this.http.put(this.baseURI + `/api/quiz/updateQuiz/${id}`, quiz,{ observe: 'response' ,responseType: 'text'});
+  }
+  deleteQuiz(id : any) {
+    return this.http.delete(this.baseURI + `/api/quiz/deleteQuiz/${id}`)
+  }
+  getQuizById(id:any){
+    return this.http.get<Quiz>(this.baseURI + `/api/quiz/getQuiz/${id}`);
 
   }
 }

@@ -22,15 +22,7 @@ public class TestController {
         return testService.getTest(id);
     }
 
-    @PostMapping("/addTest")
-    public ResponseEntity<String> addTest(@RequestBody Quiz test) {
-        String s = testService.addTest(test);
-        if (s.equals("test added successfully")) {
-            return ResponseEntity.ok("test added successfully");
-        } else
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
-    }
 
     @GetMapping("/getTests")
     public List<Test> getTests() {
@@ -57,5 +49,9 @@ public class TestController {
         } else
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
     }
+
+
+    /// QUIZ
+
 
 }

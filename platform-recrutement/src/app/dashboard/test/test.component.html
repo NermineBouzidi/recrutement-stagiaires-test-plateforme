@@ -1,6 +1,6 @@
 <button (click)="openDialog()"
   class="text-white mt-12 border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-  Add Test
+  Add Quiz
 </button>
 
 <!--table-->
@@ -9,32 +9,31 @@
   <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
     <thead class="text-[#1d2736]">
       <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0" *ngFor="
-      let test of data 
+      let quiz of data 
     ">
         <th class="p-3 text-left">Title</th>
-        <th class="p-3 text-left">Difficulty</th>
-        <th class="p-3 text-left">Category</th>
+        <th class="p-3 text-left">Question</th>
+        <th class="p-3 text-left">Question Type</th>
         <th class="p-3 text-left" width="110px">Actions</th>
       </tr>
     </thead>
     <tbody class="flex-1 sm:flex-none">
       <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0" *ngFor="
-          let test of data | paginate : { itemsPerPage: 7, currentPage: p }
+          let quiz of data | paginate : { itemsPerPage: 3, currentPage: p }
         ">
         <td class="border-grey-light border hover:bg-gray-100 p-3">
-          {{ test.title }}
-        </td>
-        <td class="border-grey-light border hover:bg-gray-100 p-3" [class.text-green-500]="test.difficulty === 'easy'"
-          [class.text-yellow-500]="test.difficulty === 'medium'" [class.text-red-500]="test.difficulty === 'hard'">
-          {{ test.difficulty }}
+          {{ quiz.title }}
         </td>
         <td class="border-grey-light border hover:bg-gray-100 p-3">
-          {{ test.category }}
+          {{ quiz.question }}
+        </td>
+        <td class="border-grey-light border hover:bg-gray-100 p-3">
+          {{ quiz.questionType }}
         </td>
 
         <td
           class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
-          <button (click)="openShowDialog(test.id)">
+          <button (click)="openShowDialog(quiz.id)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
               <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
               <path fill-rule="evenodd"
@@ -43,7 +42,7 @@
             </svg>
           </button>
 
-          <button (click)="openUpdateDialog(test)">
+          <button (click)="openUpdateDialog(quiz)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
               <path
                 d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" />
@@ -51,7 +50,7 @@
                 d="M3.5 5.75c0-.69.56-1.25 1.25-1.25H10A.75.75 0 0 0 10 3H4.75A2.75 2.75 0 0 0 2 5.75v9.5A2.75 2.75 0 0 0 4.75 18h9.5A2.75 2.75 0 0 0 17 15.25V10a.75.75 0 0 0-1.5 0v5.25c0 .69-.56 1.25-1.25 1.25h-9.5c-.69 0-1.25-.56-1.25-1.25v-9.5Z" />
             </svg>
           </button>
-          <button (click)="deleteTest(test.id)">
+          <button (click)="deleteQuiz(quiz.id)">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
               <path fill-rule="evenodd"
                 d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
@@ -84,157 +83,71 @@
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
           </button>
-         
+
         </div>
-     
-        <form class="space-y-4 md:space-y-6 text-[#0D2E4D] poppins-regular" action="#" [formGroup]="testForm" (submit)="addTest()">
+
+        <form class="space-y-4 md:space-y-6 text-[#0D2E4D] poppins-regular" action="#" [formGroup]="quizForm"
+          (submit)="addQuiz(quizForm)">
           <div>
             <label for="title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
             <input type="text" name="title" id="title" formControlName="title"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               placeholder="title" required="" />
             <div *ngIf="
-              testForm.controls['title'].touched ||
-              testForm.controls['title'].dirty
+              quizForm.controls['title'].touched ||
+              quizForm.controls['title'].dirty
             ">
-              <div *ngIf="testForm.controls['title'].hasError('required')"
+              <div *ngIf="quizForm.controls['title'].hasError('required')"
                 class="mt-2 text-sm text-red-600 dark:text-red-500">
                 This field is required
               </div>
             </div>
+          </div>
+
+          <div>
+            <label for="question" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question</label>
+            <textarea type="text" name="question" id="question" formControlName="question"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              placeholder="question" required=""></textarea>
           </div>
           <div>
-            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-
-            <select name="category" id="category" formControlName="category" 
+            <label for="questionType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question
+              Type</label>
+            <select name="questionType" id="questionType" formControlName="questionType"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-              <option value="QUIZ">Quiz</option>
-              <option value="CODE">Code</option>
+              <option value="single">Single Answer</option>
+              <option value="multiple">Multiple Answers</option>
             </select>
-            <div *ngIf="
-            testForm.controls['category'].touched ||
-            testForm.controls['category'].dirty
-          ">
-              <div *ngIf="testForm.controls['category'].hasError('required')"
-                class="mt-2 text-sm text-red-600 dark:text-red-500">
-                This field is required
-              </div>
-            </div>
           </div>
-          <!--QUIZ FIELD-->
-          <div *ngIf="testForm.get('category').value=== 'QUIZ'" class="space-y-4 md:space-y-6">
-            <div>
-              <label for="question"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question</label>
-              <textarea type="text" name="question" id="question" formControlName="question"
+          <div formArrayName="choices">
+            <label for="choices" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choices </label>
+            <div class="flex items-center mb-3" *ngFor="let choice of choices.controls; let i = index">
+              <input type="text" formControlName={{i}}
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="question" required=""></textarea>
+                placeholder="choice" aria-label="Recipient's username" aria-describedby="basic-addon2">
+              <span class="bg-[#DFE0DF] border border-gray-300 p-2.5 rounded-lg" (click)="removeChoice(i)">remove</span>
             </div>
-            <div>
-              <label for="questionType" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Question
-                Type</label>
-              <select name="questionType" id="questionType" formControlName="questionType"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option value="single">Single Answer</option>
-                <option value="multiple">Multiple Answers</option>
-              </select>
-            </div>
-            <div formArrayName="choices">
-              <label for="choices" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Choices </label>
-              <div class="flex items-center mb-3" *ngFor="let choice of choices.controls; let i = index">
-                <input type="text" formControlName="text"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="choice" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <span class="bg-[#DFE0DF] border border-gray-300 p-2.5 rounded-lg" (click)="removeChoice(i)">remove</span>
-              </div>
-              <button class="text-[#2F4858] border bg-[#DFE0DF] hover:bg-transparent hover:text-[#DFE0DF] hover:border-[#DFE0DF] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
-               (click)="addChoice()">add</button>
+            <button type="button"
+              class="text-[#2F4858] border bg-[#DFE0DF] hover:bg-transparent hover:text-[#DFE0DF] hover:border-[#DFE0DF] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+              (click)="addChoice()">add</button>
 
+          </div>
+          <div formArrayName="answers">
+            <label for="answers" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Answers </label>
+            <div class="flex items-center mb-3" *ngFor="let answer of answers.controls; let j = index">
+              <input type="text" formControlName={{j}}
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="choice" aria-label="Recipient's username" aria-describedby="basic-addon2">
+              <span
+                class="text-[#2F4858] border bg-[#DFE0DF] hover:bg-transparent hover:text-[#DFE0DF] hover:border-[#DFE0DF] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
+                (click)="removeAnswer(j)">remove</span>
             </div>
-            <div formArrayName="answers">
-              <label for="answers" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Answers </label>
-              <div class="flex items-center mb-3" *ngFor="let choice of answers.controls; let i = index">
-                <input type="text" formControlName="text"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="choice" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                <span class="text-[#2F4858] border bg-[#DFE0DF] hover:bg-transparent hover:text-[#DFE0DF] hover:border-[#DFE0DF] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center" (click)="removeAnswer(i)">remove</span>
-              </div>
-              <button *ngIf="testForm.get('questionType').value=== 'multiple'"
+            <button *ngIf="quizForm.get('questionType').value=== 'multiple'" type="button"
               class="text-[#2F4858] border bg-[#DFE0DF] hover:bg-transparent hover:text-[#DFE0DF] hover:border-[#DFE0DF] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center "
               (click)="addAnswer()">add</button>
 
-            </div>
           </div>
-                    <!--code FIELD-->
-                    <div *ngIf="testForm.get('category').value=== 'CODE'" class="space-y-4 md:space-y-6">
-                      <div>
-                        <label for="description"
-                          class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-                        <textarea type="text" name="description" id="description" formControlName="description"
-                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          placeholder="description" required=""></textarea>
-                      </div>
-                    
-                    </div>
 
-          <!---
-          <div>
-            <label for="description"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
-            <textarea type="text" name="description" id="description" formControlName="description"
-              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              placeholder="description"></textarea>
-            <div *ngIf="
-              testForm.controls['description'].touched ||
-              testForm.controls['description'].dirty
-            ">
-              <div *ngIf="testForm.controls['description'].hasError('required')"
-                class="mt-2 text-sm text-red-600 dark:text-red-500">
-                This field is required
-              </div>
-            </div>
-          </div>
-          <div class="flex -mx-3">
-            <div class="w-1/2 px-3">
-              <label for="category"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category</label>
-
-              <select name="category" id="category" formControlName="category"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option>DataBase</option>
-                <option>Algorithm</option>
-              </select>
-              <div *ngIf="
-                testForm.controls['category'].touched ||
-                testForm.controls['category'].dirty
-              ">
-                <div *ngIf="testForm.controls['category'].hasError('required')"
-                  class="mt-2 text-sm text-red-600 dark:text-red-500">
-                  This field is required
-                </div>
-              </div>
-            </div>
-            <div class="w-1/2 px-3">
-              <label for="difficulty"
-                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Difficulty</label>
-
-              <select name="difficulty" id="difficulty" formControlName="difficulty"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                <option>easy</option>
-                <option>medium</option>
-                <option>hard</option>
-              </select>
-              <div *ngIf="
-                testForm.controls['difficulty'].touched ||
-                testForm.controls['difficulty'].dirty
-              ">
-                <div *ngIf="testForm.controls['difficulty'].hasError('required')"
-                  class="mt-2 text-sm text-red-600 dark:text-red-500">
-                  This field is required
-                </div>
-              </div>
-            </div>
-          </div>-->
           <button type="submit"
             class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
             Save
@@ -269,41 +182,37 @@
   </div>
 </div>
 ---------------------------------------------->
-<!-------------------------------------------Dialog SHow --------------------------------------------------->
-<div *ngIf="isShowDialog" class="dialog-overlay">
-  <div class="fixed z-50 inset-0 flex items-center justify-center">
-    <div class="relative w-full max-w-2xl max-h-full">
-      <!-- Modal content -->
-      <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-        <!-- Modal header -->
-        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-          <h3 class="text-xl font-medium text-gray-900 dark:text-white">
-            {{ testShow.title }}
-          </h3>
-          <button (click)="closeShowDialog()" type="button"
-            class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white"
-            data-modal-hide="top-right-modal">
-            <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-            </svg>
-            <span class="sr-only">Close modal</span>
-          </button>
-        </div>
-        <!-- Modal body -->
-        <div class="p-4 md:p-5 space-y-4">
-          <pre class="text-base leading-relaxed text-gray-500 dark:text-gray-400"
-            style="white-space: pre-line;">{{testShow.description }}</pre>
+<div *ngIf="isShowDialog" class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">
+  <div class="flex flex-col items-center min-h-screen justify-center ml-14  px-6 py-12 mx-auto  lg:py-0">
+    <div
+      class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
+      <div class="flex items-center justify-end p-4">
+        <button (click)="closeShowDialog()" type="button">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            class="feather feather-x">
+            <line x1="18" y1="6" x2="6" y2="18" />
+            <line x1="6" y1="6" x2="18" y2="18" />
+          </svg>
+        </button>
+      </div>
+      <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <h1 class="text-lg text-[#0D2E4D] mb-2 font-bold "> {{ quizShow.title}}</h1>
+        <h3 class="text-xl font-semibold mb-4">{{ quizShow.question }}<span class="px-1">?</span></h3>
 
+        <div class="mb-4">
+          <p class="text-lg font-semibold mb-2">Choices:</p>
+          <ol class="list-decimal pl-6">
+            <li *ngFor="let choice of quizShow.choices">{{ choice }}</li>
+          </ol>
         </div>
-        <!-- Modal footer -->
-        <div
-          class="flex items-center p-4 md:p-5 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b dark:border-gray-600">
-          <p class="text-black  ">#{{ testShow.category }}</p>
-          <p class="text-black  ">#{{ testShow.difficulty }}</p>
 
+        <div>
+          <p class="text-lg font-semibold mb-2">Correct Answers:</p>
+          <ol class="list-decimal pl-6">
+            <li *ngFor="let answer of quizShow.answers">{{ answer }}</li>
+          </ol>
         </div>
       </div>
     </div>
   </div>
-</div>

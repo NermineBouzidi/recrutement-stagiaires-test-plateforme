@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -88,15 +89,7 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-    @PostMapping("/addTest")
-    public ResponseEntity<String> addTest(@RequestBody Quiz test) {
-        String s = testService.addTest(test);
-        if (s.equals("test added successfully")) {
-            return ResponseEntity.ok("test added successfully");
-        } else
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
-    }
 
 }
 
