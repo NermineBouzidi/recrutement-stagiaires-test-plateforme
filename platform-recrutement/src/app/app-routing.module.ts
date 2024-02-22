@@ -8,6 +8,7 @@ import { SignupComponent } from './signup/signup.component';
 import { HomeComponent } from './home/home.component';
 import { UserGuard } from './shared/services/user.guard';
 import { UserHomeComponent } from './userspace/user-home/user-home.component';
+import { UserTestComponent } from './userspace/user-test/user-test.component';
 
 
 const routes: Routes = [
@@ -26,8 +27,15 @@ const routes: Routes = [
     ]
   },
   {
-    path:"user" , component:UserHomeComponent
+    path: "user-space", canActivate:[UserGuard],
+    component: UserHomeComponent,
+    children: [
+      // Remove the redirect
+      // { path: '', redirectTo: 'uiuser', pathMatch: 'full' },
+      { path: "tester", component: UserTestComponent }
+    ]
   }
+  
 
 ]
   

@@ -19,8 +19,10 @@ public class JwtUtils {
     private final static Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
 
     public String generate(User user) {
+        String fullName = user.getFirstname() + " " + user.getLastName();
         return Jwts.builder()
                 .setSubject(user.getEmail())
+                .claim("name", fullName)  // Add the "name" claim with the full name
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + expireInMs))
                 .signWith(key)

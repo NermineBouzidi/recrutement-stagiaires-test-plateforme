@@ -108,8 +108,13 @@ reject(id:String){
 getResume (id :any){
    return this.http.get(this.baseURI + `/api/user/getFile/${id}`, { responseType: 'blob' });
 }
-
+// get token 
+getToken(){
+    return this.loginValue.token;
 }
+}
+
+
 export interface LoginResponse {
     token: string;
     role: string;

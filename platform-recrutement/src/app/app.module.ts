@@ -19,7 +19,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     HomeComponent,
     SignupComponent,
     SigninComponent,
-    NavbarComponent
+    NavbarComponent,
   ],
   imports: [
     BrowserModule,
