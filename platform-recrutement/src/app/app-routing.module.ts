@@ -27,15 +27,11 @@ const routes: Routes = [
     ]
   },
   {
-    path: "user-space", canActivate:[UserGuard],
-    component: UserHomeComponent,
-    children: [
-      // Remove the redirect
-      // { path: '', redirectTo: 'uiuser', pathMatch: 'full' },
-      { path: "tester", component: UserTestComponent }
-    ]
+    path:'user', canActivate:[UserGuard],
+    loadChildren: () => import('./userspace/userspace.module').then((m)=> m.UserspaceModule)
   }
   
+
 
 ]
   

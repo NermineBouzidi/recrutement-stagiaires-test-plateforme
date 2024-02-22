@@ -9,6 +9,7 @@ import com.example.backend.Entity.Test;
 import com.example.backend.Entity.User;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
+import com.example.backend.Service.QuizService;
 import com.example.backend.Service.TestService;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class AuthController {
     private TestService testService;
     @Autowired
     private UserService userService;
+    @Autowired
+    QuizService quizService;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -89,7 +92,10 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-
+    @GetMapping("/getAllQuiz")
+    public List<Quiz> getAllQuiz() {
+        return quizService.getAllQuiz();
+    }
 
 }
 
