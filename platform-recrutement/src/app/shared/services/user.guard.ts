@@ -14,7 +14,8 @@ export class UserGuard implements CanActivate {
 canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
   const user = this.accountService.userValue;
   const login = this.accountService.loginValue;
-  if (login ) {
+  const requiredRole = route.data['requiredRole'];
+  if (login  && this.accountService.loginValue.role === requiredRole ) {
      
       return true;
   }

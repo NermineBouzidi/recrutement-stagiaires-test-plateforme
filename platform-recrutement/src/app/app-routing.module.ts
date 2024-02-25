@@ -18,6 +18,7 @@ const routes: Routes = [
   { path: 'register', component: SignupComponent }, 
   {
     path: 'dashboard', canActivate:[UserGuard],
+    data: { requiredRole: 'ROLE_ADMIN' },
     component: UidashboardComponent,
     children: [
       { path: '', redirectTo: 'uidash', pathMatch: 'full' },
@@ -28,6 +29,7 @@ const routes: Routes = [
   },
   {
     path:'user', canActivate:[UserGuard],
+    data: { requiredRole: 'ROLE_USER' },
     loadChildren: () => import('./userspace/userspace.module').then((m)=> m.UserspaceModule)
   }
   

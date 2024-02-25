@@ -12,6 +12,7 @@ import com.example.backend.Security.JwtUtils;
 import com.example.backend.Service.QuizService;
 import com.example.backend.Service.TestService;
 import com.example.backend.Service.UserService;
+import jakarta.servlet.annotation.MultipartConfig;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -56,7 +57,9 @@ public class AuthController {
         }
     }
     @PostMapping("/signup")
-    public ResponseEntity<String> signup (@RequestPart("user") User user ,@RequestPart("file") MultipartFile file) {
+    public ResponseEntity<String> signup (@RequestParam("user") User user ,@RequestParam("file") MultipartFile file) {
+        System.out.println("Received User: " + user);
+        System.out.println("Received File: " + file.getOriginalFilename());
         String s= userService.signup(user,file);
 
         if(s.equals("Registration successful")) {

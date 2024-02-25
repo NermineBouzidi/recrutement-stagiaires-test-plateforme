@@ -59,13 +59,14 @@ logout() {
     this.router.navigate(['/login']);
 }
 
-/*signup(user :UserDTO, file :File) {
+signup(user :UserDTO, file :File) {
   // console.log(user)
   const formData = new FormData();
   formData.append('user', JSON.stringify(user));
   formData.append('file', file);
-    return this.http.post(this.baseURI + `/api/auth/signup`, formData,{headers: new HttpHeaders({ 'multipart/form-data; boundary=<calculated when request is sent>' }),observe: 'response' ,responseType: 'text'});
-}*/
+  
+    return this.http.post(this.baseURI + `/api/auth/signup`, formData);
+}
 register(user :UserDTO){
     return this.http.post(this.baseURI + `/api/auth/register`, user,{observe: 'response' ,responseType: 'text'});
 

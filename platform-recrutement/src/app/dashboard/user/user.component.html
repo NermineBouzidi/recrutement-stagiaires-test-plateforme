@@ -1,8 +1,7 @@
 <body class="flex items-center justify-center">
-    <div class="container">
-        <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
-            <thead class="text-[#1d2736]">
-                <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
+    <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+      <thead class="text-[#1d2736]">
+        <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
                     *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
                     <th class="p-3 text-left">FirstName</th>
                     <th class="p-3 text-left">LastName</th>
@@ -11,10 +10,9 @@
                     <th class="p-3 text-left">EducationLevel</th>
                     <th class="p-3 text-left" width="110px">Actions</th>
                 </tr>
-
             </thead>
             <tbody class="flex-1 sm:flex-none">
-                <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 "
+              <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0"
                     *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.firstname}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.lastName}}</td>
@@ -56,13 +54,11 @@
                                     d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
                                     clip-rule="evenodd" />
                             </svg>
-                        </button>
-                    </td>
-                </tr>
-
-            </tbody>
-        </table>
-    </div>
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </body>
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
 

@@ -21,7 +21,7 @@ public class User implements UserDetails {
     @NonNull
     String email;
     @NonNull
-    int number ;
+    String number ;
 
     String educationLevel;
     String password;
@@ -69,7 +69,7 @@ public class User implements UserDetails {
 
     }*/
 
-   public User( String firstname, String lastName, String email, int number, String educationLevel, String linkedinUrl ) {
+   public User( String firstname, String lastName, String email, String number, String educationLevel, String linkedinUrl ) {
        this.firstname = firstname;
        this.lastName = lastName;
        this.email = email;
@@ -160,11 +160,11 @@ public class User implements UserDetails {
         this.email = email;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 }

@@ -13,6 +13,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { JwtInterceptor } from './shared/services/jwt.interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -28,11 +30,12 @@ import { NgxPaginationModule } from 'ngx-pagination';
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgxPaginationModule
-
+    NgxPaginationModule,
+    NgxMaskDirective
   ],
-  providers: [{
-    provide :HTTP_INTERCEPTORS , useClass:JwtInterceptor,
+  providers: [
+    provideNgxMask(),
+    {provide :HTTP_INTERCEPTORS , useClass:JwtInterceptor,
     multi:true
   }],
   bootstrap: [AppComponent]

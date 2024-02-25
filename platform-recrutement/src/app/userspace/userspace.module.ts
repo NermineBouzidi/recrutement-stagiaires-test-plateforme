@@ -6,12 +6,14 @@ import { UserHomeComponent } from './user-home/user-home.component';
 import { UserTestComponent } from './user-test/user-test.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { UserCodeComponent } from './user-code/user-code.component';
 
 
 @NgModule({
   declarations: [
     UserHomeComponent,
     UserTestComponent,
+    UserCodeComponent,
   ],
   imports: [
     CommonModule,

@@ -6,7 +6,7 @@ public class UserDTO {
     String firstname ;
     String lastName ;
     String email;
-    int number ;
+    String number ;
     String educationLevel;
     String password;
 
@@ -19,7 +19,7 @@ public class UserDTO {
         this.password = PasswordGenerator.generateRandomPassword();
     }*/
 
-    public UserDTO(String firstname, String lastName, String email, int number, String educationLevel, String password) {
+    public UserDTO(String firstname, String lastName, String email, String number, String educationLevel, String password) {
         this.firstname = firstname;
         this.lastName = lastName;
         this.email = email;
@@ -63,11 +63,11 @@ public class UserDTO {
         this.email = email;
     }
 
-    public int getNumber() {
+    public String getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(String number) {
         this.number = number;
     }
 
