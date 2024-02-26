@@ -11,8 +11,9 @@ import { AuthService } from '../shared/services/auth.service';
 })
 export class SigninComponent {
  loginObj : login;
- isSubmitted =false;
+ isSubmitted :boolean=false;
  userForm :FormGroup;
+ errorMessage: string;
 
   constructor (private http : AuthService, private router:Router,private fb: FormBuilder){
     this.loginObj=new login;
@@ -35,18 +36,20 @@ export class SigninComponent {
           alert("login successful");
           this.router.navigateByUrl("/dashboard");
 
-        } else {
-        alert("Login failed");
+    }}
+    },
+    (error: HttpErrorResponse) => {
+     if (error.status === 401) {
+        this.errorMessage = "Invalid credentials";
+      } else {
+        this.errorMessage = "Login failed";
       }
-    }
-    });
-  }
+      console.error("Login error:", error);
+      
+    })
   
-  
+}}
 
-
-
-}
  export class login {
        email :String;
        password:String ;

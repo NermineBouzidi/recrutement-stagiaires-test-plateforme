@@ -14,6 +14,8 @@ import { JwtInterceptor } from './shared/services/jwt.interceptor.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+
 
 @NgModule({
   declarations: [
@@ -31,7 +33,9 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
     HttpClientModule,
     BrowserAnimationsModule,
     NgxPaginationModule,
-    NgxMaskDirective
+    NgxMaskDirective,
+    CodemirrorModule
+  
   ],
   providers: [
     provideNgxMask(),

@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { UserGuard } from './shared/services/user.guard';
 import { UserHomeComponent } from './userspace/user-home/user-home.component';
 import { UserTestComponent } from './userspace/user-test/user-test.component';
+import { FormsModule } from '@angular/forms';
 
 
 const routes: Routes = [
@@ -39,7 +40,7 @@ const routes: Routes = [
   
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  imports: [RouterModule.forRoot(routes) ,FormsModule],
+  exports: [RouterModule ]
 })
 export class AppRoutingModule { }

@@ -1,6 +1,5 @@
 package com.example.backend.Security;
 
-import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.User;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

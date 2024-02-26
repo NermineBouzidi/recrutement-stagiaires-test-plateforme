@@ -16,7 +16,7 @@ public class Quiz  {
     long id ;
     String title ;
     private String question ;
-    private String questionType ;
+    private String questionType ;   
     @ElementCollection
     private List<String> choices;
     @ElementCollection

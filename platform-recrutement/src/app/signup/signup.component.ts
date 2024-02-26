@@ -8,7 +8,7 @@ import {
 } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
 import { User } from '../models/Users';
-import { HttpClient, HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -44,7 +44,7 @@ export class SignupComponent {
       console.log(res)
     })*/
   }
-  formatNumber(input: string): string {
+  formatNumber(input: string): String {
     const numericValue = input.replace(/\D/g, '');
     if (numericValue.length > 0) {
       const formattedValue = numericValue.match(/(\d{1,2})(\d{1,3})(\d{1,3})/);
@@ -60,7 +60,7 @@ export class SignupComponent {
     }
   }
   
-  /*Register(){
+  Register(){
     const formData = new FormData();
     const user: UserDTO = {
       firstname: this.userForm.get('firstname').value,
@@ -70,14 +70,15 @@ export class SignupComponent {
       educationLevel: this.userForm.get('educationLevel').value,
       linkedinUrl: this.userForm.get('linkedinUrl').value,
     };
+    formData.append('file', this.selectedFile);
     formData.append('user', JSON.stringify(user));
-        formData.append('file', this.selectedFile);
-        console.log(JSON.stringify(user));
-    this.h.post("http://localhost:8080/api/auth/signup",formData).subscribe((res: any)=>{
-      console.log(res)
-    })
-  }*/
- 
+    
+    console.log(JSON.stringify(user), this.selectedFile);
+    
+    this.h.post("http://localhost:8080/api/auth/signup", formData).subscribe((res: any) => {
+      console.log(res);
+    });
+ /*
   Register() {
     this.isSubmitted = true;
     
@@ -118,9 +119,10 @@ export class SignupComponent {
         }
       );
     } 
-  }
+  }*/
 }
-export class UserDTO {
+}
+export interface UserDTO {
   firstname:String ;
   lastName:String ;
   email:String;

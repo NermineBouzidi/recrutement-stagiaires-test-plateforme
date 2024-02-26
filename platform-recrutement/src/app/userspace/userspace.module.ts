@@ -4,9 +4,10 @@ import { CommonModule } from '@angular/common';
 import { UserspaceRoutingModule } from './userspace-routing.module';
 import { UserHomeComponent } from './user-home/user-home.component';
 import { UserTestComponent } from './user-test/user-test.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserCodeComponent } from './user-code/user-code.component';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 
 @NgModule({
@@ -20,6 +21,8 @@ import { UserCodeComponent } from './user-code/user-code.component';
     UserspaceRoutingModule,
     ReactiveFormsModule,
     RouterModule,
+    CodemirrorModule,
+    FormsModule
 
   ]
 })

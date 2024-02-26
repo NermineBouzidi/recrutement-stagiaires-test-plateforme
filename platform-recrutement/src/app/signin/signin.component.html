@@ -58,7 +58,7 @@
                 </h1>
                 <form class="space-y-4 md:space-y-6" action="#" [formGroup]="userForm" (ngSubmit)=" Login()">
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
                         <input type="email" name="email" id="email"
                         formControlName="email"
                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
@@ -67,8 +67,9 @@
                                 class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
                             <div *ngIf="userForm.controls['email'].hasError('email')"
                                 class="mt-2 text-sm text-red-600 dark:text-red-500"> Invalid email</div>
+                            </div>
                         </div>
-                    </div>
+                       
                     <div>
                         <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
                         <input type="password" name="password" id="password" placeholder="••••••••••"
@@ -77,8 +78,9 @@
                         <div *ngIf="userForm.controls['password'].touched || userForm.controls['password'].dirty || isSubmitted">
                             <div *ngIf="userForm.controls['password'].hasError('required')"
                                 class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
-                            
+                               
                         </div>
+                       
                     </div>
                     <div class="flex items-center justify-between">
                         <div class="flex items-start">
@@ -92,6 +94,8 @@
                         </div>
                         <a href="#" class="text-sm font-medium text-[#d97a07] hover:underline dark:text-primary-500">Forgot password?</a>
                     </div>
+                    <div *ngIf="errorMessage" class="mt-2 text-sm text-red-600 dark:text-red-500">{{ errorMessage }}</div>
+
                     <button type="submit" class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
                     <p class="text-sm font-light text-gray-500 dark:text-gray-400">
                         Don’t have an account yet? <a  routerLink="/register" routerLinkActive="active" class="font-medium text-[#d97a07] hover:underline dark:text-primary-500">Sign up</a>

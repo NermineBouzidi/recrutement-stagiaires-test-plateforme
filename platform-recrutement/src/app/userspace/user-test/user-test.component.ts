@@ -9,7 +9,10 @@ import { UserspaceService } from '../shared/services/userspace.service';
 })
 export class UserTestComponent {
   data: any[] = [];
-currentQuestion :number=1;
+  currentQuestion :number=1;
+  userAnswers: Map<number, string> = new Map<number, string>();
+  score: number = 0;
+  isTestCompleted: boolean = false; 
   constructor(private http :UserspaceService){
   }
   ngOnInit() {
@@ -23,9 +26,23 @@ currentQuestion :number=1;
     }
     });
   }
-  nextQuestion(){
-   if (this.currentQuestion <this.data.length)
-   this.currentQuestion ++;
+  nextQuestion(selectedChoice: string) {
+    console.log(this.data)
+    if (this.currentQuestion <= this.data.length ) {
+      this.userAnswers.set(this.currentQuestion, selectedChoice);
+      const correctAnswer = this.data[this.currentQuestion -1].answers[0];
+      if (selectedChoice === correctAnswer) {
+        this.score++;
+        console.log(this.score)
+      }
+      this.currentQuestion++;
+      if (this.currentQuestion > this.data.length) {
+        this.isTestCompleted = true; // Mark test as completed
+      }
+    }
+  }
+  checkAnswer(){
+
   }
 
 }
