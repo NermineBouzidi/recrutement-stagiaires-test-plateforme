@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { AdminService } from 'src/app/dashboard/shared/services/admin.service';
 import { UserspaceService } from '../shared/services/userspace.service';
-
+import { timer } from 'rxjs';
+import { takeWhile, tap } from 'rxjs/operators';
 @Component({
   selector: 'app-user-test',
   templateUrl: './user-test.component.html',
@@ -13,8 +14,34 @@ export class UserTestComponent {
   userAnswers: Map<number, string> = new Map<number, string>();
   score: number = 0;
   isTestCompleted: boolean = false; 
+  counter = 120; // Counter in seconds
+  displayTime: string;
   constructor(private http :UserspaceService){
+     timer(1000, 1000) // Initial delay 1 second and interval countdown also 1 second
+      .pipe(
+        takeWhile(() => this.counter > 0),
+        tap(() => {
+          this.counter--;
+          this.displayTime = this.secondsToHHMMSS(this.counter);
+        })
+      )
+      .subscribe(() => {
+        // Add your more code
+      });
   }
+
+  private secondsToHHMMSS(seconds: number): string {
+    const hours = Math.floor(seconds / 3600);
+    const minutes = Math.floor((seconds % 3600) / 60);
+    const remainingSeconds = seconds % 60;
+
+    const hoursStr = hours < 10 ? '0' + hours : hours;
+    const minutesStr = minutes < 10 ? '0' + minutes : minutes;
+    const secondsStr = remainingSeconds < 10 ? '0' + remainingSeconds : remainingSeconds;
+
+    return `${hoursStr}:${minutesStr}:${secondsStr}`;
+  }
+
   ngOnInit() {
     this.loadQuiz();
   }

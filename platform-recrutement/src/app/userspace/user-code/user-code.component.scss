@@ -1,3 +1,18 @@
-@import '~codemirror/lib/codemirror.css';
-@import "node_modules/@uiw/codemirror-theme-dracula";
 
+/* user-code.component.scss */
+
+
+  /* Include CodeMirror dark theme */
+  @import '~codemirror/theme/darcula.css';
+  
+.split-container {
+    display: flex;
+    height: 100vh; /* Set container height for responsiveness */
+    width: auto;
+  }
+  
+  .left-pane, .right-pane {
+    border: 1px solid gray;
+    padding: 10px;
+  }
+  

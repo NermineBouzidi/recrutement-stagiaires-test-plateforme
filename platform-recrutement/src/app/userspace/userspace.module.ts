@@ -21,8 +21,9 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
     UserspaceRoutingModule,
     ReactiveFormsModule,
     RouterModule,
-    CodemirrorModule,
-    FormsModule
+    FormsModule,
+    CodemirrorModule
+
 
   ]
 })
