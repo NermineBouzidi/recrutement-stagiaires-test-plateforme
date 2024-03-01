@@ -14,7 +14,9 @@ export class UserHomeComponent {
     const token = this.http.getToken();
     if (token) {
       const decodedToken :any = jwtDecode(token);
-      this.fullname = decodedToken.name;
+      let name = decodedToken.name;
+      this.fullname = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
     }
   }
 

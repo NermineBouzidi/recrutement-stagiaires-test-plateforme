@@ -9,7 +9,7 @@
   <div class="flex w-full h-screen" >
     <div class="left-pane w-full" flex="1">Left Pane Content</div>
     <div class="right-pane w-full" flex="2">
-        <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="onLanguageChange()">
+        <select id="languageSelect" [(ngModel)]="selectedLanguage" (change)="onLanguageChange()" class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-auto mb-10 p-2.5">
           <option value="text/x-mysql">MySQL</option>
           <option value="text/x-java">Java</option>
           <option value="text/x-python">Python</option>
@@ -23,4 +23,5 @@
       </ngx-codemirror>
     </div>
   </div>
+  
   

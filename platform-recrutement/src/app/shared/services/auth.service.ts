@@ -55,7 +55,7 @@ login(email, password) {
 logout() {
     // remove user from local storage and set current user to null
     sessionStorage.removeItem('user');
-    this.userSubject.next(null);
+    this.loginSubject.next(null);
     this.router.navigate(['/login']);
 }
 

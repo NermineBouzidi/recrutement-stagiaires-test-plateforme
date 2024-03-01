@@ -9,7 +9,7 @@
   <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
     <thead class="text-[#1d2736]">
       <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0" *ngFor="
-      let quiz of data 
+      let quiz of data | paginate : { itemsPerPage: 3, currentPage: p }
     ">
         <th class="p-3 text-left">Title</th>
         <th class="p-3 text-left">Question</th>

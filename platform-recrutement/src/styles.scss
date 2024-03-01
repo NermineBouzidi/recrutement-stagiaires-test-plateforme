@@ -11,3 +11,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import '~codemirror/lib/codemirror.css';
 @import '~codemirror/addon/lint/lint.css';
 @import '~codemirror/addon/hint/show-hint.css';
+@import 'codemirror/theme/night';
+@import 'codemirror/theme/darcula';
+

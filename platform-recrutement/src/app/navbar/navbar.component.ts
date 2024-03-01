@@ -9,6 +9,11 @@ import { MatSidenav } from '@angular/material/sidenav';
   
 })
 export class NavbarComponent {
- 
+  isMenuOpen = false;
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+    console.log(this.isMenuOpen)
+  }
 
 }

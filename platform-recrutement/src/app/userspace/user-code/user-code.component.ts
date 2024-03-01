@@ -11,9 +11,9 @@ export class UserCodeComponent {
   counter = 120; // Counter in seconds
   displayTime: string;
   selectedLanguage: string ="text/x-java"; // Default language
-
   codeMirrorOptions: any = {
     mode: "text/x-java",
+    theme:"darcula",
     indentWithTabs: true,
     smartIndent: true,
     lineNumbers: true,

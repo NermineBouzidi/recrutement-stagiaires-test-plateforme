@@ -1,61 +1,55 @@
-<nav class="bg-white border-gray-200 fixed w-screen ">
+
+<nav class="bg-white border-gray-200 fixed w-full">
     <div class="flex flex-wrap space-x-3 mx-auto max-w-screen-xl p-4 justify-between">
-        <div class="flex items-center space-x-4 rtl:space-x-reverse ">
-            <a href="" class="flex items-center space-x-3 rtl:space-x-reverse" routerLink="/home"
-                routerLinkActive="active">
-                <img src="assets/logo.png" class="h-12" alt="logo" />
-            </a>
-        </div>
-        <button data-collapse-toggle="mobile-menu-3" type="button" class="md:hidden text-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg inline-flex items-center justify-center" aria-controls="mobile-menu-3" aria-expanded="false">
-            <span class="sr-only">Open main menu</span>
-            <svg  class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
-            <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-          </button>
-        <div class="hidden md:flex justify-between items-center w-full md:w-auto " id="mobile-menu-3">
-            <ul class="flex-col md:flex-row flex md:space-x-2 mt-4 md:mt-0 md:text-sm md:font-medium">
-                <li class="p-3 "><a href="https://twitter.com/majesteye" target="_blank" name="twitter" class="hover:text-[#d97a07] "><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
-                            shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
-                            image-rendering="optimizeQuality" fill="currentColor" clip-rule="evenodd"
-                            viewBox="0 0 640 640">
-                            <path
-                                d="M640.012 121.513c-23.528 10.524-48.875 17.516-75.343 20.634 27.118-16.24 47.858-41.977 57.756-72.615-25.347 14.988-53.516 25.985-83.363 31.866-24-25.5-58.087-41.35-95.848-41.35-72.508 0-131.21 58.736-131.21 131.198 0 10.228 1.134 20.232 3.355 29.882-109.1-5.528-205.821-57.757-270.57-137.222a131.423 131.423 0 0 0-17.764 66c0 45.497 23.102 85.738 58.347 109.207-21.508-.638-41.74-6.638-59.505-16.359v1.642c0 63.627 45.225 116.718 105.32 128.718-11.008 2.988-22.63 4.642-34.606 4.642-8.48 0-16.654-.874-24.78-2.35 16.783 52.11 65.233 90.095 122.612 91.205-44.989 35.245-101.493 56.233-163.09 56.233-10.63 0-20.988-.65-31.334-1.89 58.229 37.359 127.206 58.997 201.31 58.997 241.42 0 373.552-200.069 373.552-373.54 0-5.764-.13-11.35-.366-16.996 25.642-18.343 47.87-41.493 65.469-67.844l.059-.059z" />
-                        </svg>
-                    </a>
-                </li>
+      <div class="flex items-center space-x-4 rtl:space-x-reverse">
+        <a href="" class="flex items-center space-x-3 rtl:space-x-reverse" routerLink="/home" routerLinkActive="active">
+          <img src="assets/logo.png" class="h-12" alt="logo">
+        </a>
+      </div>
+      <button (click)="toggleMenu()" type="button" class="md:hidden text-gray-400 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-300 rounded-lg inline-flex items-center justify-center" aria-controls="mobile-menu" aria-expanded="false">
+        <span class="sr-only">Open main menu</span>
+        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M3 5a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zM3 15a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd"></path></svg>
+        <svg class="hidden w-6 h-6" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10l-4.293-4.293z" clip-rule="evenodd"></path></svg>
+      </button>
+      <div class="hidden md:flex justify-between items-center w-full md:w-auto " id="mobile-menu" [ngClass]="{ 'block': isMenuOpen, 'hidden': !isMenuOpen }">
+        <ul class="flex-col md:flex-row flex md:space-x-2 mt-4 md:mt-0 md:text-sm md:font-medium ">
+          <li class="p-3"><a href="https://twitter.com/majesteye" target="_blank" name="twitter" class="hover:text-[#d97a07] "><svg xmlns="http://www.w3.org/2000/svg" width="15" height="15"
+            shape-rendering="geometricPrecision" text-rendering="geometricPrecision"
+            image-rendering="optimizeQuality" fill="currentColor" clip-rule="evenodd"
+            viewBox="0 0 640 640">
+            <path
+                d="M640.012 121.513c-23.528 10.524-48.875 17.516-75.343 20.634 27.118-16.24 47.858-41.977 57.756-72.615-25.347 14.988-53.516 25.985-83.363 31.866-24-25.5-58.087-41.35-95.848-41.35-72.508 0-131.21 58.736-131.21 131.198 0 10.228 1.134 20.232 3.355 29.882-109.1-5.528-205.821-57.757-270.57-137.222a131.423 131.423 0 0 0-17.764 66c0 45.497 23.102 85.738 58.347 109.207-21.508-.638-41.74-6.638-59.505-16.359v1.642c0 63.627 45.225 116.718 105.32 128.718-11.008 2.988-22.63 4.642-34.606 4.642-8.48 0-16.654-.874-24.78-2.35 16.783 52.11 65.233 90.095 122.612 91.205-44.989 35.245-101.493 56.233-163.09 56.233-10.63 0-20.988-.65-31.334-1.89 58.229 37.359 127.206 58.997 201.31 58.997 241.42 0 373.552-200.069 373.552-373.54 0-5.764-.13-11.35-.366-16.996 25.642-18.343 47.87-41.493 65.469-67.844l.059-.059z" />
+        </svg>
+    </a></li>
+          <li class="p-3"><a href="https://www.linkedin.com/company/majesteye/" target="_blank" name="linkedin" class="hover:text-[#d97a07]"><svg xmlns="http://www.w3.org/2000/svg"
+            xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" version="1.1" width="15"
+            height="15" viewBox="0 0 512 512" xml:space="preserve">
 
-                <li class="p-3"><a href="https://www.linkedin.com/company/majesteye/" target="_blank" name="linkedin" class="hover:text-[#d97a07]"><svg xmlns="http://www.w3.org/2000/svg"
-                            xmlns:xlink="http://www.w3.org/1999/xlink" fill="currentColor" version="1.1" width="15"
-                            height="15" viewBox="0 0 512 512" xml:space="preserve">
+            <g id="7935ec95c421cee6d86eb22ecd125aef">
 
-                            <g id="7935ec95c421cee6d86eb22ecd125aef">
+                <path style="display: inline; fill-rule: evenodd; clip-rule: evenodd;"
+                    d="M116.504,500.219V170.654H6.975v329.564H116.504   L116.504,500.219z M61.751,125.674c38.183,0,61.968-25.328,61.968-56.953c-0.722-32.328-23.785-56.941-61.252-56.941   C24.994,11.781,0.5,36.394,0.5,68.722c0,31.625,23.772,56.953,60.53,56.953H61.751L61.751,125.674z M177.124,500.219   c0,0,1.437-298.643,0-329.564H286.67v47.794h-0.727c14.404-22.49,40.354-55.533,99.44-55.533   c72.085,0,126.116,47.103,126.116,148.333v188.971H401.971V323.912c0-44.301-15.848-74.531-55.497-74.531   c-30.254,0-48.284,20.38-56.202,40.08c-2.897,7.012-3.602,16.861-3.602,26.711v184.047H177.124L177.124,500.219z">
 
-                                <path style="display: inline; fill-rule: evenodd; clip-rule: evenodd;"
-                                    d="M116.504,500.219V170.654H6.975v329.564H116.504   L116.504,500.219z M61.751,125.674c38.183,0,61.968-25.328,61.968-56.953c-0.722-32.328-23.785-56.941-61.252-56.941   C24.994,11.781,0.5,36.394,0.5,68.722c0,31.625,23.772,56.953,60.53,56.953H61.751L61.751,125.674z M177.124,500.219   c0,0,1.437-298.643,0-329.564H286.67v47.794h-0.727c14.404-22.49,40.354-55.533,99.44-55.533   c72.085,0,126.116,47.103,126.116,148.333v188.971H401.971V323.912c0-44.301-15.848-74.531-55.497-74.531   c-30.254,0-48.284,20.38-56.202,40.08c-2.897,7.012-3.602,16.861-3.602,26.711v184.047H177.124L177.124,500.219z">
+                </path>
 
-                                </path>
+            </g>
 
-                            </g>
-
-                        </svg></a>
-                </li>
-                    <li class="p-3"><a href="https://www.facebook.com/majesteye" target="_blank" name="facebook" class="hover:text-[#d97a07]" >
-                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                            fill="currentColor" version="1.1" width="15" height="15" viewBox="0 0 512 512"
-                            xml:space="preserve">
+        </svg></a></li>
+          <li class="p-3"><a href="https://www.facebook.com/majesteye" target="_blank" name="facebook" class="hover:text-[#d97a07]" >
+            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                fill="currentColor" version="1.1" width="15" height="15" viewBox="0 0 512 512"
+                xml:space="preserve">
 
 
-                            <path style="display: inline;"
-                                d="M283.122,122.174c0,5.24,0,22.319,0,46.583h83.424l-9.045,74.367h-74.379   c0,114.688,0,268.375,0,268.375h-98.726c0,0,0-151.653,0-268.375h-51.443v-74.367h51.443c0-29.492,0-50.463,0-56.302   c0-27.82-2.096-41.02,9.725-62.578C205.948,28.32,239.308-0.174,297.007,0.512c57.713,0.711,82.04,6.263,82.04,6.263   l-12.501,79.257c0,0-36.853-9.731-54.942-6.263C293.539,83.238,283.122,94.366,283.122,122.174z">
+                <path style="display: inline;"
+                    d="M283.122,122.174c0,5.24,0,22.319,0,46.583h83.424l-9.045,74.367h-74.379   c0,114.688,0,268.375,0,268.375h-98.726c0,0,0-151.653,0-268.375h-51.443v-74.367h51.443c0-29.492,0-50.463,0-56.302   c0-27.82-2.096-41.02,9.725-62.578C205.948,28.32,239.308-0.174,297.007,0.512c57.713,0.711,82.04,6.263,82.04,6.263   l-12.501,79.257c0,0-36.853-9.731-54.942-6.263C293.539,83.238,283.122,94.366,283.122,122.174z">
 
-                            </path>
+                </path>
 
-                        </svg>
-                    </a>
-                </li>
-               
-            </ul>
-        </div>
-           
+            </svg>
+        </a></li>
+        </ul>
+      </div>
     </div>
-
-</nav>
+  </nav>
+  
