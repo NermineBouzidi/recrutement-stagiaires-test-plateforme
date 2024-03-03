@@ -1,7 +1,7 @@
+import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { timer } from 'rxjs';
 import { takeWhile, tap } from 'rxjs/operators';
-
 @Component({
   selector: 'app-user-code',
   templateUrl: './user-code.component.html',
@@ -13,11 +13,11 @@ export class UserCodeComponent {
   selectedLanguage: string ="text/x-java"; // Default language
   codeMirrorOptions: any = {
     mode: "text/x-java",
-    theme:"darcula",
+    theme:"dracula",
     indentWithTabs: true,
     smartIndent: true,
     lineNumbers: true,
-    lineWrapping: false,
+    lineWrapping: true,
     extraKeys: { "Ctrl-Space": "autocomplete" },
     gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"],
     autoCloseBrackets: true,
@@ -25,6 +25,7 @@ export class UserCodeComponent {
     lint: true,
 
   };
+  
 
   query: string;
 
@@ -35,8 +36,9 @@ export class UserCodeComponent {
 
 
   }
+  
 
-  constructor() {
+  constructor(private http :HttpClient) {
     timer(1000, 1000) // Initial delay 1 second and interval countdown also 1 second
       .pipe(
         takeWhile(() => this.counter > 0),
@@ -87,5 +89,18 @@ export class UserCodeComponent {
     this.codeMirrorOptions.mode = this.selectedLanguage;
     this.updateCode()
   }
-  
+  runPythonCode() {
+    const apiUrl = "http://localhost:8080/api/run-python-code";  // Replace with your actual API endpoint
+
+    this.http.post(apiUrl, this.query )
+      .subscribe(
+        (data: any) => {
+          // Handle the response (e.g., display output, errors, etc.).
+          console.log(data);
+        },
+        error => {
+          console.error('Error:', error);
+        }
+      );
+  }
 }

@@ -34,7 +34,7 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
     BrowserAnimationsModule,
     NgxPaginationModule,
     NgxMaskDirective,
-    CodemirrorModule
+    CodemirrorModule,
   
   ],
   providers: [

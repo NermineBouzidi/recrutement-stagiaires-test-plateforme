@@ -1,8 +1,9 @@
-<section class="bg-[#e6eaed] dark:bg-gray-900 ">
-    <div class="flex flex-col items-center justify-center ">
-        <p class="text-4xl mb-4">{{ displayTime }}</p> </div>
-    <p *ngIf="counter === 0">Countdown complete!</p>
-    <div class="flex flex-col items-center min-h-screen justify-center px-6 py-12 mx-auto">
+<section class="bg-[#e6eaed] h-screen">
+     <div class=" flex items-center justify-center py-12 ">
+        <div class="bg-[#e7e7e7] hover:bg-gray-100 text-[#7b7b7b] font-bold py-2 px-4 rounded inline-flex items-center">
+            <span >{{ displayTime }}</span>
+          </div>    </div>
+    <div class="flex flex-col items-center  justify-center  mx-auto">
         <div class="w-full bg-white rounded-lg shadow sm:max-w-xl  container ">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8" *ngIf="data.length > 0 && currentQuestion <= data.length ">
                 <span class=" poppins-regular text-[#0D2E4D] text-xl font-semibold"> {{ data[currentQuestion -

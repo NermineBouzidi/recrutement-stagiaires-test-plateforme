@@ -1,83 +1,34 @@
 <app-navbar></app-navbar>
-<!-- 
-
-<div class="min-h-screen bg-[#e6eaed] py-6 flex flex-col justify-center sm:py-12">
-    <div class="relative py-3 sm:max-w-xl sm:mx-auto">
-        <div class="absolute inset-0 bg-gradient-to-r  shadow-lg transform -skew-y-6 sm:skew-y-0 sm:-rotate-6 sm:rounded-3xl">
-        </div>
-        <div class="relative px-4 py-10 bg-white shadow-lg sm:rounded-3xl sm:p-20">
-            <div class="max-w-md mx-auto">
-                <div>
-                    <h1 class="text-2xl font-semibold text-[#1d2736]">Login Form with Floating Labels</h1>
-                </div>
-                <div class="divide-y divide-gray-200">
-                    <form  #userForm="ngForm">
-                        <div class="relative">
-                            <label for="firstname" class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">First Name</label>
-
-                            <input autocomplete="off" id="email" [(ngModel)]="loginObj.email" name="email" type="text" formControlName="email"
-                                class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                                placeholder="Email" required />
-                            <div *ngIf="userForm.controls['email'].touched || userForm.controls['email'].dirty">
-                                <div *ngIf="userForm.controls['email'].hasError('required')"
-                                    class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
-                                <div *ngIf="userForm.controls['email'].hasError('email')"
-                                    class="mt-2 text-sm text-red-600 dark:text-red-500"> Invalid email</div>
-                            </div>
-                        </div>
-                        <div class="relative">
-                            <input autocomplete="off" id="password" [(ngModel)]="loginObj.password" name="password"
-                                type="password"
-                                class="peer placeholder-transparent h-10 w-full border-b-2 border-gray-300 text-gray-900 focus:outline-none focus:borer-rose-600"
-                                placeholder="Password" required />
-                            <label for="password"
-                                class="absolute left-0 -top-3.5 text-gray-600 text-sm peer-placeholder-shown:text-base peer-placeholder-shown:text-gray-440 peer-placeholder-shown:top-2 transition-all peer-focus:-top-3.5 peer-focus:text-gray-600 peer-focus:text-sm">Password</label>
-                            <div *ngIf="userForm.controls['password'].touched || userForm.controls['password'].dirty">
-                                <div *ngIf="userForm.controls['password'].hasError('required')"
-                                    class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
-                            </div>
-                        </div>
-
-                        <div class="relative">
-                            <button class="rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] focus:outline-none focus:ring active:text-opacity-75 sm:w-auto text-white rounded-md px-12 py-1"
-                                type="submit">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> -->
-<section class="bg-[#e6eaed] dark:bg-gray-900 ">
+<section class="bg-[#e6eaed] ">
     <div class="flex flex-col items-center min-h-screen justify-center px-6 py-12 mx-auto  lg:py-0">
       
-        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 container">
+        <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 container">
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <h1 class="text-xl font-bold leading-tight tracking-tight text-[#1d2736] md:text-2xl dark:text-white">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-[#1d2736] md:text-2xl ">
                     Sign in to your account
                 </h1>
                 <form class="space-y-4 md:space-y-6" action="#" [formGroup]="userForm" (ngSubmit)=" Login()">
                     <div>
-                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Email</label>
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
                         <input type="email" name="email" id="email"
                         formControlName="email"
-                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="name@company.com" required="">
+                         class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " placeholder="name@company.com" required="">
                         <div *ngIf="userForm.controls['email'].touched || userForm.controls['email'].dirty ||isSubmitted">
                             <div *ngIf="userForm.controls['email'].hasError('required')"
-                                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+                                class="mt-2 text-sm text-red-600 "> This field is required</div>
                             <div *ngIf="userForm.controls['email'].hasError('email')"
-                                class="mt-2 text-sm text-red-600 dark:text-red-500"> Invalid email</div>
+                                class="mt-2 text-sm text-red-600 "> Invalid email</div>
                             </div>
                         </div>
                        
                     <div>
-                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
                         <input type="password" name="password" id="password" placeholder="••••••••••"
                         formControlName="password"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required="">
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
                         <div *ngIf="userForm.controls['password'].touched || userForm.controls['password'].dirty || isSubmitted">
                             <div *ngIf="userForm.controls['password'].hasError('required')"
-                                class="mt-2 text-sm text-red-600 dark:text-red-500"> This field is required</div>
+                                class="mt-2 text-sm text-red-600 "> This field is required</div>
                                
                         </div>
                        
@@ -85,20 +36,20 @@
                     <div class="flex items-center justify-between">
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
-                              <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
+                              <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required="">
                            
                             </div>
                             <div class="ml-3 text-sm">
-                              <label for="remember" class="text-gray-500 dark:text-gray-300">Remember me</label>
+                              <label for="remember" class="text-gray-500 ">Remember me</label>
                             </div>
                         </div>
-                        <a href="#" class="text-sm font-medium text-[#d97a07] hover:underline dark:text-primary-500">Forgot password?</a>
+                        <a href="#" class="text-sm font-medium text-[#d97a07] hover:underline ">Forgot password?</a>
                     </div>
-                    <div *ngIf="errorMessage" class="mt-2 text-sm text-red-600 dark:text-red-500">{{ errorMessage }}</div>
+                    <div *ngIf="errorMessage" class="mt-2 text-sm text-red-600 ">{{ errorMessage }}</div>
 
-                    <button type="submit" class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Sign in</button>
-                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                        Don’t have an account yet? <a  routerLink="/register" routerLinkActive="active" class="font-medium text-[#d97a07] hover:underline dark:text-primary-500">Sign up</a>
+                    <button type="submit" class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>
+                    <p class="text-sm font-light text-gray-500 ">
+                        Don’t have an account yet? <a  routerLink="/register" routerLinkActive="active" class="font-medium text-[#d97a07] hover:underline ">Sign up</a>
                     </p>
                 </form>
             </div>

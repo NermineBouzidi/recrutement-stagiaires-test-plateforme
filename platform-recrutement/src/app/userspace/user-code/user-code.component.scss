@@ -1,18 +1,43 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" );
 
-/* user-code.component.scss */
-
-
-  /* Include CodeMirror dark theme */
-  @import '~codemirror/theme/darcula.css';
+.container{
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  padding:15px;
+  background:rgba(255, 255, 255, 0.66);
+  border-radius:50%;
+  transition:all 0.3s ease-in;
+  box-shadow: 10px 10px 10px rgba(0,0,0,0.1),
+    -10px -10px 10px rgba(255,255,255,0.6);
+}
+.container .fas{
+  display:grid;
+  place-items:center;
+  font-size:15px;
+  color:#7b7b7b;
+}
+.container:active{
+  box-shadow: inset 10px 10px 10px rgba(0,0,0,0.1),
+    inset -10px -10px 10px rgba(255,255,255,0.6);
+}
+.container:active .fas{
+  color:#d97a07;
+}
   
-.split-container {
-    display: flex;
-    height: 100vh; /* Set container height for responsiveness */
-    width: auto;
-  }
+
   
   .left-pane, .right-pane {
-    border: 1px solid gray;
-    padding: 10px;
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    margin: 10px;
   }
   
+  .container2 {
+    border-radius: 20px;
+
+  }
+  
+

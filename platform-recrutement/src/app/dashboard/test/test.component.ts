@@ -47,6 +47,7 @@ export class TestComponent {
  // return tests
  
   openDialog() {
+    
     this.isDialogOpen = true;
   }
 
