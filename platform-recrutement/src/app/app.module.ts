@@ -16,6 +16,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { AlertComponent } from './alert/alert.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
     SignupComponent,
     SigninComponent,
     NavbarComponent,
+    AlertComponent,
   ],
   imports: [
     BrowserModule,

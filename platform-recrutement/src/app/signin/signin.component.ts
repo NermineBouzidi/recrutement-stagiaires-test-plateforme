@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormGroup,FormControl,FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../shared/services/auth.service';
+import { ToastrService } from '../shared/services/toastr.service';
 
 @Component({
   selector: 'app-signin',
@@ -14,8 +15,8 @@ export class SigninComponent {
  isSubmitted :boolean=false;
  userForm :FormGroup;
  errorMessage: string;
-
-  constructor (private http : AuthService, private router:Router,private fb: FormBuilder){
+ alertMessage: string = 'Login successful.';
+  constructor (private http : AuthService, private router:Router,private fb: FormBuilder , private toastr : ToastrService){
     this.loginObj=new login;
     this.userForm  =this.fb.group(
       {password:new FormControl("",[Validators.required]),
@@ -29,11 +30,11 @@ export class SigninComponent {
     this.loginObj.password= this.userForm.value.password;
     this.http.login(this.userForm.value.email, this.userForm.value.password).subscribe((res: any) => {
       if (res.role=='ROLE_USER') {
-        alert("login successful");
+        this.toastr.showToas("login successfull")
         this.router.navigateByUrl("/user");
       } else {
         if  (res.role=='ROLE_ADMIN') {
-          alert("login successful");
+          this.toastr.showToas("login successfull")
           this.router.navigateByUrl("/dashboard");
 
     }}

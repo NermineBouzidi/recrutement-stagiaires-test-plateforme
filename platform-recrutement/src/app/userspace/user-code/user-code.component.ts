@@ -89,18 +89,11 @@ export class UserCodeComponent {
     this.codeMirrorOptions.mode = this.selectedLanguage;
     this.updateCode()
   }
-  runPythonCode() {
-    const apiUrl = "http://localhost:8080/api/run-python-code";  // Replace with your actual API endpoint
 
-    this.http.post(apiUrl, this.query )
-      .subscribe(
-        (data: any) => {
-          // Handle the response (e.g., display output, errors, etc.).
-          console.log(data);
-        },
-        error => {
-          console.error('Error:', error);
-        }
-      );
+  Submit(){
+    this.http.post("http://localhost:8080/api/compile",this.query).subscribe((res: any)=>{
+      console.log(res)
+    })
   }
+ 
 }
