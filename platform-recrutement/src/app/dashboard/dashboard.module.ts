@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { JwtInterceptor } from '../shared/services/jwt.interceptor.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { ProfileComponent } from './profile/profile.component';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
     TestComponent,
     UserComponent,
     SidebarComponent,
-    UidashboardComponent
+    UidashboardComponent,
+    ProfileComponent
   ],
   imports: [
     CommonModule,

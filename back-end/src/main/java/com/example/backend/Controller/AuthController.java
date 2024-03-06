@@ -59,14 +59,18 @@ public class AuthController {
         }
     }
     @PostMapping("/signup" )
-    public ResponseEntity<String> signup (@RequestPart("user") User user , @RequestPart("file") MultipartFile file) {
-        System.out.println("Received User: " + user);
-        System.out.println("Received File: " + file.getOriginalFilename());
-        String s= userService.signup(user,file);
+    public ResponseEntity<String> signup ( @RequestParam String firstname,
+                                           @RequestParam String lastName,
+                                           @RequestParam String email,
+                                           @RequestParam String number,
+                                           @RequestParam String educationLevel,
+                                           @RequestParam String linkedinUrl, @RequestPart("file") MultipartFile file) {
 
-        if(s.equals("Registration successful")) {
-            return ResponseEntity.ok("Registration successful");
-        } else {
+        User user = new User(firstname,lastName,email,number,educationLevel,linkedinUrl);
+        String s= userService.signup(user,file);
+            if(s.equals("Registration successful")) {
+                return ResponseEntity.ok("Registration successful");
+            } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
         }

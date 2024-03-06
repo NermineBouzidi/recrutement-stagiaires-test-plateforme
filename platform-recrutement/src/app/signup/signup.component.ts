@@ -9,6 +9,7 @@ import {
 import { AuthService } from '../shared/services/auth.service';
 import { User } from '../models/Users';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { ToastrService } from '../shared/services/toastr.service';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class SignupComponent {
   selectedFile: File;
 
   
-  constructor(private http: AuthService, private fb: FormBuilder,private h :HttpClient) {
+  constructor(private http: AuthService, private fb: FormBuilder, private toastr : ToastrService) {
     this.userForm = this.fb.group({
       firstname: new FormControl('', [Validators.required ,Validators.pattern(/^[a-zA-Z ]+$/)]),
       lastName: new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]+$/)]),
@@ -44,7 +45,7 @@ export class SignupComponent {
       console.log(res)
     })*/
   }
-  formatNumber(input: string): String {
+  formatNumber(input: string): string {
     const numericValue = input.replace(/\D/g, '');
     if (numericValue.length > 0) {
       const formattedValue = numericValue.match(/(\d{1,2})(\d{1,3})(\d{1,3})/);
@@ -60,47 +61,24 @@ export class SignupComponent {
     }
   }
   
-  Register(){
-    const formData = new FormData();
-    const user: UserDTO = {
-      firstname: this.userForm.get('firstname').value,
-      lastName: this.userForm.get('lastName').value, // Corrected property name
-      email: this.userForm.get('email').value,
-      number: this.formatNumber(this.userForm.get('number').value) ,
-      educationLevel: this.userForm.get('educationLevel').value,
-      linkedinUrl: this.userForm.get('linkedinUrl').value,
-    };
-    formData.append('file', this.selectedFile);
-    formData.append('user', JSON.stringify(user));
-    
-    console.log(JSON.stringify(user), this.selectedFile);
-    
-    this.h.post("http://localhost:8080/api/auth/signup", formData).subscribe((res: any) => {
-      console.log(res);
-    });
- /*
+  
+ 
   Register() {
     this.isSubmitted = true;
     
    if (this.userForm.valid) {
-      const user: UserDTO = {
-        firstname: this.userForm.get('firstname').value,
-        lastName: this.userForm.get('lastName').value, // Corrected property name
-        email: this.userForm.get('email').value,
-        linkedinUrl: this.userForm.get('linkedinUrl').value,
-        number: this.formatNumber(this.userForm.get('number').value) ,
-        educationLevel: this.userForm.get('educationLevel').value,
-      };
-    //  const file :File =this.userForm.get('resume').value;
-      this.http.register(user).subscribe(
-        (response: HttpResponse<any>) => {
-          console.log('Response:', response); // Log the entire response for debugging
+    const formData = new FormData();
+    formData.append('file', this.selectedFile);
+    formData.append('firstname', this.userForm.get('firstname').value);
+    formData.append('lastName', this.userForm.get('lastName').value);
+    formData.append('email', this.userForm.get('email').value);
+    formData.append('number', this.formatNumber(this.userForm.get('number').value));
+    formData.append('educationLevel', this.userForm.get('educationLevel').value);
+    formData.append('linkedinUrl', this.userForm.get('linkedinUrl').value);    
+      this.http.signup(formData).subscribe((res: any) => {
 
-          if (
-            response.body &&
-            response.body.includes("Registration successful")
-          ) {
-            alert('Registration successful');
+          if (  res.body &&  res.body.includes("Registration successful")) {
+            this.toastr.showToas("login successfull")
             // Redirect to a new page or perform any other actions after successful registration
           } else {
             alert('login failed');
@@ -119,9 +97,9 @@ export class SignupComponent {
         }
       );
     } 
-  }*/
+  }
 }
-}
+
 export interface UserDTO {
   firstname:String ;
   lastName:String ;
