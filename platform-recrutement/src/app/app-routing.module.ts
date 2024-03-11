@@ -18,15 +18,11 @@ const routes: Routes = [
   { path: 'login', component: SigninComponent },
   { path: 'register', component: SignupComponent }, 
   {
-    path: 'dashboard', canActivate:[UserGuard],
-    data: { requiredRole: 'ROLE_ADMIN' },
+    path: 'dashboard', //canActivate:[UserGuard],
+    //data: { requiredRole: 'ROLE_ADMIN' },
     component: UidashboardComponent,
-    children: [
-      { path: '', redirectTo: 'uidash', pathMatch: 'full' },
-      { path: 'uidash', component: UidashboardComponent },
-      { path: 'user', component: UserComponent },
-      { path: 'test', component: TestComponent }
-    ]
+    loadChildren: () => import('./dashboard/dashboard.module').then((m)=> m.DashboardModule)
+
   },
   {
     path:'user', canActivate:[UserGuard],

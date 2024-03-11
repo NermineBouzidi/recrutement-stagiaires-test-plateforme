@@ -11,6 +11,7 @@ import { JwtInterceptor } from '../shared/services/jwt.interceptor.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProfileComponent } from './profile/profile.component';
+import { DashComponent } from './dash/dash.component';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import { ProfileComponent } from './profile/profile.component';
     UserComponent,
     SidebarComponent,
     UidashboardComponent,
-    ProfileComponent
+    ProfileComponent,
+    DashComponent
   ],
   imports: [
     CommonModule,

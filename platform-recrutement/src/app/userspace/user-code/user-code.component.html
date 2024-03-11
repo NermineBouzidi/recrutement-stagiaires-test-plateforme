@@ -2,7 +2,7 @@
 <div class="bg-[#e6eaed]  ">
 
   <div class="flex items-center justify-center gap-1 py-2">
-    <div class="container w-12 h-12 ">
+    <div class="container w-12 h-12 " (click)="Submit()">
       <i class="fas fa-play"></i>
     </div>
     <button class="bg-[#e7e7e7] hover:bg-gray-100 text-[#14b738] font-semibold py-2 px-4 rounded inline-flex items-center" >
@@ -32,7 +32,8 @@
 
   <div class="flex w-full min-h-screen">
     <div class="left-pane w-full bg-white rounded-lg shadow  container2 " flex="1">
-      Left Pane Content
+      Left Pane Content      
+
     </div>
     <div class="right-pane w-full bg-white rounded-lg shadow  container2 " flex="2">
         <div class="inline-flex items-center gap-2">
@@ -50,7 +51,10 @@
 
         >
       </ngx-codemirror>
-      <button (click)="Submit()" >Submit</button>
+      <div class="mt-4">
+        <h3 class="text-lg font-bold text-black">Output:</h3>
+        <pre>{{ output }}</pre>
+      </div>
     </div>
   </div>
 

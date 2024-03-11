@@ -10,6 +10,7 @@ import { takeWhile, tap } from 'rxjs/operators';
 export class UserCodeComponent {
   counter = 120; // Counter in seconds
   displayTime: string;
+  output : [any];
   selectedLanguage: string ="text/x-java"; // Default language
   codeMirrorOptions: any = {
     mode: "text/x-java",
@@ -33,7 +34,6 @@ export class UserCodeComponent {
     console.log(this.query);
     this.onLanguageChange();
     this.updateCode();
-
 
   }
   
@@ -91,9 +91,12 @@ export class UserCodeComponent {
   }
 
   Submit(){
-    this.http.post("http://localhost:8080/api/compile",this.query).subscribe((res: any)=>{
-      console.log(res)
-    })
+    const code = this.query;
+    //const output = new Function(`return ${code}`)(); // Execute code with caution
+    this.output = eval(code);
+
+    console.log(this.output);
+    
   }
  
 }
