@@ -47,53 +47,33 @@ public class AuthController {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @PostMapping("/register")
-    public ResponseEntity<String> register (@RequestBody User user ) {
-       String s= userService.addUser(user);
 
-        if(s.equals("Registration successful")) {
+    @PostMapping("/signup")
+    public ResponseEntity<String> signup(@RequestParam String firstname,
+                                         @RequestParam String lastName,
+                                         @RequestParam String email,
+                                         @RequestParam String number,
+                                         @RequestParam String educationLevel,
+                                         @RequestParam String linkedinUrl, @RequestPart("file") MultipartFile file) {
+
+        User user = new User(firstname, lastName, email, number, educationLevel, linkedinUrl);
+        String s = userService.signup(user, file);
+        if (s.equals("Registration successful")) {
             return ResponseEntity.ok("Registration successful");
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
         }
     }
-    @PostMapping("/signup" )
-    public ResponseEntity<String> signup ( @RequestParam String firstname,
-                                           @RequestParam String lastName,
-                                           @RequestParam String email,
-                                           @RequestParam String number,
-                                           @RequestParam String educationLevel,
-                                           @RequestParam String linkedinUrl, @RequestPart("file") MultipartFile file) {
 
-        User user = new User(firstname,lastName,email,number,educationLevel,linkedinUrl);
-        String s= userService.signup(user,file);
-            if(s.equals("Registration successful")) {
-                return ResponseEntity.ok("Registration successful");
-            } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
-
-        }
-    }
-
-    @PostMapping("/addFile")
-    public String addFile (@RequestParam MultipartFile file){
-        return userService.addFile(file);
-    }
-
-
-    @GetMapping("/hi")
-    public String hi (){
-        return "hello";
-    }
 
     @PostMapping("/login")
-    public ResponseEntity<LoginResponse> login (@RequestBody LoginDTO loginDTO){
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginDTO loginDTO) {
         try {
             UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(loginDTO.getEmail(), loginDTO.getPassword());
             authenticationManager.authenticate(token);
             User user = userRepository.findByEmail(loginDTO.getEmail());
-           // LoginResponse loginResponse = new LoginResponse(jwtUtils.generate(user), user.getRole().name());
+            // LoginResponse loginResponse = new LoginResponse(jwtUtils.generate(user), user.getRole().name());
 
             //return ResponseEntity.ok(jwtUtils.generate(user));
             return ResponseEntity.ok(new LoginResponse(jwtUtils.generate(user), user.getRole().name()));
@@ -105,10 +85,34 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
     }
-    @GetMapping("/getAllQuiz")
-    public List<Quiz> getAllQuiz() {
-        return quizService.getAllQuiz();
+
+    @GetMapping("/me")
+    public ResponseEntity<User> getUserProfile(@RequestHeader("Authorization") String authorization) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String token = authorization.substring(7); // Extract token after "Bearer "
+
+        // Validate token (implement your token validation logic here)
+        User user = userRepository.findByEmail(jwtUtils.getUsername(token));
+        if (user == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(user);
+
     }
 
-}
+    @GetMapping("/mee")
+    public ResponseEntity<User> getUserP(@RequestHeader("Authorization") String authorization) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
+        String token = authorization.substring(7); // Extract token after "Bearer "
+
+        // Validate token (implement your token validation logic here)
+        return ResponseEntity.ok(userRepository.findByEmail(jwtUtils.getUsername(token)));
+
+    }
+}

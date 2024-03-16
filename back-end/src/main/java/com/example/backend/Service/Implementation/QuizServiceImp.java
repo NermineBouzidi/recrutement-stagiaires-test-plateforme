@@ -44,6 +44,11 @@ public class QuizServiceImp implements QuizService {
     }
 
     @Override
+    public List<Quiz> getRandomQuiz() {
+        return quizRepository.findAll();
+    }
+
+    @Override
     public String updateQuiz(long id, Quiz quiz) {
 
         Optional<Quiz> existingQuiz = quizRepository.findById(id);

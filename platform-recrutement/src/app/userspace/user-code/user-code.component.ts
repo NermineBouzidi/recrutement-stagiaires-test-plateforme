@@ -79,7 +79,7 @@ export class UserCodeComponent {
     }  else if (this.selectedLanguage === 'text/javascript'){
       this.query = `// JavaScript code example
       function greet(name) {
-          console.log("Hello, " + name + "!");
+          return("Hello, " + name + "!");
       }
       
       greet("World");`
@@ -92,7 +92,6 @@ export class UserCodeComponent {
 
   Submit(){
     const code = this.query;
-    //const output = new Function(`return ${code}`)(); // Execute code with caution
     this.output = eval(code);
 
     console.log(this.output);

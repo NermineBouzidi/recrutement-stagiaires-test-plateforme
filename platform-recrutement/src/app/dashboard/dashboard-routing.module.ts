@@ -7,7 +7,7 @@ import { ProfileComponent } from './profile/profile.component';
 import { DashComponent } from './dash/dash.component';
 
 const routes: Routes = [
-   {path :"" ,component :UidashboardComponent},
+   {path :"" ,component :DashComponent},
    {path :"uidash" ,component :DashComponent},
    {path:"user",component :UserComponent},
    {path:"test",component :TestComponent},

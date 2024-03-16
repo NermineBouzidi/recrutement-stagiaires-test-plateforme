@@ -8,5 +8,6 @@ export class User {
     password:String
     id: string;
     token: string ;
+    role :string;
     
 }

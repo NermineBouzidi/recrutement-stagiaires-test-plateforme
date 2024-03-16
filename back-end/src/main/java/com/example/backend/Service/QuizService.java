@@ -10,6 +10,8 @@ public interface QuizService {
     String addQuiz(Quiz test);
     String deleteQuiz(long id);
     List<Quiz> getAllQuiz();
+    List<Quiz> getRandomQuiz();
+
     String updateQuiz(long id,Quiz quiz);
     Optional<Quiz> getQuiz(long id);
 

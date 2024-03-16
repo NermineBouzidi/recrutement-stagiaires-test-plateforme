@@ -40,6 +40,12 @@ public class QuizController {
     public List<Quiz> getAllQuiz() {
         return quizService.getAllQuiz();
     }
+
+    @GetMapping("/getRandomQuiz")
+    public List<Quiz> getRandomQuiz() {
+        return quizService.getAllQuiz();
+    }
+
     @PutMapping("/updateQuiz/{id}")
     public ResponseEntity<String> updateQuiz(@PathVariable long id,@RequestBody Quiz quiz) {
         String s = quizService.updateQuiz(id,quiz);

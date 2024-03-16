@@ -1,5 +1,6 @@
 package com.example.backend.Service;
 
+import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -12,11 +13,13 @@ public interface UserService {
     String addUser(User user );
     String addFile (MultipartFile file);
     String deleteUser(long id);
-    void updateUser(long id);
+    String updateUser(long id , UserDTO user);
     List<User> getUsers ();
     Optional<User> getUser(long id);
     String signup (User user ,MultipartFile file );
     String acceptUser (long id );
     String rejectUser (long id );
     byte[] getResume (long id) throws IOException;
-}
+    public void changePassword(Long userId, String currentPassword, String newPassword, String confirmPassword)throws IOException ;
+
+    }

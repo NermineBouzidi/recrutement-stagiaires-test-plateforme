@@ -21,13 +21,13 @@ import { DashComponent } from './dash/dash.component';
     SidebarComponent,
     UidashboardComponent,
     ProfileComponent,
-    DashComponent
+    DashComponent,
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
-    NgxPaginationModule
+    NgxPaginationModule,
   ]
 })
 export class DashboardModule { }

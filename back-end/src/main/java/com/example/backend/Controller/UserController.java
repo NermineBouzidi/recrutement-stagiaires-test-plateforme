@@ -1,8 +1,13 @@
 package com.example.backend.Controller;
 
+import com.example.backend.DTO.ChangePasswordRequest;
+import com.example.backend.DTO.UserDTO;
+import com.example.backend.Entity.Test;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +38,14 @@ public class UserController {
         }
     }
 
-    @PutMapping("/update")
-    public void update(@RequestBody long id) {
 
+    @PutMapping("/update/{id}")
+    public ResponseEntity<String> update(@PathVariable long id,@RequestBody UserDTO user) {
+        String s = userService.updateUser(id,user);
+        if (s.equals("user updated successfully")) {
+            return ResponseEntity.ok("user updated successfully");
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
     }
 
     @GetMapping("/hi")
@@ -87,5 +97,26 @@ public class UserController {
                 .contentType(MediaType.valueOf("application/pdf"))
                 .body(file);
     }
-
+    @PostMapping("/changePassword/{id}")
+    public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest request) {
+        try {
+            userService.changePassword(id, request.getCurrentPassword(), request.getNewPassword(), request.getConfirmPassword());
+            return ResponseEntity.ok().build();
+        } catch (BadRequestException e) {
+            if (e.getMessage().equals("New passwords do not match")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New passwords do not match"); // 400 Bad Request
+            } else if (e.getMessage().equals("Current password is incorrect")) {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Current password is incorrect"); // 400 Bad Request
+            } else {
+                // Handle other cases within BadRequestException
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("An unknown bad request error occurred.");
+            }
+        } catch (IOException e) {
+            // Handle IOException appropriately
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        } catch (Exception e) { // Catch other unexpected exceptions
+            // Handle unexpected errors
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

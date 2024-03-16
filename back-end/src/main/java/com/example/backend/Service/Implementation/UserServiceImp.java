@@ -1,12 +1,16 @@
 package com.example.backend.Service.Implementation;
 
+import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.PasswordGenerator;
+import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Role;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -80,9 +84,22 @@ public class UserServiceImp implements UserService {
     }
 
     @Override
-    public void updateUser(long id) {
+    public String updateUser(long id , UserDTO user) {
+        Optional<User> existingUser = userRepository.findById(id);
+        if (existingUser.isPresent()) {
+            User user1 = existingUser.get();
+            user1.setFirstname(user.getFirstname());
+            user1.setLastName(user.getLastName());
+            user1.setEmail(user.getEmail());
+            user1.setNumber(user.getNumber());
+            userRepository.save(user1);
+            return "user updated successfully";
+        } else {
+            return "update failed";
+        }
 
     }
+
     public List<User> getUsers (){
         List <User> liste =userRepository.findAll();
         List<User> listeUser = liste.stream()
@@ -212,4 +229,29 @@ public class UserServiceImp implements UserService {
         } else
             throw new IOException("user not found");
     }
+
+    @Override
+    public void changePassword(Long userId, String currentPassword, String newPassword, String confirmPassword) throws IOException{
+        // Use orElseThrow for proper exception handling
+        Optional<User> userOptional = userRepository.findById(userId);
+        if(userOptional.isPresent()) {
+            User user =userOptional.get();
+            // Validate password match before hashing
+            if (!newPassword.equals(confirmPassword)) {
+                throw new BadRequestException("New passwords do not match");
+            }
+
+            // Ensure current password matches before updating
+            if (!passwordEncoder.matches(currentPassword, user.getPassword())) {
+                throw new BadRequestException("Current password is incorrect");
+            }
+
+            // Update password with hashed value
+            user.setPassword(passwordEncoder.encode(newPassword));
+            userRepository.save(user);
+        } else
+            throw new IOException("user not found");
+    }
+
+
 }

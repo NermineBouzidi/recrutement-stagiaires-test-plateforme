@@ -75,6 +75,14 @@ getAll() {
 getById(id: string) {
     return this.http.get<User>(this.baseURI + `/api/user/getUser/${id}`);
 }
+updateUser(id :any,user :User){
+    return this.http.put(this.baseURI + `/api/user/update/${id}`, user,{ observe: 'response' ,responseType: 'text'});
+
+}
+updatePassword(id :any, request:any){
+    return this.http.post(this.baseURI + `/api/user/changePassword/${id}`,request,{});
+
+}
 
 update(id, params) {
     return this.http.put(this.baseURI + `/users/${id}`, params)
@@ -109,6 +117,13 @@ getResume (id :any){
 getToken(){
     return this.loginValue.token;
 }
+getUserProfileFromToken(token: string) {
+    // Retrieve user ID from token-based API endpoint
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+  
+   return this.http.get<User>(this.baseURI + '/api/test/mee', { headers })
+    
+  }
 }
 
 

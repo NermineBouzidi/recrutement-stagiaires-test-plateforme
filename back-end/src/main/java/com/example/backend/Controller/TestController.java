@@ -2,6 +2,9 @@ package com.example.backend.Controller;
 
 import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Test;
+import com.example.backend.Entity.User;
+import com.example.backend.Repository.UserRepository;
+import com.example.backend.Security.JwtUtils;
 import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +18,23 @@ import java.util.List;
 @RequestMapping("/api/test")
 public class TestController {
     @Autowired
+    JwtUtils jwtUtils;
+    @Autowired
+    UserRepository userRepository;
+    @Autowired
     private TestService testService;
+    @GetMapping("/mee")
+    public ResponseEntity<User> getUserP(@RequestHeader("Authorization") String authorization) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
 
+        String token = authorization.substring(7); // Extract token after "Bearer "
+
+        // Validate token (implement your token validation logic here)
+        return ResponseEntity.ok(userRepository.findByEmail(jwtUtils.getUsername(token)));
+
+    }
     @GetMapping("/getTest/{id}")
     public Test getTest(@PathVariable long id) {
         return testService.getTest(id);
