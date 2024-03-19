@@ -12,15 +12,14 @@ export class UserGuard implements CanActivate {
 ) {}
 
 canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-  const user = this.accountService.userValue;
+//  const user = this.accountService.userValue;
   const login = this.accountService.loginValue;
   const requiredRole = route.data['requiredRole'];
   if (login  && this.accountService.loginValue.role === requiredRole ) {
-     
       return true;
-  }
-  
+  }else{
   this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
   return false;
+  }
 }
 }

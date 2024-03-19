@@ -89,4 +89,13 @@ updatePassword(passwordForm){
     )
   }
 }
+getInitials(firstName: String, lastName: String): string {
+  return `${firstName.charAt(0).toLowerCase()}${lastName.charAt(0).toLowerCase()}`;
+}
+// Add this method to your component class
+togglePasswordVisibility(inputId: string): void {
+  const input = document.getElementById(inputId) as HTMLInputElement;
+  input.type = input.type === 'password' ? 'text' : 'password';
+}
+
 }

@@ -7,10 +7,11 @@ import java.util.List;
 import java.util.Optional;
 
 public interface QuizService {
-    String addQuiz(Quiz test);
+    String AddQuiz(Quiz test);
     String deleteQuiz(long id);
     List<Quiz> getAllQuiz();
     List<Quiz> getRandomQuiz();
+    Quiz addQuiz(Quiz quiz) ;
 
     String updateQuiz(long id,Quiz quiz);
     Optional<Quiz> getQuiz(long id);

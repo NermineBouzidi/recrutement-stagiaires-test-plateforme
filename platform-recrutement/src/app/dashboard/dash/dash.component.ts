@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/internal/operators/filter';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({
@@ -9,8 +11,17 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class DashComponent {
 
   data: any[] = [];
-  constructor (private http: AuthService ){
+  constructor (private http: AuthService,private router :Router ){
     this.loadUsers()
+  }
+  ngOnInit() {
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event: NavigationEnd) => {
+      if (event.url === '/login') {
+        this.http.logout();
+      }
+    });
   }
   getInitials(firstName: String, lastName: String): string {
     return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;

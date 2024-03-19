@@ -13,6 +13,7 @@ export class UserComponent {
   data: any[] = [];
   file :any;
   user :User;
+  usersNumber:number ;
   isDialogOpen :boolean=false;
   constructor (private http: AuthService ){
     for(let i:number=1; i<=100;i++){
@@ -27,6 +28,7 @@ export class UserComponent {
     this.http.getAll().subscribe(
       (data : any) => {
           this.data=data
+          this.usersNumber= this.data.length;
   })
   }
   openDialog(id:any){

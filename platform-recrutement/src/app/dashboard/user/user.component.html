@@ -1,5 +1,12 @@
-<body class="flex items-center justify-center">
-    <table class="flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5 w-full">
+<div class="py-12">
+    <div class="text-2xl montserrat-semi text-gray-800 mt-0">Welcome</div>
+    <div class="text-4xl montserrat-extra text-[#1d2736]  mb-0">Dashboard-Users List</div>
+    <div class="montserrat text-gray-800 mt-0">{{usersNumber}} users found</div>
+   </div>
+<div class="flex items-center justify-center ">
+    <div class=" h-full  container bg-white  p-8 ">
+    <body class="flex items-center justify-center mt-12 mb-4">
+    <table class="flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden   w-full">
       <thead class="text-[#1d2736]">
         <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0 "
                     *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
@@ -60,7 +67,10 @@
     </tbody>
   </table>
 </body>
+   
 <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>
+</div>
 
 <!-------------------------------- user --------------------------------------------------------->
 <div *ngIf="isDialogOpen" class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">

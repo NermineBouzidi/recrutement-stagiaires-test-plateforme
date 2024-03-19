@@ -4,17 +4,24 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
-@Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class Problem {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    int  id ;
+    private long  id ;
+    private String title;
+    private String language;
+    private int duration;
+    private String description;
+    private String input;
+    private String output;
+    private int points;
 
-   String  name ;
-   String description ;
-   String input ;
-   String expected_output ;
 }
