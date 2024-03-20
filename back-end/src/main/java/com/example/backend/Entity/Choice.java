@@ -17,8 +17,7 @@ public class Choice {
     private String choice;
     private boolean isCorrect;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "quiz_id")
+    @ManyToOne// Enforce mandatory association with Quiz
     private Quiz quiz;
 
     // Constructors, getters, and setters

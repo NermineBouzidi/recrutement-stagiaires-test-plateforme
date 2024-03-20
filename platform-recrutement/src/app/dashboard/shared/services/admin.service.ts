@@ -47,4 +47,8 @@ export class AdminService {
     return this.http.get<Quiz>(this.baseURI + `/api/quiz/getQuiz/${id}`);
 
   }
+  getAllProblem(){
+    return this.http.get<any[]>(this.baseURI + `/api/quiz/getAllProblem`);
+
+  }
 }

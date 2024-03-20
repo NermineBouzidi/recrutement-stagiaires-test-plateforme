@@ -17,6 +17,8 @@ import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { AlertComponent } from './alert/alert.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { AlertComponent } from './alert/alert.component';
     NgxPaginationModule,
     NgxMaskDirective,
     CodemirrorModule,
+    AngularEditorModule,
+    QuillModule
   
   ],
   providers: [

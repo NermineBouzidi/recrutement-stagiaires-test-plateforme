@@ -2,12 +2,12 @@ package com.example.backend.Controller;
 
 import com.example.backend.DTO.ChangePasswordRequest;
 import com.example.backend.DTO.UserDTO;
-import com.example.backend.Entity.Test;
 import com.example.backend.Entity.User;
+import com.example.backend.Repository.UserRepository;
+import com.example.backend.Security.JwtUtils;
 import com.example.backend.Service.UserService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +24,10 @@ import java.util.List;
 public class UserController {
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
+    @Autowired
+    JwtUtils jwtUtils;
 
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
@@ -118,5 +122,17 @@ public class UserController {
             // Handle unexpected errors
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
+    }
+    @GetMapping("/mee")
+    public ResponseEntity<User> getUserP(@RequestHeader("Authorization") String authorization) {
+        if (authorization == null || !authorization.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        String token = authorization.substring(7); // Extract token after "Bearer "
+
+        // Validate token (implement your token validation logic here)
+        return ResponseEntity.ok(userRepository.findByEmail(jwtUtils.getUsername(token)));
+
     }
 }

@@ -39,7 +39,7 @@ public class SecurityConfig  {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/test/**").hasRole("ADMIN")
                 .requestMatchers("/api/user/**").hasRole("ADMIN")
-                .requestMatchers("/api/quiz/**").permitAll()
+                .requestMatchers("/api/quiz/**").hasRole("ADMIN")
                 .anyRequest()
                 .authenticated()
                 .and()

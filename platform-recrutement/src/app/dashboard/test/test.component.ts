@@ -13,7 +13,13 @@ import { Quiz } from 'src/app/models/Quiz';
 })
 export class TestComponent {
   p:any =0;
-  data: any[] = [];
+  quizs: any[] = [];
+  quizNumber:number;
+  problems:any[]=[];
+  problemNumber:number;
+  currentSection:String ="Alltests";
+  currentMode:String ="show";
+
   quiz :Quiz;
   quizShow :Quiz;
   selectedQuizId :string = null;
@@ -22,7 +28,7 @@ export class TestComponent {
   quizForm :FormGroup
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {
     for(let i:number=1; i<=100;i++){
-      this.data.push(i as never);
+      this.quizs.push(i as never);
     }
   }
   ngOnInit() {
@@ -36,13 +42,22 @@ export class TestComponent {
     //  description: [''],
     //  examples: this.fb.array([])
   });
-    this.loadQuiz()
+    this.loadQuiz();
+    this.loadProblems();
    
   }
   loadQuiz() {
     this.http.getAllQuiz().subscribe((data: any) => {
-      this.data = data;
+      this.quizs = data;
+      this.quizNumber=data.length;
     });
+  }
+
+  loadProblems(){
+    this.http.getAllProblem().subscribe((data:any)=>{
+      this.problems=data;
+      this.problemNumber=data.length;
+    })
   }
  // return tests
  
@@ -174,4 +189,14 @@ export class TestComponent {
 submit(formdata :any){
   console.log(formdata);
 }
+
+switchSection(sectionName: string) {
+  this.currentSection = sectionName;
+}
+switchMode(modeName: string) {
+  this.currentMode = modeName;
+  this.closeDialog();
+}
+
+
 }

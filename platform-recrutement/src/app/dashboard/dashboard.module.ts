@@ -6,12 +6,15 @@ import { TestComponent } from './test/test.component';
 import { UserComponent } from './user/user.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { UidashboardComponent } from './uidashboard/uidashboard.component';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { JwtInterceptor } from '../shared/services/jwt.interceptor.service';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProfileComponent } from './profile/profile.component';
 import { DashComponent } from './dash/dash.component';
+import { RapportComponent } from './rapport/rapport.component';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
@@ -22,12 +25,18 @@ import { DashComponent } from './dash/dash.component';
     UidashboardComponent,
     ProfileComponent,
     DashComponent,
+    RapportComponent,
   ],
   imports: [
     CommonModule,
     DashboardRoutingModule,
     ReactiveFormsModule,
     NgxPaginationModule,
+    FormsModule,
+    AngularEditorModule,
+    HttpClientModule,
+    QuillModule
+
   ]
 })
 export class DashboardModule { }

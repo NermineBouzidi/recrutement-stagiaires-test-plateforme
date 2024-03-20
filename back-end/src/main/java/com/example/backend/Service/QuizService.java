@@ -1,14 +1,13 @@
 package com.example.backend.Service;
 
 import com.example.backend.Entity.Quiz;
-import com.example.backend.Entity.Test;
 
 import java.util.List;
 import java.util.Optional;
 
 public interface QuizService {
     String AddQuiz(Quiz test);
-    String deleteQuiz(long id);
+    void deleteQuiz(long id);
     List<Quiz> getAllQuiz();
     List<Quiz> getRandomQuiz();
     Quiz addQuiz(Quiz quiz) ;

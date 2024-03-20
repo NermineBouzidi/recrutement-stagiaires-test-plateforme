@@ -1,22 +1,21 @@
 package com.example.backend.Service.Implementation;
 
 import com.example.backend.Entity.Choice;
-import com.example.backend.Entity.Problem;
 import com.example.backend.Entity.Quiz;
-import com.example.backend.Entity.Test;
+import com.example.backend.Repository.ChoiceRepository;
 import com.example.backend.Repository.QuizRepository;
 import com.example.backend.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
 public class QuizServiceImp implements QuizService {
     @Autowired
     QuizRepository quizRepository;
+
     @Override
     public String AddQuiz(Quiz quiz) {
         if (quizRepository.findByTitle(quiz.getTitle()) != null) {
@@ -51,23 +50,22 @@ public class QuizServiceImp implements QuizService {
                 choice.setQuiz(quiz);
             }
         }
-
-
         // Save the quiz to the database
         return quizRepository.save(quiz);
     }
 
     @Override
-    public String deleteQuiz(long id) {
-        Optional<Quiz> test = quizRepository.findById(id);
-        if (!test.isPresent()) {
-            return "quiz not found";
-        } else {
-            quizRepository.deleteById(id);
-            return "succes";
-
+    public void deleteQuiz(long id) {
+        if (id <= 0) {
+            throw new IllegalArgumentException("Invalid quiz ID: " + id);
         }
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Quiz not found with id: " + id));
+        quizRepository.delete(quiz);
+
+
     }
+
 
     @Override
     public List<Quiz> getAllQuiz() {

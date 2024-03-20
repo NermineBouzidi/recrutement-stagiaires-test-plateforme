@@ -7,6 +7,7 @@ import com.example.backend.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Secured("hasRole('ADMIN')")
 @RequestMapping("/api/quiz")
 public class QuizController {
     @Autowired
@@ -43,22 +45,20 @@ public class QuizController {
 
 
     @DeleteMapping("/deleteQuiz/{id}")
-    public ResponseEntity<Void> deleteQuiz(@PathVariable long id) {
-        if (id == 0 || id <= 0) {
-            return ResponseEntity.badRequest().build();
-        }
-        String s = quizService.deleteQuiz(id);
-        if (s.equals("succes")) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+    public ResponseEntity<?> deleteQuiz(@PathVariable long id) {
+        try {
+            quizService.deleteQuiz(id);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // No content to return on successful deletion
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
 
     @GetMapping("/getAllQuiz")
-    public List<Quiz> getAllQuiz() {
-        return quizService.getAllQuiz();
+    public ResponseEntity<List<Quiz>> getAllQuiz() {
+        List <Quiz> quizzes =quizService.getAllQuiz();
+        return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
 
     @GetMapping("/getRandomQuiz")
@@ -69,8 +69,8 @@ public class QuizController {
     @PutMapping("/updateQuiz/{id}")
     public ResponseEntity<?> updateQuiz(@PathVariable long id,@RequestBody Quiz quiz) {
         try {
-            Quiz updatedQuiz = quizService.updateQuiz(id,quiz);
-            return new ResponseEntity<>(updatedQuiz, HttpStatus.OK);
+            quizService.updateQuiz(id,quiz);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }

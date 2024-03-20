@@ -1,7 +1,9 @@
 package com.example.backend.Service.Implementation;
 
 import com.example.backend.Entity.Problem;
+import com.example.backend.Entity.Quiz;
 import com.example.backend.Repository.ProblemRepository;
+import com.example.backend.Repository.QuizRepository;
 import com.example.backend.Service.ProblemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,6 +18,8 @@ public class ProblemServiceImp implements ProblemService {
         @Autowired
         private ProblemRepository problemRepository;
 
+        @Autowired
+        private QuizRepository quizRepository;
 
         public Problem addProblem(Problem problem) {
 
