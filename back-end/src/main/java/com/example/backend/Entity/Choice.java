@@ -18,7 +18,7 @@ public class Choice {
     private boolean isCorrect;
 
     @ManyToOne// Enforce mandatory association with Quiz
-    private Quiz quiz;
+    private MultipleChoiceQuestion multipleChoiceQuestion;
 
     // Constructors, getters, and setters
 }

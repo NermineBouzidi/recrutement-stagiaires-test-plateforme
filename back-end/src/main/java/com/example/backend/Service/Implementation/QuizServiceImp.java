@@ -1,6 +1,7 @@
 package com.example.backend.Service.Implementation;
 
 import com.example.backend.Entity.Choice;
+import com.example.backend.Entity.MultipleChoiceQuestion;
 import com.example.backend.Entity.Quiz;
 import com.example.backend.Repository.ChoiceRepository;
 import com.example.backend.Repository.QuizRepository;
@@ -44,12 +45,17 @@ public class QuizServiceImp implements QuizService {
         if (quiz.getPoints() == null || quiz.getPoints() <= 0) {
             throw new IllegalArgumentException("Quiz points must be positive.");
         }
-        List<Choice> choices = quiz.getChoices();
-        if (choices != null) {
-            for (Choice choice : choices) {
-                choice.setQuiz(quiz);
+        if (quiz instanceof MultipleChoiceQuestion) {
+            MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) quiz;
+            List<Choice> choices = mcq.getChoices();
+            if (choices != null) {
+                for (Choice choice : choices) {
+                    choice.setMultipleChoiceQuestion(mcq);
+                }
             }
         }
+
+
         // Save the quiz to the database
         return quizRepository.save(quiz);
     }
@@ -103,9 +109,9 @@ if(quiz.getPoints()!=null){
     existingQuiz.setPoints(quiz.getPoints());
 
 }
-if(quiz.getChoices()!=null){
+/*if(quiz.getChoices()!=null){
     existingQuiz.setChoices(quiz.getChoices());
-}
+}*/
  quizRepository.save(existingQuiz);
 
         return "Quiz updated successfully";

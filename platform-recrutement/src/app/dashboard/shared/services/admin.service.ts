@@ -49,6 +49,9 @@ export class AdminService {
   }
   getAllProblem(){
     return this.http.get<any[]>(this.baseURI + `/api/quiz/getAllProblem`);
+  }
+  addProblem(problem :any){
+    return this.http.post(this.baseURI + `/api/quiz/addProblem`, problem,{ observe: 'response' ,responseType: 'text'});
 
   }
 }

@@ -25,10 +25,8 @@ export class JwtInterceptor implements HttpInterceptor {
         if (token) {
             // Decode the token using a library like jsonwebtoken (not included)
             const decodedToken :any = jwtDecode(token);
-
             // Check if the token is expired
             if (decodedToken.exp < Date.now() / 1000) {
-                // Handle token expiration
               this.accountService.logout();
             }
           }

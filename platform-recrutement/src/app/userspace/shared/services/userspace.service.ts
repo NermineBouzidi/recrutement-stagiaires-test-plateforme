@@ -10,7 +10,9 @@ export class UserspaceService {
 
   constructor(private http: HttpClient) {}
   getAllQuiz(){
-    return this.http.get<any[]>(this.baseURI + `/api/quiz/getAllQuiz`);
-
+    return this.http.get<any[]>(this.baseURI + `/api/test/getAllQuiz`);
+}
+getAllProblem(){
+  return this.http.get<any[]>(this.baseURI + `/api/test/getAllProblem`);
 }
 }

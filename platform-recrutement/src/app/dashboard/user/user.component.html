@@ -10,16 +10,16 @@
       <thead class="text-[#1d2736]">
         <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0 "
                     *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
-                    <th class="p-3 text-left">FirstName</th>
-                    <th class="p-3 text-left">LastName</th>
-                    <th class="p-3 text-left">Email</th>
-                    <th class="p-3 text-left">Number</th>
-                    <th class="p-3 text-left">EducationLevel</th>
-                    <th class="p-3 text-left" width="110px">Actions</th>
+                    <th class="p-3 text-left ">FirstName</th>
+                    <th class="p-3 text-left ">LastName</th>
+                    <th class="p-3 text-left ">Email</th>
+                    <th class="p-3 text-left ">Number</th>
+                    <th class="p-3 text-left ">EducationLevel</th>
+                    <th class="p-3 text-left " width="110px" >Actions</th>
                 </tr>
             </thead>
             <tbody class="flex-1 sm:flex-none">
-                <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0"
+                <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 montserrat-semi"
                     *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.firstname}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.lastName}}</td>
@@ -27,8 +27,8 @@
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.number}}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.educationLevel}}</td>
                     <td
-                    class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
-                        <button (click)="openDialog(user.id)" class="text-[#4b5563] hover:text-[#a1a1aa]">
+                    class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer flex justify-between">
+                        <button (click)="openDialog(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 class="w-5 h-5">
                                 <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
@@ -38,7 +38,7 @@
                             </svg>
                         </button>
 
-                        <button (click)="acceptUser(user.id)" class="text-[#4ade80] hover:text-[#166534] ">
+                        <button (click)="acceptUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62] ">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="md:w-5 md:h-5 w-4 h-4">
                                 <path
@@ -46,7 +46,7 @@
                             </svg>
 
                         </button>
-                        <button (click)="rejectUser(user.id)" class="text-red-400 hover:text-red-600">
+                        <button (click)="rejectUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
                                 class="w-5 h-5">
                                 <path
@@ -54,7 +54,7 @@
                             </svg>
 
                         </button>
-                        <button (click)="deleteUser(user.id)" class="text-red-400 hover:text-red-600">
+                        <button (click)="deleteUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
                                 class="w-5 h-5">
                                 <path fill-rule="evenodd"

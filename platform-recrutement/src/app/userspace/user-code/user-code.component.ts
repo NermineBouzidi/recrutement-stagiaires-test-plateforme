@@ -2,16 +2,20 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { timer } from 'rxjs';
 import { takeWhile, tap } from 'rxjs/operators';
+import { UserspaceService } from '../shared/services/userspace.service';
 @Component({
   selector: 'app-user-code',
   templateUrl: './user-code.component.html',
   styleUrls: ['./user-code.component.scss']
 })
 export class UserCodeComponent {
+  problems:any[]=[];
+  problemNumber:number;
+  currentProblem :number=1;
   counter = 120; // Counter in seconds
   displayTime: string;
   output : [any];
-  selectedLanguage: string ="text/x-java"; // Default language
+  selectedLanguage: string ; // Default language
   codeMirrorOptions: any = {
     mode: "text/x-java",
     theme:"dracula",
@@ -34,11 +38,12 @@ export class UserCodeComponent {
     console.log(this.query);
     this.onLanguageChange();
     this.updateCode();
+    this.loadProblems();
 
   }
   
 
-  constructor(private http :HttpClient) {
+  constructor(private http :UserspaceService) {
     timer(1000, 1000) // Initial delay 1 second and interval countdown also 1 second
       .pipe(
         takeWhile(() => this.counter > 0),
@@ -76,7 +81,7 @@ export class UserCodeComponent {
       print("Hello, world!")`;
     } else if (this.selectedLanguage === 'text/x-mysql') {
       this.query = `SELECT SQL_NO_CACHE DISTINCT`;
-    }  else if (this.selectedLanguage === 'text/javascript'){
+    }  else if (this.selectedLanguage === 'javascript'){
       this.query = `// JavaScript code example
       function greet(name) {
           return("Hello, " + name + "!");
@@ -86,8 +91,12 @@ export class UserCodeComponent {
     }
   }
   onLanguageChange() {
-    this.codeMirrorOptions.mode = this.selectedLanguage;
-    this.updateCode()
+    this.codeMirrorOptions.mode = this.selectedLanguage === 'Java' ? 'text/x-java' :
+    this.selectedLanguage === 'Python' ? 'text/x-python' :
+    this.selectedLanguage === 'Mysql' ? 'text/x-mysql' :
+    this.selectedLanguage === 'JavaScript' ? 'text/x-javascript' :
+    'text/plain'; // Default mode for unknown languages    this.updateCode()
+    this.updateCode();
   }
 
   Submit(){
@@ -97,5 +106,20 @@ export class UserCodeComponent {
     console.log(this.output);
     
   }
- 
+  loadProblems(){
+    this.http.getAllProblem().subscribe((data:any)=>{
+      this.problems=data;
+      this.problemNumber=data.length;
+      this.selectedLanguage = this.problems[0].language;
+      this.onLanguageChange();
+
+    })
+  }
+  nextProblem() {
+    if (this.currentProblem < this.problems.length ) {
+      this.selectedLanguage = this.problems[this.currentProblem].language;
+      this.onLanguageChange();
+      this.currentProblem++;
+    }
+  }
 }

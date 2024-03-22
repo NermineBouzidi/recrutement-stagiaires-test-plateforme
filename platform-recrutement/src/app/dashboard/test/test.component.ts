@@ -25,13 +25,23 @@ export class TestComponent {
   selectedQuizId :string = null;
   isDialogOpen: boolean = false;
   isShowDialog :boolean=false;
-  quizForm :FormGroup
+  quizForm :FormGroup;
+  problemForm :FormGroup;
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {
     for(let i:number=1; i<=100;i++){
       this.quizs.push(i as never);
     }
   }
   ngOnInit() {
+    this.problemForm = this.fb.group({
+      title: ['', [Validators.required]],
+      language: [''],
+      description: [''],
+      input: [''],
+      output: [''],
+      duration: [''],
+      points: [''],
+  });
     this.quizForm = this.fb.group({
       title: ['', [Validators.required]],
       question: [''],
@@ -198,5 +208,20 @@ switchMode(modeName: string) {
   this.closeDialog();
 }
 
-
+addProblem(problemForm){
+  if(problemForm.valid){
+    const problem= problemForm.value;
+    this.http.addProblem(problem).subscribe(
+      (response: HttpResponse<any>) => {
+        console.log("Response:", response); // Log the entire response for debugging
+        if (response.body && response.body.includes("Problem added successfully")) {
+        
+          // Redirect to a new page or perform any other actions after successful registration
+        } else {
+          alert("failed");
+        }
+      })
+    
+  }
+}
 }

@@ -6,6 +6,7 @@ import lombok.*;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 @Entity
 @NoArgsConstructor
@@ -17,13 +18,16 @@ public class Quiz  {
     long id ;
     String title ;
     private String question ;
-    private String questionType ;
+    @Enumerated(EnumType.STRING)
+    private QuestionType questionType ;
     private Integer duration ;
     private Integer points ;
 
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    @JsonIgnoreProperties("quiz")
-    private List<Choice> choices = new ArrayList<>();
 
 }
 
+enum QuestionType {
+    TRUE_FALSE,
+    MULTIPLE_CHOICE,
+    SHORT_ANSWER
+}
