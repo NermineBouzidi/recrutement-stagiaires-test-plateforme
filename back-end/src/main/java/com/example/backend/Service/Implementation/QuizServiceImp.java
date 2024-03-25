@@ -1,9 +1,8 @@
 package com.example.backend.Service.Implementation;
 
-import com.example.backend.Entity.Choice;
 import com.example.backend.Entity.MultipleChoiceQuestion;
 import com.example.backend.Entity.Quiz;
-import com.example.backend.Repository.ChoiceRepository;
+import com.example.backend.Entity.TrueFalseQuestion;
 import com.example.backend.Repository.QuizRepository;
 import com.example.backend.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +27,75 @@ public class QuizServiceImp implements QuizService {
 
     }
     @Override
+    public  MultipleChoiceQuestion addMultipleChoice(MultipleChoiceQuestion multipleChoiceQuestion){
+        Quiz existingQuiz = quizRepository.findByTitle(multipleChoiceQuestion.getTitle()); // Example using title for uniqueness
+
+        if (existingQuiz != null) {
+            throw new IllegalArgumentException("A quiz with the same title already exists.");
+        }        if (multipleChoiceQuestion.getTitle() == null || multipleChoiceQuestion.getTitle().isEmpty()) {
+            throw new IllegalArgumentException("Quiz title is required.");
+        }
+       /* if (multipleChoiceQuestion.getQuestionType() == null) {
+            throw new IllegalArgumentException("Quiz question type is required.");
+        }*/
+        if (multipleChoiceQuestion.getDuration() == null || multipleChoiceQuestion.getDuration() <= 0) {
+            throw new IllegalArgumentException("Quiz duration must be positive.");
+        }
+        if (multipleChoiceQuestion.getPoints() == null || multipleChoiceQuestion.getPoints() <= 0) {
+            throw new IllegalArgumentException("Quiz points must be positive.");
+        }
+        return quizRepository.save(multipleChoiceQuestion);
+    }
+
+    @Override
+    public TrueFalseQuestion addTrueFlase(TrueFalseQuestion trueFalseQuestion) {
+        Quiz existingQuiz = quizRepository.findByTitle(trueFalseQuestion.getTitle()); // Example using title for uniqueness
+
+        if (existingQuiz != null) {
+            throw new IllegalArgumentException("A quiz with the same title already exists.");
+        }        if (trueFalseQuestion.getTitle() == null || trueFalseQuestion.getTitle().isEmpty()) {
+            throw new IllegalArgumentException("Quiz title is required.");
+        }
+      /*  if (trueFalseQuestion.getQuestionType() == null) {
+            throw new IllegalArgumentException("Quiz question type is required.");
+        }*/
+        if (trueFalseQuestion.getDuration() == null || trueFalseQuestion.getDuration() <= 0) {
+            throw new IllegalArgumentException("Quiz duration must be positive.");
+        }
+        if (trueFalseQuestion.getPoints() == null || trueFalseQuestion.getPoints() <= 0) {
+            throw new IllegalArgumentException("Quiz points must be positive.");
+        }
+        return quizRepository.save(trueFalseQuestion);
+    }
+
+    @Override
+    public void updateTrueFalse(long id ,TrueFalseQuestion trueFalseQuestion) {
+        if (id <0) {
+            throw new IllegalArgumentException("Quiz ID cannot be negative");
+        }
+        if (trueFalseQuestion == null) {
+            throw new IllegalArgumentException("Quiz object cannot be null");
+        }
+        Quiz quiz = quizRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Problem not found with id: " + id));
+        TrueFalseQuestion existingQuiz = (TrueFalseQuestion) quiz;
+        if (trueFalseQuestion.getTitle()!=null){
+            existingQuiz.setTitle(trueFalseQuestion.getTitle());
+        }
+        if (trueFalseQuestion.getQuestion()!=null){
+            existingQuiz.setQuestion(trueFalseQuestion.getQuestion());
+        }
+        if (trueFalseQuestion.getDuration()!=null){
+            existingQuiz.setDuration(trueFalseQuestion.getDuration());
+        }
+        if (trueFalseQuestion.getPoints()!=null){
+            existingQuiz.setPoints(trueFalseQuestion.getPoints());
+        }
+        existingQuiz.setCorrectAnswer(trueFalseQuestion.isCorrectAnswer());
+        quizRepository.save(existingQuiz);
+    }
+
+    @Override
     public Quiz addQuiz(Quiz quiz) {
         Quiz existingQuiz = quizRepository.findByTitle(quiz.getTitle()); // Example using title for uniqueness
 
@@ -36,16 +104,16 @@ public class QuizServiceImp implements QuizService {
         }        if (quiz.getTitle() == null || quiz.getTitle().isEmpty()) {
             throw new IllegalArgumentException("Quiz title is required.");
         }
-        if (quiz.getQuestionType() == null) {
+       /* if (quiz.getQuestionType() == null) {
             throw new IllegalArgumentException("Quiz question type is required.");
-        }
+        }*/
         if (quiz.getDuration() == null || quiz.getDuration() <= 0) {
             throw new IllegalArgumentException("Quiz duration must be positive.");
         }
         if (quiz.getPoints() == null || quiz.getPoints() <= 0) {
             throw new IllegalArgumentException("Quiz points must be positive.");
         }
-        if (quiz instanceof MultipleChoiceQuestion) {
+    /*    if (quiz instanceof MultipleChoiceQuestion) {
             MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) quiz;
             List<Choice> choices = mcq.getChoices();
             if (choices != null) {
@@ -53,7 +121,7 @@ public class QuizServiceImp implements QuizService {
                     choice.setMultipleChoiceQuestion(mcq);
                 }
             }
-        }
+        }*/
 
 
         // Save the quiz to the database
@@ -99,9 +167,9 @@ public class QuizServiceImp implements QuizService {
         if (quiz.getQuestion()!=null){
             existingQuiz.setQuestion(quiz.getQuestion());
         }
-        if(quiz.getQuestionType()!=null){
+       /* if(quiz.getQuestionType()!=null){
             existingQuiz.setQuestionType(quiz.getQuestionType());
-        }
+        }*/
        if (quiz.getDuration()!=null){
     existingQuiz.setDuration(quiz.getDuration());
     }

@@ -27,6 +27,7 @@ export class TestComponent {
   isShowDialog :boolean=false;
   quizForm :FormGroup;
   problemForm :FormGroup;
+  trueFalseForm :FormGroup;
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {
     for(let i:number=1; i<=100;i++){
       this.quizs.push(i as never);
@@ -42,12 +43,20 @@ export class TestComponent {
       duration: [''],
       points: [''],
   });
+  this.trueFalseForm = this.fb.group({
+    title: ['', [Validators.required]],
+    question: [''],
+    duration: [''],
+    points: [''],
+    correctAnswer:['']
+  })
     this.quizForm = this.fb.group({
       title: ['', [Validators.required]],
       question: [''],
-      questionType: [''],
-      choices: this.fb.array([this.fb.control('')]),
-      answers: this.fb.array([this.fb.control('')]),
+      duration: [''],
+      points: [''],
+      options: this.fb.array([this.fb.control('')]),
+      correctOptionIndex : ['']
   
     //  description: [''],
     //  examples: this.fb.array([])
@@ -224,4 +233,46 @@ addProblem(problemForm){
     
   }
 }
+deleteProblem(id :any){
+  this.http.deleteProblem(id).subscribe(
+    ()=>{
+      alert("test deleted successfully")
+      this.loadProblems();
+    }
+
+  )
+}
+addTrueFalse(trueFalseForm){
+  if(trueFalseForm.valid){
+    const quiz= trueFalseForm.value;
+    this.http.addTrueFalse(quiz).subscribe(
+      (response: HttpResponse<any>) => {
+        console.log("Response:", response); // Log the entire response for debugging
+        if (response.body && response.body.includes("quiz added successfully")) {
+        
+          // Redirect to a new page or perform any other actions after successful registration
+        } else {
+          alert("failed");
+        }
+      })
+    
+  }
+}
+addMultipleChoice(quizForm){
+  if(quizForm.valid){
+    const quiz= quizForm.value;
+    this.http.addMultipleChoice(quiz).subscribe(
+      (response: HttpResponse<any>) => {
+        console.log("Response:", response); // Log the entire response for debugging
+        if (response.body && response.body.includes("quiz added successfully")) {
+        
+          // Redirect to a new page or perform any other actions after successful registration
+        } else {
+          alert("failed");
+        }
+      })
+    
+  }
+}
+
 }

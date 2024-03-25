@@ -52,6 +52,14 @@ export class AdminService {
   }
   addProblem(problem :any){
     return this.http.post(this.baseURI + `/api/quiz/addProblem`, problem,{ observe: 'response' ,responseType: 'text'});
-
+  }
+  deleteProblem(id : any) {
+    return this.http.delete(this.baseURI + `/api/quiz/deleteProblem/${id}`)
+  }
+  addTrueFalse(quiz:any){
+    return this.http.post(this.baseURI + `/api/quiz/addTrueFalse`, quiz,{ observe: 'response' ,responseType: 'text'});
+  }
+  addMultipleChoice(quiz:any){
+    return this.http.post(this.baseURI + `/api/quiz/addMulti`, quiz,{ observe: 'response' ,responseType: 'text'});
   }
 }

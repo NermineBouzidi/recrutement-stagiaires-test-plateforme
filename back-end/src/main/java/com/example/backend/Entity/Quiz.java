@@ -12,14 +12,14 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "question_type", discriminatorType = DiscriminatorType.STRING)
 public class Quiz  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     long id ;
     String title ;
     private String question ;
-    @Enumerated(EnumType.STRING)
-    private QuestionType questionType ;
     private Integer duration ;
     private Integer points ;
 
@@ -29,5 +29,4 @@ public class Quiz  {
 enum QuestionType {
     TRUE_FALSE,
     MULTIPLE_CHOICE,
-    SHORT_ANSWER
 }

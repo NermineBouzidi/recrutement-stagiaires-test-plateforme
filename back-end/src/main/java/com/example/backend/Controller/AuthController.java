@@ -2,6 +2,9 @@ package com.example.backend.Controller;
 
 import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.LoginResponse;
+import com.example.backend.Entity.MultipleChoiceQuestion;
+import com.example.backend.Entity.Quiz;
+import com.example.backend.Entity.TrueFalseQuestion;
 import com.example.backend.Entity.User;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
@@ -100,5 +103,34 @@ public class AuthController {
         // Validate token (implement your token validation logic here)
         return ResponseEntity.ok(userRepository.findByEmail(jwtUtils.getUsername(token)));
 
+    }
+    @PostMapping("/multiplechoice")
+    public ResponseEntity<?> addMultipleChoiceQuestion(@RequestBody MultipleChoiceQuestion questionDTO) {
+        MultipleChoiceQuestion question = quizService.addMultipleChoice(questionDTO);
+        String correctOption = question.getOptions().get(question.getCorrectOptionIndex());
+        return ResponseEntity.ok(correctOption);
+    }
+    @PostMapping("/truefalse")
+    public ResponseEntity<?> addTrueFalse(@RequestBody TrueFalseQuestion questionDTO) {
+        TrueFalseQuestion question = quizService.addTrueFlase(questionDTO);
+        return ResponseEntity.ok(question);
+    }
+    @PostMapping("/addQuiz")
+    public ResponseEntity<String> addTest(@RequestBody Quiz quiz) {
+        String s = quizService.AddQuiz(quiz);
+        if (s.equals("quiz added successfully")) {
+            return ResponseEntity.ok("quiz added successfully");
+        } else
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
+
+    }
+    @PutMapping("/updateTrueFalse/{id}")
+    public ResponseEntity<?> updateTrueFalse(@PathVariable long id,@RequestBody TrueFalseQuestion quiz) {
+        try {
+            quizService.updateTrueFalse(id,quiz);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
 }

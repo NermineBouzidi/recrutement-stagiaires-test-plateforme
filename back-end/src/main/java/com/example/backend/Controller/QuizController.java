@@ -1,7 +1,9 @@
 package com.example.backend.Controller;
 
+import com.example.backend.Entity.MultipleChoiceQuestion;
 import com.example.backend.Entity.Problem;
 import com.example.backend.Entity.Quiz;
+import com.example.backend.Entity.TrueFalseQuestion;
 import com.example.backend.Service.ProblemService;
 import com.example.backend.Service.QuizService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,17 +33,34 @@ public class QuizController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
     }
-    @PostMapping("add")
-    public ResponseEntity<String> createQuiz(@RequestBody Quiz quiz) {
+    @PostMapping("/addMulti")
+    public ResponseEntity<String> createMulti(@RequestBody MultipleChoiceQuestion quiz) {
         try {
-            Quiz savedQuiz = quizService.addQuiz(quiz);
+            Quiz savedQuiz = quizService.addMultipleChoice(quiz);
+            return ResponseEntity.ok("quiz added successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    @PostMapping("/addTrueFalse")
+    public ResponseEntity<String> createTrueFalse(@RequestBody TrueFalseQuestion quiz) {
+        try {
+            Quiz savedQuiz = quizService.addTrueFlase(quiz);
             return ResponseEntity.ok("quiz added successfully");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
-
+    @PutMapping("/updateTrueFalse/{id}")
+    public ResponseEntity<?> updateTrueFalse(@PathVariable long id,@RequestBody TrueFalseQuestion quiz) {
+        try {
+            quizService.updateTrueFalse(id,quiz);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
 
 
     @DeleteMapping("/deleteQuiz/{id}")
