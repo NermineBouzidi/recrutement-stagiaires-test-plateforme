@@ -133,4 +133,10 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+    @GetMapping("/getQuiz/{id}")
+    public  ResponseEntity<Quiz> getQuiz(@PathVariable long id){
+        return quizService.getQuiz(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
+    }
 }

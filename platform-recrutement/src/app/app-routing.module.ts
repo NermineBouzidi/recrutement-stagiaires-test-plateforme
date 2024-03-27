@@ -10,6 +10,7 @@ import { UserGuard } from './shared/services/user.guard';
 import { UserHomeComponent } from './userspace/user-home/user-home.component';
 import { UserTestComponent } from './userspace/user-test/user-test.component';
 import { FormsModule } from '@angular/forms';
+import { TestPreviewComponent } from './dashboard/test-preview/test-preview.component';
 
 
 const routes: Routes = [
@@ -18,12 +19,13 @@ const routes: Routes = [
   { path: 'login', component: SigninComponent },
   { path: 'register', component: SignupComponent }, 
   {
-    path: 'dashboard', canActivate:[UserGuard],
-    data: { requiredRole: 'ROLE_ADMIN' },
+    path: 'dashboard', //canActivate:[UserGuard],
+   // data: { requiredRole: 'ROLE_ADMIN' },
     component: UidashboardComponent,
     loadChildren: () => import('./dashboard/dashboard.module').then((m)=> m.DashboardModule)
 
   },
+  {path:'preview', component:TestPreviewComponent},
   {
     path:'user', canActivate:[UserGuard],
     data: { requiredRole: 'ROLE_USER' },

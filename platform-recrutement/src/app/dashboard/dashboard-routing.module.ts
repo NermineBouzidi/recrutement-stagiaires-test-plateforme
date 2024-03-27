@@ -6,6 +6,7 @@ import { UidashboardComponent } from './uidashboard/uidashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashComponent } from './dash/dash.component';
 import { RapportComponent } from './rapport/rapport.component';
+import { TestPreviewComponent } from './test-preview/test-preview.component';
 
 const routes: Routes = [
    {path :"" ,component :DashComponent},
@@ -13,7 +14,8 @@ const routes: Routes = [
    {path:"user",component :UserComponent},
    {path:"test",component :TestComponent},
    {path: "profile", component:ProfileComponent},
-   {path: "rapport", component:RapportComponent}
+   {path: "rapport", component:RapportComponent},
+
 
 ];
 

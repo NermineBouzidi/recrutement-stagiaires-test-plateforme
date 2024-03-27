@@ -59,6 +59,9 @@ export class AdminService {
   addTrueFalse(quiz:any){
     return this.http.post(this.baseURI + `/api/quiz/addTrueFalse`, quiz,{ observe: 'response' ,responseType: 'text'});
   }
+  updateTrueFalse(id:any ,quiz :Quiz){
+    return this.http.put(this.baseURI + `/api/quiz/updateTrueFalse/${id}`, quiz,{ observe: 'response' ,responseType: 'text'});
+  }
   addMultipleChoice(quiz:any){
     return this.http.post(this.baseURI + `/api/quiz/addMulti`, quiz,{ observe: 'response' ,responseType: 'text'});
   }

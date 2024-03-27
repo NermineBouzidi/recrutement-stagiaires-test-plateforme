@@ -15,6 +15,7 @@ import { DashComponent } from './dash/dash.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuillModule } from 'ngx-quill';
+import { TestPreviewComponent } from './test-preview/test-preview.component';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { QuillModule } from 'ngx-quill';
     ProfileComponent,
     DashComponent,
     RapportComponent,
+    TestPreviewComponent,
   ],
   imports: [
     CommonModule,

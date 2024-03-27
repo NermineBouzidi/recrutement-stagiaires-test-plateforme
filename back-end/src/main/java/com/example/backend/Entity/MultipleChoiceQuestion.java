@@ -14,8 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class MultipleChoiceQuestion extends Quiz {
-    @ElementCollection
-    private List<String> options;
-    private int correctOptionIndex;
+    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true) // Cascade and orphanRemoval for proper relationship management
+    private List<Choice> choices;
 
 }
