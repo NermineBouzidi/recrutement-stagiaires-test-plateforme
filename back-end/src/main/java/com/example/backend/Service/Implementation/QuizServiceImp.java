@@ -1,5 +1,6 @@
 package com.example.backend.Service.Implementation;
 
+import com.example.backend.Entity.Choice;
 import com.example.backend.Entity.MultipleChoiceQuestion;
 import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.TrueFalseQuestion;
@@ -26,7 +27,7 @@ public class QuizServiceImp implements QuizService {
         }
 
     }
-    @Override
+    /*@Override
     public  MultipleChoiceQuestion addMultipleChoice(MultipleChoiceQuestion multipleChoiceQuestion){
         Quiz existingQuiz = quizRepository.findByTitle(multipleChoiceQuestion.getTitle()); // Example using title for uniqueness
 
@@ -37,7 +38,7 @@ public class QuizServiceImp implements QuizService {
         }
        /* if (multipleChoiceQuestion.getQuestionType() == null) {
             throw new IllegalArgumentException("Quiz question type is required.");
-        }*/
+        }
         if (multipleChoiceQuestion.getDuration() == null || multipleChoiceQuestion.getDuration() <= 0) {
             throw new IllegalArgumentException("Quiz duration must be positive.");
         }
@@ -45,7 +46,7 @@ public class QuizServiceImp implements QuizService {
             throw new IllegalArgumentException("Quiz points must be positive.");
         }
         return quizRepository.save(multipleChoiceQuestion);
-    }
+    }*/
 
     @Override
     public TrueFalseQuestion addTrueFlase(TrueFalseQuestion trueFalseQuestion) {
@@ -96,12 +97,13 @@ public class QuizServiceImp implements QuizService {
     }
 
     @Override
-    public Quiz addQuiz(Quiz quiz) {
+    public Quiz addMultipleChoice(MultipleChoiceQuestion quiz) {
         Quiz existingQuiz = quizRepository.findByTitle(quiz.getTitle()); // Example using title for uniqueness
 
         if (existingQuiz != null) {
             throw new IllegalArgumentException("A quiz with the same title already exists.");
-        }        if (quiz.getTitle() == null || quiz.getTitle().isEmpty()) {
+        }
+        if (quiz.getTitle() == null || quiz.getTitle().isEmpty()) {
             throw new IllegalArgumentException("Quiz title is required.");
         }
        /* if (quiz.getQuestionType() == null) {
@@ -113,17 +115,13 @@ public class QuizServiceImp implements QuizService {
         if (quiz.getPoints() == null || quiz.getPoints() <= 0) {
             throw new IllegalArgumentException("Quiz points must be positive.");
         }
-    /*    if (quiz instanceof MultipleChoiceQuestion) {
-            MultipleChoiceQuestion mcq = (MultipleChoiceQuestion) quiz;
-            List<Choice> choices = mcq.getChoices();
+
+            List<Choice> choices = quiz.getChoices();
             if (choices != null) {
                 for (Choice choice : choices) {
-                    choice.setMultipleChoiceQuestion(mcq);
+                    choice.setMultipleChoiceQuestion(quiz);
                 }
             }
-        }*/
-
-
         // Save the quiz to the database
         return quizRepository.save(quiz);
     }

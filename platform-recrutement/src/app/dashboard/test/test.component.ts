@@ -6,6 +6,7 @@ import { Test } from 'src/app/models/Test';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Quiz } from 'src/app/models/Quiz';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
@@ -31,7 +32,7 @@ export class TestComponent {
   problemForm :FormGroup;
   trueFalseForm :FormGroup;
   multiChoiceForm :FormGroup;
-  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router) {
+  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService) {
     for(let i:number=1; i<=100;i++){
       this.quizs.push(i as never);
     }
@@ -53,43 +54,38 @@ export class TestComponent {
     points: [''],
     correctAnswer:['']
   })
-  this.multiChoiceForm= this.fb.group({
-    title: ['', [Validators.required]],
-    question: [''],
-    duration: [''],
-    points: [''],
-    options: this.fb.array([this.fb.control('')]),
-
-  })
- 
-    this.quizForm = this.fb.group({
+    this.multiChoiceForm= this.fb.group({
       title: ['', [Validators.required]],
       question: [''],
       duration: [''],
       points: [''],
-      options: this.fb.array([this.fb.control('')]),
-      correctOptionIndex : ['']
-  
-    //  description: [''],
-    //  examples: this.fb.array([])
-  });
+      choices: this.fb.array([this.createOptionFormGroup()]),
+
+    })
+ 
+   
     this.loadQuiz();
     this.loadProblems();
 
 
   }
-  loadQuiz() {
-    this.http.getAllQuiz().subscribe((data: any) => {
-      this.quizs = data;
-      this.quizNumber=data.length;
-    })
+  createOptionFormGroup(): FormGroup {
+    return this.fb.group({
+      text: [''], // Initialize as an empty FormControl
+      isCorrect: [false]
+    });
   }
+  
 
-  loadProblems(){
-    this.http.getAllProblem().subscribe((data:any)=>{
-      this.problems=data;
-      this.problemNumber=data.length;
-    })
+ 
+ 
+
+  // Toggle editing mode for an option
+ // Toggle editing mode for an option
+
+
+  removeOption(index: number) {
+    this.choices.removeAt(index);
   }
  // return tests
  
@@ -103,19 +99,8 @@ export class TestComponent {
     this.quizForm.reset();
     this.selectedQuizId=null;
   }
-  deleteQuiz(id :any){
-    this.http.deleteQuiz(id).subscribe(
-      ()=>{
-        alert("quiz deleted successfully")
-        this.loadQuiz();
-      }
 
-    )
-  }
-  openPreview() {
-    // Open the preview component in a new window
-    window.open('/preview', '_blank', 'width=800,height=600');
-  }
+ 
   
   /*openUpdateDialog(id : string){
   this.selectedTestId = id;
@@ -141,38 +126,26 @@ export class TestComponent {
   closeShowDialog() {
     this.isShowDialog= false;
   }
+ 
   get choices() {
-    return this.quizForm.get('choices') as FormArray;
-  }
-  get options() {
-    return this.multiChoiceForm.get('options') as FormArray;
+    return this.multiChoiceForm.get('choices') as FormArray;
   }
 
   // Getter for easier access in the template
-  get answers() {
-    return this.quizForm.get('answers') as FormArray;
-  }
+ 
 
   addOption() {
-    if (this.options.length < 4) {
-      this.options.push(this.fb.control(''));
+    if (this.choices.length < 4) {
+      this.choices.push(this.createOptionFormGroup());
     }
   }
   
   
   removeOptions(index: number) {
-    this.options.removeAt(index);
+    this.choices.removeAt(index);
   }
   
-  addAnswer() {
-    const answerCount = this.answers.length;
-    if (answerCount < this.choices.length ) {
-      this.answers.push(this.fb.control(''));
-    }
-  }
-  removeAnswer(index: number) {
-    this.answers.removeAt(index);
-  }
+ 
   
 
 
@@ -230,7 +203,7 @@ export class TestComponent {
 submit(formdata :any){
   console.log(formdata);
 }
-
+//---------------------------switching ---------------------------------------------
 switchSection(sectionName: string) {
   this.currentSection = sectionName;
 }
@@ -239,6 +212,7 @@ switchMode(modeName: string) {
   this.closeDialog();
 }
 
+// -------------------------------Problem------------------------------------------ 
 addProblem(problemForm){
   if(problemForm.valid){
     const problem= problemForm.value;
@@ -246,7 +220,8 @@ addProblem(problemForm){
       (response: HttpResponse<any>) => {
         console.log("Response:", response); // Log the entire response for debugging
         if (response.body && response.body.includes("Problem added successfully")) {
-        
+          this.toastr.showToas("added succefully")
+
           // Redirect to a new page or perform any other actions after successful registration
         } else {
           alert("failed");
@@ -258,7 +233,7 @@ addProblem(problemForm){
 deleteProblem(id :any){
   this.http.deleteProblem(id).subscribe(
     ()=>{
-      alert("test deleted successfully")
+      this.toastr.showToas("test deleted succefully succefully")
       this.loadProblems();
     }
 
@@ -270,6 +245,7 @@ openUpdateProblem(problem :any){
   const selectedTest =problem;
   this.problemForm.patchValue(selectedTest);
 }
+//-----------------------------------------True False --------------------------------
 addTrueFalse(trueFalseForm){
   if(trueFalseForm.valid){
     const quiz= trueFalseForm.value;
@@ -277,7 +253,7 @@ addTrueFalse(trueFalseForm){
       this.http.updateTrueFalse(this.selectedQuizId,quiz).subscribe(
         (response: HttpResponse<any>) => {
        console.log(response);
-       alert("updated successfully");
+       this.toastr.showToas("updated succefully")
        this.currentMode="show";
        this.loadQuiz();
         },
@@ -288,6 +264,7 @@ addTrueFalse(trueFalseForm){
      }else{
     this.http.addTrueFalse(quiz).subscribe(
       (response: HttpResponse<any>) => {
+        this.toastr.showToas("added succefully")
         this.currentMode="show";
         this.loadQuiz();
       },
@@ -307,21 +284,67 @@ openUpdateTrueFalse(quiz :any){
   const selectedTest =quiz;
   this.trueFalseForm.patchValue(selectedTest);
 }
-addMultipleChoice(quizForm){
-  if(quizForm.valid){
-    const quiz= quizForm.value;
+// -----------------------------------Multiple choice ---------------------------
+addMulti(multipleChoiceForm){
+  if(multipleChoiceForm.valid){
+    const quiz= multipleChoiceForm.value;
+    if(this.selectedQuizId){
+      this.http.updateTrueFalse(this.selectedQuizId,quiz).subscribe(
+        (response: HttpResponse<any>) => {
+       console.log(response);
+       alert("updated successfully");
+       this.currentMode="show";
+       this.loadQuiz();
+        },
+        (error :HttpErrorResponse)=>{
+          console.error('Error updating True/False question:', error);
+  
+        })
+     }else{
     this.http.addMultipleChoice(quiz).subscribe(
       (response: HttpResponse<any>) => {
-        console.log("Response:", response); // Log the entire response for debugging
-        if (response.body && response.body.includes("quiz added successfully")) {
-        
-          // Redirect to a new page or perform any other actions after successful registration
-        } else {
-          alert("failed");
-        }
-      })
+        this.currentMode="show";
+        this.loadQuiz();
+      },
+      (error :HttpErrorResponse)=>{
+        console.error('Error updating True/False question:', error);
+      }
+      
+      )
+      
+    }
     
   }
 }
+//----------------------- delete quiz --------------------------
+deleteQuiz(id :any){
+  this.http.deleteQuiz(id).subscribe(
+    ()=>{
+      alert("quiz deleted successfully")
+      this.loadQuiz();
+    }
+
+  )
+}
+//---------------------load problems-------------------------------
+loadProblems(){
+  this.http.getAllProblem().subscribe((data:any)=>{
+    this.problems=data;
+    this.problemNumber=data.length;
+  })
+}
+//--------------------+load quiz --------------------------------
+loadQuiz() {
+  this.http.getAllQuiz().subscribe((data: any) => {
+    this.quizs = data;
+    this.quizNumber=data.length;
+  })
+}
+//  -------------------preview --------------------------------
+openPreview() {
+  // Open the preview component in a new window
+  window.open('/preview', '_blank', 'width=800,height=600');
+}
+
 
 }

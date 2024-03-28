@@ -9,15 +9,17 @@ import lombok.NoArgsConstructor;
 //@Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 @Data
 public class Choice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String choice;
+    private String text;
     private boolean isCorrect;
 
-    @ManyToOne// Enforce mandatory association with Quiz
+    @ManyToOne(optional = false) // Enforce mandatory association
+    @JoinColumn(name = "multiple_choice_question_id")
     private MultipleChoiceQuestion multipleChoiceQuestion;
 
     // Constructors, getters, and setters

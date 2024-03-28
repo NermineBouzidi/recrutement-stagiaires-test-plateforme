@@ -36,12 +36,13 @@ public class QuizController {
     @PostMapping("/addMulti")
     public ResponseEntity<String> createMulti(@RequestBody MultipleChoiceQuestion quiz) {
         try {
-            Quiz savedQuiz = quizService.addMultipleChoice(quiz);
+            quizService.addMultipleChoice(quiz);
             return ResponseEntity.ok("quiz added successfully");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @PostMapping("/addTrueFalse")
     public ResponseEntity<String> createTrueFalse(@RequestBody TrueFalseQuestion quiz) {
         try {

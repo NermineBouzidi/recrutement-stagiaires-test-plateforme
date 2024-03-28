@@ -57,7 +57,8 @@ export class UserTestComponent {
     console.log(this.data)
     if (this.currentQuestion <= this.data.length ) {
       this.userAnswers.set(this.currentQuestion, selectedChoice);
-      const correctAnswer = this.data[this.currentQuestion -1].answers[0];
+      const correctAnswer = this.data[this.currentQuestion - 1].correctAnswer ||
+      this.data[this.currentQuestion - 1].choices.find(choice => choice.correct);
       if (selectedChoice === correctAnswer) {
         this.score++;
         console.log(this.score)

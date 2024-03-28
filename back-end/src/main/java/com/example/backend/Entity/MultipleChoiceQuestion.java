@@ -14,7 +14,9 @@ import java.util.List;
 @AllArgsConstructor
 @Data
 public class MultipleChoiceQuestion extends Quiz {
-    @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true) // Cascade and orphanRemoval for proper relationship management
-    private List<Choice> choices;
+    @OneToMany(mappedBy = "multipleChoiceQuestion", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @JsonIgnoreProperties("multipleChoiceQuestion") // Prevent infinite recursion
+    private List<Choice> choices = new ArrayList<>();
+
 
 }

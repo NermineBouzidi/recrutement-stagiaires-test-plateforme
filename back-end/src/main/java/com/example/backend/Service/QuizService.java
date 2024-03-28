@@ -10,12 +10,12 @@ import java.util.Optional;
 public interface QuizService {
     String AddQuiz(Quiz test);
     void deleteQuiz(long id);
-    MultipleChoiceQuestion addMultipleChoice(MultipleChoiceQuestion multipleChoiceQuestion);
+   // MultipleChoiceQuestion addMultipleChoice(MultipleChoiceQuestion multipleChoiceQuestion);
     TrueFalseQuestion addTrueFlase(TrueFalseQuestion trueFalseQuestion);
     void  updateTrueFalse(long id ,TrueFalseQuestion trueFalseQuestion);
     List<Quiz> getAllQuiz();
     List<Quiz> getRandomQuiz();
-    Quiz addQuiz(Quiz quiz) ;
+    Quiz addMultipleChoice(MultipleChoiceQuestion quiz) ;
 
     String updateQuiz(long id,Quiz quiz);
     Optional<Quiz> getQuiz(long id);

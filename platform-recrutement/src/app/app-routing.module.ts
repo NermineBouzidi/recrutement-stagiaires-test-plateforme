@@ -19,8 +19,8 @@ const routes: Routes = [
   { path: 'login', component: SigninComponent },
   { path: 'register', component: SignupComponent }, 
   {
-    path: 'dashboard', //canActivate:[UserGuard],
-   // data: { requiredRole: 'ROLE_ADMIN' },
+    path: 'dashboard', canActivate:[UserGuard],
+   data: { requiredRole: 'ROLE_ADMIN' },
     component: UidashboardComponent,
     loadChildren: () => import('./dashboard/dashboard.module').then((m)=> m.DashboardModule)
 

@@ -20,6 +20,8 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @RequestMapping("/api/auth")
@@ -104,11 +106,14 @@ public class AuthController {
         return ResponseEntity.ok(userRepository.findByEmail(jwtUtils.getUsername(token)));
 
     }
-    @PostMapping("/multiplechoice")
+    @PostMapping("/addMultiple")
     public ResponseEntity<?> addMultipleChoiceQuestion(@RequestBody MultipleChoiceQuestion questionDTO) {
-        MultipleChoiceQuestion question = quizService.addMultipleChoice(questionDTO);
-        String correctOption = question.getOptions().get(question.getCorrectOptionIndex());
-        return ResponseEntity.ok(correctOption);
+        try {
+            quizService.addMultipleChoice(questionDTO);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
     }
     @PostMapping("/truefalse")
     public ResponseEntity<?> addTrueFalse(@RequestBody TrueFalseQuestion questionDTO) {
@@ -138,5 +143,10 @@ public class AuthController {
         return quizService.getQuiz(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
+    }
+    @GetMapping("/getAllQuiz")
+    public ResponseEntity<List<Quiz>> getAllQuiz() {
+        List <Quiz> quizzes =quizService.getAllQuiz();
+        return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
 }
