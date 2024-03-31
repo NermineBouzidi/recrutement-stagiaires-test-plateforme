@@ -32,6 +32,7 @@ export class SignupComponent {
       linkedinUrl: new FormControl('', [Validators.required]),
       number: new FormControl('', [ Validators.required,Validators.minLength(8),Validators.maxLength(8)]),
       educationLevel: new FormControl('', [Validators.required]),
+      specializations: new FormControl('',[Validators.required]),
       resume : new FormControl(''),
   
     });
@@ -74,7 +75,8 @@ export class SignupComponent {
     formData.append('email', this.userForm.get('email').value);
     formData.append('number', this.formatNumber(this.userForm.get('number').value));
     formData.append('educationLevel', this.userForm.get('educationLevel').value);
-    formData.append('linkedinUrl', this.userForm.get('linkedinUrl').value);    
+    formData.append('linkedinUrl', this.userForm.get('linkedinUrl').value); 
+    formData.append('specializations', this.userForm.get('specializations').value);       
       this.http.signup(formData).subscribe((res: any) => {
 
           if (  res.body &&  res.body.includes("Registration successful")) {

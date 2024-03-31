@@ -1,35 +1,41 @@
 package com.example.backend.Entity;
 
+import com.example.backend.Entity.Enum.Role;
 import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 
 @Entity
+@Data
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id ;
+    private long id ;
     @NonNull
-    String firstname ;
-    @NonNull    
-    String lastName ;
+    private String firstname ;
     @NonNull
-    String email;
+    private String lastName ;
     @NonNull
-    String number ;
+    private String email;
+    @NonNull
+    private String number ;
 
-    String educationLevel;
-    String password;
-
-    String linkedinUrl;
-    String resumePath;
+    private String educationLevel;
+    private String password;
+    private String specializations;
+    private String linkedinUrl;
+    private String resumePath;
+    private LocalDateTime registrationDate;
+    private String status;
     @Enumerated(EnumType.STRING)
-    Role role ;
+    private Role role ;
 
     public String getLinkedinUrl() {
         return linkedinUrl;
@@ -69,7 +75,7 @@ public class User implements UserDetails {
 
     }*/
 
-   public User( String firstname, String lastName, String email, String number, String educationLevel, String linkedinUrl ) {
+   public User( String firstname, String lastName, String email, String number, String educationLevel, String linkedinUrl, String specializations ) {
        this.firstname = firstname;
        this.lastName = lastName;
        this.email = email;
@@ -77,6 +83,7 @@ public class User implements UserDetails {
        this.educationLevel = educationLevel;
      //  this.password = password;
        this.linkedinUrl = linkedinUrl;
+       this.specializations=specializations;
 
    }
     @Override

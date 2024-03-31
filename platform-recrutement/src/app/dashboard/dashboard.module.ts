@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { DashboardRoutingModule } from './dashboard-routing.module';
 import { TestComponent } from './test/test.component';
@@ -37,8 +37,10 @@ import { TestPreviewComponent } from './test-preview/test-preview.component';
     FormsModule,
     AngularEditorModule,
     HttpClientModule,
-    QuillModule
+    QuillModule,
+    DatePipe
 
-  ]
+  ],
+  providers: [DatePipe]
 })
 export class DashboardModule { }

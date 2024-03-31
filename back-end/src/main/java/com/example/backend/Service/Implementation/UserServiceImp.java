@@ -2,15 +2,13 @@ package com.example.backend.Service.Implementation;
 
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.PasswordGenerator;
-import com.example.backend.Entity.Quiz;
-import com.example.backend.Entity.Role;
+import com.example.backend.Entity.Enum.Role;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -20,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,7 +64,8 @@ public class UserServiceImp implements UserService {
                     user.getNumber(),
                     user.getEducationLevel(),
                   //  passwordEncoder.encode(user.getPassword()),
-                    user.getLinkedinUrl()
+                    user.getLinkedinUrl(),
+                    user.getSpecializations()
             );
             use.setRole(Role.ROLE_USER);
             //use.setPassword(passwordEncoder.encode(use.getPassword()));
@@ -127,10 +127,13 @@ public class UserServiceImp implements UserService {
                     user.getNumber(),
                     user.getEducationLevel(),
                     //passwordEncoder.encode(user.getPassword()),
-                    user.getLinkedinUrl()
+                    user.getLinkedinUrl(),
+                    user.getSpecializations()
             );
 
             use.setRole(Role.ROLE_USER);
+            use.setStatus("Pending");
+            use.setRegistrationDate(LocalDateTime.now());
            // use.setPassword(passwordEncoder.encode(use.getPassword()));
             use.setResumePath(filePath);
             userRepository.save(use);
@@ -157,6 +160,7 @@ public class UserServiceImp implements UserService {
                 String email = user.getEmail();
                 String generatedPassword = PasswordGenerator.generateRandomPassword();
                 user.setPassword(passwordEncoder.encode(generatedPassword));
+                user.setStatus("Accepted");
                 userRepository.save(user);
                 SimpleMailMessage message = new SimpleMailMessage();
                 String acceptanceMessage = String.format(
@@ -192,6 +196,8 @@ public class UserServiceImp implements UserService {
 
             if (userOptional.isPresent()) {
                 User user =userOptional.get();
+                user.setStatus("Rejected");
+                userRepository.save(user);
                 String email = user.getEmail();
                 String rejectionMessage = String.format(
                 "Dear %s %s,%n%n"

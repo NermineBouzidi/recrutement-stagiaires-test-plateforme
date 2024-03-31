@@ -48,6 +48,7 @@ import { QuillModule } from 'ngx-quill';
     {provide :HTTP_INTERCEPTORS , useClass:JwtInterceptor,
     multi:true
   }],
+  
   bootstrap: [AppComponent]
 
 })

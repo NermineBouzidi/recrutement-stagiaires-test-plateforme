@@ -1,3 +1,4 @@
+import { DatePipe } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/Users';
@@ -15,7 +16,7 @@ export class UserComponent {
   user :User;
   usersNumber:number ;
   isDialogOpen :boolean=false;
-  constructor (private http: AuthService ){
+  constructor (private http: AuthService , private datePipe: DatePipe ){
     for(let i:number=1; i<=100;i++){
       this.data.push(i as never);
     }
@@ -82,4 +83,16 @@ export class UserComponent {
     )
 
   }
+  formatDate(date: any): string {
+    return this.datePipe.transform(date, 'MMMM d, y');
+  }
+  toggleActions() {
+    const actionButtons = document.querySelector('.action-buttons');
+    if (actionButtons.classList.contains('hidden')) {
+      actionButtons.classList.remove('hidden');
+    } else {
+      actionButtons.classList.add('hidden');
+    }
+  }
+  
 }

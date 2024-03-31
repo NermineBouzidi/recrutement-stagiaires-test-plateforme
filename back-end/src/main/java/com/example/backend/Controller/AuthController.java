@@ -45,9 +45,11 @@ public class AuthController {
                                          @RequestParam String email,
                                          @RequestParam String number,
                                          @RequestParam String educationLevel,
-                                         @RequestParam String linkedinUrl, @RequestPart("file") MultipartFile file) {
+                                         @RequestParam String linkedinUrl,
+                                         @RequestParam String specializations,
+                                         @RequestPart("file") MultipartFile file) {
 
-        User user = new User(firstname, lastName, email, number, educationLevel, linkedinUrl);
+        User user = new User(firstname, lastName, email, number, educationLevel, linkedinUrl,specializations);
         String s = userService.signup(user, file);
         if (s.equals("Registration successful")) {
             return ResponseEntity.ok("Registration successful");

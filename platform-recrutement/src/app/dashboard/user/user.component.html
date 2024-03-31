@@ -2,81 +2,121 @@
     <div class="text-2xl montserrat-semi text-gray-800 mt-0">Welcome</div>
     <div class="text-4xl montserrat-extra text-[#1d2736]  mb-0">Dashboard-Users List</div>
     <div class="montserrat text-gray-800 mt-0">{{usersNumber}} users found</div>
-   </div>
+</div>
 <div class="flex items-center justify-center ">
     <div class=" h-full  container bg-white  p-8 ">
-    <body class="flex items-center justify-center mt-12 mb-4">
-    <table class="flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden   w-full">
-      <thead class="text-[#1d2736]">
-        <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0 "
-                    *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
-                    <th class="p-3 text-left ">FirstName</th>
-                    <th class="p-3 text-left ">LastName</th>
-                    <th class="p-3 text-left ">Email</th>
-                    <th class="p-3 text-left ">Number</th>
-                    <th class="p-3 text-left ">EducationLevel</th>
-                    <th class="p-3 text-left " width="110px" >Actions</th>
-                </tr>
-            </thead>
-            <tbody class="flex-1 sm:flex-none">
-                <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 montserrat-semi"
-                    *ngFor="let user of data | paginate : { itemsPerPage: 7, currentPage: p }">
-                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.firstname}}</td>
-                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.lastName}}</td>
-                    <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{user.email}}</td>
-                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.number}}</td>
-                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{user.educationLevel}}</td>
+        <div class="flex text-gray-400 montserrat-semi ">
+            <a
+                [class]="'cursor-pointer hover:border-[#d97a07] hover:border-b-2 hover:text-[#d97a07] transition duration-300' ">All
+                Users</a>
+            <a class="mx-8"
+                [class]="'cursor-pointer hover:border-[#d97a07] hover:border-b-2 hover:text-[#d97a07] transition duration-300' ">Accepted</a>
+            <a
+                [class]="'cursor-pointer hover:border-[#d97a07] hover:border-b-2 hover:text-[#d97a07] transition duration-300'">Rejected</a>
+            <a
+                [class]="'ml-8 cursor-pointer hover:border-[#d97a07] hover:border-b-2 hover:text-[#d97a07] transition duration-300'">Pending</a>
+        </div>
+
+        <body class="flex items-center justify-center mt-5 mb-4">
+            <table class="bg-white rounded-lg overflow-hidden w-full">
+                <thead class="text-[#1d2736]">
+                  <tr>
+                    <th class="p-3 text-left">User</th>
+                    <th class="p-3 text-left">Email</th>
+                    <th class="p-3 text-left">Specializations</th>
+                    <th class="p-3 text-left">Registration Date</th>
+                    <th class="p-3 text-left">Status</th>
+                    <th class="p-3 text-left" width="110px">Actions</th>
+                    <th class="p-3 text-left">Test</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let user of data | paginate : { itemsPerPage: 5, currentPage: p }">
+                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.firstname }} {{ user.lastName }}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ user.email }}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.specializations }}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3">{{ formatDate(user.registrationDate) }}</td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3 ">
+                    <span class="flex "
+                      [ngClass]="{
+                        'text-red-500': user.status === 'Rejected',
+                        'text-orange-500': user.status === 'Pending',
+                        'text-green-500': user.status === 'Accepted'
+                      }">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                          <path fill-rule="evenodd"
+                            d="M15 8c0 .982-.472 1.854-1.202 2.402a2.995 2.995 0 0 1-.848 2.547 2.995 2.995 0 0 1-2.548.849A2.996 2.996 0 0 1 8 15a2.996 2.996 0 0 1-2.402-1.202 2.995 2.995 0 0 1-2.547-.848 2.995 2.995 0 0 1-.849-2.548A2.996 2.996 0 0 1 1 8c0-.982.472-1.854 1.202-2.402a2.995 2.995 0 0 1 .848-2.547 2.995 2.995 0 0 1 2.548-.849A2.995 2.995 0 0 1 8 1c.982 0 1.854.472 2.402 1.202a2.995 2.995 0 0 1 2.547.848c.695.695.978 1.645.849 2.548A2.996 2.996 0 0 1 15 8Zm-3.291-2.843a.75.75 0 0 1 .135 1.052l-4.25 5.5a.75.75 0 0 1-1.151.043l-2.25-2.5a.75.75 0 1 1 1.114-1.004l1.65 1.832 3.7-4.789a.75.75 0 0 1 1.052-.134Z"
+                            clip-rule="evenodd" />
+                        </svg>
+                        {{ user.status }}
+                    </span>
+                    </td>
                     <td
                     class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer flex justify-between">
-                        <button (click)="openDialog(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                class="w-5 h-5">
-                                <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
-                                <path fill-rule="evenodd"
-                                    d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
-                                    clip-rule="evenodd" />
-                            </svg>
-                        </button>
+                    <button (click)="openDialog(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            class="w-5 h-5">
+                            <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                            <path fill-rule="evenodd"
+                                d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
 
-                        <button (click)="acceptUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62] ">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="md:w-5 md:h-5 w-4 h-4">
-                                <path
-                                    d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z" />
-                            </svg>
+                    <button (click)="acceptUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62] ">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="md:w-5 md:h-5 w-4 h-4">
+                            <path
+                                d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z" />
+                        </svg>
 
-                        </button>
-                        <button (click)="rejectUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
-                                class="w-5 h-5">
-                                <path
-                                    d="M15.73 5.5h1.035A7.465 7.465 0 0 1 18 9.625a7.465 7.465 0 0 1-1.235 4.125h-.148c-.806 0-1.534.446-2.031 1.08a9.04 9.04 0 0 1-2.861 2.4c-.723.384-1.35.956-1.653 1.715a4.499 4.499 0 0 0-.322 1.672v.633A.75.75 0 0 1 9 22a2.25 2.25 0 0 1-2.25-2.25c0-1.152.26-2.243.723-3.218.266-.558-.107-1.282-.725-1.282H3.622c-1.026 0-1.945-.694-2.054-1.715A12.137 12.137 0 0 1 1.5 12.25c0-2.848.992-5.464 2.649-7.521C4.537 4.247 5.136 4 5.754 4H9.77a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23ZM21.669 14.023c.536-1.362.831-2.845.831-4.398 0-1.22-.182-2.398-.52-3.507-.26-.85-1.084-1.368-1.973-1.368H19.1c-.445 0-.72.498-.523.898.591 1.2.924 2.55.924 3.977a8.958 8.958 0 0 1-1.302 4.666c-.245.403.028.959.5.959h1.053c.832 0 1.612-.453 1.918-1.227Z" />
-                            </svg>
+                    </button>
+                    <button (click)="rejectUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"
+                            class="w-5 h-5">
+                            <path
+                                d="M15.73 5.5h1.035A7.465 7.465 0 0 1 18 9.625a7.465 7.465 0 0 1-1.235 4.125h-.148c-.806 0-1.534.446-2.031 1.08a9.04 9.04 0 0 1-2.861 2.4c-.723.384-1.35.956-1.653 1.715a4.499 4.499 0 0 0-.322 1.672v.633A.75.75 0 0 1 9 22a2.25 2.25 0 0 1-2.25-2.25c0-1.152.26-2.243.723-3.218.266-.558-.107-1.282-.725-1.282H3.622c-1.026 0-1.945-.694-2.054-1.715A12.137 12.137 0 0 1 1.5 12.25c0-2.848.992-5.464 2.649-7.521C4.537 4.247 5.136 4 5.754 4H9.77a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23ZM21.669 14.023c.536-1.362.831-2.845.831-4.398 0-1.22-.182-2.398-.52-3.507-.26-.85-1.084-1.368-1.973-1.368H19.1c-.445 0-.72.498-.523.898.591 1.2.924 2.55.924 3.977a8.958 8.958 0 0 1-1.302 4.666c-.245.403.028.959.5.959h1.053c.832 0 1.612-.453 1.918-1.227Z" />
+                        </svg>
 
+                    </button>
+                    <button (click)="deleteUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                            class="w-5 h-5">
+                            <path fill-rule="evenodd"
+                                d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </button>
+                </td>
+                    <td class="border-grey-light border hover:bg-gray-100 p-3 relative">
+                        <span class="flex justify-between">
+                        <button class="p-2  bg-gray-100">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                            <path fill-rule="evenodd" d="M6.455 1.45A.5.5 0 0 1 6.952 1h2.096a.5.5 0 0 1 .497.45l.186 1.858a4.996 4.996 0 0 1 1.466.848l1.703-.769a.5.5 0 0 1 .639.206l1.047 1.814a.5.5 0 0 1-.14.656l-1.517 1.09a5.026 5.026 0 0 1 0 1.694l1.516 1.09a.5.5 0 0 1 .141.656l-1.047 1.814a.5.5 0 0 1-.639.206l-1.703-.768c-.433.36-.928.649-1.466.847l-.186 1.858a.5.5 0 0 1-.497.45H6.952a.5.5 0 0 1-.497-.45l-.186-1.858a4.993 4.993 0 0 1-1.466-.848l-1.703.769a.5.5 0 0 1-.639-.206l-1.047-1.814a.5.5 0 0 1 .14-.656l1.517-1.09a5.033 5.033 0 0 1 0-1.694l-1.516-1.09a.5.5 0 0 1-.141-.656L2.46 3.593a.5.5 0 0 1 .639-.206l1.703.769c.433-.36.928-.65 1.466-.848l.186-1.858Zm-.177 7.567-.022-.037a2 2 0 0 1 3.466-1.997l.022.037a2 2 0 0 1-3.466 1.997Z" clip-rule="evenodd" />
+                          </svg>
                         </button>
-                        <button (click)="deleteUser(user.id)" class="text-[#907A9A] hover:text-[#3D3D62]">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                class="w-5 h-5">
-                                <path fill-rule="evenodd"
-                                    d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
-                                    clip-rule="evenodd" />
-                            </svg>
-          </button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</body>
-   
-<pagination-controls (pageChange)="p = $event"></pagination-controls>
-</div>
+                        <button class="p-2  bg-gray-100">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                            <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                          </svg>
+                        </button>
+                    </span>
+                      </td>
+                      
+                  </tr>
+                </tbody>
+              </table>
+              
+        </body>
+
+        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
 </div>
 
 <!-------------------------------- user --------------------------------------------------------->
 <div *ngIf="isDialogOpen" class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">
     <div class="flex flex-col items-center min-h-screen justify-center ml-14  px-6 py-12 mx-auto  lg:py-0">
-        <div
-            class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0  container">
+        <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
             <div class="flex items-center justify-end p-4">
                 <button (click)="closeDialog()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -113,7 +153,8 @@
                         <path stroke="#000000" stroke-linecap="round" stroke-width="12"
                             d="M126 130v-26c0-9.941-8.059-18-18-18v0c-9.941 0-18 8.059-18 18v26" />
                     </svg> <span class="poppins-regular">Linkedin Profile :</span>
-                    <span class="text-black"><a href="https://{{user.linkedinUrl}}" target="_blank">{{ user.linkedinUrl }}</a></span>
+                    <span class="text-black"><a href="https://{{user.linkedinUrl}}" target="_blank">{{ user.linkedinUrl
+                            }}</a></span>
                 </div>
                 <div class="flex items-center space-x-1 text-gray-600">
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"

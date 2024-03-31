@@ -26,7 +26,3 @@ public class Quiz  {
 
 }
 
-enum QuestionType {
-    TRUE_FALSE,
-    MULTIPLE_CHOICE,
-}
