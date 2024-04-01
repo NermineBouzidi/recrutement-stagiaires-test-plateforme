@@ -1,0 +1,19 @@
+import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
+import { UiTestComponent } from './ui-test/ui-test.component';
+import { AddTestComponent } from './add-test/add-test.component';
+import { TestComponent } from './test/test.component';
+
+
+const routes: Routes = [
+ 
+  { path: "", component: TestComponent }, // Make this the default route for '/dashboard/test'
+  { path: "addTest", component: AddTestComponent}, 
+
+];
+
+@NgModule({
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
+})
+export class TestsRoutingModule { }

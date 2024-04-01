@@ -2,13 +2,11 @@ package com.example.backend.Controller;
 
 import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.LoginResponse;
-import com.example.backend.Entity.MultipleChoiceQuestion;
-import com.example.backend.Entity.Quiz;
-import com.example.backend.Entity.TrueFalseQuestion;
-import com.example.backend.Entity.User;
+import com.example.backend.Entity.*;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
 import com.example.backend.Service.QuizService;
+import com.example.backend.Service.TestService;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +33,8 @@ public class AuthController {
     private UserService userService;
     @Autowired
     QuizService quizService;
+    @Autowired
+    TestService testService;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -150,5 +150,19 @@ public class AuthController {
     public ResponseEntity<List<Quiz>> getAllQuiz() {
         List <Quiz> quizzes =quizService.getAllQuiz();
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
+    }
+    @PostMapping("addTest")
+    public ResponseEntity<String> createTest(@RequestBody Test test) {
+        try {
+            Test savedTest=testService.addTest(test);
+            return ResponseEntity.ok("Test added successfully");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+    @GetMapping("/getAllTest")
+    public ResponseEntity<List<Test>> getAllTests() {
+        List<Test> tests = testService.getAllTests();
+        return new ResponseEntity<>(tests, HttpStatus.OK);
     }
 }

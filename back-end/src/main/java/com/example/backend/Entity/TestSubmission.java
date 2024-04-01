@@ -17,5 +17,7 @@ public class TestSubmission{
     private Test test;
     @ManyToOne
     private User user;
-    
+    private Integer score;
+    private boolean isPassed;
+
 }

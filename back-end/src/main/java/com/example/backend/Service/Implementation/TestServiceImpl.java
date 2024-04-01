@@ -3,26 +3,34 @@ package com.example.backend.Service.Implementation;
 import com.example.backend.Entity.Problem;
 import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Test;
+import com.example.backend.Repository.QuizRepository;
 import com.example.backend.Repository.TestRepository;
 import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
+@Service
 public class TestServiceImpl implements TestService {
     @Autowired
     TestRepository testRepository;
+    @Autowired
+    QuizRepository quizRepository;
 
     @Override
     public Test addTest(Test test) {
         if (test == null) {
             throw new IllegalArgumentException("Test cannot be null");
         }
-        if (test.getPassingPercentage() <= 0 || test.getPassingPercentage() > 1) {
+        if (test.getPassingPercentage() <= 0 ) {
         throw new IllegalArgumentException("Passing Percentage must be positive");
         }
-         return testRepository.save(test);
+        List<Quiz> existingQuizzes = quizRepository.findAllById(test.getQuizzes().stream().map(Quiz::getId).collect(Collectors.toList()));
+        test.setQuizzes(existingQuizzes);
+        return testRepository.save(test);
         }
 
     @Override

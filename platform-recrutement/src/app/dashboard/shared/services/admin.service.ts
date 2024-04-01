@@ -65,4 +65,10 @@ export class AdminService {
   addMultipleChoice(quiz:any){
     return this.http.post(this.baseURI + `/api/quiz/addMulti`, quiz,{ observe: 'response' ,responseType: 'text'});
   }
+  getAllTest(){
+    return this.http.get<any[]>(this.baseURI + `/api/test/getAllTest`);
+  }
+  deleteTest(id : any) {
+    return this.http.delete(this.baseURI + `/api/test/deleteTest/${id}`)
+  }
 }

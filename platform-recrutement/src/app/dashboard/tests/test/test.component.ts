@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { AdminService } from '../shared/services/admin.service';
+import { AdminService } from '../../shared/services/admin.service';
 import { SigninComponent } from 'src/app/signin/signin.component';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Test } from 'src/app/models/Test';
@@ -15,6 +15,7 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
 export class TestComponent {
   p:any =0;
   quizs: any[] = [];
+  tests: any[] = [];
   quizNumber:number;
   problems:any[]=[];
   problemNumber:number;
@@ -66,13 +67,14 @@ export class TestComponent {
    
     this.loadQuiz();
     this.loadProblems();
+    this.loadTest();
 
 
   }
   createOptionFormGroup(): FormGroup {
     return this.fb.group({
       text: [''], // Initialize as an empty FormControl
-      isCorrect: [false]
+      correct: [false]
     });
   }
   
@@ -239,6 +241,15 @@ deleteProblem(id :any){
 
   )
 }
+deleteTest(id :any){
+  this.http.deleteTest(id).subscribe(
+    ()=>{
+      this.toastr.showToas("test deleted succefully succefully")
+      this.loadTest();
+    }
+
+  )
+}
 openUpdateProblem(problem :any){
   this.selectedProblemId = problem.id;
   this.currentMode ="addProblem";
@@ -283,6 +294,12 @@ openUpdateTrueFalse(quiz :any){
   this.currentMode ="truefalse";
   const selectedTest =quiz;
   this.trueFalseForm.patchValue(selectedTest);
+}
+openUpdateMultipleChoice(quiz :any){
+  this.selectedQuizId = quiz.id;
+  this.currentMode ="multiple";
+  const selectedTest =quiz;
+  this.multiChoiceForm.patchValue(selectedTest);
 }
 // -----------------------------------Multiple choice ---------------------------
 addMulti(multipleChoiceForm){
@@ -338,6 +355,11 @@ loadQuiz() {
   this.http.getAllQuiz().subscribe((data: any) => {
     this.quizs = data;
     this.quizNumber=data.length;
+  })
+}
+loadTest(){
+  this.http.getAllTest().subscribe((data: any) => {
+    this.tests = data;
   })
 }
 //  -------------------preview --------------------------------

@@ -1,20 +1,24 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { UserComponent } from './user/user.component';
-import { TestComponent } from './test/test.component';
+import { TestComponent } from './tests/test/test.component';
 import { UidashboardComponent } from './uidashboard/uidashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashComponent } from './dash/dash.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { TestPreviewComponent } from './test-preview/test-preview.component';
+import { UiTestComponent } from './tests/ui-test/ui-test.component';
 
 const routes: Routes = [
    {path :"" ,component :DashComponent},
    {path :"uidash" ,component :DashComponent},
    {path:"user",component :UserComponent},
-   {path:"test",component :TestComponent},
+   {path:"test",component :UiTestComponent,
+   loadChildren: () => import('./tests/tests.module').then((m)=> m.TestsModule)
+  },
    {path: "profile", component:ProfileComponent},
    {path: "rapport", component:RapportComponent},
+   
 
 
 ];

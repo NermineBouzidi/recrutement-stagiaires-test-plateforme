@@ -11,14 +11,28 @@
 
                 <!-- user-test.component.html -->
                 <!-- ... existing HTML ... -->
-                
+                <div *ngIf="data[currentQuestion - 1].questionType === 'MultipleChoiceQuestion'">
+
                 <ul class="my-4 space-y-3" *ngFor="let choice of data[currentQuestion - 1].choices; let i = index">
                     <li (click)="nextQuestion(choice.text)" [class.selected]="userAnswers.get(currentQuestion) === choice.text"
                          class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
                       <span class="flex-1 ms-3 whitespace-nowrap">{{ choice.text }}</span>
                     </li>
                   </ul>
-                  
+                </div>
+                <div *ngIf="data[currentQuestion - 1].questionType === 'TrueFalseQuestion'">
+
+                    <ul class="my-4 space-y-3" >
+                        <li 
+                             class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
+                          <span class="flex-1 ms-3 whitespace-nowrap">True</span>
+                        </li>
+                        <li  
+                        class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
+                        <span class="flex-1 ms-3 whitespace-nowrap">False</span>
+                       </li>
+                      </ul>
+                    </div>
 
         
             </div>

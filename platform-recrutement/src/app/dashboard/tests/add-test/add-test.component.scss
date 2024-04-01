@@ -1,0 +1,16 @@
+.container {
+    border-radius: 20px;
+
+    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px #e6eaed;
+  }
+  .circle-with-number {
+    width: 20px;
+    height: 20px;
+    background-color: currentColor;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 11px;
+  }

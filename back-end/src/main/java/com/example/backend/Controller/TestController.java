@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Secured("hasRole('USER')")
+@Secured("hasRole('ADMIN')")
 @RequestMapping("/api/test")
 public class TestController {
     @Autowired
@@ -54,7 +54,7 @@ public class TestController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-    @DeleteMapping("/deleteTest/{problemId}")
+    @DeleteMapping("/deleteTest/{testId}")
     public ResponseEntity<?> deleteTest(@PathVariable long testId) {
         try {
             testService.deleteTest(testId);

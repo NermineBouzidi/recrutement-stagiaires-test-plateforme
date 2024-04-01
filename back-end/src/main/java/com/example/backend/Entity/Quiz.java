@@ -22,6 +22,11 @@ public class Quiz  {
     private String question ;
     private Integer duration ;
     private Integer points ;
+    public String getQuestionType() {
+      return this.getClass().getSimpleName();
+
+    }
+
 
 
 }
