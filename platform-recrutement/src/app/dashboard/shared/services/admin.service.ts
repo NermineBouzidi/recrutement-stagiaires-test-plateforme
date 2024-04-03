@@ -71,4 +71,7 @@ export class AdminService {
   deleteTest(id : any) {
     return this.http.delete(this.baseURI + `/api/test/deleteTest/${id}`)
   }
+  addTest(problem :any){
+    return this.http.post(this.baseURI + `/api/test/addTest`, problem,{ observe: 'response' ,responseType: 'text'});
+  }
 }

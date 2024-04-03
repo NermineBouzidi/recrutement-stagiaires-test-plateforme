@@ -30,6 +30,9 @@ public class Test {
             inverseJoinColumns = @JoinColumn(name = "problem_id"))
     private List<Problem> problems = new ArrayList<>();
     private Integer passingPercentage ;
+    @OneToMany(mappedBy = "test") // Many Tests can have Many TestSubmissions
+    private List<TestSubmission> submissions;
+
     public int getTotalPoints() {
         int totalPoints = 0;
         for (Problem problem : problems) {

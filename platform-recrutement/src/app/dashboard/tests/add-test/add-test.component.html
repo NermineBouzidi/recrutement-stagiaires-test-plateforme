@@ -1,3 +1,124 @@
+<!--<div class="py-12 px-4">
+  <div class="flex items-center justify-center">
+    <div class="container bg-white p-8 ">
+      <div class="text-2xl montserrat-extra text-[#1d2736] mt-0 text-center mb-6">
+        Add Test
+      </div>
+      <nav class="mb-6 text-center">
+        <span
+          [class]="'cursor-pointer inline-flex px-4 rounded-lg hover:bg-white hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300 ' + (currentMode === 'type' ? ' border-[#d97a07] text-[#d97a07]' : 'text-gray-500')"
+          (click)="switchMode('type')">
+          <svg width="24px" height="24px">
+            <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">1</text>
+          </svg>
+          Choose a Type
+        </span>
+
+        <span
+          [class]="'cursor-pointer inline-flex px-4 rounded-lg hover:bg-white hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300 ' + (currentMode === 'quiz' ? ' border-[#d97a07] text-[#d97a07]' : 'text-gray-500')"
+          (click)="switchMode('quiz')">
+          <svg width="24px" height="24px">
+            <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">2</text>
+          </svg>
+          Quizzes
+        </span>
+
+        <span
+          [class]="'cursor-pointer inline-flex px-4 rounded-lg hover:bg-white hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300 ' + (currentMode === 'problem' ? ' border-[#d97a07] text-[#d97a07]' : 'text-gray-500')"
+          (click)="switchMode('problem')">
+          <svg width="24px" height="24px">
+            <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">3</text>
+          </svg>
+          Problems
+        </span>
+
+      </nav>
+      <form [formGroup]="testForm">
+        <div *ngIf="currentMode === 'type'" class="flex justify-center mt-12 mb-12">
+          <div class="flex flex-col w-1/2 border-r border-gray-400 px-12"  >
+            <div
+              class="border border-gray-400 rounded-lg p-2 inline-block flex items-center mb-4 mt-5  text-base  rounded-lg bg-gray-50 hover:bg-[#FFCB78] group hover:shadow cursor-pointer"
+              (click)="selectCategory('Web Development')">
+              <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" fill="" stroke="black" stroke-width="1" />
+                <image href="/assets/coding.png" x="30" y="30" width="40" height="40" />
+              </svg>
+              <span class="px-4 montserrat-medium">Web Development</span>
+            </div>
+            <div
+              class="border border-gray-400 rounded-lg p-2 inline-block flex items-center   text-base  rounded-lg bg-gray-50 hover:bg-[#FFCB78] group hover:shadow cursor-pointer"
+              (click)="selectCategory('Mobile Development')">
+
+              <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" fill="" stroke="black" stroke-width="1" />
+                <image href="/assets/analytics (3).png" x="30" y="30" width="40" height="40" />
+              </svg>
+              <span class="px-4 montserrat-medium">Mobile Development</span>
+            </div>
+            <div
+              class="border border-gray-400 rounded-lg p-2 inline-block flex items-center  mt-5  text-base  rounded-lg bg-gray-50 hover:bg-[#FFCB78] group hover:shadow cursor-pointer"
+              (click)="selectCategory('Data Science')">
+              <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="50" cy="50" r="40" fill="" stroke="black" stroke-width="1" />
+                <image href="/assets/analytics (3).png" x="30" y="30" width="40" height="40" />
+              </svg>
+              <span class="px-4 montserrat-medium">Data Science</span>
+            </div>
+          </div>
+          <div class="w-1/2 flex flex-col px-12 justify-center">
+            <div class="mb-4">
+              <label class="block text-[#1d2736] montserrat-semi mb-2">
+                Passing Percentage <span class="text-red-500">*</span>
+              </label>
+              <input type="number" formControlName="passingPercentage"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
+            </div>
+
+          </div>
+        </div>
+        <div *ngIf="currentMode === 'quiz'" class="flex flex-col w-1/2 border-r border-gray-400 px-12">
+
+          <div *ngFor="let quiz of quizzes">
+            <input type="checkbox" for [value]="quiz.id" (change)="toggleQuizSelection($event, quiz)">
+            {{ quiz.title }}
+          </div>
+
+        </div>
+        <div *ngIf="currentMode === 'problem'" class="flex flex-col w-1/2 border-r border-gray-400 px-12">
+
+          <div *ngFor="let problem of problems">
+            <input type="checkbox" [value]="problem.id" (change)="toggleProblemSelection($event, problem)">
+            {{ problem.title }}
+          </div>
+
+
+        </div>
+
+      <div class="flex justify-end">
+        <button   *ngIf="currentMode!='problem'"
+        (click)="nextMode()"
+          class="text-[#7b7b7b] border bg-[#e7e7e7] hover:bg-gray-100 py-2 px-4 rounded inline-flex items-center cursor-pointer">
+          <span class="mr-2">Next</span>
+          <svg class="w-5 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd"
+              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+              clip-rule="evenodd"></path>
+          </svg>
+        </button>
+        <button type="submit" *ngIf="currentMode==='problem'" (click)="submit(testForm)"
+          class="text-[#7b7b7b] border bg-[#e7e7e7] hover:bg-gray-100 py-2 px-4 rounded inline-flex items-center cursor-pointer">
+          <span class="mr-2">Submit</span>
+          
+        </button>
+      </div>
+    </form>
+
+    </div>
+  </div>
+</div>-->
 <div class="py-12 px-4">
   <div class="flex items-center justify-center">
     <div class="container bg-white p-8 ">
@@ -5,74 +126,105 @@
         Add Test
       </div>
       <nav class="mb-6 text-center">
-        <span [class]="'cursor-pointer text-gray-500 inline-flex px-4 hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300' + (currentMode === 'type' ? ' border-[#d97a07] text-[#d97a07]' : '')"
-            (click)="switchMode('type')"    >  
-             <svg width="24px" height="24px">
-                <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">1</text>
-              </svg>
-              Choose a Type
-                             
+        <span
+          [class]="'cursor-pointer inline-flex px-4 rounded-lg hover:bg-white hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300 ' + (currentMode === 'type' ? ' border-[#d97a07] text-[#d97a07]' : 'text-gray-500')"
+          (click)="switchMode('type')">
+          <svg width="24px" height="24px">
+            <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">1</text>
+          </svg>
+          Choose a Type
         </span>
-        <span [class]="'cursor-pointer text-gray-500 inline-flex px-4 hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300' + (currentMode === 'quiz' ? ' border-[#d97a07] text-[#d97a07]' : '')"
-            (click)="switchMode('problem') "   >     
-                     <svg width="24px" height="24px">
-                <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">2</text>
-              </svg>
-              
-              Quizzes
-                          
+
+        <span
+          [class]="'cursor-pointer inline-flex px-4 rounded-lg hover:bg-white hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300 ' + (currentMode === 'quiz' ? ' border-[#d97a07] text-[#d97a07]' : 'text-gray-500')"
+          (click)="switchMode('quiz')">
+          <svg width="24px" height="24px">
+            <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">2</text>
+          </svg>
+          Quizzes
         </span>
-        <span [class]="'cursor-pointer text-gray-500 inline-flex px-4 hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300' + (currentMode === 'problem' ? ' border-[#d97a07] text-[#d97a07]' : '')"
-        (click)="switchMode('problem')"    >  
-                    <svg width="24px" height="24px">
-                <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
-                <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">3</text>
-              </svg>
-              
-                        Problems
-                          
+
+        <span
+          [class]="'cursor-pointer inline-flex px-4 rounded-lg hover:bg-white hover:text-[#d97a07] hover:border-[#d97a07] transition duration-300 ' + (currentMode === 'problem' ? ' border-[#d97a07] text-[#d97a07]' : 'text-gray-500')"
+          (click)="switchMode('problem')">
+          <svg width="24px" height="24px">
+            <circle cx="50%" cy="50%" r="40%" fill="currentColor" />
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle" font-size="11" fill="white">3</text>
+          </svg>
+          Problems
         </span>
+
       </nav>
-      <div *ngIf="currentMode === 'type'" class="flex justify-between mt-12 mb-12">
-        <div class="flex flex-col w-1/2 border-r border-gray-200 px-3">
-            <div class="border border-gray-200 rounded-lg p-4 inline-block flex items-center mb-4 mt-5">
-                <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="50" cy="50" r="40" fill="" stroke="black" stroke-width="1" />
-                  <image href="/assets/coding.png" x="30" y="30" width="40" height="40" />
-                </svg>
-
-                <span class="px-4 montserrat-medium">Web Development</span>
+      <form [formGroup]="testForm" (ngSubmit)="addTest(testForm)">
+        <div *ngIf="currentMode === 'type'" class="flex justify-center mt-12 mb-12">
+          <div class="flex flex-col w-1/2 border-r border-gray-400 px-12">
+            <div>
+              <label for="category">Category:</label>
+              <input type="text" id="category" formControlName="category">
+              <div *ngIf="testForm.get('category').errors && testForm.get('category').touched">
+                <span *ngIf="testForm.get('category').hasError('required')">Category is required.</span>
               </div>
-              <div class="border border-gray-200 rounded-lg p-4 inline-block flex items-center mb-4">
-                <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <circle cx="50" cy="50" r="40" fill="" stroke="black" stroke-width="1" />
-                    <image href="/assets/analytics (3).png" x="30" y="30" width="40" height="40" />
-                  </svg>
-                  <span class="px-4 montserrat-medium">Data Science</span>
-                </div>
-                <div class="border border-gray-200 rounded-lg p-4 inline-block flex items-center mb-4">
-                    <svg class="w-12 h-12" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="50" cy="50" r="40" fill="" stroke="black" stroke-width="1" />
-                        <image href="/assets/analytics (3).png" x="30" y="30" width="40" height="40" />
-                      </svg>
-                      <span class="px-4 montserrat-medium">Data Science</span>
-                    </div>
-            
+            </div>
+            <div>
+              <label for="difficultyLevel">Difficulty Level:</label>
+              <input type="text" id="difficultyLevel" formControlName="difficultyLevel">
+            </div>
 
+            <div>
+              <label for="passingPercentage">Passing Percentage:</label>
+              <input type="number" id="passingPercentage" formControlName="passingPercentage">
+              <div *ngIf="testForm.get('passingPercentage').errors && testForm.get('passingPercentage').touched">
+                <span *ngIf="testForm.get('passingPercentage').hasError('required')">Passing Percentage is
+                  required.</span>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="flex justify-end">
-        <div class="text-[#7b7b7b] border bg-[#e7e7e7] hover:bg-gray-100 py-2 px-4 rounded inline-flex items-center cursor-pointer" >
+
+          <div *ngIf="currentMode === 'quiz'" class="flex flex-col w-1/2 border-r border-gray-400 px-12">
+            <label>Quizzes:</label>
+              <div formArrayName="quizzes">
+                <div *ngFor="let quiz of quizzes; let i = index">
+                  <label>
+                    <input type="checkbox" [formControlName]="quiz.id" [value]="quiz.id"
+                      (change)="toggleQuizSelection($event, quiz)">
+                    {{ quiz.title }} <!-- Replace loadedQuizzes with the name of your array containing quiz data -->
+                  </label>
+                </div>
+              </div>
+          </div>
+        <div *ngIf="currentMode === 'problem'" class="flex flex-col w-1/2 border-r border-gray-400 px-12">
+
+            <label>Problems:</label>
+            <div formArrayName="problems">
+              <div *ngFor="let problem of problems; let i = index">
+                <label>
+                  <input type="checkbox" [formControlName]="problem.id" [value]="problem.id"
+                    (change)="toggleProblemSelection($event, problem)">
+                  {{ problem.title }}
+                  <!-- Replace loadedProblems with the name of your array containing problem data -->
+                </label>
+              </div>
+          </div>
+        </div>
+        <div class="flex justify-end">
+          <button *ngIf="currentMode!='problem'" (click)="nextMode()"
+            class="text-[#7b7b7b] border bg-[#e7e7e7] hover:bg-gray-100 py-2 px-4 rounded inline-flex items-center cursor-pointer">
             <span class="mr-2">Next</span>
             <svg class="w-5 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
               <path fill-rule="evenodd"
                 d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
                 clip-rule="evenodd"></path>
             </svg>
-          </div>
-      </div>
+          </button>
+          <button type="submit" *ngIf="currentMode==='problem'" (click)="submit(testForm)" [disabled]="testForm.invalid"
+            class="text-[#7b7b7b] border bg-[#e7e7e7] hover:bg-gray-100 py-2 px-4 rounded inline-flex items-center cursor-pointer">
+            <span class="mr-2">Submit</span>
+
+          </button>
+        </div>
+      </form>
     </div>
   </div>
-</div>

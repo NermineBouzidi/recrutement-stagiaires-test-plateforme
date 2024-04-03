@@ -310,6 +310,7 @@ addMulti(multipleChoiceForm){
         (response: HttpResponse<any>) => {
        console.log(response);
        alert("updated successfully");
+       console.log(quiz);
        this.currentMode="show";
        this.loadQuiz();
         },

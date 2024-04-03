@@ -3,10 +3,13 @@ package com.example.backend.Controller;
 import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.LoginResponse;
 import com.example.backend.Entity.*;
+import com.example.backend.Repository.TestRepository;
+import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
 import com.example.backend.Service.QuizService;
 import com.example.backend.Service.TestService;
+import com.example.backend.Service.TestSubmissionService;
 import com.example.backend.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -28,6 +32,8 @@ public class AuthController {
     JwtUtils jwtUtils;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    TestRepository testRepository;
 
     @Autowired
     private UserService userService;
@@ -35,6 +41,8 @@ public class AuthController {
     QuizService quizService;
     @Autowired
     TestService testService;
+    @Autowired
+    TestSubmissionService testSubmissionService;
     @Autowired
     private AuthenticationManager authenticationManager;
 
@@ -165,4 +173,27 @@ public class AuthController {
         List<Test> tests = testService.getAllTests();
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
+    @PostMapping("/assign-test")
+    public ResponseEntity<String> assignTest(@RequestBody Map<String, Long> requestBody) {
+        Long testId = requestBody.get("testId");
+        Long userId = requestBody.get("userId");
+
+        if (testId != null && userId != null) {
+            // Fetch the Test and User objects from their respective repositories
+            Test test = testRepository.findById(testId).orElse(null);
+            User user = userRepository.findById(userId).orElse(null);
+
+            if (test != null && user != null) {
+                // Assign the test to the user
+                testSubmissionService.assignTestToUser(test, user);
+                return ResponseEntity.ok("Test assigned successfully.");
+            } else {
+                return ResponseEntity.badRequest().body("Invalid test or user ID.");
+            }
+        } else {
+            return ResponseEntity.badRequest().body("Missing testId or userId in the request.");
+        }
+    }
+
+
 }

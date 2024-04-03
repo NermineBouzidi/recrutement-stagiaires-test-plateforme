@@ -14,6 +14,7 @@ export class UserComponent {
   data: any[] = [];
   file :any;
   user :User;
+  isOpen :boolean=false
   usersNumber:number ;
   isDialogOpen :boolean=false;
   constructor (private http: AuthService , private datePipe: DatePipe ){
@@ -94,5 +95,9 @@ export class UserComponent {
       actionButtons.classList.add('hidden');
     }
   }
+  toggleDropdown() {
+    this.isOpen = !this.isOpen;
+  }
+  
   
 }

@@ -1,5 +1,6 @@
 package com.example.backend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -14,10 +15,10 @@ public class TestSubmission{
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id ;
     @ManyToOne
+    @JsonBackReference // Use this annotation to prevent infinite recursion
     private Test test;
-    @ManyToOne
+    @OneToOne
     private User user;
     private Integer score;
     private boolean isPassed;
-
 }
