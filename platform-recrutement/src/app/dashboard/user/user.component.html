@@ -80,15 +80,8 @@
                     </button>
                 </td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 relative">
-                        <span class="flex justify-between">
-                        
-                        <button class="p-2  bg-gray-100">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
-                            <path fill-rule="evenodd" d="M4.22 6.22a.75.75 0 0 1 1.06 0L8 8.94l2.72-2.72a.75.75 0 1 1 1.06 1.06l-3.25 3.25a.75.75 0 0 1-1.06 0L4.22 7.28a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                          </svg>
-                        </button>
-                    </span>
-                      </td>
+                        <button (click)="openTest(user.category)" [disabled]="isButtonDisabled(user.status)">Add</button>
+                    </td>
                       
                   </tr>
                 </tbody>
@@ -163,6 +156,35 @@
                     <button (click)="getResume(user.id)"
                         class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
                         View Resume</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!----------------------------------Test------------------------------------------>
+<div *ngIf="isTestOpen" class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">
+    <div class="flex flex-col items-center min-h-screen justify-center ml-14  px-6 py-12 mx-auto  lg:py-0">
+        <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
+            <div class="flex items-center justify-end px-4 pt-4">
+                <button (click)="closeTest()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                        class="feather feather-x">
+                        <line x1="18" y1="6" x2="6" y2="18" />
+                        <line x1="6" y1="6" x2="18" y2="18" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <div *ngFor="let test of tests">
+                    <input type="radio" >{{test.category}}
+                </div>
+                <div
+                    class="flex items-center p-4 md:p-5 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b ">
+                    <button 
+                        class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
+                        set Test</button>
                 </div>
             </div>
         </div>

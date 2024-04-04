@@ -1,5 +1,6 @@
 package com.example.backend.Entity;
 
+import com.example.backend.Entity.Enum.TestCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,8 +17,8 @@ public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id ;
-    private String category;
-    private String difficultyLevel;
+    @Enumerated(EnumType.STRING)
+    private TestCategory category;
     @ManyToMany
     @JoinTable(name = "test_quizzes",
             joinColumns = @JoinColumn(name = "test_id"),
@@ -53,6 +54,22 @@ public class Test {
         }
         return totalDuration;
     }
+    public String getDifficultyLevel(){
+        int totalPoints = getTotalPoints();
+        int totalDuration = getTotalDuration();
+
+        // Logic to determine difficulty level based on totalPoints and totalDuration
+        if (totalPoints < 50 && totalDuration < 60) {
+            return "Easy";
+        } else if (totalPoints >= 50 && totalDuration >= 60 && totalPoints < 100 && totalDuration < 120) {
+            return "Intermediate";
+        } else {
+            return "Advanced";
+        }
+    }
 
 
 }
+
+
+

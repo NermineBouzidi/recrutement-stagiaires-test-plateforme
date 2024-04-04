@@ -1,5 +1,6 @@
 package com.example.backend.Controller;
 
+import com.example.backend.Entity.Enum.TestCategory;
 import com.example.backend.Entity.Problem;
 import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Test;
@@ -72,5 +73,14 @@ public class TestController {
     public ResponseEntity<List<Test>> getAllTests() {
         List<Test> tests = testService.getAllTests();
         return new ResponseEntity<>(tests, HttpStatus.OK);
+    }
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Test>> getTestsByCategory(@PathVariable TestCategory category) {
+        List<Test> tests = testService.getTestsByCategory(category);
+        if (tests != null && !tests.isEmpty()) {
+            return ResponseEntity.ok(tests);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

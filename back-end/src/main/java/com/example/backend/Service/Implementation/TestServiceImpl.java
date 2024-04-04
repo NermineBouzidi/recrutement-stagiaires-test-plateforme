@@ -1,5 +1,6 @@
 package com.example.backend.Service.Implementation;
 
+import com.example.backend.Entity.Enum.TestCategory;
 import com.example.backend.Entity.Problem;
 import com.example.backend.Entity.Quiz;
 import com.example.backend.Entity.Test;
@@ -70,4 +71,8 @@ public class TestServiceImpl implements TestService {
         // Delete the problem
         testRepository.delete(existingTest);
     }
+    public List<Test> getTestsByCategory(TestCategory category) {
+        return testRepository.findByCategory(category);
+    }
+
 }

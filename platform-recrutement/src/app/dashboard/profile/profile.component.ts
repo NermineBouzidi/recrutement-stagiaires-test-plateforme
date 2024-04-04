@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { User } from 'src/app/models/Users';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { AdminService } from '../shared/services/admin.service';
 
 @Component({
   selector: 'app-profile',
@@ -17,7 +18,7 @@ export class ProfileComponent {
   passwordForm :FormGroup;
   passwordChangeError:string;
 
-  constructor(private http :AuthService, private fb: FormBuilder){
+  constructor(private http :AdminService, private fb: FormBuilder, private Http :AuthService){
     this.profileForm = this.fb.group({
       firstname: [''],
       lastName: [''],
@@ -39,7 +40,7 @@ export class ProfileComponent {
     this.editModePassword = !this.editModePassword;
   }
   getProfile(){
-    const token = this.http.getToken();
+    const token = this.Http.getToken();
     this.http.getUserProfileFromToken(token).subscribe((data:any)=>{
       this.user=data;
       this.profileForm.patchValue(this.user);

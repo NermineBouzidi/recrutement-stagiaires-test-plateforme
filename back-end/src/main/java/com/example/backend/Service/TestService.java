@@ -1,5 +1,6 @@
 package com.example.backend.Service;
 
+import com.example.backend.Entity.Enum.TestCategory;
 import com.example.backend.Entity.Problem;
 import com.example.backend.Entity.Test;
 
@@ -12,5 +13,6 @@ public interface TestService {
   List<Test> getAllTests();
   Optional<Test> getTestById(Long testId);
   void deleteTest(long testId);
+  List<Test> getTestsByCategory(TestCategory category);
 
 }

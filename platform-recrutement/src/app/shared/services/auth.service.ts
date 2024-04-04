@@ -75,21 +75,7 @@ register(user :UserDTO){
 
 }
 
-getAll() {
-    return this.http.get<User[]>(this.baseURI + `/api/user/getUsers`);
-}
 
-getById(id: string) {
-    return this.http.get<User>(this.baseURI + `/api/user/getUser/${id}`);
-}
-updateUser(id :any,user :User){
-    return this.http.put(this.baseURI + `/api/user/update/${id}`, user,{ observe: 'response' ,responseType: 'text'});
-
-}
-updatePassword(id :any, request:any){
-    return this.http.post(this.baseURI + `/api/user/changePassword/${id}`,request,{});
-
-}
 /*
 update(id, params) {
     return this.http.put(this.baseURI + `/users/${id}`, params)
@@ -107,30 +93,12 @@ update(id, params) {
         }));
 }*/
 
-delete(id: string) {
-    return this.http.delete(this.baseURI + `/api/user/deleteUser/${id}`)
-}
 
-accept(id:String){
-    return this.http.put(this.baseURI + `/api/user/accept/${id}`,{});
-}
-reject(id:String){
-    return this.http.put(this.baseURI + `/api/user/reject/${id}`,{});
-}
-getResume (id :any){
-   return this.http.get(this.baseURI + `/api/user/getFile/${id}`, { responseType: 'blob' });
-}
 // get token 
 getToken(){
     return this.loginValue.token;
 }
-getUserProfileFromToken(token: string) {
-    // Retrieve user ID from token-based API endpoint
-    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
-  
-   return this.http.get<User>(this.baseURI + '/api/user/mee', { headers })
-    
-  }
+
   
 }
 

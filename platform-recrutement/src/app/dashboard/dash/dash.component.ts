@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs/internal/operators/filter';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { AdminService } from '../shared/services/admin.service';
 
 @Component({
   selector: 'app-dash',
@@ -11,7 +12,7 @@ import { AuthService } from 'src/app/shared/services/auth.service';
 export class DashComponent {
 
   data: any[] = [];
-  constructor (private http: AuthService,private router :Router ){
+  constructor (private http: AdminService,private router :Router,private Http :AuthService ){
     this.loadUsers()
   }
   ngOnInit() {
@@ -19,7 +20,7 @@ export class DashComponent {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: NavigationEnd) => {
       if (event.url === '/login') {
-        this.http.logout();
+        this.Http.logout();
       }
     });
   }
@@ -27,7 +28,7 @@ export class DashComponent {
     return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
   }
     loadUsers(){
-      this.http.getAll().subscribe(
+      this.http.getAllUser().subscribe(
         (data : any) => {
           const users= data;
           this.data=users.slice(0, 5) // Slice the array to get only the first 5 elements

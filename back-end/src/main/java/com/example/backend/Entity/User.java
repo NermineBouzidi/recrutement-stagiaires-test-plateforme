@@ -1,6 +1,7 @@
 package com.example.backend.Entity;
 
 import com.example.backend.Entity.Enum.Role;
+import com.example.backend.Entity.Enum.TestCategory;
 import jakarta.persistence.*;
 import lombok.Data;
 import org.springframework.lang.NonNull;
@@ -29,7 +30,8 @@ public class User implements UserDetails {
 
     private String educationLevel;
     private String password;
-    private String specializations;
+    @Enumerated(EnumType.STRING)
+    private TestCategory specializations;
     private String linkedinUrl;
     private String resumePath;
     private LocalDateTime registrationDate;
@@ -76,7 +78,7 @@ public class User implements UserDetails {
 
     }*/
 
-   public User( String firstname, String lastName, String email, String number, String educationLevel, String linkedinUrl, String specializations ) {
+   public User( String firstname, String lastName, String email, String number, String educationLevel, String linkedinUrl, TestCategory specializations ) {
        this.firstname = firstname;
        this.lastName = lastName;
        this.email = email;

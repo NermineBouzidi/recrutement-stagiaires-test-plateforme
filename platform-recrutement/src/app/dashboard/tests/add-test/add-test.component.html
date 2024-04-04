@@ -166,6 +166,11 @@
               <div *ngIf="testForm.get('category').errors && testForm.get('category').touched">
                 <span *ngIf="testForm.get('category').hasError('required')">Category is required.</span>
               </div>
+              <select>
+                <option value="WEB_DEVELOPMENT">Web Development</option>
+                <option value="MOBILE_DEVELOPMENT">Mobile Development</option>
+                <option value="DATA_SCIENCE">Data Science/option>
+              </select>
             </div>
             <div>
               <label for="difficultyLevel">Difficulty Level:</label>

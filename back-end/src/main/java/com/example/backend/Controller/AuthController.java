@@ -3,6 +3,7 @@ package com.example.backend.Controller;
 import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.LoginResponse;
 import com.example.backend.Entity.*;
+import com.example.backend.Entity.Enum.TestCategory;
 import com.example.backend.Repository.TestRepository;
 import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
@@ -54,7 +55,7 @@ public class AuthController {
                                          @RequestParam String number,
                                          @RequestParam String educationLevel,
                                          @RequestParam String linkedinUrl,
-                                         @RequestParam String specializations,
+                                         @RequestParam TestCategory specializations,
                                          @RequestPart("file") MultipartFile file) {
 
         User user = new User(firstname, lastName, email, number, educationLevel, linkedinUrl,specializations);
@@ -163,7 +164,7 @@ public class AuthController {
     public ResponseEntity<String> createTest(@RequestBody Test test) {
         try {
             Test savedTest=testService.addTest(test);
-            return ResponseEntity.ok("Test added successfully");
+            return ResponseEntity.ok("Test added successfully"+savedTest);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
@@ -192,6 +193,15 @@ public class AuthController {
             }
         } else {
             return ResponseEntity.badRequest().body("Missing testId or userId in the request.");
+        }
+    }
+    @GetMapping("/category/{category}")
+    public ResponseEntity<List<Test>> getTestsByCategory(@PathVariable TestCategory category) {
+        List<Test> tests = testService.getTestsByCategory(category);
+        if (tests != null && !tests.isEmpty()) {
+            return ResponseEntity.ok(tests);
+        } else {
+            return ResponseEntity.notFound().build();
         }
     }
 

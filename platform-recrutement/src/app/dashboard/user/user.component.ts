@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/Users';
 import { AuthService } from 'src/app/shared/services/auth.service';
+import { AdminService } from '../shared/services/admin.service';
 
 @Component({
   selector: 'app-user',
@@ -17,7 +18,9 @@ export class UserComponent {
   isOpen :boolean=false
   usersNumber:number ;
   isDialogOpen :boolean=false;
-  constructor (private http: AuthService , private datePipe: DatePipe ){
+  isTestOpen :boolean=false;
+  tests: any[] = [];
+  constructor (private http: AdminService, private datePipe: DatePipe ){
     for(let i:number=1; i<=100;i++){
       this.data.push(i as never);
     }
@@ -27,7 +30,7 @@ export class UserComponent {
   }
 
   loadUsers(){
-    this.http.getAll().subscribe(
+    this.http.getAllUser().subscribe(
       (data : any) => {
           this.data=data
           this.usersNumber= this.data.length;
@@ -35,17 +38,15 @@ export class UserComponent {
   }
   openDialog(id:any){
      this.isDialogOpen=true;
-     this.http.getById(id).subscribe((data:any)=>{
+     this.http.getUserById(id).subscribe((data:any)=>{
       this.user=data;
       })
   }
   closeDialog() {
     this.isDialogOpen = false;
-   
-
   }
   deleteUser(id:any){
-    this.http.delete(id).subscribe(
+    this.http.deleteUser(id).subscribe(
       ()=>{
         alert("test deleted successfully")
         this.loadUsers();
@@ -87,17 +88,21 @@ export class UserComponent {
   formatDate(date: any): string {
     return this.datePipe.transform(date, 'MMMM d, y');
   }
-  toggleActions() {
-    const actionButtons = document.querySelector('.action-buttons');
-    if (actionButtons.classList.contains('hidden')) {
-      actionButtons.classList.remove('hidden');
-    } else {
-      actionButtons.classList.add('hidden');
-    }
-  }
-  toggleDropdown() {
-    this.isOpen = !this.isOpen;
-  }
+
+  openTest(category:any){
+    this.isTestOpen=true;
+    this.http.getTestByCategory(category).subscribe((data:any)=>{
+     this.tests=data;
+     })
+ }
+ closeTest() {
+   this.isTestOpen = false;
+ }
+ isButtonDisabled(status: string): boolean {
+  return status !== 'Accepted';
+}
+  
   
   
 }
+

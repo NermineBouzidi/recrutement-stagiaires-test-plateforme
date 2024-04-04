@@ -96,9 +96,9 @@
 
             <select name="specializations" id="specializations" formControlName="specializations"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
-              <option>Web Development</option>
-              <option>Mobile Development</option>
-              <option>Data Science</option>
+              <option value="WEB_DEVELOPMENT" >Web Development</option>
+              <option value="MOBILE_DEVELOPMENT">Mobile Development</option>
+              <option value="DATA_SCIENCE">Data Science</option>
             </select>
             <div
               *ngIf="userForm.controls['specializations'].touched || userForm.controls['specializations'].dirty ||isSubmitted">
