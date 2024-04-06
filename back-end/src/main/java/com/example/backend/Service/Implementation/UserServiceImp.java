@@ -6,6 +6,7 @@ import com.example.backend.Entity.Enum.Role;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
+import jakarta.transaction.Transactional;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -73,6 +74,7 @@ public class UserServiceImp implements UserService {
             return "Registration successful";
         }
     }
+
     public String deleteUser (long id){
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
@@ -82,6 +84,7 @@ public class UserServiceImp implements UserService {
 
         }
     }
+
 
     @Override
     public String updateUser(long id , UserDTO user) {

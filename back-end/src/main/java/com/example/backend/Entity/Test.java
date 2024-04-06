@@ -17,8 +17,8 @@ public class Test {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id ;
-    @Enumerated(EnumType.STRING)
-    private TestCategory category;
+   // @Enumerated(EnumType.STRING)
+    private String category;
     @ManyToMany
     @JoinTable(name = "test_quizzes",
             joinColumns = @JoinColumn(name = "test_id"),

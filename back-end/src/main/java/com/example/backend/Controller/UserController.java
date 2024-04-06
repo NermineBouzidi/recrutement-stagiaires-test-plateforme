@@ -19,7 +19,6 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Secured("hasRole('ADMIN')")
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired

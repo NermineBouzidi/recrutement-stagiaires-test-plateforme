@@ -30,8 +30,7 @@ public class User implements UserDetails {
 
     private String educationLevel;
     private String password;
-    @Enumerated(EnumType.STRING)
-    private TestCategory specializations;
+    private String specializations;
     private String linkedinUrl;
     private String resumePath;
     private LocalDateTime registrationDate;
@@ -78,7 +77,7 @@ public class User implements UserDetails {
 
     }*/
 
-   public User( String firstname, String lastName, String email, String number, String educationLevel, String linkedinUrl, TestCategory specializations ) {
+   public User( String firstname, String lastName, String email, String number, String educationLevel, String linkedinUrl, String specializations ) {
        this.firstname = firstname;
        this.lastName = lastName;
        this.email = email;

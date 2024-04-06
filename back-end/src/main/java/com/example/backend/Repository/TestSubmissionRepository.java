@@ -6,5 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TestSubmissionRepository extends JpaRepository<TestSubmission,Long> {
     TestSubmission findByUser(User user);
+    void deleteByUser(User user);
 
 }

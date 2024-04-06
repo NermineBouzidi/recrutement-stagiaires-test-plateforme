@@ -10,8 +10,8 @@
         <body class="flex items-center justify-center mt-5 mb-4">
             <table class="bg-white rounded-lg overflow-hidden w-full">
                 <thead class="text-[#1d2736]">
-                  <tr>
-                    <th class="p-3 text-left">User</th>
+                    <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                        <th class="p-3 text-left">User</th>
                     <th class="p-3 text-left">Email</th>
                     <th class="p-3 text-left">Specializations</th>
                     <th class="p-3 text-left">Registration Date</th>
@@ -20,8 +20,8 @@
                     <th class="p-3 text-left">Test</th>
                   </tr>
                 </thead>
-                <tbody>
-                  <tr *ngFor="let user of data | paginate : { itemsPerPage: 5, currentPage: p }">
+                <tbody class="flex-1 sm:flex-none">
+                    <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 montserrat-semi" *ngFor="let user of data | paginate : { itemsPerPage: 5, currentPage: p }">
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.firstname }} {{ user.lastName }}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ user.email }}</td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.specializations }}</td>
@@ -80,7 +80,7 @@
                     </button>
                 </td>
                     <td class="border-grey-light border hover:bg-gray-100 p-3 relative">
-                        <button (click)="openTest(user.category)" [disabled]="isButtonDisabled(user.status)">Add</button>
+                        <button (click)="openTest(user.specializations,user.id)" [disabled]="isButtonDisabled(user.status)">Add</button>
                     </td>
                       
                   </tr>
@@ -178,15 +178,24 @@
             </div>
             <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
                 <div *ngFor="let test of tests">
-                    <input type="radio" >{{test.category}}
+                <div class="relative border-l-4 border-blue-500 p-2 max-w-xs">
+                    <input type="radio" [value]="test.id" [(ngModel)]="selectedTestId">
+                    <div class="text-lg font-bold mb-4">{{test.totalPoints}}</div>
+                    <!-- Content goes here -->
+                    <div class="absolute bottom-0 right-0 flex space-x-2">
+                      <span class="inline-block px-2 py-1 bg-orange-500 text-white rounded">{{test.difficultyLevel}}</span>
+                    </div>
+                  </div>
                 </div>
+            
                 <div
                     class="flex items-center p-4 md:p-5 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b ">
-                    <button 
+                    <button (click)="assignTest(selectedTestId,user.id)"
                         class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
                         set Test</button>
                 </div>
             </div>
+          
         </div>
     </div>
 </div>

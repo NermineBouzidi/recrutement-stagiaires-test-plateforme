@@ -55,7 +55,7 @@ public class AuthController {
                                          @RequestParam String number,
                                          @RequestParam String educationLevel,
                                          @RequestParam String linkedinUrl,
-                                         @RequestParam TestCategory specializations,
+                                         @RequestParam String specializations,
                                          @RequestPart("file") MultipartFile file) {
 
         User user = new User(firstname, lastName, email, number, educationLevel, linkedinUrl,specializations);
@@ -174,29 +174,9 @@ public class AuthController {
         List<Test> tests = testService.getAllTests();
         return new ResponseEntity<>(tests, HttpStatus.OK);
     }
-    @PostMapping("/assign-test")
-    public ResponseEntity<String> assignTest(@RequestBody Map<String, Long> requestBody) {
-        Long testId = requestBody.get("testId");
-        Long userId = requestBody.get("userId");
 
-        if (testId != null && userId != null) {
-            // Fetch the Test and User objects from their respective repositories
-            Test test = testRepository.findById(testId).orElse(null);
-            User user = userRepository.findById(userId).orElse(null);
-
-            if (test != null && user != null) {
-                // Assign the test to the user
-                testSubmissionService.assignTestToUser(test, user);
-                return ResponseEntity.ok("Test assigned successfully.");
-            } else {
-                return ResponseEntity.badRequest().body("Invalid test or user ID.");
-            }
-        } else {
-            return ResponseEntity.badRequest().body("Missing testId or userId in the request.");
-        }
-    }
     @GetMapping("/category/{category}")
-    public ResponseEntity<List<Test>> getTestsByCategory(@PathVariable TestCategory category) {
+    public ResponseEntity<List<Test>> getTestsByCategory(@PathVariable String category) {
         List<Test> tests = testService.getTestsByCategory(category);
         if (tests != null && !tests.isEmpty()) {
             return ResponseEntity.ok(tests);

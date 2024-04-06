@@ -13,6 +13,6 @@ public interface TestService {
   List<Test> getAllTests();
   Optional<Test> getTestById(Long testId);
   void deleteTest(long testId);
-  List<Test> getTestsByCategory(TestCategory category);
+  List<Test> getTestsByCategory(String category);
 
 }

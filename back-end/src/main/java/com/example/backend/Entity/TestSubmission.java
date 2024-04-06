@@ -17,7 +17,7 @@ public class TestSubmission{
     @ManyToOne
     @JsonBackReference // Use this annotation to prevent infinite recursion
     private Test test;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL ,orphanRemoval = true)// Enable orphan removal
     private User user;
     private Integer score;
     private boolean isPassed;

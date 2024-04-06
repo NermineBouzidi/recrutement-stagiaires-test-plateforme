@@ -1,9 +1,10 @@
 import { DatePipe } from '@angular/common';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { User } from 'src/app/models/Users';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AdminService } from '../shared/services/admin.service';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
 
 @Component({
   selector: 'app-user',
@@ -20,13 +21,16 @@ export class UserComponent {
   isDialogOpen :boolean=false;
   isTestOpen :boolean=false;
   tests: any[] = [];
-  constructor (private http: AdminService, private datePipe: DatePipe ){
+  selectedTestId: number;
+    constructor (private http: AdminService, private datePipe: DatePipe, private toast :ToastrService ){
     for(let i:number=1; i<=100;i++){
       this.data.push(i as never);
     }
   }
   ngOnInit(){
-     this.loadUsers()
+     this.loadUsers();
+     
+     
   }
 
   loadUsers(){
@@ -89,8 +93,12 @@ export class UserComponent {
     return this.datePipe.transform(date, 'MMMM d, y');
   }
 
-  openTest(category:any){
+  openTest(category:any,id:any){
+    console.log(category)
     this.isTestOpen=true;
+    this.http.getUserById(id).subscribe((data:any)=>{
+      this.user=data;
+      })
     this.http.getTestByCategory(category).subscribe((data:any)=>{
      this.tests=data;
      })
@@ -101,7 +109,21 @@ export class UserComponent {
  isButtonDisabled(status: string): boolean {
   return status !== 'Accepted';
 }
-  
+assignTest(testId:any, userId:any){
+  this.http.assignTest(testId,userId).subscribe((response) => {
+    console.log('Test assigned successfully:', response);
+    this.toast.showToas("test assigned successfully");
+    
+    // Handle success (e.g., trigger a notification or update UI)
+  },
+  (error: HttpErrorResponse) => {
+    console.error('Error assigning test:', error);
+    // Handle errors (e.g., display error messages)
+  })
+}
+submit(testId:any, userId:any){
+  console.log(testId,userId);
+}
   
   
 }

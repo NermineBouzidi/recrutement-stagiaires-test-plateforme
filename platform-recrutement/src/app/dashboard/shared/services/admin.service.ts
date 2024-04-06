@@ -30,7 +30,7 @@ updatePassword(id :any, request:any){
     return this.http.post(this.baseURI + `/api/user/changePassword/${id}`,request,{});
 
 }
-deleteUser(id: string) {
+deleteUser(id: any) {
   return this.http.delete(this.baseURI + `/api/user/deleteUser/${id}`)
 }
 
@@ -99,9 +99,9 @@ getUserProfileFromToken(token: string) {
   addTest(problem :any){
     return this.http.post(this.baseURI + `/api/test/addTest`, problem,{ observe: 'response' ,responseType: 'text'});
   }
-  assignTest(testId: number, userId: number){
+  assignTest(testId: any, userId: any){
     const requestBody = { testId, userId };
-    return this.http.post(this.baseURI + `/api/auth/assign-test`, requestBody,{ observe: 'response' ,responseType: 'text'});
+    return this.http.post(this.baseURI + `/api/test/assign-test`, requestBody,{ observe: 'response' ,responseType: 'text'});
   }
   getTestByCategory(category:any){
     return this.http.get<any[]>(this.baseURI + `/api/test/category/${category}`);

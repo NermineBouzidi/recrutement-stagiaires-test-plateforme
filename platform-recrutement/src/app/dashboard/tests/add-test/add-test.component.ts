@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../shared/services/admin.service';
 import { HttpResponse } from '@angular/common/http';
@@ -17,7 +17,7 @@ export class AddTestComponent {
   selectedCategory: string;
 
   testForm :FormGroup;
-  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService){}
+  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef){}
   ngOnInit() {
     this.testForm = this.fb.group({
       category: ['', [Validators.required]],
@@ -32,6 +32,8 @@ export class AddTestComponent {
 
 switchMode(modeName: string) {
   this.currentMode = modeName;
+  this.cdr.detectChanges();
+
 }
 loadQuiz() {
   this.http.getAllQuiz().subscribe((data: any) => {

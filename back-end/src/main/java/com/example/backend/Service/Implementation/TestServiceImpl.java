@@ -71,7 +71,7 @@ public class TestServiceImpl implements TestService {
         // Delete the problem
         testRepository.delete(existingTest);
     }
-    public List<Test> getTestsByCategory(TestCategory category) {
+    public List<Test> getTestsByCategory(String category) {
         return testRepository.findByCategory(category);
     }
 
