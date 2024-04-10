@@ -1,55 +1,15 @@
-<section class="bg-[#e6eaed] h-screen">
-     <div class=" flex items-center justify-center py-12 ">
-        <div class="bg-[#e7e7e7] hover:bg-gray-100 text-[#7b7b7b] font-bold py-2 px-4 rounded inline-flex items-center">
-            <span >{{ displayTime }}</span>
-          </div>    </div>
-    <div class="flex flex-col items-center  justify-center  mx-auto">
-        <div class="w-full bg-white rounded-lg shadow sm:max-w-xl  container ">
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8" *ngIf="data.length > 0 && currentQuestion <= data.length ">
-                <span class=" poppins-regular text-[#0D2E4D] text-xl font-semibold"> {{ data[currentQuestion -
-                    1].question }}</span>
-
-                <!-- user-test.component.html -->
-                <!-- ... existing HTML ... -->
-                <div *ngIf="data[currentQuestion - 1].questionType === 'MultipleChoiceQuestion'">
-
-                <ul class="my-4 space-y-3" *ngFor="let choice of data[currentQuestion - 1].choices; let i = index">
-                    <li (click)="nextQuestion(choice.text)" [class.selected]="userAnswers.get(currentQuestion) === choice.text"
-                         class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
-                      <span class="flex-1 ms-3 whitespace-nowrap">{{ choice.text }}</span>
-                    </li>
-                  </ul>
-                </div>
-                <div *ngIf="data[currentQuestion - 1].questionType === 'TrueFalseQuestion'">
-
-                    <ul class="my-4 space-y-3" >
-                        <li 
-                             class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
-                          <span class="flex-1 ms-3 whitespace-nowrap">True</span>
-                        </li>
-                        <li  
-                        class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
-                        <span class="flex-1 ms-3 whitespace-nowrap">False</span>
-                       </li>
-                      </ul>
-                    </div>
-
-        
-            </div>
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8" *ngIf="isTestCompleted">
-                <div  class="text-red ">
-                    Your Score: {{ score }} / {{ data.length }}
-                </div>
-                <div class="mt-4 flex flex-wrap justify-center gap-4">
-
-                    <a class="block w-full rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] sm:w-auto"
-                                        routerLink="/user/code" routerLinkActive="active">
-    code                                </a>
-                    </div>
-            </div>
-          
-        </div>
-    
-    </div>
-
-</section>
+<div>
+    <button (click)="previousPage()">Previous</button>
+    <button (click)="nextPage()">Next</button>
+  </div>
+  
+  <!-- Display current page problems -->
+  <div *ngFor="let problem of currentPageProblems">
+    <app-user-code [problem]="problem"></app-user-code>
+  </div>
+  
+  <!-- Display current page quizzes -->
+  <div *ngFor="let quiz of currentPageQuizzes">
+    <app-user-quiz [quiz]="quiz"></app-user-quiz>
+  </div>
+  

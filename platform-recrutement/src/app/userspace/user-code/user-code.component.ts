@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { timer } from 'rxjs';
 import { takeWhile, tap } from 'rxjs/operators';
 import { UserspaceService } from '../shared/services/userspace.service';
@@ -9,6 +9,8 @@ import { UserspaceService } from '../shared/services/userspace.service';
   styleUrls: ['./user-code.component.scss']
 })
 export class UserCodeComponent {
+  @Input() problem: any;
+
   problems:any[]=[];
   problemNumber:number;
   currentProblem :number=1;
@@ -56,7 +58,20 @@ export class UserCodeComponent {
         // Add your more code
       });
   }
-
+  private minutesToMMSS(minutes: number): string {
+    if (isNaN(minutes) || minutes < 0) {
+      return '00:00'; // Handle invalid or negative input
+    }
+  
+    const totalSeconds = minutes * 60; // Convert minutes to seconds
+    const remainingSeconds = totalSeconds % 60;
+  
+    const minutesStr = minutes.toString().padStart(2, '0'); // Pad with leading zeros
+    const secondsStr = remainingSeconds.toString().padStart(2, '0'); // Pad with leading zeros
+  
+    return `${minutesStr}:${secondsStr}`;
+  }
+  
   private secondsToHHMMSS(seconds: number): string {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);

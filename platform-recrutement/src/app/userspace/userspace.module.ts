@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { UserCodeComponent } from './user-code/user-code.component';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { UserQuizComponent } from './user-quiz/user-quiz.component';
+import { DurationToTimerPipe } from './shared/services/duration-to-timer.pipe';
 
 
 @NgModule({
@@ -15,6 +17,8 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
     UserHomeComponent,
     UserTestComponent,
     UserCodeComponent,
+    UserQuizComponent,
+    DurationToTimerPipe
   ],
   imports: [
     CommonModule,

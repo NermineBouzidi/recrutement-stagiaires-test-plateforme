@@ -39,6 +39,7 @@ public class User implements UserDetails {
     private Role role ;
 
 
+
     public String getLinkedinUrl() {
         return linkedinUrl;
     }

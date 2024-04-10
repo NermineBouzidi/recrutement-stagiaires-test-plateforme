@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
 
@@ -14,5 +14,11 @@ export class UserspaceService {
 }
 getAllProblem(){
   return this.http.get<any[]>(this.baseURI + `/api/test/getAllProblem`);
+}
+getAssinedTest(token: string) {
+  // Retrieve user ID from token-based API endpoint
+  const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+
+ return this.http.get(this.baseURI + '/api/userTest/assigned-test', { headers })
 }
 }
