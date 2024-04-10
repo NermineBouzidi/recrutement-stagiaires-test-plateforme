@@ -12,7 +12,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { ProfileComponent } from './profile/profile.component';
 import { DashComponent } from './dash/dash.component';
-import { RapportComponent } from './rapport/rapport.component';
+import { RapportComponent } from './rapports/rapport/rapport.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuillModule } from 'ngx-quill';
 import { TestPreviewComponent } from './test-preview/test-preview.component';

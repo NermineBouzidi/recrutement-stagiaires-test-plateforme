@@ -12,6 +12,8 @@ import { AdminService } from '../shared/services/admin.service';
 export class DashComponent {
 
   data: any[] = [];
+  usersNumber:number ;
+
   constructor (private http: AdminService,private router :Router,private Http :AuthService ){
     this.loadUsers()
   }
@@ -31,6 +33,7 @@ export class DashComponent {
       this.http.getAllUser().subscribe(
         (data : any) => {
           const users= data;
+          this.usersNumber= data.length;
           this.data=users.slice(0, 5) // Slice the array to get only the first 5 elements
         })
     }

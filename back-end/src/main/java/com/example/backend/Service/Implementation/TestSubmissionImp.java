@@ -7,8 +7,10 @@ import com.example.backend.Repository.*;
 import com.example.backend.Service.TestSubmissionService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -27,6 +29,8 @@ public class TestSubmissionImp implements TestSubmissionService {
         TestSubmission testSubmission = new TestSubmission();
         testSubmission.setTest(test);
         testSubmission.setUser(user);
+        testSubmission.setAcceptedDate(LocalDateTime.now());
+        testSubmission.setStatus("Pending");
         // You can set other attributes such as score and isPassed as needed
         testSubmissionRepository.save(testSubmission);
     }
@@ -42,6 +46,29 @@ public class TestSubmissionImp implements TestSubmissionService {
             }
         }
         return  testSubmissionRepository.save(existingTestSubmission);
+    }
+
+    @Override
+    public List<TestSubmission> getAllTestSubmissions() {
+        return testSubmissionRepository.findAll();
+    }
+
+    @Override
+    public TestSubmission addProblemAnswer(long id, List<ProblemAnswer> problemAnswers) {
+        TestSubmission testSubmission = testSubmissionRepository.findById(id)
+                        .orElseThrow(() -> new IllegalArgumentException("testSubmission not found with id: " + id));
+
+// Clear existing problem answers (optional)
+        testSubmission.getProblemAnswers().clear();
+
+        // Set new problem answers with association
+        for (ProblemAnswer answer : problemAnswers) {
+            answer.setTestSubmission(testSubmission); // Set association
+        }
+
+        testSubmission.setProblemAnswers(problemAnswers); // Update list
+        return testSubmissionRepository.save(testSubmission);
+    }
     }
 
 

@@ -1,11 +1,9 @@
 package com.example.backend.Controller;
 
+import com.example.backend.Entity.*;
 import com.example.backend.Entity.Enum.TestCategory;
-import com.example.backend.Entity.Problem;
-import com.example.backend.Entity.Quiz;
-import com.example.backend.Entity.Test;
-import com.example.backend.Entity.User;
 import com.example.backend.Repository.TestRepository;
+import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Service.ProblemService;
 import com.example.backend.Service.QuizService;
@@ -34,6 +32,8 @@ public class TestController {
     TestService testService;
     @Autowired
     TestSubmissionService testSubmissionService;
+    @Autowired
+    TestSubmissionRepository testSubmissionRepository;
     @Autowired
     UserRepository userRepository;
     @Autowired
@@ -114,5 +114,10 @@ public class TestController {
         } else {
             return ResponseEntity.badRequest().body("Missing testId or userId in the request.");
         }
+    }
+    @GetMapping("/getAllTestSubmission")
+    public ResponseEntity<List<TestSubmission>> getAllTestSubmissions() {
+        List<TestSubmission>testSubmissions = testSubmissionRepository.findAll();
+        return new ResponseEntity<>(testSubmissions, HttpStatus.OK);
     }
 }

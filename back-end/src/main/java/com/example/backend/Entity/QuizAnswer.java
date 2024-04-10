@@ -16,6 +16,7 @@ public class QuizAnswer {
     @ManyToOne
     private  Quiz quiz;
     private String answerText;
+    private Integer points;
     @ManyToOne(optional = false) // Enforce mandatory association
     @JoinColumn(name = "test-submission_id")
     private TestSubmission testSubmission;

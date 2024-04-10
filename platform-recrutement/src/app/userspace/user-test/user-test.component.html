@@ -1,15 +1,7 @@
-<div>
-    <button (click)="previousPage()">Previous</button>
-    <button (click)="nextPage()">Next</button>
-  </div>
-  
-  <!-- Display current page problems -->
-  <div *ngFor="let problem of currentPageProblems">
+<div *ngFor="let problem of problems">
     <app-user-code [problem]="problem"></app-user-code>
   </div>
-  
-  <!-- Display current page quizzes -->
-  <div *ngFor="let quiz of currentPageQuizzes">
+
+  <div *ngFor="let quiz of quizzes">
     <app-user-quiz [quiz]="quiz"></app-user-quiz>
   </div>
-  

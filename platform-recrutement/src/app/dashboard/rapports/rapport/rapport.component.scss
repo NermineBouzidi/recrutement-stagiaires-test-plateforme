@@ -1,0 +1,21 @@
+.container {
+    border-radius: 20px;
+
+    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px #e6eaed;
+  }
+  .initials-circle {
+    width: 35px;
+    height: 35px;
+    background-color: #eceff1;
+    color: #722e78;
+    font-size: 14px;
+    font-family: sans-serif;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #ccc; /* Thin grey border */
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Little shadow */
+  }
+  
+ 
