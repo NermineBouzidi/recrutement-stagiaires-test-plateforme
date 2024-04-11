@@ -21,4 +21,7 @@ getAssinedTest(token: string) {
 
  return this.http.get(this.baseURI + '/api/userTest/assigned-test', { headers })
 }
+setAnswers(id:any ,quiz :Quiz){
+  return this.http.put(this.baseURI + `/api/quiz/updateTrueFalse/${id}`, quiz,{ observe: 'response' ,responseType: 'text'});
+}
 }

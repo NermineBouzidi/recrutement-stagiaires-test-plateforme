@@ -1,5 +1,6 @@
 package com.example.backend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,7 @@ public class Choice {
 
     @ManyToOne(optional = false) // Enforce mandatory association
     @JoinColumn(name = "multiple_choice_question_id")
+    @JsonBackReference
     private MultipleChoiceQuestion multipleChoiceQuestion;
 
     // Constructors, getters, and setters

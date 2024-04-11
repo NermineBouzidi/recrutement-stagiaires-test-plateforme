@@ -28,10 +28,10 @@ public class TestSubmission{
     private String status;
     private LocalDateTime testSubmissionDate;
     private LocalDateTime acceptedDate;
-    @OneToMany(mappedBy = "testSubmission", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "testSubmission", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     @JsonIgnoreProperties("testSubmission") // Prevent infinite recursion
     private List<ProblemAnswer> problemAnswers = new ArrayList<>();
-    @OneToMany(mappedBy = "testSubmission", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "testSubmission", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JsonIgnoreProperties("testSubmission") // Prevent infinite recursion
     private List<QuizAnswer> quizAnswers  = new ArrayList<>();
     public int getScore() {

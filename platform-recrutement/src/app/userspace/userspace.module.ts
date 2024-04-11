@@ -10,6 +10,7 @@ import { UserCodeComponent } from './user-code/user-code.component';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { UserQuizComponent } from './user-quiz/user-quiz.component';
 import { DurationToTimerPipe } from './shared/services/duration-to-timer.pipe';
+import { TestCompletionComponent } from './test-completion/test-completion.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { DurationToTimerPipe } from './shared/services/duration-to-timer.pipe';
     UserTestComponent,
     UserCodeComponent,
     UserQuizComponent,
-    DurationToTimerPipe
+    DurationToTimerPipe,
+    TestCompletionComponent
   ],
   imports: [
     CommonModule,

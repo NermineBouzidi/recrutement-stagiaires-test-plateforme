@@ -7,6 +7,7 @@ import { TestsRoutingModule } from '../tests/tests-routing.module';
 import { UiRapportsComponent } from './ui-rapports/ui-rapports.component';
 import { RapportComponent } from './rapport/rapport.component';
 import { RapportsRoutingModule } from './rapports-routing.module';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 
 
@@ -20,6 +21,7 @@ import { RapportsRoutingModule } from './rapports-routing.module';
     RapportsRoutingModule,
     NgxPaginationModule,
     ReactiveFormsModule,
-    FormsModule  ]
+    FormsModule,
+    CodemirrorModule  ]
 })
 export class RapportsModule { }

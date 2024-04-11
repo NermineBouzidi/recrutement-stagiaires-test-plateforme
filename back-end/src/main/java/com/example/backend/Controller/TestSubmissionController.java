@@ -1,10 +1,7 @@
 package com.example.backend.Controller;
 
 import com.example.backend.DTO.ProblemAnswerDTO;
-import com.example.backend.Entity.ProblemAnswer;
-import com.example.backend.Entity.Test;
-import com.example.backend.Entity.TestSubmission;
-import com.example.backend.Entity.User;
+import com.example.backend.Entity.*;
 import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
@@ -14,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -81,6 +80,21 @@ public class TestSubmissionController {
         TestSubmission savedAnswer = testSubmissionService.addAnswers(id,testSubmission);
         return ResponseEntity.ok(savedAnswer);
     }
+    @PutMapping("/problem-answers/{id}")
+    public ResponseEntity<TestSubmission> setProblemAnswers(@PathVariable Long id, @RequestBody List<ProblemAnswer> problemAnswers) {
+        TestSubmission testSubmission = testSubmissionService.setProblemAnswers(id, problemAnswers);
+        return ResponseEntity.ok(testSubmission);
+    }
+    @PutMapping("/quiz-answers/{id}")
+    public ResponseEntity<TestSubmission> setQuizAnswers(@PathVariable Long id, @RequestBody List<QuizAnswer> quizAnswers) {
+        TestSubmission testSubmission = testSubmissionService.setQuizAnswers(id, quizAnswers);
+        return ResponseEntity.ok(testSubmission);
+    }
+@PutMapping("/set-answers/{id}")
+    public ResponseEntity<TestSubmission> setAnswers(@PathVariable Long id ,@RequestBody List<ProblemAnswer> problemAnswers ,@RequestBody List<QuizAnswer> quizAnswers){
+        TestSubmission testSubmission =testSubmissionService.setProblemAnswers(id,problemAnswers);
+        testSubmissionService.setQuizAnswers(id,quizAnswers);
+    return ResponseEntity.ok(testSubmission);
 
-
+}
 }

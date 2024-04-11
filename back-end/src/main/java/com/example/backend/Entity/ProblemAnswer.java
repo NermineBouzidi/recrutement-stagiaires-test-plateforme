@@ -1,5 +1,6 @@
 package com.example.backend.Entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,5 +22,6 @@ public class ProblemAnswer {
 
     @ManyToOne(optional = false) // Enforce mandatory association
     @JoinColumn(name = "test-submission_id")
+    @JsonBackReference // Use this annotation to prevent infinite recursion
     private TestSubmission testSubmission;
 }

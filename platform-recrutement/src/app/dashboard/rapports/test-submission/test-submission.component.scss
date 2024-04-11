@@ -1,0 +1,13 @@
+.container {
+    border-radius: 20px;
+
+    box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px #e6eaed;
+  }
+  @import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" );
+  .left-pane, .right-pane {
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    margin: 10px;
+  }

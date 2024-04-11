@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {path:'preview', component:TestPreviewComponent},
   {
-    path:'user', canActivate:[UserGuard],
+    path:'user', //canActivate:[UserGuard],
     data: { requiredRole: 'ROLE_USER' },
     loadChildren: () => import('./userspace/userspace.module').then((m)=> m.UserspaceModule)
   }

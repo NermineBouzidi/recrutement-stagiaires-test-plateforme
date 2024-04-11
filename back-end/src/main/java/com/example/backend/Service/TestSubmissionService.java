@@ -11,5 +11,7 @@ public interface TestSubmissionService {
     TestSubmission addAnswers(long id ,TestSubmission testSubmission);
     List<TestSubmission> getAllTestSubmissions();
 
-    TestSubmission addProblemAnswer(long id ,List<ProblemAnswer> problemAnswers);
+    TestSubmission setProblemAnswers(long id ,List<ProblemAnswer> problemAnswers);
+    TestSubmission setQuizAnswers(long id , List<QuizAnswer> quizAnswers);
+
 }

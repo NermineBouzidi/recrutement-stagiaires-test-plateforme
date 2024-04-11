@@ -11,7 +11,10 @@ import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class TestSubmissionImp implements TestSubmissionService {
@@ -54,12 +57,12 @@ public class TestSubmissionImp implements TestSubmissionService {
     }
 
     @Override
-    public TestSubmission addProblemAnswer(long id, List<ProblemAnswer> problemAnswers) {
+    public TestSubmission setProblemAnswers(long id, List<ProblemAnswer> problemAnswers) {
         TestSubmission testSubmission = testSubmissionRepository.findById(id)
                         .orElseThrow(() -> new IllegalArgumentException("testSubmission not found with id: " + id));
 
 // Clear existing problem answers (optional)
-        testSubmission.getProblemAnswers().clear();
+      //  testSubmission.getProblemAnswers().clear();
 
         // Set new problem answers with association
         for (ProblemAnswer answer : problemAnswers) {
@@ -69,7 +72,32 @@ public class TestSubmissionImp implements TestSubmissionService {
         testSubmission.setProblemAnswers(problemAnswers); // Update list
         return testSubmissionRepository.save(testSubmission);
     }
-    }
 
+    @Override
+    public TestSubmission setQuizAnswers(long id, List<QuizAnswer> quizAnswers) {
+        TestSubmission testSubmission = testSubmissionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("testSubmission not found with id: " + id));
+
+// Clear existing problem answers (optional)
+        //  testSubmission.getProblemAnswers().clear();
+
+        // Set new problem answers with association
+        testSubmission.getQuizAnswers().clear();
+
+        // Set new quiz answers with association and potentially calculate points
+        for (QuizAnswer answer : quizAnswers) {
+            answer.setTestSubmission(testSubmission); // Set association
+
+            // Handle Multiple Choice questions with potential duplicates:
+            if (answer.getQuiz().getQuestionType().equals("MultipleChoiceQuestion") && answer.getMultipleChoiceAnswers() != null) {
+                Set<Choice> chosenChoices = new HashSet<>(answer.getMultipleChoiceAnswers()); // Use Set to avoid duplicates
+                answer.setMultipleChoiceAnswers(new ArrayList<>(chosenChoices)); // Update with de-duplicated list
+            }
+
+        }
+
+        testSubmission.setQuizAnswers(new ArrayList<>(quizAnswers)); // Update list (avoid modification issues)
+        return testSubmissionRepository.save(testSubmission);
+    }
 
 }

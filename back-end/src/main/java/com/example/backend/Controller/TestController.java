@@ -15,6 +15,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -120,4 +121,19 @@ public class TestController {
         List<TestSubmission>testSubmissions = testSubmissionRepository.findAll();
         return new ResponseEntity<>(testSubmissions, HttpStatus.OK);
     }
+    @GetMapping("/getAnswers/{testSubmissionId}")
+    public ResponseEntity<?> getAnswersByTestSubmission(@PathVariable Long testSubmissionId) {
+        TestSubmission testSubmission = testSubmissionRepository.findById(testSubmissionId)
+                .orElseThrow(() -> new IllegalArgumentException("TestSubmission not found with id: " + testSubmissionId));
+
+        List<ProblemAnswer> problemAnswers = testSubmission.getProblemAnswers();
+        List<QuizAnswer> quizAnswers = testSubmission.getQuizAnswers();
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("problemAnswers", problemAnswers);
+        response.put("quizAnswers", quizAnswers);
+
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
 }

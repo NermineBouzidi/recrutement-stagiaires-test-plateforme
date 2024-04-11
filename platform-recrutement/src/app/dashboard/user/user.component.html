@@ -171,7 +171,7 @@
 <!----------------------------------Test------------------------------------------>
 <div *ngIf="isTestOpen" class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">
     <div class="flex flex-col items-center min-h-screen justify-center ml-14  px-6 py-12 mx-auto  lg:py-0">
-        <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
+        <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 h-96 overflow-y-auto  ">
             <div class="flex items-center justify-end px-4 pt-4">
                 <button (click)="closeTest()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
@@ -182,7 +182,7 @@
                     </svg>
                 </button>
             </div>
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 ">
                 <div *ngFor="let test of tests">
                   <div class="border border-gray-300 rounded-lg p-2 border-l-4  mb-2 hover:border-[#d97a07] ">
                     <!-- Checkbox -->
