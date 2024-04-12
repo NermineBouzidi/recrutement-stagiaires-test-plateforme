@@ -6,6 +6,7 @@ import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
 import com.example.backend.Service.TestSubmissionService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +14,7 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -92,9 +94,17 @@ public class TestSubmissionController {
     }
 @PutMapping("/set-answers/{id}")
     public ResponseEntity<TestSubmission> setAnswers(@PathVariable Long id ,@RequestBody List<ProblemAnswer> problemAnswers ,@RequestBody List<QuizAnswer> quizAnswers){
-        TestSubmission testSubmission =testSubmissionService.setProblemAnswers(id,problemAnswers);
-        testSubmissionService.setQuizAnswers(id,quizAnswers);
+
+        TestSubmission testSubmission =testSubmissionService.setAnswers(id,quizAnswers,problemAnswers);
     return ResponseEntity.ok(testSubmission);
 
 }
+
+
+
+
+    // Helper method for type safety and potential error handling:
+
+
+
 }

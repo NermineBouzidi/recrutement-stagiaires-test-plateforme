@@ -1,63 +1,63 @@
 <section class="bg-[#e6eaed] h-screen">
     <div class=" flex items-center justify-center py-12 gap-1">
-       
-       <div class="bg-[#e7e7e7] hover:bg-gray-100 text-[#7b7b7b] font-bold py-2 px-4 rounded inline-flex items-center">
-           <span >{{ quiz.duration | durationToTimer }}</span>
-         </div>
-         <div class="text-[#7b7b7b] border bg-[#e7e7e7] hover:bg-gray-100 py-2 px-4 rounded inline-flex items-center cursor-pointer" >
-           <span class="mr-2">Next</span>
-           <svg class="w-5 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-             <path fill-rule="evenodd"
-               d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
-               clip-rule="evenodd"></path>
-           </svg>
-         </div> 
-       </div>
-   <div class="flex flex-col items-center  justify-center  mx-auto">
-       <div class="w-full bg-white rounded-lg shadow sm:max-w-xl  container ">
-           <div class="p-6 space-y-4 md:space-y-6 sm:p-8" *ngIf="quiz ">
-               <span class=" poppins-regular text-[#0D2E4D] text-xl font-semibold"> {{quiz.question }}</span>
 
-               
-               <div *ngIf="quiz.questionType === 'MultipleChoiceQuestion'">
+      <div class="bg-[#e7e7e7] hover:bg-gray-100 text-[#7b7b7b] font-bold py-2 px-4 rounded inline-flex items-center">
+        <span>{{ data[currentQuestion -1].duration | durationToTimer }}</span>
+      </div>
+      <div
+        class="text-[#7b7b7b] border bg-[#e7e7e7] hover:bg-gray-100 py-2 px-4 rounded inline-flex items-center cursor-pointer">
+        <span class="mr-2">Next</span>
+        <svg class="w-5 " fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+          <path fill-rule="evenodd"
+            d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+            clip-rule="evenodd"></path>
+        </svg>
+      </div>
+    </div>
+    <div class="flex flex-col items-center  justify-center  mx-auto">
+      <div class="w-full bg-white rounded-lg shadow sm:max-w-xl  container ">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8" >
+          <span class=" poppins-regular text-[#0D2E4D] text-xl font-semibold"> {{ data[currentQuestion -1].question }}</span>
 
-               <ul class="my-4 space-y-3" *ngFor="let choice of quiz.choices; let i = index">
-                   <li (click)="nextQuestion(choice.text)" [class.selected]="userAnswers.get(currentQuestion) === choice.text"
-                        class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
-                     <span class="flex-1 ms-3 whitespace-nowrap">{{ choice.text }}</span>
-                   </li>
-                 </ul>
-               </div>
-               <div *ngIf="quiz.questionType === 'TrueFalseQuestion'">
 
-                   <ul class="my-4 space-y-3" >
-                       <li 
-                            class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
-                         <span class="flex-1 ms-3 whitespace-nowrap">True</span>
-                       </li>
-                       <li  
-                       class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
-                       <span class="flex-1 ms-3 whitespace-nowrap">False</span>
-                      </li>
-                     </ul>
-                   </div>
+          <div *ngIf="data[currentQuestion -1].questionType === 'MultipleChoiceQuestion'">
 
-       
-           </div>
-           <div class="p-6 space-y-4 md:space-y-6 sm:p-8" *ngIf="isTestCompleted">
-               <div  class="text-red ">
-                   Your Score: {{ score }} / {{ data.length }}
-               </div>
-               <div class="mt-4 flex flex-wrap justify-center gap-4">
+            <ul class="my-4 space-y-3" *ngFor="let choice of data[currentQuestion -1].choices; let i = index">
+              <li (click)="nextQuestion(choice.text)"
+                [class.selected]="userAnswers.get(currentQuestion) === choice.text"
+                class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
+                <span class="flex-1 ms-3 whitespace-nowrap">{{ choice.text }}</span>
+              </li>
+            </ul>
+          </div>
+          <div *ngIf="data[currentQuestion -1].questionType === 'TrueFalseQuestion'">
 
-                   <a class="block w-full rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] sm:w-auto"
-                                       routerLink="/user/code" routerLinkActive="active">
-   code                                </a>
-                   </div>
-           </div>
-         
-       </div>
-   
-   </div>
+            <ul class="my-4 space-y-3">
+              <li
+                class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
+                <span class="flex-1 ms-3 whitespace-nowrap">True</span>
+              </li>
+              <li
+                class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
+                <span class="flex-1 ms-3 whitespace-nowrap">False</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="p-6 space-y-4 md:space-y-6 sm:p-8" *ngIf="isTestCompleted">
+      <div class="text-red ">
+        Your Score: {{ score }} / {{ data.length }}
+      </div>
+      <div class="mt-4 flex flex-wrap justify-center gap-4">
+
+        <a class="block w-full rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] sm:w-auto"
+          routerLink="/user/code" routerLinkActive="active">
+          code </a>
+      </div>
+    </div>
+
 
 </section>

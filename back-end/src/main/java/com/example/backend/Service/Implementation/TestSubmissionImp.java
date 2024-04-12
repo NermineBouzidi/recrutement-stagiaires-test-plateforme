@@ -28,6 +28,7 @@ public class TestSubmissionImp implements TestSubmissionService {
     ProblemRepository problemRepository;
     @Autowired
     QuizRepository quizRepository;
+
     public void assignTestToUser(Test test, User user) {
         TestSubmission testSubmission = new TestSubmission();
         testSubmission.setTest(test);
@@ -48,7 +49,7 @@ public class TestSubmissionImp implements TestSubmissionService {
                 answer.setTestSubmission(existingTestSubmission);
             }
         }
-        return  testSubmissionRepository.save(existingTestSubmission);
+        return testSubmissionRepository.save(existingTestSubmission);
     }
 
     @Override
@@ -59,10 +60,10 @@ public class TestSubmissionImp implements TestSubmissionService {
     @Override
     public TestSubmission setProblemAnswers(long id, List<ProblemAnswer> problemAnswers) {
         TestSubmission testSubmission = testSubmissionRepository.findById(id)
-                        .orElseThrow(() -> new IllegalArgumentException("testSubmission not found with id: " + id));
+                .orElseThrow(() -> new IllegalArgumentException("testSubmission not found with id: " + id));
 
 // Clear existing problem answers (optional)
-      //  testSubmission.getProblemAnswers().clear();
+        //  testSubmission.getProblemAnswers().clear();
 
         // Set new problem answers with association
         for (ProblemAnswer answer : problemAnswers) {
@@ -100,4 +101,36 @@ public class TestSubmissionImp implements TestSubmissionService {
         return testSubmissionRepository.save(testSubmission);
     }
 
+    @Override
+    public TestSubmission setAnswers(long id, List<QuizAnswer> quizAnswers, List<ProblemAnswer> problemAnswers) {
+        TestSubmission testSubmission = testSubmissionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("testSubmission not found with id: " + id));
+
+// Clear existing problem answers (optional)
+        //  testSubmission.getProblemAnswers().clear();
+
+        // Set new problem answers with association
+        testSubmission.getQuizAnswers().clear();
+        testSubmission.getProblemAnswers().clear();
+
+        // Set new quiz answers with association and potentially calculate points
+        for (QuizAnswer answer : quizAnswers) {
+            answer.setTestSubmission(testSubmission); // Set association
+
+            // Handle Multiple Choice questions with potential duplicates:
+            if (answer.getQuiz().getQuestionType().equals("MultipleChoiceQuestion") && answer.getMultipleChoiceAnswers() != null) {
+                Set<Choice> chosenChoices = new HashSet<>(answer.getMultipleChoiceAnswers()); // Use Set to avoid duplicates
+                answer.setMultipleChoiceAnswers(new ArrayList<>(chosenChoices)); // Update with de-duplicated list
+            }
+
+        }
+
+        testSubmission.setQuizAnswers(new ArrayList<>(quizAnswers)); // Update list (avoid modification issues)    }
+        for (ProblemAnswer answer : problemAnswers) {
+            answer.setTestSubmission(testSubmission); // Set association
+        }
+
+        testSubmission.setProblemAnswers(problemAnswers); // Update list
+        return testSubmissionRepository.save(testSubmission);
+    }
 }

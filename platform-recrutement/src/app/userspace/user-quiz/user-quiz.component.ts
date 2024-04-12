@@ -3,6 +3,7 @@ import { timer, takeWhile, tap } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserspaceService } from '../shared/services/userspace.service';
 import { DurationToTimerPipe } from '../shared/services/duration-to-timer.pipe';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 
 @Component({
   selector: 'app-user-quiz',
@@ -19,7 +20,10 @@ export class UserQuizComponent {
   isTestCompleted: boolean = false; 
   counter = 120; // Counter in seconds
   displayTime: string;
-  constructor(private http :UserspaceService,private Http :AuthService){
+  
+  formGroup: FormGroup;
+
+  constructor(private http :UserspaceService,private Http :AuthService,private fb: FormBuilder){
      timer(1000, 1000) // Initial delay 1 second and interval countdown also 1 second
       .pipe(
         takeWhile(() => this.counter > 0),
@@ -31,7 +35,14 @@ export class UserQuizComponent {
       .subscribe(() => {
         // Add your more code
       });
-     
+      this.formGroup = this.fb.group({
+        id: [null], // Optional - Set to null for new answers
+        quiz: [null, Validators.required],
+        trueFalseAnswer: [null],
+        multipleChoiceAnswers: this.fb.array([]),
+        points: [null],
+        testSubmission: [null, Validators.required], // Mandatory association
+      });
   }
   
   private minutesToHHMMSS(minutes: number): string {
@@ -62,8 +73,10 @@ export class UserQuizComponent {
     this.loadQuiz();
   }
   loadQuiz() {
-    this.http.getAllQuiz().subscribe((data: any) => {
-      this.data = data;
+    const token = this.Http.getToken();
+    this.http.getAssinedTest(token).subscribe((data:any)=>{
+      this.test=data;
+      this.data=data.quizzes
       for (const question of this.data) {
         shuffle(question.choices); // Randomize choices for each question
     }
@@ -89,7 +102,20 @@ export class UserQuizComponent {
 
   }
 
- 
+
+  get multipleChoiceAnswersArray(): FormArray {
+    return this.formGroup.get('multipleChoiceAnswers') as FormArray;
+  }
+
+  addMultipleChoiceAnswer() {
+    this.multipleChoiceAnswersArray.push(this.fb.group({
+      id: [null], // Optional - Set to null for new choices
+    }));
+  }
+
+  removeMultipleChoiceAnswer(index: number) {
+    this.multipleChoiceAnswersArray.removeAt(index);
+  }
 
 }
 
