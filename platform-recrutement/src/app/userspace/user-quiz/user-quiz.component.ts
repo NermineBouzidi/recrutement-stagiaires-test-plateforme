@@ -1,9 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { timer, takeWhile, tap } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserspaceService } from '../shared/services/userspace.service';
 import { DurationToTimerPipe } from '../shared/services/duration-to-timer.pipe';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-user-quiz',
@@ -12,6 +12,8 @@ import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 })
 export class UserQuizComponent {
   @Input() quiz: any;
+  @Output() formGroupValue = new EventEmitter<FormGroup>();
+
   data: any[] = [];
   test: any = {};
   currentQuestion :number=1;
@@ -21,7 +23,7 @@ export class UserQuizComponent {
   counter = 120; // Counter in seconds
   displayTime: string;
   
-  formGroup: FormGroup;
+  quizAnswerForm: FormGroup;
 
   constructor(private http :UserspaceService,private Http :AuthService,private fb: FormBuilder){
      timer(1000, 1000) // Initial delay 1 second and interval countdown also 1 second
@@ -35,13 +37,11 @@ export class UserQuizComponent {
       .subscribe(() => {
         // Add your more code
       });
-      this.formGroup = this.fb.group({
-        id: [null], // Optional - Set to null for new answers
-        quiz: [null, Validators.required],
+      this.quizAnswerForm = this.fb.group({
+        quiz: [null],
         trueFalseAnswer: [null],
         multipleChoiceAnswers: this.fb.array([]),
         points: [null],
-        testSubmission: [null, Validators.required], // Mandatory association
       });
   }
   
@@ -98,13 +98,11 @@ export class UserQuizComponent {
       }
     }
   }
-  checkAnswer(){
-
-  }
+  
 
 
   get multipleChoiceAnswersArray(): FormArray {
-    return this.formGroup.get('multipleChoiceAnswers') as FormArray;
+    return this.quizAnswerForm.get('multipleChoiceAnswers') as FormArray;
   }
 
   addMultipleChoiceAnswer() {
@@ -116,7 +114,63 @@ export class UserQuizComponent {
   removeMultipleChoiceAnswer(index: number) {
     this.multipleChoiceAnswersArray.removeAt(index);
   }
+  
+  emitFormGroupValue(quizAnswerForm) {
+    const questionType = this.quiz.questionType;
+    const quiz= quizAnswerForm.value;
+    const transformedquiz = {id:this.quiz.id};
+    const transformedAnswers = quiz.multipleChoiceAnswers.map(Id => ({ id: Id }));
+    let transformedPoints= 0;
+    // Check if quiz.choices is defined before accessing its properties
+    const correctChoices = this.quiz.choices?.filter((choice: any) => choice.correct)?.map((choice: any) => choice.id) || [];
+    
+    if (questionType === 'MultipleChoiceQuestion') {
+    if (this.doArraysHaveSameElements(quiz.multipleChoiceAnswers,correctChoices)){
+        transformedPoints = this.quiz.points; // Full points for correct True/False
 
+      }
+      
+    } else if (questionType === 'TrueFalseQuestion') {
+      const correctAnswer = this.quiz.correctAnswer;
+      const userAnswer = quiz.trueFalseAnswer;
+      if (userAnswer !== undefined && userAnswer === correctAnswer) {
+        transformedPoints = this.quiz.points; // Full points for correct True/False
+      } 
+      
+      else {
+        transformedPoints = 0; // No points for incorrect True/False
+      }
+    }
+    
+    const finalFormGroup = { ...quiz, quiz: transformedquiz, multipleChoiceAnswers: transformedAnswers, points:transformedPoints };
+    console.log(finalFormGroup)
+    this.formGroupValue.emit(finalFormGroup);
+
+  }
+  toggleQuizSelection(event: Event, quiz: any): void {
+    const isChecked = (event.target as HTMLInputElement).checked;
+  
+    if (isChecked) {
+      this.multipleChoiceAnswersArray.push(this.fb.control(quiz.id));
+    } else {
+      const index = this.multipleChoiceAnswersArray.controls.findIndex((control: FormControl) => control.value === quiz.id);
+      this.multipleChoiceAnswersArray.removeAt(index);
+    }
+  }
+  doArraysHaveSameElements(arr1: any[], arr2: any[]): boolean {
+    // Handle empty arrays or arrays with different lengths
+    if (arr1.length !== arr2.length) {
+      return false;
+    }
+  
+    // Convert arrays to sets to handle duplicates and order independence
+    const set1 = new Set(arr1);
+    const set2 = new Set(arr2);
+  
+    // Check if all elements from set1 are present in set2 (and vice versa)
+    return set1.size === set2.size && [...set1].every(element => set2.has(element));
+  }
+  
 }
 
 function shuffle(array: any[]) {
@@ -138,5 +192,6 @@ function shuffle(array: any[]) {
 
   return array;
 }
+
 
 

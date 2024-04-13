@@ -1,6 +1,7 @@
 package com.example.backend.Entity;
 
 import com.example.backend.Entity.Enum.TestCategory;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,6 +33,7 @@ public class Test {
     private List<Problem> problems = new ArrayList<>();
     private Integer passingPercentage ;
     @OneToMany(mappedBy = "test") // Many Tests can have Many TestSubmissions
+    @JsonBackReference
     private List<TestSubmission> submissions;
 
     public int getTotalPoints() {

@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserspaceService } from '../shared/services/userspace.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-home',
@@ -17,6 +18,7 @@ export class UserHomeComponent {
   quizzesPerPage: number = 1; // Number of quizzes to display per page
   currentPage: number = 1;
   totalPages: number;
+  isSubmited :boolean=false;
   constructor (private router :Router,private http :UserspaceService,private Http :AuthService){}
   diasbleBack(): void {
     // Disable browser navigation
@@ -41,7 +43,13 @@ export class UserHomeComponent {
       this.test=data;
       this.quizzes= shuffle(data.quizzes);
       this.problems= shuffle(data.problems);
-      })
+    }, (error: any) => {
+      if (error.status === 401 ){
+        this.router.navigateByUrl("/user/testCompletion")
+      }
+    }
+  )
+    
 
   }
 

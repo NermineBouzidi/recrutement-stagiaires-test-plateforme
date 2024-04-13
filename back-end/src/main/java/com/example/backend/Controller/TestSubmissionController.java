@@ -1,6 +1,7 @@
 package com.example.backend.Controller;
 
 import com.example.backend.DTO.ProblemAnswerDTO;
+import com.example.backend.DTO.TestAnswersRequest;
 import com.example.backend.Entity.*;
 import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
@@ -69,7 +70,17 @@ public class TestSubmissionController {
             TestSubmission testSubmission = testSubmissionRepository.findByUser(user);
 
             if (testSubmission != null) {
-                return ResponseEntity.ok(testSubmission);
+                String submissionStatus = testSubmission.getStatus();
+                if (submissionStatus.equals("Submitted")) {
+                    // User has already completed the test, return appropriate response
+                    return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("completed");
+                } else if (submissionStatus.equals("TIMED_OUT")) {
+                    // User has already started the test, don't allow access again
+                    // (Optional: You can consider returning a message indicating the test is in progress)
+                    return ResponseEntity.status(HttpStatus.FORBIDDEN).body(null);
+                } else {
+                    return ResponseEntity.ok(testSubmission);
+                }
             } else {
                 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
             }
@@ -93,9 +104,9 @@ public class TestSubmissionController {
         return ResponseEntity.ok(testSubmission);
     }
 @PutMapping("/set-answers/{id}")
-    public ResponseEntity<TestSubmission> setAnswers(@PathVariable Long id ,@RequestBody List<ProblemAnswer> problemAnswers ,@RequestBody List<QuizAnswer> quizAnswers){
+    public ResponseEntity<TestSubmission> setAnswers(@PathVariable Long id , @RequestBody TestAnswersRequest testAnswersRequest){
 
-        TestSubmission testSubmission =testSubmissionService.setAnswers(id,quizAnswers,problemAnswers);
+        TestSubmission testSubmission =testSubmissionService.setAnswers(id,testAnswersRequest.getQuizAnswers(),testAnswersRequest.getProblemAnswers());
     return ResponseEntity.ok(testSubmission);
 
 }

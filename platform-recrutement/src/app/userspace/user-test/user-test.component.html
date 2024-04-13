@@ -1,6 +1,9 @@
+<div>
+<button (click)="Submit()">submit</button>
 <div *ngFor="let problem of problems">
-    <app-user-code [problem]="problem"></app-user-code>
-
+    <app-user-code [problem]="problem" (formGroupValue)="handleProblemGroupValue($event)"></app-user-code>
+</div>
   <div *ngFor="let quiz of quizzes">
-    <app-user-quiz [quiz]="quiz"></app-user-quiz>
+    <app-user-quiz [quiz]="quiz" (formGroupValue)="handleFormGroupValue($event)"></app-user-quiz>
   </div>
+</div>

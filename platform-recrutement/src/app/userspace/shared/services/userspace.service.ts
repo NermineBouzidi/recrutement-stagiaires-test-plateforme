@@ -19,7 +19,19 @@ getAssinedTest(token: string) {
   // Retrieve user ID from token-based API endpoint
   const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
 
- return this.http.get(this.baseURI + '/api/userTest/assigned-test', { headers })
+ return this.http.get(this.baseURI + '/api/userTest/assigned', { headers })
 }
+setQuizAnswers(id:any ,quizAnswers :any[]){
+  return this.http.put(this.baseURI + `/api/userTest/quiz-answers/${id}`, quizAnswers,{ observe: 'response' ,responseType: 'text'});
+}
+setProblemAnswers(id:any ,problemAnswers :any[]){
+  return this.http.put(this.baseURI + `/api/userTest/problem-answers/${id}`, problemAnswers,{ observe: 'response' ,responseType: 'text'});
+}
+setAnswers(id:any ,submissionAnswers:any){
+ 
+  return this.http.put(this.baseURI + `/api/userTest/set-answers/${id}`,submissionAnswers,{ observe: 'response' ,responseType: 'text'});
+
+}
+
 
 }

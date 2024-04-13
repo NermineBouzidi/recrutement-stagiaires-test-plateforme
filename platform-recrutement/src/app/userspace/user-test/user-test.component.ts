@@ -5,6 +5,8 @@ import { timer } from 'rxjs';
 import { takeWhile, tap } from 'rxjs/operators';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { Router } from '@angular/router';
+import { FormGroup } from '@angular/forms';
+import { ToastrService } from 'src/app/shared/services/toastr.service';
 @Component({
   selector: 'app-user-test',
   templateUrl: './user-test.component.html',
@@ -13,10 +15,12 @@ import { Router } from '@angular/router';
 export class UserTestComponent {
   test: any = {};
   quizzes: any[];
+  quizzesAnswers: any[] = []; // Array to store form group values
+  problemAnswers: any[] = []; // Array to store form group values
   problems: any[];
   itemsPerPage = 1;
   currentPage = 0;
-  constructor (private router :Router,private http :UserspaceService,private Http :AuthService){}
+  constructor (private router :Router,private http :UserspaceService,private Http :AuthService, private toastr : ToastrService){}
   diasbleBack(): void {
     // Disable browser navigation
     this.router.events.subscribe((event) => {
@@ -24,6 +28,7 @@ export class UserTestComponent {
     });
   }
   ngOnInit(): void {
+    
     this.diasbleBack();
     this.loadTest();
   }
@@ -31,10 +36,18 @@ export class UserTestComponent {
     const token = this.Http.getToken();
     this.http.getAssinedTest(token).subscribe((data:any)=>{
       this.test=data;
-      this.quizzes= shuffle(data.quizzes);
-      this.problems= shuffle(data.problems);
+      this.quizzes= shuffle(data.test?.quizzes);
+      this.problems= shuffle(data.test?.problems);
       })
 
+  }
+  handleFormGroupValue(value: any) {
+    this.quizzesAnswers.push(value); // Add the form group value to the array
+    console.log('Quizzes:', this.quizzesAnswers); // Optional: Log the array
+  }
+  handleProblemGroupValue(value: any) {
+    this.problemAnswers.push(value); // Add the form group value to the array
+    console.log('Problems:', this.problemAnswers); // Optional: Log the array
   }
   get currentPageProblems() {
     const startIndex = this.currentPage * this.itemsPerPage;
@@ -57,7 +70,47 @@ export class UserTestComponent {
     const totalPages = Math.ceil(Math.max(this.problems.length, this.quizzes.length) / this.itemsPerPage);
     this.currentPage = (this.currentPage - 1 + totalPages) % totalPages;
   }
-
+  receiveFormGroupValue(formGroupValue: FormGroup) {
+    // Handle the received form group value here
+    console.log('Form Group Value:', formGroupValue);
+    // Send the value to the API or perform other actions
+  }
+ 
+  submit(){
+    this.http.setQuizAnswers(this.test.id,this.quizzesAnswers).subscribe(response => {
+      console.log('Quiz answers submitted successfully:', response);
+      // Handle successful submission (e.g., display a confirmation message)
+    }, error => {
+      console.error('Error submitting quiz answers:', error);
+      // Handle errors (e.g., display an error message)
+    });
+    this.http.setProblemAnswers(this.test.id,this.problemAnswers).subscribe(response => {
+      console.log('Problem answers submitted successfully:', response);
+      // Handle successful submission (e.g., display a confirmation message)
+    }, error => {
+      console.error('Error submitting problem answers:', error);
+      // Handle errors (e.g., display an error message)
+    });
+  }
+  Submit() {
+    const submissionAnswers: any = {
+      quizAnswers: this.quizzesAnswers,
+      problemAnswers: this.problemAnswers
+    };
+    this.http.setAnswers(this.test.id,submissionAnswers)
+      .subscribe(
+        response => {
+          console.log('Answers submitted successfully:', response);
+          this.toastr.showToas("Test submitted successfull")
+          this.router.navigateByUrl("/user/testCompletion");
+          // Handle successful submission (e.g., display a confirmation message)
+        },
+        error => {
+          console.error('Error submitting answers:', error);
+          // Handle errors (e.g., display an error message)
+        }
+      );
+  }
 }
 function shuffle(array: any[]) {
   let currentIndex = array.length;

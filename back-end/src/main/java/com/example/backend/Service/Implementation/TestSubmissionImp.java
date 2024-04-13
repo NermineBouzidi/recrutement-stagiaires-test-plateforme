@@ -2,6 +2,7 @@ package com.example.backend.Service.Implementation;
 
 import com.example.backend.DTO.ProblemAnswerDTO;
 import com.example.backend.DTO.QuizAnswerDTO;
+import com.example.backend.DTO.TestAnswersRequest;
 import com.example.backend.Entity.*;
 import com.example.backend.Repository.*;
 import com.example.backend.Service.TestSubmissionService;
@@ -129,8 +130,11 @@ public class TestSubmissionImp implements TestSubmissionService {
         for (ProblemAnswer answer : problemAnswers) {
             answer.setTestSubmission(testSubmission); // Set association
         }
-
+        testSubmission.setTestSubmissionDate(LocalDateTime.now());
+        testSubmission.setStatus("Submitted");
         testSubmission.setProblemAnswers(problemAnswers); // Update list
         return testSubmissionRepository.save(testSubmission);
     }
+
+
 }

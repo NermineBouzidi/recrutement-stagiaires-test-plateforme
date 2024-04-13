@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { timer } from 'rxjs';
 import { takeWhile, tap } from 'rxjs/operators';
 import { UserspaceService } from '../shared/services/userspace.service';
+import { FormGroup, FormBuilder } from '@angular/forms';
 @Component({
   selector: 'app-user-code',
   templateUrl: './user-code.component.html',
@@ -10,6 +11,7 @@ import { UserspaceService } from '../shared/services/userspace.service';
 })
 export class UserCodeComponent {
   @Input() problem: any;
+  @Output() formGroupValue = new EventEmitter<FormGroup>();
 
   problems:any[]=[];
   problemNumber:number;
@@ -33,6 +35,7 @@ export class UserCodeComponent {
 
   };
   
+  problemAnswerForm: FormGroup;
 
   query: string;
 
@@ -45,7 +48,7 @@ export class UserCodeComponent {
   }
   
 
-  constructor(private http :UserspaceService) {
+  constructor(private http :UserspaceService,private fb: FormBuilder) {
     timer(1000, 1000) // Initial delay 1 second and interval countdown also 1 second
       .pipe(
         takeWhile(() => this.counter > 0),
@@ -56,6 +59,11 @@ export class UserCodeComponent {
       )
       .subscribe(() => {
         // Add your more code
+      });
+      this.problemAnswerForm = this.fb.group({
+        problem: [null],
+        answerText: [''],
+        points: [0],
       });
   }
   private minutesToMMSS(minutes: number): string {
@@ -84,19 +92,19 @@ export class UserCodeComponent {
     return `${hoursStr}:${minutesStr}:${secondsStr}`;
   }
   updateCode() {
-    if (this.selectedLanguage === 'text/x-java') {
+    if (this.problem.language  === 'Java') {
       this.query = `// Java code example
       public class MyClass {
         public static void main(String[] args) {
           System.out.println("Hello, world!");
         }
       }`;
-    } else if (this.selectedLanguage === 'text/x-python') {
+    } else if (this.problem.language  === 'Python') {
       this.query = `# Python code example
       print("Hello, world!")`;
-    } else if (this.selectedLanguage === 'text/x-mysql') {
+    } else if (this.problem.language  === 'text/Mysql') {
       this.query = `SELECT SQL_NO_CACHE DISTINCT`;
-    }  else if (this.selectedLanguage === 'javascript'){
+    }  else if (this.problem.language  === 'JavaScript'){
       this.query = `// JavaScript code example
       function greet(name) {
           return("Hello, " + name + "!");
@@ -106,10 +114,10 @@ export class UserCodeComponent {
     }
   }
   onLanguageChange() {
-    this.codeMirrorOptions.mode = this.selectedLanguage === 'Java' ? 'text/x-java' :
-    this.selectedLanguage === 'Python' ? 'text/x-python' :
-    this.selectedLanguage === 'Mysql' ? 'text/x-mysql' :
-    this.selectedLanguage === 'JavaScript' ? 'text/x-javascript' :
+    this.codeMirrorOptions.mode = this.problem.language === 'Java' ? 'text/x-java' :
+    this.problem.language === 'Python' ? 'text/x-python' :
+    this.problem.language === 'Mysql' ? 'text/x-mysql' :
+    this.problem.language === 'JavaScript' ? 'text/x-javascript' :
     'text/plain'; // Default mode for unknown languages    this.updateCode()
     this.updateCode();
   }
@@ -136,5 +144,16 @@ export class UserCodeComponent {
       this.onLanguageChange();
       this.currentProblem++;
     }
+  }
+  emitFormGroupValue(problemAnswerForm) {
+    const problem= problemAnswerForm.value;
+    const transformedproblem = {id:this.problem.id};
+    // Check if quiz.choices is defined before accessing its properties
+    
+    
+    const finalFormGroup = { ...problem, problem:transformedproblem};
+    console.log(finalFormGroup)
+    this.formGroupValue.emit(finalFormGroup);
+
   }
 }
