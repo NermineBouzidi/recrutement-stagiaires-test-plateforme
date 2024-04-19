@@ -104,6 +104,7 @@ addTest(testForm){
         console.log("Response:", response); // Log the entire response for debugging
         if (response.body && response.body.includes("Test added successfully")) {
           this.toastr.showToas("added succefully")
+          this.router.navigateByUrl("/dashboard/test");
 
           // Redirect to a new page or perform any other actions after successful registration
         } else {

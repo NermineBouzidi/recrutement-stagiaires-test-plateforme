@@ -50,3 +50,7 @@ body {
 .dropdown-menu {
   min-width: 100%;
 }
+
+.dropdown-menu-top {
+  bottom: 100%; /* Position the menu above the button */
+}

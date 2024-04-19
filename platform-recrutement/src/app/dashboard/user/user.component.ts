@@ -27,10 +27,17 @@ export class UserComponent {
       this.data.push(i as never);
     }
   }
+  isDropDownOpenArray: boolean[] = [];
+
+  toggleDropdown(index: number): void {
+    this.isDropDownOpenArray[index] = !this.isDropDownOpenArray[index];
+  }
+  
   ngOnInit(){
      this.loadUsers();
      
-     
+     this.isDropDownOpenArray = this.data.map(() => false);
+
   }
 
   loadUsers(){

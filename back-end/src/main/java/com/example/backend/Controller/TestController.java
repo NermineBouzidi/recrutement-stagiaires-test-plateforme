@@ -135,5 +135,36 @@ public class TestController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
+    @PutMapping("/set-points/{id}")
+    public ResponseEntity<TestSubmission> setPoints(@PathVariable Long id, @RequestBody List<ProblemAnswer> problemAnswers) {
+        TestSubmission testSubmission = testSubmissionService.setProblemAnswers(id, problemAnswers);
+        return ResponseEntity.ok(testSubmission);
+    }
 
+    @PutMapping("/problemAnswers-points/{id}")
+    public ResponseEntity<TestSubmission> updateProblemAnswerPoints(@PathVariable Long id, @RequestBody Map<Long, Integer> updatedPoints) {
+        Optional<TestSubmission> testSubmissionOptional = testSubmissionRepository.findById(id);
+        if (testSubmissionOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        TestSubmission testSubmission = testSubmissionOptional.get();
+        boolean anyUpdates = false; // Flag to track if any updates happened
+
+        for (ProblemAnswer problemAnswer : testSubmission.getProblemAnswers()) {
+            Long problemAnswerId = problemAnswer.getId();
+            Integer newPoints = updatedPoints.get(problemAnswerId);
+            if (newPoints != null) {
+                problemAnswer.setPoints(newPoints);
+                anyUpdates = true; // Update flag if a point is updated
+            }
+        }
+
+        if (!anyUpdates) {
+            return ResponseEntity.noContent().build(); // No updates, return 204 No Content
+        }
+
+        testSubmission = testSubmissionRepository.save(testSubmission);
+        return ResponseEntity.ok(testSubmission);
+    }
 }

@@ -3,7 +3,7 @@ import { Router } from '@angular/router';
 import { jwtDecode } from 'jwt-decode';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserspaceService } from '../shared/services/userspace.service';
-import { HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-user-home',
@@ -19,7 +19,7 @@ export class UserHomeComponent {
   currentPage: number = 1;
   totalPages: number;
   isSubmited :boolean=false;
-  constructor (private router :Router,private http :UserspaceService,private Http :AuthService){}
+  constructor (private router :Router,private http :UserspaceService,private Http :AuthService,private h:HttpClient){}
   diasbleBack(): void {
     // Disable browser navigation
     this.router.events.subscribe((event) => {
@@ -57,6 +57,8 @@ export class UserHomeComponent {
     this.Http.logout();
     alert("logout");
 }
+
+
 }
 function shuffle(array: any[]) {
   let currentIndex = array.length;

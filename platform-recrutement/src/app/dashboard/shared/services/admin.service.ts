@@ -113,4 +113,8 @@ getUserProfileFromToken(token: string) {
   getAllAnswers(testSubmissionId:any){
     return this.http.get<any[]>(this.baseURI + `/api/test/getAnswers/${testSubmissionId}`);
   }
+  setPoints(testSubmissionId:any,updatedPoints: any){
+    return this.http.put(this.baseURI + `/api/test/problemAnswers-points/${testSubmissionId}`, updatedPoints,{ observe: 'response' ,responseType: 'text'});
+
+  }
 }

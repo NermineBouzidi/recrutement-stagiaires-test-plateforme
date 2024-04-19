@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -46,6 +47,8 @@ public class AuthController {
     TestSubmissionService testSubmissionService;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    TestSubmissionRepository testSubmissionRepository;
 
 
     @PostMapping("/signup")
@@ -183,6 +186,32 @@ public class AuthController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+    @PutMapping("/problemAnswers-points/{id}")
+    public ResponseEntity<TestSubmission> updateProblemAnswerPoints(@PathVariable Long id, @RequestBody Map<Long, Integer> updatedPoints) {
+        Optional<TestSubmission> testSubmissionOptional = testSubmissionRepository.findById(id);
+        if (testSubmissionOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        TestSubmission testSubmission = testSubmissionOptional.get();
+        boolean anyUpdates = false; // Flag to track if any updates happened
+
+        for (ProblemAnswer problemAnswer : testSubmission.getProblemAnswers()) {
+            Long problemAnswerId = problemAnswer.getId();
+            Integer newPoints = updatedPoints.get(problemAnswerId);
+            if (newPoints != null) {
+                problemAnswer.setPoints(newPoints);
+                anyUpdates = true; // Update flag if a point is updated
+            }
+        }
+
+        if (!anyUpdates) {
+            return ResponseEntity.noContent().build(); // No updates, return 204 No Content
+        }
+
+        testSubmission = testSubmissionRepository.save(testSubmission);
+        return ResponseEntity.ok(testSubmission);
     }
 
 

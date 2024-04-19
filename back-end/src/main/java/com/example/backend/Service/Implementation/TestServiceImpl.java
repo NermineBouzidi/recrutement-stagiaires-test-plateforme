@@ -1,11 +1,10 @@
 package com.example.backend.Service.Implementation;
 
+import com.example.backend.Entity.*;
 import com.example.backend.Entity.Enum.TestCategory;
-import com.example.backend.Entity.Problem;
-import com.example.backend.Entity.Quiz;
-import com.example.backend.Entity.Test;
 import com.example.backend.Repository.QuizRepository;
 import com.example.backend.Repository.TestRepository;
+import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +19,8 @@ public class TestServiceImpl implements TestService {
     TestRepository testRepository;
     @Autowired
     QuizRepository quizRepository;
+    @Autowired
+    TestSubmissionRepository testSubmissionRepository;
 
     @Override
     public Test addTest(Test test) {
@@ -73,6 +74,13 @@ public class TestServiceImpl implements TestService {
     }
     public List<Test> getTestsByCategory(String category) {
         return testRepository.findByCategory(category);
+    }
+
+    @Override
+    public Test setPoints(long id, List<ProblemAnswer> problemAnswers) {
+        TestSubmission testSubmission = testSubmissionRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("testSubmission not found with id: " + id));
+        return null;
     }
 
 }

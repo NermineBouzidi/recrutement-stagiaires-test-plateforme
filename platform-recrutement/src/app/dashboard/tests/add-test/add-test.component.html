@@ -120,9 +120,16 @@
 <div class="py-12 px-4">
   <div class="flex items-center justify-center">
     <div class="container bg-white p-8 ">
-      <div class="text-2xl montserrat-extra text-[#1d2736] mt-0 text-center mb-8">
+      <div class="flex justify-between mt-0 mb-8 ">
+      <div class="text-3xl poppins-medium text-[#1d2736]  text-center ">
         Add Test
       </div>
+      <div>
+        <button class="bg-[#0D2E4D] text-white px-4 py-2 rounded mr-2 " type="submit"
+          >Save</button>
+        <button  (click)="addTest(testForm)" [disabled]="testForm.invalid" class="bg-[#5B7DB1] text-white px-4 py-2 rounded">Cancel</button>
+      </div>
+    </div>
       <form [formGroup]="testForm" >
         <div class="">
           <div class="flex mb-6">
@@ -225,14 +232,7 @@
        
      
     
-        <div class="flex justify-end">
-
-          <button type="submit" (click)="addTest(testForm)" [disabled]="testForm.invalid"
-            class="text-[#7b7b7b] border bg-[#e7e7e7] hover:bg-gray-100 py-2 px-4 rounded inline-flex items-center cursor-pointer">
-            <span class="mr-2">Submit</span>
-
-          </button>
-        </div>
+        
       </form>
     </div>
   </div>

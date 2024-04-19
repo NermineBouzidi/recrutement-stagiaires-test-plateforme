@@ -2,6 +2,7 @@ package com.example.backend.Service;
 
 import com.example.backend.Entity.Enum.TestCategory;
 import com.example.backend.Entity.Problem;
+import com.example.backend.Entity.ProblemAnswer;
 import com.example.backend.Entity.Test;
 
 import java.util.List;
@@ -14,5 +15,6 @@ public interface TestService {
   Optional<Test> getTestById(Long testId);
   void deleteTest(long testId);
   List<Test> getTestsByCategory(String category);
+  Test setPoints(long id, List<ProblemAnswer>problemAnswers);
 
 }
