@@ -10,7 +10,7 @@ import { UserGuard } from './shared/services/user.guard';
 import { UserHomeComponent } from './userspace/user-home/user-home.component';
 import { UserTestComponent } from './userspace/user-test/user-test.component';
 import { FormsModule } from '@angular/forms';
-import { TestPreviewComponent } from './dashboard/test-preview/test-preview.component';
+import { TestPreviewComponent } from './dashboard/tests/test-preview/test-preview.component';
 
 
 const routes: Routes = [

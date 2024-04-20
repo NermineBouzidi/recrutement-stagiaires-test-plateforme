@@ -1,0 +1,71 @@
+<section class="bg-[#e6eaed] h-screen" *ngIf="isQuiz">
+  <div class=" flex items-center justify-center py-12 gap-1">
+    <div class="flex flex-col items-center  justify-center  mx-auto">
+      <div class="w-full bg-white rounded-lg shadow sm:max-w-xl  container ">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+          <span class=" poppins-regular text-[#0D2E4D] text-xl font-semibold"> {{ quiz.question }}</span>
+
+
+          <div *ngIf="quiz.questionType === 'MultipleChoiceQuestion'">
+            <div formArrayName="multipleChoiceAnswers">
+              <ul class="my-4 space-y-3" *ngFor="let choice of quiz.choices; let i = index">
+                <li
+                  class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
+
+
+                  <span class="flex-1 ms-3 whitespace-nowrap">{{ choice.text }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          <div *ngIf="quiz.questionType === 'TrueFalseQuestion'">
+
+            <ul class="my-4 space-y-3">
+              <li
+                class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
+                <input type="radio" formControlName="trueFalseAnswer" [value]="true"> <!-- Bind to true -->
+                <span class="flex-1 ms-3 whitespace-nowrap">True</span>
+              </li>
+              <li
+                class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
+                <input type="radio" formControlName="trueFalseAnswer" [value]="false"> <!-- Bind to false -->
+                <span class="flex-1 ms-3 whitespace-nowrap">False</span>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--------------------Problem------------------------->
+<!-- user-code.component.html -->
+<div class="bg-[#e6eaed]  "*ngIf="isProblem ">
+
+  <div class="flex items-center justify-center gap-1 py-2">
+
+    <div class="flex w-full min-h-screen" >
+      <div class="left-pane w-full bg-white rounded-lg shadow  container2 " flex="1">
+        <div class="p-8 justify-center items-center">
+          <div class="text-3xl montserrat-bold text-[#1d2736]  ">{{problem.title}} </div>
+          <div class="montserrat-semi text-gray-800 mt-12" [innerHTML]="problem.description"></div>
+          <div class="flex justify-center items-center mt-12">
+            <p class="w-1/3 text-gray-900 montserrat-extra">Input:</p>
+            <p class="w-2/3 montserrat-semi">{{problem.input}}</p>
+          </div>
+          <div class="flex items-start">
+            <p class="w-1/3 text-gray-900 montserrat-extra">Output:</p>
+            <p class="w-2/3 montserrat-semi">{{problem.output}}</p>
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+</div>

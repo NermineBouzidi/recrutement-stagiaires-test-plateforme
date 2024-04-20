@@ -15,7 +15,7 @@ import { DashComponent } from './dash/dash.component';
 import { RapportComponent } from './rapports/rapport/rapport.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuillModule } from 'ngx-quill';
-import { TestPreviewComponent } from './test-preview/test-preview.component';
+import { TestPreviewComponent } from './tests/test-preview/test-preview.component';
 
 
 @NgModule({

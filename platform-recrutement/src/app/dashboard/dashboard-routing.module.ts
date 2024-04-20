@@ -6,7 +6,7 @@ import { UidashboardComponent } from './uidashboard/uidashboard.component';
 import { ProfileComponent } from './profile/profile.component';
 import { DashComponent } from './dash/dash.component';
 import { RapportComponent } from './rapports/rapport/rapport.component';
-import { TestPreviewComponent } from './test-preview/test-preview.component';
+import { TestPreviewComponent } from './tests/test-preview/test-preview.component';
 import { UiTestComponent } from './tests/ui-test/ui-test.component';
 import { UiRapportsComponent } from './rapports/ui-rapports/ui-rapports.component';
 

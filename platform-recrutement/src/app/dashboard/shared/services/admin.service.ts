@@ -68,7 +68,7 @@ getUserProfileFromToken(token: string) {
     return this.http.delete(this.baseURI + `/api/quiz/deleteQuiz/${id}`)
   }
   getQuizById(id:any){
-    return this.http.get<Quiz>(this.baseURI + `/api/quiz/getQuiz/${id}`);
+    return this.http.get(this.baseURI + `/api/quiz/getQuiz/${id}`);
 
   }
   ///--------------------Problems
@@ -80,6 +80,10 @@ getUserProfileFromToken(token: string) {
   }
   deleteProblem(id : any) {
     return this.http.delete(this.baseURI + `/api/quiz/deleteProblem/${id}`)
+  }
+  getProblemById(id:any){
+    return this.http.get(this.baseURI + `/api/quiz/getProblem/${id}`);
+
   }
   addTrueFalse(quiz:any){
     return this.http.post(this.baseURI + `/api/quiz/addTrueFalse`, quiz,{ observe: 'response' ,responseType: 'text'});
