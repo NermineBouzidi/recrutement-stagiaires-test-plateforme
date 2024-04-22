@@ -21,7 +21,6 @@ export class TestComponent {
   problemNumber:number;
   currentSection:String ="Alltests";
   currentMode:String ="show";
-  optionss =["hello there ", " it is true that "];
   quiz :Quiz;
   option :any[]=[];
   quizShow :Quiz;
@@ -208,6 +207,7 @@ submit(formdata :any){
 //---------------------------switching ---------------------------------------------
 switchSection(sectionName: string) {
   this.currentSection = sectionName;
+  this.p=0;
 }
 switchMode(modeName: string) {
   this.currentMode = modeName;
@@ -364,10 +364,7 @@ loadTest(){
   })
 }
 //  -------------------preview --------------------------------
-openPreview() {
-  // Open the preview component in a new window
-  window.open('/preview', '_blank', 'width=800,height=600');
-}
+
 
 
 }

@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../shared/services/admin.service';
 import { HttpResponse } from '@angular/common/http';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 
 @Component({
@@ -17,7 +17,7 @@ export class AddTestComponent {
   selectedCategory: string;
 
   testForm :FormGroup;
-  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef){}
+  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef,private route: ActivatedRoute){}
   ngOnInit() {
     this.testForm = this.fb.group({
       category: ['', [Validators.required]],
@@ -28,6 +28,9 @@ export class AddTestComponent {
   });
   this.loadQuiz();
   this.loadProblem();
+  const testId = this.route.snapshot.paramMap.get('test');
+  this.getTestById(testId);
+
 }
 
 switchMode(modeName: string) {
@@ -113,5 +116,12 @@ addTest(testForm){
       })
     
   }
+}
+getTestById(testId:any){
+  this.http.getTestById(testId).subscribe((data :any)=>{
+    this.testForm.patchValue(data);
+    console.log("api:",data,"form:",this.testForm)
+  })
+
 }
 }

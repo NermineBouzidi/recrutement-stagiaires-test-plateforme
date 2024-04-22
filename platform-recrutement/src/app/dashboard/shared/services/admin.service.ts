@@ -111,6 +111,10 @@ getUserProfileFromToken(token: string) {
     return this.http.get<any[]>(this.baseURI + `/api/test/category/${category}`);
 
   }
+  getTestById(id:any){
+    return this.http.get<any[]>(this.baseURI + `/api/test/getTest/${id}`);
+
+  }
   getAllRapport(){
     return this.http.get<any[]>(this.baseURI + `/api/test/getAllTestSubmission`);
   }

@@ -37,4 +37,5 @@ export class DashComponent {
           this.data=users.slice(0, 5) // Slice the array to get only the first 5 elements
         })
     }
+    
 }
