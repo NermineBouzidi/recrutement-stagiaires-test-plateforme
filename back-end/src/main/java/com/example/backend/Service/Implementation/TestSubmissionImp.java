@@ -136,6 +136,12 @@ public class TestSubmissionImp implements TestSubmissionService {
         return testSubmissionRepository.save(testSubmission);
     }
 
+    @Override
+    public void analyzeProblemAnswer(ProblemAnswer answer) {
+        String code= answer.getAnswerText();
+        String language =answer.getProblem().getLanguage();
+
+    }
 
 
 }

@@ -17,7 +17,7 @@
     <div class="flex flex-col items-center  justify-center  mx-auto">
       <div class="w-full bg-white rounded-lg shadow sm:max-w-xl  container ">
         <div class="p-6 space-y-4 md:space-y-6 sm:p-8" >
-          <span class=" poppins-regular text-[#0D2E4D] text-xl font-semibold"> {{ quiz.question }}</span>
+          <span class=" poppins-regular text-[#0D2E4D] text-xl font-semibold" [innerHTML]="quiz.question"> </span>
 
 
           <div *ngIf="quiz.questionType === 'MultipleChoiceQuestion'">

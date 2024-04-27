@@ -19,6 +19,7 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { AlertComponent } from './alert/alert.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuillModule } from 'ngx-quill';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,9 @@ import { QuillModule } from 'ngx-quill';
     NgxMaskDirective,
     CodemirrorModule,
     AngularEditorModule,
-    QuillModule
+    QuillModule,
+    NgMultiSelectDropDownModule.forRoot()
+
   
   ],
   providers: [

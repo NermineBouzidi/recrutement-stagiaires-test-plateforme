@@ -22,7 +22,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Secured("hasRole('ADMIN')")
+@Secured("hasRole('ADMIN','EVALUATOR')")
 @RequestMapping("/api/test")
 public class TestController {
     @Autowired
@@ -116,6 +116,28 @@ public class TestController {
             return ResponseEntity.badRequest().body("Missing testId or userId in the request.");
         }
     }
+    @PostMapping("/assignTest/{userId}")
+    public ResponseEntity<String> assignTest(@PathVariable long userId) {
+        if (userId <= 0) {
+            return ResponseEntity.badRequest().body("Invalid user ID.");
+        }
+
+        User user = userRepository.findById(userId).orElse(null);
+
+        if (user == null) {
+            return ResponseEntity.badRequest().body("User not found with ID: " + userId);
+        }
+
+        Test test = testService.findRandomTestByCategory(user.getSpecializations());
+
+        if (test != null) {
+            testSubmissionService.assignTestToUser(test, user);
+            return ResponseEntity.ok("Test assigned successfully.");
+        } else {
+            return ResponseEntity.badRequest().body("No test available for user's specialization.");
+        }
+    }
+
     @GetMapping("/getAllTestSubmission")
     public ResponseEntity<List<TestSubmission>> getAllTestSubmissions() {
         List<TestSubmission>testSubmissions = testSubmissionRepository.findAll();

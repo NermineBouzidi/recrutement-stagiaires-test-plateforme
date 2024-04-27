@@ -16,5 +16,6 @@ public interface TestService {
   void deleteTest(long testId);
   List<Test> getTestsByCategory(String category);
   Test setPoints(long id, List<ProblemAnswer>problemAnswers);
+  Test findRandomTestByCategory(String specialization) ;
 
 }

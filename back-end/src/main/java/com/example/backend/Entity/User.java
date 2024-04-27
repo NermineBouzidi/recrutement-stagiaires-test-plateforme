@@ -3,7 +3,9 @@ package com.example.backend.Entity;
 import com.example.backend.Entity.Enum.Role;
 import com.example.backend.Entity.Enum.TestCategory;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +17,7 @@ import java.util.List;
 
 @Entity
 @Data
+@AllArgsConstructor
 public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -36,7 +39,7 @@ public class User implements UserDetails {
     private LocalDateTime registrationDate;
     private String status;
     @Enumerated(EnumType.STRING)
-    private Role role ;
+    private Role role;
 
 
 

@@ -50,7 +50,7 @@
             <div *ngFor="let answer of quizzes">
                 <div class="bg-gray-200 rounded-lg px-8 py-4 shadow-md mb-3">
                     <div class="flex justify-between">
-                        <div class="montserrat-semi text-gray-800 mb-2 " >{{answer.quiz?.question }}</div>
+                        <div class="montserrat-semi text-gray-800 mb-2 " [innerHTML]="answer.quiz?.question"></div>
                         <div class="flex items-center">
                             <div class="text-[#1d2736] montserrat-semi ">Points</div>
                             <div class="text-[#1d2736] montserrat-semi px-3">{{answer.points}}</div>

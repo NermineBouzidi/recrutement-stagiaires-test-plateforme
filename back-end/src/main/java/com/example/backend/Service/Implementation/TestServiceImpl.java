@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 import java.util.stream.Collectors;
 
 @Service
@@ -72,10 +73,25 @@ public class TestServiceImpl implements TestService {
         // Delete the problem
         testRepository.delete(existingTest);
     }
+    @Override
     public List<Test> getTestsByCategory(String category) {
         return testRepository.findByCategory(category);
     }
+    @Override
+    public Test findRandomTestByCategory(String specialization) {
+        // Retrieve a list of tests with the same category as the user's specialization
+        List<Test> tests = testRepository.findByCategory(specialization);
 
+        // Check if any tests are found
+        if (!tests.isEmpty()) {
+            // Get a random test from the list
+            Random random = new Random();
+            int randomIndex = random.nextInt(tests.size());
+            return tests.get(randomIndex);
+        } else {
+            return null; // No tests found for the specified specialization
+        }
+    }
     @Override
     public Test setPoints(long id, List<ProblemAnswer> problemAnswers) {
         TestSubmission testSubmission = testSubmissionRepository.findById(id)

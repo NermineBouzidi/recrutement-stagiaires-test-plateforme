@@ -19,7 +19,7 @@ const routes: Routes = [
   { path: 'login', component: SigninComponent },
   { path: 'register', component: SignupComponent }, 
   {
-    path: 'dashboard',// canActivate:[UserGuard],
+    path: 'dashboard',//canActivate:[UserGuard],
    //data: { requiredRole: 'ROLE_ADMIN' },
     component: UidashboardComponent,
     loadChildren: () => import('./dashboard/dashboard.module').then((m)=> m.DashboardModule)
@@ -27,7 +27,7 @@ const routes: Routes = [
   },
   {path:'preview', component:TestPreviewComponent},
   {
-    path:'user', //canActivate:[UserGuard],
+    path:'user', canActivate:[UserGuard],
     data: { requiredRole: 'ROLE_USER' },
     loadChildren: () => import('./userspace/userspace.module').then((m)=> m.UserspaceModule)
   }

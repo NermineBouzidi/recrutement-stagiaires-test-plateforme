@@ -32,7 +32,7 @@ public class SecurityConfig  {
                 .authorizeRequests()
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/v1/code/**").permitAll()
-                .requestMatchers("/api/test/**").hasRole("ADMIN")
+                .requestMatchers("/api/test/**").hasAnyRole("ADMIN","EVALUATOR")
                 .requestMatchers("/api/user/**").hasRole("ADMIN")
                 .requestMatchers("/api/quiz/**").hasRole("ADMIN")
                 .requestMatchers("/api/userTest/**").hasRole("USER")

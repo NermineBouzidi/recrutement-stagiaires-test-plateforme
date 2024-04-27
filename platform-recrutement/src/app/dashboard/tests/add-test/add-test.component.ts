@@ -12,6 +12,7 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
 })
 export class AddTestComponent {
   currentMode:String ="type";
+  isSubmitted: boolean = false;
   quizzes: any[] = [];
   problems: any[] = [];
   selectedCategory: string;
@@ -93,6 +94,8 @@ submit(testForm){
   console.log(test);
 }
 addTest(testForm){
+  this.isSubmitted = true;
+
   if(testForm.valid){
     const test= testForm.value;
     const transformedProblems = test.problems.map(problemId => ({ id: problemId }));

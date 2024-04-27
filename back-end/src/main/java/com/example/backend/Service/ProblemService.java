@@ -10,8 +10,7 @@ public interface ProblemService {
     Problem addProblem (Problem problem);
     Problem updateProblem(Long problemId, Problem problem);
     List<Problem> getAllProblems();
-
-        Optional<Problem> getProblemById(Long problemId);
+    Optional<Problem> getProblemById(Long problemId);
     void deleteProblem(long problemId);
 
 }

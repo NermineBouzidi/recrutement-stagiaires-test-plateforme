@@ -5,20 +5,25 @@ import { UiTestComponent } from './ui-test/ui-test.component';
 import { TestsRoutingModule } from './tests-routing.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { AddProblemComponent } from './add-problem/add-problem.component';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { QuillModule } from 'ngx-quill';
 
 
 @NgModule({
   declarations: [
     AddTestComponent,
     UiTestComponent,
+    AddProblemComponent,
   ],
   imports: [
     CommonModule,
     TestsRoutingModule,
     NgxPaginationModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgMultiSelectDropDownModule,
+    QuillModule
 
     
   ]

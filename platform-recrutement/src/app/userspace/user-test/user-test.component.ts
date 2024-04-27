@@ -18,8 +18,11 @@ export class UserTestComponent {
   quizzesAnswers: any[] = []; // Array to store form group values
   problemAnswers: any[] = []; // Array to store form group values
   problems: any[];
-  itemsPerPage = 1;
-  currentPage = 0;
+  currentQuizIndex: number = 0;
+  currentProblemIndex: number = 0;
+  showQuizzes: boolean = true;
+  showProblems: boolean = false;
+  showSubmitButton: boolean = false;
   constructor (private router :Router,private http :UserspaceService,private Http :AuthService, private toastr : ToastrService){}
   diasbleBack(): void {
     // Disable browser navigation
@@ -49,27 +52,7 @@ export class UserTestComponent {
     this.problemAnswers.push(value); // Add the form group value to the array
     console.log('Problems:', this.problemAnswers); // Optional: Log the array
   }
-  get currentPageProblems() {
-    const startIndex = this.currentPage * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    return this.problems.slice(startIndex, endIndex);
-  }
-
-  get currentPageQuizzes() {
-    const startIndex = this.currentPage * this.itemsPerPage;
-    const endIndex = startIndex + this.itemsPerPage;
-    return this.quizzes.slice(startIndex, endIndex);
-  }
-
-  nextPage() {
-    const totalPages = Math.ceil(Math.max(this.problems.length, this.quizzes.length) / this.itemsPerPage);
-    this.currentPage = (this.currentPage + 1) % totalPages;
-  }
-
-  previousPage() {
-    const totalPages = Math.ceil(Math.max(this.problems.length, this.quizzes.length) / this.itemsPerPage);
-    this.currentPage = (this.currentPage - 1 + totalPages) % totalPages;
-  }
+  g
   receiveFormGroupValue(formGroupValue: FormGroup) {
     // Handle the received form group value here
     console.log('Form Group Value:', formGroupValue);
@@ -110,6 +93,19 @@ export class UserTestComponent {
           // Handle errors (e.g., display an error message)
         }
       );
+  }
+  ShowProblems() {
+    this.showQuizzes = false;
+    this.showProblems = true;
+  }
+
+  showNextProblem() {
+    this.currentProblemIndex++;
+    if (this.currentProblemIndex >= this.problems.length) {
+      // All problems completed, show submit button
+      this.showProblems = false;
+      this.showSubmitButton = true;
+    }
   }
 }
 function shuffle(array: any[]) {

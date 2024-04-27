@@ -20,7 +20,7 @@ public class ProblemAnswer {
     private String answerText;
     private Integer points;
 
-    @ManyToOne(optional = false) // Enforce mandatory association
+    @ManyToOne(optional = false ,cascade = CascadeType.ALL) // Enforce mandatory association
     @JoinColumn(name = "test-submission_id")
     @JsonBackReference // Use this annotation to prevent infinite recursion
     private TestSubmission testSubmission;

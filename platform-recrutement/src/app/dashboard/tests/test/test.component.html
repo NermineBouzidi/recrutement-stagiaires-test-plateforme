@@ -208,7 +208,7 @@
                   </button>
   
                   <button >
-                    <a [routerLink]="['/dashboard/test/addTest', { test:test.id}]" routerLinkActive="active">
+                    <a [routerLink]="['/dashboard/test/add-test', { test:test.id}]" routerLinkActive="active">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                       <path
                         d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" />
@@ -257,7 +257,9 @@
           </button>
         </div>
         <div class="flex-1 montserrat-semi">
-          <a  class="cursor-pointer block p-4 hover:bg-gray-300"routerLink="/dashboard/test/addTest" routerLinkActive="active" >Test</a>
+          <a  class="cursor-pointer block p-4 hover:bg-gray-300"routerLink="/dashboard/test/add-test" routerLinkActive="active" >Test</a>
+          <a  class="cursor-pointer block p-4 hover:bg-gray-300"routerLink="/dashboard/test/add-problem" routerLinkActive="active" >Problem</a>
+
           <a (click)="switchMode('truefalse')" class="cursor-pointer block p-4 hover:bg-gray-300 ">True/ False</a>
           <a (click)="switchMode('multiple')" class="cursor-pointer block p-4 hover:bg-gray-300">Multiple Choice</a>
           <a (click)="switchMode('addProblem')" class="cursor-pointer block p-4 hover:bg-gray-300">Problem</a>

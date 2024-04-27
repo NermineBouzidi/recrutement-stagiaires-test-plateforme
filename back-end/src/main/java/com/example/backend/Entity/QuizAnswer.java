@@ -28,7 +28,7 @@ public class QuizAnswer {
 
     private Integer points;
 
-    @ManyToOne(optional = false) // Enforce mandatory association
+    @ManyToOne(optional = false,cascade = CascadeType.ALL) // Enforce mandatory association
     @JoinColumn(name = "test-submission_id")
     @JsonBackReference
     private TestSubmission testSubmission;
