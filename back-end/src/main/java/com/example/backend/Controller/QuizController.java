@@ -17,7 +17,7 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Secured("hasRole('ADMIN')")
+@Secured("hasRole('ADMIN','EVALUATOR')")
 @RequestMapping("/api/quiz")
 public class QuizController {
     @Autowired

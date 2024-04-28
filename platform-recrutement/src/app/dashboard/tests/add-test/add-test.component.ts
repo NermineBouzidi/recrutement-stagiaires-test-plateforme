@@ -16,6 +16,7 @@ export class AddTestComponent {
   quizzes: any[] = [];
   problems: any[] = [];
   selectedCategory: string;
+  
 
   testForm :FormGroup;
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef,private route: ActivatedRoute){}
@@ -64,7 +65,13 @@ toggleQuizSelection(event: Event, quiz: any): void {
     const index = this.quizzess.controls.findIndex((control: FormControl) => control.value === quiz.id);
     this.quizzess.removeAt(index);
   }
+  this.cdr.detectChanges();
+
 }
+isQuizSelected(quizId: number): boolean {
+  return this.quizzess.value.includes(quizId);
+}
+
 toggleProblemSelection(event: Event, problem: any): void {
   const isChecked = (event.target as HTMLInputElement).checked;
 
@@ -120,11 +127,28 @@ addTest(testForm){
     
   }
 }
-getTestById(testId:any){
-  this.http.getTestById(testId).subscribe((data :any)=>{
-    this.testForm.patchValue(data);
-    console.log("api:",data,"form:",this.testForm)
-  })
+getTestById(testId: any) {
+  this.http.getTestById(testId).subscribe((data: any) => {
+    this.testForm.patchValue(data); // Patch form with test data
 
+    // Mark selected quizzes as checked
+    this.quizzess.clear();
+    this.problemss.clear();
+
+    // Mark selected quizzes as checked
+    const selectedQuizzes = data.quizzes;
+    selectedQuizzes.forEach(quiz=> {
+      this.quizzess.push(this.fb.control(quiz.id));
+    });
+
+    // Mark selected problems as checked
+    const selectedProblems = data.problems;
+    selectedProblems.forEach(problem => {
+        this.problemss.push(this.fb.control(problem.id));
+      });
+
+    console.log("api:", data, "form:", this.testForm);
+  });
 }
+
 }

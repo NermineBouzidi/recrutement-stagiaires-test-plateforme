@@ -1,0 +1,56 @@
+body {
+    height: 100%;
+  }
+
+  @media (min-width: 640px) {
+    table {
+      display: inline-table !important;
+    }
+
+    thead tr:not(:first-child) {
+      display: none;
+    }
+  }
+
+  td:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  th:not(:last-child) {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+  }
+    .initials-circle {
+        width: 50px;
+        height: 50px;
+        background-color: #eceff1;
+        color: #722e78;
+        font-size: 19px;
+        font-family: sans-serif;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #ccc; /* Thin grey border */
+        box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Little shadow */
+      }
+      
+      .container {
+        border-radius: 20px;
+    
+        box-shadow: 14px 14px 20px #cbced1, -14px -14px 20px #e6eaed;
+      }
+      .dropdown {
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  cursor: pointer;
+}
+
+.dropdown-menu {
+  min-width: 100%;
+}
+
+.dropdown-menu-top {
+  bottom: 100%; /* Position the menu above the button */
+}

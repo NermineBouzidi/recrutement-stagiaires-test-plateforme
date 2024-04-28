@@ -19,6 +19,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
+@Secured("hasRole('ADMIN','EVALUATOR')")
 @RequestMapping("/api/user")
 public class UserController {
     @Autowired
@@ -59,6 +60,10 @@ public class UserController {
     @GetMapping("/getUsers")
     public List<User> getUsers() {
         return userService.getUsers();
+    }
+    @GetMapping("/getAllUsers")
+    public List<User> getAllUsers() {
+        return userService.getAllUsers();
     }
 
     @GetMapping("/getUser/{id}")

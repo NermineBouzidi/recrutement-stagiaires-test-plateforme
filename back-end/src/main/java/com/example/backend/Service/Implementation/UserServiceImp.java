@@ -102,14 +102,21 @@ public class UserServiceImp implements UserService {
         }
 
     }
-
+@Override
     public List<User> getUsers (){
         List <User> liste =userRepository.findAll();
-        List<User> listeUser = liste.stream()
+    return liste.stream()
                 .filter(user -> user.getRole() == Role.ROLE_USER)
                 .collect(Collectors.toList());
-        return listeUser;
     }
+    @Override
+    public List<User> getAllUsers (){
+        List <User> liste =userRepository.findAll();
+        return liste.stream()
+                .filter(user -> user.getRole() != Role.ROLE_ADMIN)
+                .collect(Collectors.toList());
+    }
+
     public Optional<User> getUser(long id){
 
         return userRepository.findById(id);

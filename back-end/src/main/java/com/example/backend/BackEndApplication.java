@@ -21,7 +21,7 @@ public class BackEndApplication {
 		SpringApplication.run(BackEndApplication.class, args);
 	}
 
-	@Bean
+	/*@Bean
 	public CommandLineRunner commandLineRunner() {
 		return args -> {
 			// Create and save an admin user during application startup
@@ -33,5 +33,5 @@ public class BackEndApplication {
 			adminUser.setPassword(passwordEncoder.encode("admin"));
 			userRepository.save(adminUser);
 		};
-	}
+	}*/
 }

@@ -98,7 +98,17 @@ update(id, params) {
 getToken(){
     return this.loginValue.token;
 }
+updatePassword(id :any, request:any){
+    return this.http.post(this.baseURI + `/api/user/changePassword/${id}`,request,{});
 
+}
+getUserProfileFromToken(token: string) {
+    // Retrieve user ID from token-based API endpoint
+    const headers = new HttpHeaders({ 'Authorization': `Bearer ${token}` });
+  
+   return this.http.get<User>(this.baseURI + '/api/user/mee', { headers })
+    
+  }
   
 }
 

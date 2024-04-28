@@ -40,9 +40,15 @@ togglePasswordVisibility(inputId: string): void {
         this.toastr.showToas("login successfull")
         this.router.navigateByUrl("/user");
       } else {
-        if  (res.role=='ROLE_ADMIN') {
+        if  (res.role=='ROLE_EVALUATOR') {
           this.toastr.showToas("login successfull")
           this.router.navigateByUrl("/dashboard");
+
+    } else { if  (res.role=='ROLE_ADMIN') {
+      this.toastr.showToas("login successfull")
+      this.router.navigateByUrl("/admin-space");
+
+}
 
     }}
     },

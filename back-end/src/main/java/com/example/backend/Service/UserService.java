@@ -15,7 +15,8 @@ public interface UserService {
     String deleteUser(long id);
     String updateUser(long id , UserDTO user);
     List<User> getUsers ();
-    Optional<User> getUser(long id);
+    public List<User> getAllUsers ();
+        Optional<User> getUser(long id);
     String signup (User user ,MultipartFile file );
     String acceptUser (long id );
     String rejectUser (long id );
