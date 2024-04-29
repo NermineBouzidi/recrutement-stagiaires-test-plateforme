@@ -8,7 +8,7 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminLayoutComponent } from './admin-layout/admin-layout.component';
 import { HttpClientModule } from '@angular/common/http';
-import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { ReactiveFormsModule, FormsModule, NgSelectOption } from '@angular/forms';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { QuillModule } from 'ngx-quill';
@@ -32,6 +32,7 @@ import { QuillModule } from 'ngx-quill';
     HttpClientModule,
     QuillModule,
     DatePipe,
+  
   ],
   providers: [DatePipe]
 

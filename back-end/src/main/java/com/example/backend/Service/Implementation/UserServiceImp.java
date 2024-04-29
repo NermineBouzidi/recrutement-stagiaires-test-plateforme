@@ -64,12 +64,12 @@ public class UserServiceImp implements UserService {
                     user.getEmail(),
                     user.getNumber(),
                     user.getEducationLevel(),
-                  //  passwordEncoder.encode(user.getPassword()),
+
                     user.getLinkedinUrl(),
                     user.getSpecializations()
             );
-            use.setRole(Role.ROLE_USER);
-            //use.setPassword(passwordEncoder.encode(use.getPassword()));
+            use.setRole(user.getRole());
+            use.setPassword(passwordEncoder.encode(user.getPassword()));
             userRepository.save(use);
             return "Registration successful";
         }

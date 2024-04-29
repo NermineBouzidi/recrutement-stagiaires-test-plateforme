@@ -9,5 +9,5 @@ export class User {
     id: string;
     token: string ;
     role :string;
-    
+    specializations:string;
 }

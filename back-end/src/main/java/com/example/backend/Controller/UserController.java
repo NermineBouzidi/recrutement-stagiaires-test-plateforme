@@ -2,6 +2,8 @@ package com.example.backend.Controller;
 
 import com.example.backend.DTO.ChangePasswordRequest;
 import com.example.backend.DTO.UserDTO;
+import com.example.backend.DTO.UserRegistrationData;
+import com.example.backend.Entity.Enum.Role;
 import com.example.backend.Entity.User;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
@@ -15,7 +17,10 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.time.Month;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -57,7 +62,7 @@ public class UserController {
         return "hello";
     }
 
-    @GetMapping("/getUsers")
+    @GetMapping("/getAllCandidate")
     public List<User> getUsers() {
         return userService.getUsers();
     }
@@ -139,4 +144,39 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findByEmail(jwtUtils.getUsername(token)));
 
     }
+    @PostMapping("/addUser")
+    public ResponseEntity<?> addUser (@RequestBody User user){
+         String s= userService.addUser(user);
+        if (s.equals("Registration successful")) {
+            return ResponseEntity.ok("Registration successful");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
+
+        }
+    }
+    @GetMapping("/user-registrations")
+    public ResponseEntity<List<UserRegistrationData>> getUserRegistrations() {
+        // Fetch user registration data from the database
+        List<User> users = userRepository.findAll();
+
+        // Filter users based on their role
+        List<User> userRegistrations = users.stream()
+                .filter(user -> user.getRole() == Role.ROLE_USER)
+                .collect(Collectors.toList());
+
+        // Group user registrations by date and count registrations for each date
+        List<UserRegistrationData> userRegistrationsData = userRegistrations.stream()
+                .collect(Collectors.groupingBy(user -> user.getRegistrationDate().toLocalDate()))
+                .entrySet().stream()
+                .map(entry -> new UserRegistrationData(entry.getKey(), entry.getValue().size()))
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(userRegistrationsData);
+    }
+    @GetMapping("/user-registrations-by-month")
+    public ResponseEntity<Map<Month, Long>> getUserRegistrationsByMonth() {
+        Map<Month, Long> registrationsByMonth = userRepository.countByMonthOfRegistration(); // Assuming a custom method in UserRepository
+        return ResponseEntity.ok(registrationsByMonth);
+    }
+
 }

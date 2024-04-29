@@ -16,7 +16,7 @@ export class AdminService {
   constructor(private http: HttpClient) {}
   ///-------------------user-------------------------
   getAllUser() {
-    return this.http.get<User[]>(this.baseURI + `/api/user/getUsers`);
+    return this.http.get<User[]>(this.baseURI + `/api/user/getAllCandidate`);
 }
 
 getUserById(id: string) {

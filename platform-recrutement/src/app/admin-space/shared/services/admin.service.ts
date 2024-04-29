@@ -26,6 +26,15 @@ export class AdminService {
       responseType: 'text',
     });
   }
-  createUser() {}
- 
+  deleteUser(id: any) {
+    return this.http.delete(this.baseURI + `/api/user/deleteUser/${id}`)
+  }
+  createUser(user :User){
+    return this.http.post(this.baseURI + `/api/user/addUser`, user,{ observe: 'response' ,responseType: 'text'});
+
+  } 
+  getUserRegistrationData(){
+    return this.http.get<any[]>(this.baseURI + `/api/user/user-registrations`);
+
+  }
 }

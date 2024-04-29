@@ -7,8 +7,8 @@
     <div class="container bg-white p-8">
         <div class="mb-4 justify-between flex">
             <input type="text" class="border border-gray-300 rounded-lg p-2" placeholder="Search users..." [(ngModel)]="searchText">
-            <button 
-            class="text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex ">
+            <button (click)="openModal()"
+            class="text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center ">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
               <path fill-rule="evenodd"
                 d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
@@ -47,11 +47,20 @@
                     <td class="  hover:bg-gray-100 p-3">{{ user.email}}</td>
                     <td class="  hover:bg-gray-100 p-4 flex justify-center items-center relative">
                         <!-- User actions -->
-                        <button type="button" class="text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-500 font-medium rounded-lg text-sm inline-flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                                <path fill-rule="evenodd" d="M8.34 1.804A1 1 0 0 1 9.32 1h1.36a1 1 0 0 1 .98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 0 1 1.262.125l.962.962a1 1 0 0 1 .125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 0 1 .804.98v1.361a1 1 0 0 1-.804.98l-1.473.295a6.95 6.95 0 0 1-.587 1.416l.834 1.25a1 1 0 0 1-.125 1.262l-.962.962a1 1 0 0 1-1.262.125l-1.25-.834a6.953 6.953 0 0 1-1.416.587l-.294 1.473a1 1 0 0 1-.98.804H9.32a1 1 0 0 1-.98-.804l-.295-1.473a6.957 6.957 0 0 1-1.416-.587l-1.25.834a1 1 0 0 1-1.262-.125l-.962-.962a1 1 0 0 1-.125-1.262l.834-1.25a6.957 6.957 0 0 1-.587-1.416l-1.473-.294A1 1 0 0 1 1 10.68V9.32a1 1 0 0 1 .804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 0 1 .125-1.262l.962-.962A1 1 0 0 1 5.38 3.03l1.25.834a6.957 6.957 0 0 1 1.416-.587l.294-1.473ZM13 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" clip-rule="evenodd" />
-                            </svg>
+                        <button (click)="openUpdateModal(user)">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                            <path d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z" />
+                            <path d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z" />
+                          </svg>
                         </button>
+                          <button (click)="openDeleteConfirmationModal(user.id)">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                            <path d="M2 3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3Z" />
+                            <path fill-rule="evenodd" d="M13 6H3v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6ZM5.72 7.47a.75.75 0 0 1 1.06 0L8 8.69l1.22-1.22a.75.75 0 1 1 1.06 1.06L9.06 9.75l1.22 1.22a.75.75 0 1 1-1.06 1.06L8 10.81l-1.22 1.22a.75.75 0 0 1-1.06-1.06l1.22-1.22-1.22-1.22a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
+                          </svg>
+                        </button>
+                          
+                                                    
                     </td>
                 </tr>
             </tbody>
@@ -66,13 +75,14 @@
     
 </div>
 
+  
 
-<!-------------------------------- user --------------------------------------------------------
-<div *ngIf="isDialogOpen" class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">
+<!-------------------------------- user -------------------------------------------------------
+<div  class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">
     <div class="flex flex-col items-center min-h-screen justify-center ml-14  px-6 py-12 mx-auto  lg:py-0">
         <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0 ">
             <div class="flex items-center justify-end px-4 pt-4">
-                <button (click)="closeDialog()">
+                <button (click)="closeModal()">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
                         stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
                         class="feather feather-x">
@@ -81,70 +91,336 @@
                     </svg>
                 </button>
             </div>
-            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-                <div class="initials-circle">{{ getInitials( user.firstname , user.lastName) }}</div>
-
-                <h1 class=" poppins-regular">{{ user.firstname }} {{ user.lastName }}</h1>
-
-                <div class="flex items-center space-x-1 text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                        <path
-                            d="M3 4a2 2 0 0 0-2 2v1.161l8.441 4.221a1.25 1.25 0 0 0 1.118 0L19 7.162V6a2 2 0 0 0-2-2H3Z" />
-                        <path
-                            d="m19 8.839-7.77 3.885a2.75 2.75 0 0 1-2.46 0L1 8.839V14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V8.839Z" />
-                    </svg>
-
-                    <span class="poppins-regular">E-mail :</span>
-                    <span class="text-black">{{ user.email }}</span>
-                </div>
-                <div class="flex flex-wrap items-start space-x-1 text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 192 192" fill="none">
-                        <rect width="132" height="132" x="30" y="30" stroke="#000000" stroke-width="12" rx="16" />
-                        <path stroke="#000000" stroke-linecap="round" stroke-linejoin="round" stroke-width="12"
-                            d="M66 86v44" />
-                        <circle cx="66" cy="64" r="8" fill="#000000" />
-                        <path stroke="#000000" stroke-linecap="round" stroke-width="12"
-                            d="M126 130v-26c0-9.941-8.059-18-18-18v0c-9.941 0-18 8.059-18 18v26" />
-                    </svg>
-                    <div class="flex flex-col">
-                        <span class="poppins-regular">Linkedin Profile :</span>
-                        <span class="text-black">
-                            <a href="https://{{user.linkedinUrl}}" target="_blank" class="break-all">{{ user.linkedinUrl
-                                }}</a>
-                        </span>
+            <div class="overflow-y-auto h-80">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8 ">
+                <form class="space-y-4 md:space-y-6 text-[#0D2E4D] poppins-regular" action="#" [formGroup]="userForm" (submit)="addUser()">
+                    <div class="flex -mx-3">
+                      <div class="w-1/2 px-3 ">
+                        <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 ">Firstname</label>
+                        <input type="text" name="firstname" id="firstname" formControlName="firstname"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                          placeholder="firstname" required="">
+                          <div *ngIf="userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty ||isSubmitted">
+                            <div *ngIf="userForm.controls['firstname'].hasError('required')"
+                              class="mt-2 text-sm text-red-600 "> This field is required</div>
+                            <div *ngIf="userForm.controls['firstname'].hasError('pattern')"
+                              class="mt-2 text-sm text-red-600 ">Please enter only letters and spaces.</div>
+            
+                          </div>
+                      </div>
+                      <div class="w-1/2 px-3">
+                        <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 ">Lastname</label>
+                        <input type="text" name="lastName" id="lastName" formControlName="lastName"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                          placeholder="lastname" required="">
+                          <div *ngIf="userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty ||isSubmitted">
+                            <div *ngIf="userForm.controls['lastName'].hasError('required')"
+                              class="mt-2 text-sm text-red-600 "> This field is required</div>
+                            <div *ngIf="userForm.controls['lastName'].hasError('pattern')"
+                              class="mt-2 text-sm text-red-600 ">Please enter only letters and spaces.</div>
+                          </div>
+                      </div>
                     </div>
-                </div>
-
-                <div class="flex items-center space-x-1 text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                        <path fill-rule="evenodd"
-                            d="M2 3.5A1.5 1.5 0 0 1 3.5 2h1.148a1.5 1.5 0 0 1 1.465 1.175l.716 3.223a1.5 1.5 0 0 1-1.052 1.767l-.933.267c-.41.117-.643.555-.48.95a11.542 11.542 0 0 0 6.254 6.254c.395.163.833-.07.95-.48l.267-.933a1.5 1.5 0 0 1 1.767-1.052l3.223.716A1.5 1.5 0 0 1 18 15.352V16.5a1.5 1.5 0 0 1-1.5 1.5H15c-1.149 0-2.263-.15-3.326-.43A13.022 13.022 0 0 1 2.43 8.326 13.019 13.019 0 0 1 2 5V3.5Z"
-                            clip-rule="evenodd" />
-                    </svg>
-
-                    <span class="poppins-regular">Phone :</span>
-                    <span class="text-black">{{ user.number }}</span>
-                </div>
-                <div class="flex items-center space-x-1 text-gray-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
-                        <path fill-rule="evenodd"
-                            d="M9.664 1.319a.75.75 0 0 1 .672 0 41.059 41.059 0 0 1 8.198 5.424.75.75 0 0 1-.254 1.285 31.372 31.372 0 0 0-7.86 3.83.75.75 0 0 1-.84 0 31.508 31.508 0 0 0-2.08-1.287V9.394c0-.244.116-.463.302-.592a35.504 35.504 0 0 1 3.305-2.033.75.75 0 0 0-.714-1.319 37 37 0 0 0-3.446 2.12A2.216 2.216 0 0 0 6 9.393v.38a31.293 31.293 0 0 0-4.28-1.746.75.75 0 0 1-.254-1.285 41.059 41.059 0 0 1 8.198-5.424ZM6 11.459a29.848 29.848 0 0 0-2.455-1.158 41.029 41.029 0 0 0-.39 3.114.75.75 0 0 0 .419.74c.528.256 1.046.53 1.554.82-.21.324-.455.63-.739.914a.75.75 0 1 0 1.06 1.06c.37-.369.69-.77.96-1.193a26.61 26.61 0 0 1 3.095 2.348.75.75 0 0 0 .992 0 26.547 26.547 0 0 1 5.93-3.95.75.75 0 0 0 .42-.739 41.053 41.053 0 0 0-.39-3.114 29.925 29.925 0 0 0-5.199 2.801 2.25 2.25 0 0 1-2.514 0c-.41-.275-.826-.541-1.25-.797a6.985 6.985 0 0 1-1.084 3.45 26.503 26.503 0 0 0-1.281-.78A5.487 5.487 0 0 0 6 12v-.54Z"
-                            clip-rule="evenodd" />
-                    </svg>
-                    <span class="poppins-regular">EducationLevel :</span>
-                    <span class="text-black">{{ user.educationLevel }}</span>
-                </div>
-                <div>
-
-                </div>
-                <div
-                    class="flex items-center p-4 md:p-5 space-x-3 rtl:space-x-reverse border-t border-gray-200 rounded-b ">
-                    <button (click)="getResume(user.id)"
-                        class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">
-                        View Resume</button>
-                </div>
+                    <div>
+                      <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+                      <input type="email" name="email" id="email" formControlName="email"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                        placeholder="name@company.com" required="">
+                        <div *ngIf="userForm.controls['email'].touched || userForm.controls['email'].dirty ||isSubmitted">
+                            <div *ngIf="userForm.controls['email'].hasError('required')"
+                              class="mt-2 text-sm text-red-600 "> This field is required</div>
+                            <div *ngIf="userForm.controls['email'].hasError('email')"
+                              class="mt-2 text-sm text-red-600 "> Invalid email</div>
+                            <div *ngIf="userExist" class="mt-2 text-sm text-red-600 "> User exist with the same email
+                            </div>
+                          </div>
+                    </div>
+                    <div>
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                        <div class="relative">
+                        <input type="password" name="password" id="password" placeholder="••••••••••"
+                        formControlName="password"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
+                        <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                     >
+                        <svg class="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24"
+                          viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                          stroke-linejoin="round">
+                          <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                          <path class="hs-password-active:hidden"
+                            d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                          <path class="hs-password-active:hidden"
+                            d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                          <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22" />
+                          <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                          <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3" />
+                        </svg>
+                      </button>
+                    </div>
+                    </div>
+                    <div class="flex -mx-3">
+                        <div class="w-1/2 px-3 ">
+                      <label for="number" class="block mb-2 text-sm font-medium text-gray-900 ">Phone Number</label>
+                      <input type="text" name="number" id="number" formControlName="number"
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                        placeholder="12 345 678" required="" mask="00 000 000" >
+                        <div *ngIf="userForm.controls['number'].touched || userForm.controls['number'].dirty ||isSubmitted">
+                            <div *ngIf="userForm.controls['number'].hasError('required')"
+                              class="mt-2 text-sm text-red-600 "> This field is required</div>
+                            <div *ngIf="userForm.controls['number'].hasError('minlength')"
+                              class="mt-2 text-sm text-red-600 "> Number should contains 8</div>
+              
+                          </div>
+                    </div>
+                    <div class="w-1/2 px-3 ">
+                        <label for="role" class="block mb-2 text-sm font-medium text-gray-900 ">Role</label>
+            
+                        <select name="role" id="role" formControlName="role"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                          <option value="ROLE_USER">User</option>
+                          <option value="ROLE_EVALUATOR">Evaluator</option>
+                        </select>
+                        <div *ngIf="userForm.controls['role'].touched || userForm.controls['role'].dirty ||isSubmitted">
+                            <div *ngIf="userForm.controls['role'].hasError('required')"
+                              class="mt-2 text-sm text-red-600 "> This field is required</div>
+                        </div>
+                    </div>
+                    </div>
+                    
+                    <div *ngIf="userForm.get('role').value === 'ROLE_USER'">
+                        <div class="flex -mx-3 mb-2">
+                            <div class="w-1/2 px-3 ">
+                      <label for="educationLevel" class="block mb-2 text-sm font-medium text-gray-900 ">Education Level</label>
+          
+                      <select name="educationLevel" id="educationLevel" formControlName="educationLevel"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                      <option>Bac+3</option>
+                        <option>Bac+5</option>
+                      </select>
+                     
+                    </div>
+                    <div class="w-1/2 px-3">
+                      <label for="specializations" class="block mb-2 text-sm font-medium text-gray-900 ">Specializations</label>
+          
+                      <select name="specializations" id="specializations" formControlName="specializations"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                      <option value="WEB_DEVELOPMENT" >Web Development</option>
+                        <option value="MOBILE_DEVELOPMENT">Mobile Development</option>
+                        <option value="DATA_SCIENCE">Data Science</option>
+                      </select>
+                     
+                    </div>
+                    </div>
+                    <div>
+                        <label for="linkedinUrl" class="block mb-2 text-sm font-medium text-gray-900 ">Linkedin Profile</label>
+                        <input type="text" name="linkedinUrl" id="linkedinUrl" formControlName="linkedinUrl"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                          placeholder="http://www.linkedin.com/in/yourusername" required="">
+                      </div>
+                    </div>
+                    
+                    
+                    <button type="submit"
+                      class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign
+                      up</button>
+                   
+                  </form>
+                  
+                  
+            </div>
             </div>
         </div>
     </div>
-</div>
--->
+</div>-->
+
+<!--delete confirmation-->
+<div *ngIf="isDeleteConfirmationModalOpen" class="fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen">
+      <!-- Background overlay -->
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+  
+      <!-- Modal container -->
+      <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+        <!-- Modal header -->
+        <div class="px-6 py-4 bg-gray-800 text-white flex justify-between items-center">
+          <h5 class="text-lg font-bold" id="deleteConfirmationLabel">Confirm Delete</h5>
+          <button (click)="onCloseModal()" class="text-gray-300 hover:text-gray-100 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="p-6 text-gray-700">
+          <p>Are you sure you want to delete user {{ selectedUserId }}? This action cannot be undone.</p>
+        </div>
+  
+        <!-- Modal footer -->
+        <div class="px-6 py-4 bg-gray-100 flex justify-end">
+          <button (click)="onCloseModal()" class="px-4 py-2 mr-2 text-gray-600 bg-white rounded-lg focus:outline-none sm:mr-4">Cancel</button>
+          <button (click)="deleteUser(selectedUserId)" class="px-4 py-2 text-white bg-red-600 rounded-lg hover:bg-red-700 focus:outline-none sm:px-6">Confirm</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <!---->
+  <div *ngIf="isOpen" class="fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen">
+      <!-- Background overlay -->
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+  
+      <!-- Modal container -->
+      <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+        <!-- Modal header -->
+        <div class="px-6 py-4 bg-gray-800 text-white flex justify-between items-center">
+          <h5 class="text-lg font-bold">Add User</h5>
+          <button (click)="closeModal()" class="text-gray-300 hover:text-gray-100 focus:outline-none">
+            <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+  
+        <!-- Modal body -->
+        <div class="p-6">
+          <!-- User form -->
+          <form [formGroup]="userForm" (submit)="addUser()" class="space-y-4">
+            <div class="flex flex-col md:flex-row md:space-x-4">
+              <div class="flex-1">
+                <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 ">Firstname</label>
+                        <input type="text" name="firstname" id="firstname" formControlName="firstname"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                          placeholder="firstname" required="">
+                          <div *ngIf="userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty ||isSubmitted">
+                            <div *ngIf="userForm.controls['firstname'].hasError('required')"
+                              class="mt-2 text-sm text-red-600 "> This field is required</div>
+                            <div *ngIf="userForm.controls['firstname'].hasError('pattern')"
+                              class="mt-2 text-sm text-red-600 ">Please enter only letters and spaces.</div>
+            
+                          </div>
+              </div>
+              <div class="flex-1">
+                <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 ">Lastname</label>
+                        <input type="text" name="lastName" id="lastName" formControlName="lastName"
+                          class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                          placeholder="lastname" required="">
+                          <div *ngIf="userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty ||isSubmitted">
+                            <div *ngIf="userForm.controls['lastName'].hasError('required')"
+                              class="mt-2 text-sm text-red-600 "> This field is required</div>
+                            <div *ngIf="userForm.controls['lastName'].hasError('pattern')"
+                              class="mt-2 text-sm text-red-600 ">Please enter only letters and spaces.</div>
+                          </div>
+              </div>
+            </div>
+            <div>
+                <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+                <input type="email" name="email" id="email" formControlName="email"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                  placeholder="name@company.com" required="">
+                  <div *ngIf="userForm.controls['email'].touched || userForm.controls['email'].dirty ||isSubmitted">
+                      <div *ngIf="userForm.controls['email'].hasError('required')"
+                        class="mt-2 text-sm text-red-600 "> This field is required</div>
+                      <div *ngIf="userForm.controls['email'].hasError('email')"
+                        class="mt-2 text-sm text-red-600 "> Invalid email</div>
+                      <div *ngIf="userExist" class="mt-2 text-sm text-red-600 "> User exist with the same email
+                      </div>
+                    </div>
+            </div>
+            <div>
+                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
+                <div class="relative">
+                <input type="password" name="password" id="password" placeholder="••••••••••"
+                formControlName="password"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
+                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center"
+             >
+                <svg class="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                  stroke-linejoin="round">
+                  <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
+                  <path class="hs-password-active:hidden"
+                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
+                  <path class="hs-password-active:hidden"
+                    d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
+                  <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22" />
+                  <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
+                  <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3" />
+                </svg>
+              </button>
+            </div>
+            </div>
+            <div class="flex flex-col md:flex-row md:space-x-4">
+                <div class="flex-1">
+                    <label for="number" class="block mb-2 text-sm font-medium text-gray-900 ">Phone Number</label>
+                    <input type="text" name="number" id="number" formControlName="number"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      placeholder="12 345 678" required="" mask="00 000 000" >
+                      <div *ngIf="userForm.controls['number'].touched || userForm.controls['number'].dirty ||isSubmitted">
+                          <div *ngIf="userForm.controls['number'].hasError('required')"
+                            class="mt-2 text-sm text-red-600 "> This field is required</div>
+                          <div *ngIf="userForm.controls['number'].hasError('minlength')"
+                            class="mt-2 text-sm text-red-600 "> Number should contains 8</div>
+            
+                        </div>
+                </div>
+                <div class="flex-1">
+                    <label for="role" class="block mb-2 text-sm font-medium text-gray-900 ">Role</label>
+            
+                    <select name="role" id="role" formControlName="role"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                      <option value="ROLE_USER">User</option>
+                      <option value="ROLE_EVALUATOR">Evaluator</option>
+                    </select>
+                    <div *ngIf="userForm.controls['role'].touched || userForm.controls['role'].dirty ||isSubmitted">
+                        <div *ngIf="userForm.controls['role'].hasError('required')"
+                          class="mt-2 text-sm text-red-600 "> This field is required</div>
+                    </div>
+                </div>
+            </div>
+                <div *ngIf="userForm.get('role').value === 'ROLE_USER'">
+                    <div class="flex flex-col md:flex-row md:space-x-4">
+                        <div class="flex-1">
+                            <label for="educationLevel" class="block mb-2 text-sm font-medium text-gray-900 ">Education Level</label>
+      
+                  <select name="educationLevel" id="educationLevel" formControlName="educationLevel"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                  <option>Bac+3</option>
+                    <option>Bac+5</option>
+                  </select>
+                 
+                </div>
+                <div class="flex-1">
+                    <label for="specializations" class="block mb-2 text-sm font-medium text-gray-900 ">Specializations</label>
+      
+                  <select name="specializations" id="specializations" formControlName="specializations"
+                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                  <option value="WEB_DEVELOPMENT" >Web Development</option>
+                    <option value="MOBILE_DEVELOPMENT">Mobile Development</option>
+                    <option value="DATA_SCIENCE">Data Science</option>
+                  </select>
+                 
+                </div>
+                </div>
+                <div>
+                    <label for="linkedinUrl" class="block mb-2 text-sm font-medium text-gray-900 ">Linkedin Profile</label>
+                    <input type="text" name="linkedinUrl" id="linkedinUrl" formControlName="linkedinUrl"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                      placeholder="http://www.linkedin.com/in/yourusername" required="">
+                  </div>
+              </div>
+
+            <!-- Add more form fields here -->
+            <div class="flex justify-end mt-4">
+              <button type="button" (click)="closeModal()" class="px-4 py-2 mr-2 text-gray-600 bg-white rounded-lg focus:outline-none">Cancel</button>
+              <button type="submit" (click)="addUser()" class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none">Add User</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  
