@@ -34,7 +34,15 @@ export class AdminService {
 
   } 
   getUserRegistrationData(){
-    return this.http.get<any[]>(this.baseURI + `/api/user/user-registrations`);
+    return this.http.get<any[]>(this.baseURI + `/api/user/user-registrations-by-month`);
 
   }
+  getDashboardCounts(): Observable<DashboardCounts> {
+    return this.http.get<DashboardCounts>(this.baseURI +`/api/user/counts`);
+  }
+}
+export interface DashboardCounts {
+  usersCount: number;
+  testsSubmittedCount: number;
+  totalTestsCount: number;
 }

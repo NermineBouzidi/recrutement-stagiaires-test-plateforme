@@ -1,6 +1,8 @@
 package com.example.backend.Service;
 
+import com.example.backend.DTO.DashboardCounts;
 import com.example.backend.DTO.UserDTO;
+import com.example.backend.Entity.Test;
 import com.example.backend.Entity.User;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -22,5 +24,7 @@ public interface UserService {
     String rejectUser (long id );
     byte[] getResume (long id) throws IOException;
     public void changePassword(Long userId, String currentPassword, String newPassword, String confirmPassword)throws IOException ;
+    DashboardCounts getDashboardCounts();
+    public String assignTestAndNotifyUser(long userId, Test test) ;
 
     }

@@ -10,6 +10,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.LocalDateTime;
+import java.time.Month;
+
 @SpringBootApplication
 public class BackEndApplication {
 	@Autowired
@@ -25,11 +28,13 @@ public class BackEndApplication {
 	public CommandLineRunner commandLineRunner() {
 		return args -> {
 			// Create and save an admin user during application startup
+			LocalDateTime februaryRegistrationDate = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0); // Assuming the registration date is February 1st, 2024
 			User adminUser = new User();
-			adminUser.setFirstname("Evaluator");
-			adminUser.setLastName("Evaluator");
-			adminUser.setEmail("evaluator@example.com");
-			adminUser.setRole(Role.ROLE_EVALUATOR);
+			adminUser.setFirstname("User");
+			adminUser.setLastName("User");
+			adminUser.setEmail("user132@example.com");
+			adminUser.setRole(Role.ROLE_USER);
+			adminUser.setRegistrationDate(februaryRegistrationDate);
 			adminUser.setPassword(passwordEncoder.encode("admin"));
 			userRepository.save(adminUser);
 		};

@@ -1,12 +1,17 @@
 package com.example.backend.Controller;
 
 import com.example.backend.DTO.ChangePasswordRequest;
+import com.example.backend.DTO.DashboardCounts;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.DTO.UserRegistrationData;
 import com.example.backend.Entity.Enum.Role;
+import com.example.backend.Entity.Test;
 import com.example.backend.Entity.User;
+import com.example.backend.Repository.TestRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
+import com.example.backend.Service.TestService;
+import com.example.backend.Service.TestSubmissionService;
 import com.example.backend.Service.UserService;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,8 +25,8 @@ import java.io.IOException;
 import java.time.Month;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
-
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 @Secured("hasRole('ADMIN','EVALUATOR')")
@@ -32,6 +37,12 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    TestService testService;
+    @Autowired
+    TestRepository testRepository;
+    @Autowired
+    TestSubmissionService testSubmissionService;
+    @Autowired
     JwtUtils jwtUtils;
 
     @DeleteMapping("/deleteUser/{id}")
@@ -39,7 +50,7 @@ public class UserController {
         if (id == 0 || id <= 0) {
             return ResponseEntity.badRequest().build();
         }
-       String s= userService.deleteUser(id);
+        String s = userService.deleteUser(id);
         if (s.equals("succes")) {
             return ResponseEntity.noContent().build();
         } else {
@@ -49,8 +60,8 @@ public class UserController {
 
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<String> update(@PathVariable long id,@RequestBody UserDTO user) {
-        String s = userService.updateUser(id,user);
+    public ResponseEntity<String> update(@PathVariable long id, @RequestBody UserDTO user) {
+        String s = userService.updateUser(id, user);
         if (s.equals("user updated successfully")) {
             return ResponseEntity.ok("user updated successfully");
         } else
@@ -66,6 +77,7 @@ public class UserController {
     public List<User> getUsers() {
         return userService.getUsers();
     }
+
     @GetMapping("/getAllUsers")
     public List<User> getAllUsers() {
         return userService.getAllUsers();
@@ -84,32 +96,35 @@ public class UserController {
         if (id == 0 || id <= 0) {
             return ResponseEntity.badRequest().build();
         }
-        String s= userService.acceptUser(id);
+        String s = userService.acceptUser(id);
         if (s.equals("email send successfully")) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @PutMapping("/reject/{id}")
     public ResponseEntity<Void> reject(@PathVariable long id) {
         if (id == 0 || id <= 0) {
             return ResponseEntity.badRequest().build();
         }
-        String s= userService.rejectUser(id);
+        String s = userService.rejectUser(id);
         if (s.equals("email send successfully")) {
             return ResponseEntity.noContent().build();
         } else {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @GetMapping("/getFile/{id}")
-    public ResponseEntity<?> getFile (@PathVariable long id) throws IOException {
-        byte[] file =userService.getResume(id);
+    public ResponseEntity<?> getFile(@PathVariable long id) throws IOException {
+        byte[] file = userService.getResume(id);
         return ResponseEntity.status(HttpStatus.OK)
                 .contentType(MediaType.valueOf("application/pdf"))
                 .body(file);
     }
+
     @PostMapping("/changePassword/{id}")
     public ResponseEntity<String> changePassword(@PathVariable Long id, @RequestBody ChangePasswordRequest request) {
         try {
@@ -132,6 +147,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+
     @GetMapping("/mee")
     public ResponseEntity<User> getUserP(@RequestHeader("Authorization") String authorization) {
         if (authorization == null || !authorization.startsWith("Bearer ")) {
@@ -144,9 +160,10 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findByEmail(jwtUtils.getUsername(token)));
 
     }
+
     @PostMapping("/addUser")
-    public ResponseEntity<?> addUser (@RequestBody User user){
-         String s= userService.addUser(user);
+    public ResponseEntity<?> addUser(@RequestBody User user) {
+        String s = userService.addUser(user);
         if (s.equals("Registration successful")) {
             return ResponseEntity.ok("Registration successful");
         } else {
@@ -154,6 +171,7 @@ public class UserController {
 
         }
     }
+
     @GetMapping("/user-registrations")
     public ResponseEntity<List<UserRegistrationData>> getUserRegistrations() {
         // Fetch user registration data from the database
@@ -173,10 +191,44 @@ public class UserController {
 
         return ResponseEntity.ok(userRegistrationsData);
     }
+
     @GetMapping("/user-registrations-by-month")
     public ResponseEntity<Map<Month, Long>> getUserRegistrationsByMonth() {
         Map<Month, Long> registrationsByMonth = userRepository.countByMonthOfRegistration(); // Assuming a custom method in UserRepository
         return ResponseEntity.ok(registrationsByMonth);
     }
+
+    @GetMapping("/counts")
+    public ResponseEntity<DashboardCounts> getDashboardCounts() {
+        DashboardCounts counts = userService.getDashboardCounts();
+        return ResponseEntity.ok(counts);
+    }
+
+    @PostMapping("/assign-test-and-notify")
+    public ResponseEntity<String> assignTestAndNotify(@RequestBody Map<String, Long> requestBody) {
+        Long testId = requestBody.get("testId");
+        Long userId = requestBody.get("userId");
+
+        try {
+            // Fetch user and test details
+            Optional<User> userOptional = userRepository.findById(userId);
+            Optional<Test> testOptional = testRepository.findById(testId);
+
+            if (userOptional.isPresent() && testOptional.isPresent()) {
+                User user = userOptional.get();
+                Test test = testOptional.get();
+
+                // Assign test to user and send email notification
+                String result = userService.assignTestAndNotifyUser(userId, test);
+
+                return ResponseEntity.ok(result);
+            } else {
+                return ResponseEntity.badRequest().body("User or test not found");
+            }
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
+        }
+    }
+
 
 }

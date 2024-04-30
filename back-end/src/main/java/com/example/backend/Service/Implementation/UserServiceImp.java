@@ -1,8 +1,13 @@
 package com.example.backend.Service.Implementation;
 
+import com.example.backend.DTO.DashboardCounts;
 import com.example.backend.DTO.UserDTO;
 import com.example.backend.Entity.PasswordGenerator;
 import com.example.backend.Entity.Enum.Role;
+import com.example.backend.Entity.Test;
+import com.example.backend.Entity.TestSubmission;
+import com.example.backend.Repository.TestRepository;
+import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Entity.User;
 import com.example.backend.Service.UserService;
@@ -32,6 +37,10 @@ public class UserServiceImp implements UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
    private JavaMailSender javaMailSender;
+    @Autowired
+    TestSubmissionRepository testSubmissionRepository;
+    @Autowired
+    TestRepository testRepository;
 
     @Value("${spring.mail.username}")
     private String fromEmail;
@@ -268,6 +277,61 @@ public class UserServiceImp implements UserService {
         } else
             throw new IOException("user not found");
     }
+    @Override
+    public DashboardCounts getDashboardCounts() {
+        Long usersCount = userRepository.countByRole(Role.ROLE_USER);
+        Long testsSubmittedCount = testSubmissionRepository.count();
+        Long totalTestsCount = testRepository.count();
+        return new DashboardCounts(usersCount, testsSubmittedCount, totalTestsCount);
+    }
+    public String assignTestAndNotifyUser(long userId, Test test) {
+        try {
+            Optional<User> userOptional = userRepository.findById(userId);
 
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                String email = user.getEmail();
+                String generatedPassword = PasswordGenerator.generateRandomPassword();
+                user.setPassword(passwordEncoder.encode(generatedPassword));
+                user.setStatus("Accepted");
+                userRepository.save(user);
+
+                // Sending email to notify user
+                SimpleMailMessage message = new SimpleMailMessage();
+                String acceptanceMessage = String.format(
+                        "Dear %s %s,%n%n"
+                                + "Congratulations! We are pleased to inform you that your application at Testing Intern Platform has been accepted.%n%n"
+                                + "You are now a part of our internship program. Below are the details to access your account and start taking the tests:%n%n"
+                                + "Username: %s %n"
+                                + "Password: %s%n"
+                                + "Please log in to our platform using the provided credentials and follow the instructions to begin your journey with us.%n%n"
+                                + "If you have any questions or need assistance, feel free to contact us at %s .%n%n"
+                                + "We look forward to having you on board!%n%n"
+                                + "Best regards,%n"
+                                + "The Testing Intern Platform Team",
+                        user.getFirstname(), user.getLastName(), email, generatedPassword, fromEmail);
+                message.setTo(email);
+                message.setSubject("Application Update: Internship at Testing Intern Platform");
+                message.setText(acceptanceMessage);
+                message.setFrom(fromEmail);
+                javaMailSender.send(message);
+
+                // Assigning the test to the user
+                TestSubmission testSubmission = new TestSubmission();
+                testSubmission.setTest(test);
+                testSubmission.setUser(user);
+                testSubmission.setAcceptedDate(LocalDateTime.now());
+                testSubmission.setStatus("Pending");
+                // You can set other attributes such as score and isPassed as needed
+                testSubmissionRepository.save(testSubmission);
+
+                return "Test assigned and email sent successfully";
+            } else {
+                return "User not found with id";
+            }
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
 
 }

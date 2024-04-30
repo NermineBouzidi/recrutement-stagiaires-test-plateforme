@@ -25,10 +25,9 @@
                         <div class="flex items-center">
                             <label for="title" id="title"
                                 class="form-label text-[#1d2736] montserrat-semi px-3">Points</label>
-                            <input type="number"
-                            [(ngModel)]="answer.points" 
+                                <input type="range" id="vol" name="vol" min="0" max="{{answer.problem?.points}}" [(ngModel)]="answer.points" 
                                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600  w-auto "
-                                required="">
+                                >
                             <label class="form-label text-[#1d2736] montserrat-semi px-3">/ {{answer.problem?.points}}</label>    
                         </div>
                     </div>

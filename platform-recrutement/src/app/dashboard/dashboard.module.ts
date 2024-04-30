@@ -16,6 +16,7 @@ import { RapportComponent } from './rapports/rapport/rapport.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuillModule } from 'ngx-quill';
 import { TestPreviewComponent } from './tests/test-preview/test-preview.component';
+import { ProblemAndQuizComponent } from './problem-and-quiz/problem-and-quiz.component';
 
 
 @NgModule({
@@ -28,6 +29,7 @@ import { TestPreviewComponent } from './tests/test-preview/test-preview.componen
     DashComponent,
     RapportComponent,
     TestPreviewComponent,
+    ProblemAndQuizComponent,
   ],
   imports: [
     CommonModule,

@@ -9,11 +9,13 @@ import { RapportComponent } from './rapports/rapport/rapport.component';
 import { TestPreviewComponent } from './tests/test-preview/test-preview.component';
 import { UiTestComponent } from './tests/ui-test/ui-test.component';
 import { UiRapportsComponent } from './rapports/ui-rapports/ui-rapports.component';
+import { ProblemAndQuizComponent } from './problem-and-quiz/problem-and-quiz.component';
 
 const routes: Routes = [
    {path :"" ,component :DashComponent},
    {path :"uidash" ,component :DashComponent},
    {path:"user",component :UserComponent},
+   {path:"problem-quiz" , component:ProblemAndQuizComponent},
    {path:"test",component :UiTestComponent,
    loadChildren: () => import('./tests/tests.module').then((m)=> m.TestsModule)
   },
