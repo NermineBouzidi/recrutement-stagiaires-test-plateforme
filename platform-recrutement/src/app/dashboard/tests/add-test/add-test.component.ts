@@ -15,12 +15,13 @@ export class AddTestComponent {
   isSubmitted: boolean = false;
   quizzes: any[] = [];
   problems: any[] = [];
-  selectedCategory: string;
+  selectedCategory: string = '';
+
+
   
 
   testForm :FormGroup;
-  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef,private route: ActivatedRoute){}
-  ngOnInit() {
+  constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef,private route: ActivatedRoute){
     this.testForm = this.fb.group({
       category: ['', [Validators.required]],
       difficultyLevel:[''],
@@ -32,14 +33,15 @@ export class AddTestComponent {
   this.loadProblem();
   const testId = this.route.snapshot.paramMap.get('test');
   this.getTestById(testId);
-
-}
+  }
+ 
 
 switchMode(modeName: string) {
   this.currentMode = modeName;
   this.cdr.detectChanges();
 
 }
+//loading
 loadQuiz() {
   this.http.getAllQuiz().subscribe((data: any) => {
     this.quizzes = data;
@@ -50,6 +52,22 @@ loadProblem() {
     this.problems = data;
   })
 }
+
+///// filtrage 
+get filteredProblems(): any[] {
+  return this.problems.filter(problem => {
+    // Check if the search text matches the user's name, role, or email
+    return problem.category !== null && problem.category.includes(this.selectedCategory);
+  });
+}
+get filteredQuizzes(): any[] {
+  return this.quizzes.filter(quiz => {
+    // Check if the search text matches the user's name, role, or email
+    return quiz.category !== null && quiz.category.includes(this.selectedCategory);
+  });
+}
+
+// ------------------
 get problemss (){
   return this.testForm.get('problems') as FormArray;
 }
@@ -82,24 +100,13 @@ toggleProblemSelection(event: Event, problem: any): void {
     this.problemss.removeAt(index);
   }
 }
-selectCategory(category: string): void {
-  this.testForm.get('category').setValue(category);
-}
-isCategorySelected(category: string): boolean {
-  return this.selectedCategory === category;
-}
-nextMode(){
-  if (this.currentMode=="type"){
-    this.currentMode="quiz";
-  }else
-  if (this.currentMode=="quiz"){
-    this.currentMode="problem";
-  }
-}
+
+//-------------submit button -----
 submit(testForm){
   const test= testForm.value;
   console.log(test);
 }
+
 addTest(testForm){
   this.isSubmitted = true;
 
@@ -150,5 +157,7 @@ getTestById(testId: any) {
     console.log("api:", data, "form:", this.testForm);
   });
 }
+
+
 
 }

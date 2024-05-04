@@ -8,6 +8,8 @@ const routes: Routes = [
   {path :"dashboard" ,component :DashboardComponent},
   {path: "profile", component:AdminProfileComponent},
   {path: "users", component:UsersComponent},
+  { path: '**', redirectTo: 'dashboard', pathMatch: 'full' }
+
 ];
 
 @NgModule({

@@ -31,6 +31,8 @@ export class ProblemAndQuizComponent {
   problemForm :FormGroup;
   trueFalseForm :FormGroup;
   multiChoiceForm :FormGroup;
+  isSubmitted: boolean = false;
+
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService) {
     for(let i:number=1; i<=100;i++){
       this.quizs.push(i as never);
@@ -48,16 +50,18 @@ export class ProblemAndQuizComponent {
   });
   this.trueFalseForm = this.fb.group({
     title: ['', [Validators.required]],
-    question: [''],
-    duration: [''],
-    points: [''],
-    correctAnswer:['']
+    question: ['',Validators.required],
+    duration: ['',Validators.required],
+    category: ['',Validators.required],
+    points: ['',Validators.required],
+    correctAnswer:['',Validators.required]
   })
     this.multiChoiceForm= this.fb.group({
       title: ['', [Validators.required]],
-      question: [''],
-      duration: [''],
-      points: [''],
+      question: ['',Validators.required],
+      duration: ['',Validators.required],
+      category: ['',Validators.required],
+      points: ['',Validators.required],
       choices: this.fb.array([this.createOptionFormGroup()]),
 
     })
@@ -257,6 +261,7 @@ openUpdateProblem(problem :any){
 }
 //-----------------------------------------True False --------------------------------
 addTrueFalse(trueFalseForm){
+  this.isSubmitted = true;
   if(trueFalseForm.valid){
     const quiz= trueFalseForm.value;
     if(this.selectedQuizId){
@@ -302,6 +307,7 @@ openUpdateMultipleChoice(quiz :any){
 }
 // -----------------------------------Multiple choice ---------------------------
 addMulti(multipleChoiceForm){
+  this.isSubmitted = true;
   if(multipleChoiceForm.valid){
     const quiz= multipleChoiceForm.value;
     if(this.selectedQuizId){
@@ -345,6 +351,8 @@ deleteQuiz(id :any){
 }
 //---------------------load problems-------------------------------
 loadProblems(){
+  this.isSubmitted = false;
+
   this.http.getAllProblem().subscribe((data:any)=>{
     this.problems=data;
     this.problemNumber=data.length;
@@ -352,6 +360,8 @@ loadProblems(){
 }
 //--------------------+load quiz --------------------------------
 loadQuiz() {
+  this.isSubmitted = false;
+
   this.http.getAllQuiz().subscribe((data: any) => {
     this.quizs = data;
     this.quizNumber=data.length;

@@ -17,7 +17,6 @@ import { AdminLayoutComponent } from './admin-space/admin-layout/admin-layout.co
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', component: HomeComponent },
   { path: 'login', component: SigninComponent },
   { path: 'register', component: SignupComponent }, 
@@ -41,12 +40,13 @@ const routes: Routes = [
     loadChildren: () => import('./evaluator-space/evaluator-space.module').then((m)=> m.EvaluatorSpaceModule)
   },
   {
-    path:'admin-space', canActivate:[UserGuard],
-    data: { requiredRole: 'ROLE_ADMIN' },
+    path:'admin-space', //canActivate:[UserGuard],
+    //data: { requiredRole: 'ROLE_ADMIN' },
     component: AdminLayoutComponent,
     loadChildren: () => import('./admin-space/admin-space.module').then((m)=> m.AdminSpaceModule)
-  }
-  
+  },
+  { path: '**', redirectTo: 'home', pathMatch: 'full' },
+
 
 
 ]

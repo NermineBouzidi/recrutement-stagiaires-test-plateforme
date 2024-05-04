@@ -11,8 +11,10 @@
         <form class="space-y-4 md:space-y-6 text-[#0D2E4D] poppins-regular" action="#" [formGroup]="userForm" (ngSubmit)=" Register() ">
           <div class="flex -mx-3">
             <div class="w-1/2 px-3 ">
-              <label for="firstname" class="block mb-2 text-sm font-medium text-gray-900 ">Firstname</label>
-              <input type="text" name="firstname" id="firstname" formControlName="firstname"
+              <label for="firstname" class="block text-[#1d2736] font-medium mb-2 text-sm">
+                First Name <span class="text-red-500">*</span>
+              </label>            
+                <input type="text" name="firstname" id="firstname" formControlName="firstname"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder="firstname" required="">
               <div *ngIf="userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty ||isSubmitted">
@@ -24,8 +26,10 @@
               </div>
             </div>
             <div class="w-1/2 px-3">
-              <label for="lastName" class="block mb-2 text-sm font-medium text-gray-900 ">Lastname</label>
-              <input type="text" name="lastName" id="lastName" formControlName="lastName"
+              <label for="lastName" class="block text-[#1d2736] font-medium mb-2 text-sm">
+                Last Name <span class="text-red-500">*</span>
+              </label>
+                <input type="text" name="lastName" id="lastName" formControlName="lastName"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                 placeholder="lastname" required="">
               <div *ngIf="userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty ||isSubmitted">
@@ -37,7 +41,9 @@
             </div>
           </div>
           <div>
-            <label for="email" class="block mb-2 text-sm font-medium text-gray-900 ">Email</label>
+            <label for="email" class="block text-[#1d2736] font-medium mb-2 text-sm">
+              Email <span class="text-red-500">*</span>
+            </label>            
             <input type="email" name="email" id="email" formControlName="email"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
               placeholder="name@company.com" required="">
@@ -51,8 +57,10 @@
             </div>
           </div>
           <div>
-            <label for="linkedinUrl" class="block mb-2 text-sm font-medium text-gray-900 ">Linkedin Profile</label>
-            <input type="text" name="linkedinUrl" id="linkedinUrl" formControlName="linkedinUrl"
+            <label for="linkedinUrl" class="block text-[#1d2736] font-medium mb-2 text-sm">
+              Linkedin Profile <span class="text-red-500">*</span>
+            </label>           
+             <input type="text" name="linkedinUrl" id="linkedinUrl" formControlName="linkedinUrl"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
               placeholder="http://www.linkedin.com/in/yourusername" required="">
             <div
@@ -63,7 +71,9 @@
             </div>
           </div>
           <div>
-            <label for="number" class="block mb-2 text-sm font-medium text-gray-900 ">Phone Number</label>
+            <label for="number" class="block text-[#1d2736] font-medium mb-2 text-sm">
+              Phone Number <span class="text-red-500">*</span>
+            </label>            
             <input type="text" name="number" id="number" formControlName="number"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
               placeholder="12 345 678" required="" mask="00 000 000" >
@@ -77,7 +87,169 @@
           </div>
           <div class="flex -mx-3">
             <div class="w-1/2 px-3 ">
-            <label for="educationLevel" class="block mb-2 text-sm font-medium text-gray-900 ">Education Level</label>
+              <label for="educationLevel" class="block text-[#1d2736] font-medium mb-2 text-sm">
+                Education Level<span class="text-red-500">*</span>
+              </label>
+            <select name="educationLevel" id="educationLevel" formControlName="educationLevel"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+              <option>High School Diploma</option>
+              <option>Bachelor's Degree</option>
+              <option>Master's Degree </option>
+
+            </select>
+            <div
+              *ngIf="userForm.controls['educationLevel'].touched || userForm.controls['educationLevel'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['educationLevel'].hasError('required')"
+                class="mt-2 text-sm text-red-600 "> This field is required</div>
+
+            </div>
+          </div>
+          <div class="w-1/2 px-3">
+            <label for="specializations" class="block text-[#1d2736] font-medium mb-2 text-sm">
+              specializations<span class="text-red-500">*</span>
+            </label>
+
+            <select name="specializations" id="specializations" formControlName="specializations"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+              <option value="WEB_DEVELOPMENT" >Web Development</option>
+              <option value="MOBILE_DEVELOPMENT">Mobile Development</option>
+              <option value="DATA_SCIENCE">Data Science</option>
+            </select>
+            <div
+              *ngIf="userForm.controls['specializations'].touched || userForm.controls['specializations'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['specializations'].hasError('required')"
+                class="mt-2 text-sm text-red-600 "> This field is required</div>
+
+            </div>
+          </div>
+          </div>
+          <div>
+            <label for="uploadFile1"
+            class="bg-white text-center rounded w-auto  py-2 px-2 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 mx-auto font-[sans-serif] m-2">
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 mb-6 fill-gray-400" viewBox="0 0 24 24">
+              <path
+                d="M22 13a1 1 0 0 0-1 1v4.213A2.79 2.79 0 0 1 18.213 21H5.787A2.79 2.79 0 0 1 3 18.213V14a1 1 0 0 0-2 0v4.213A4.792 4.792 0 0 0 5.787 23h12.426A4.792 4.792 0 0 0 23 18.213V14a1 1 0 0 0-1-1Z"
+                data-original="#000000" />
+              <path
+                d="M6.707 8.707 11 4.414V17a1 1 0 0 0 2 0V4.414l4.293 4.293a1 1 0 0 0 1.414-1.414l-6-6a1 1 0 0 0-1.414 0l-6 6a1 1 0 0 0 1.414 1.414Z"
+                data-original="#000000" />
+            </svg>
+            <p class="text-gray-400 font-semibold text-sm">Choose  <span class="text-[#d97a07]"> resume</span> to
+              upload</p>
+            <input type="file" id='uploadFile1' class="hidden"  accept=".pdf" (change)="onFileSelected($event)" required>
+            <p class="text-xs text-gray-400 mt-2">PDF is Allowed.</p>
+            <p *ngIf="isSubmitted && !selectedFile" class="mt-2 text-sm text-red-600">Please select a file</p>
+
+            <p>{{selectedFile?.name}}</p>
+
+          </label>
+          </div>
+          
+          <button type="submit"
+            class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign
+            up</button>
+          <p class="text-sm font-light text-gray-500 ">
+            Already have an account ? <a routerLink="/login" routerLinkActive="active"
+              class="font-medium text-[#d97a07] hover:underline ">Sign in</a>
+          </p>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+<!--
+  <app-navbar></app-navbar>
+
+<section class="bg-[#e6eaed]  "style="padding-top: 80px;">
+  <div class="flex flex-col items-center min-h-screen justify-center px-6 py-12 mx-auto"> 
+      
+    <div class="w-full bg-white rounded-lg shadow sm:max-w-xl  container">
+        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+              <h1 class="text-xl text-[#0D2E4D] poppins-regular  leading-tight tracking-tight  md:text-2xl ">
+                  Register
+              </h1>
+        <form class="space-y-4 md:space-y-6 text-[#0D2E4D] poppins-regular" action="#" [formGroup]="userForm" (ngSubmit)=" Register() ">
+          <div class="flex -mx-3">
+            <div class="w-1/2 px-3 ">
+              <label for="firstname" class="block text-[#1d2736] font-medium mb-2 text-sm">
+                First Name <span class="text-red-500">*</span>
+              </label>
+              <input type="text" name="firstname" id="firstname" formControlName="firstname"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder="firstname" required="">
+              <div *ngIf="userForm.controls['firstname'].touched || userForm.controls['firstname'].dirty ||isSubmitted">
+                <div *ngIf="userForm.controls['firstname'].hasError('required')"
+                  class="mt-2 text-sm text-red-600 "> This field is required</div>
+                <div *ngIf="userForm.controls['firstname'].hasError('pattern')"
+                  class="mt-2 text-sm text-red-600 ">Please enter only letters and spaces.</div>
+
+              </div>
+            </div>
+            <div class="w-1/2 px-3">
+              <label for="lastName" class="block text-[#1d2736] font-medium mb-2 text-sm">
+                Last Name <span class="text-red-500">*</span>
+              </label>
+              <input type="text" name="lastName" id="lastName" formControlName="lastName"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+                placeholder="lastname" required="">
+              <div *ngIf="userForm.controls['lastName'].touched || userForm.controls['lastName'].dirty ||isSubmitted">
+                <div *ngIf="userForm.controls['lastName'].hasError('required')"
+                  class="mt-2 text-sm text-red-600 "> This field is required</div>
+                <div *ngIf="userForm.controls['lastName'].hasError('pattern')"
+                  class="mt-2 text-sm text-red-600 ">Please enter only letters and spaces.</div>
+              </div>
+            </div>
+          </div>
+          <div>
+            <label for="email" class="block text-[#1d2736] font-medium mb-2 text-sm">
+              Email <span class="text-red-500">*</span>
+            </label>
+            <input type="email" name="email" id="email" formControlName="email"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              placeholder="name@company.com" required="">
+            <div *ngIf="userForm.controls['email'].touched || userForm.controls['email'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['email'].hasError('required')"
+                class="mt-2 text-sm text-red-600 "> This field is required</div>
+              <div *ngIf="userForm.controls['email'].hasError('email')"
+                class="mt-2 text-sm text-red-600 "> Invalid email</div>
+              <div *ngIf="userExist" class="mt-2 text-sm text-red-600 "> User exist with the same email
+              </div>
+            </div>
+          </div>
+          <div>
+            <label for="linkedinUrl" class="block text-[#1d2736] font-medium mb-2 text-sm">
+              Linkedin Profile <span class="text-red-500">*</span>
+            </label>
+            <input type="text" name="linkedinUrl" id="linkedinUrl" formControlName="linkedinUrl"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              placeholder="http://www.linkedin.com/in/yourusername" required="">
+            <div
+              *ngIf="userForm.controls['linkedinUrl'].touched || userForm.controls['linkedinUrl'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['linkedinUrl'].hasError('required')"
+                class="mt-2 text-sm text-red-600 "> This field is required</div>
+
+            </div>
+          </div>
+          <div>
+            <label for="number" class="block text-[#1d2736] font-medium mb-2 text-sm">
+              Phone Number <span class="text-red-500">*</span>
+            </label>
+            <input type="text" name="number" id="number" formControlName="number"
+              class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
+              placeholder="12 345 678" required="" mask="00 000 000" >
+            <div *ngIf="userForm.controls['number'].touched || userForm.controls['number'].dirty ||isSubmitted">
+              <div *ngIf="userForm.controls['number'].hasError('required')"
+                class="mt-2 text-sm text-red-600 "> This field is required</div>
+              <div *ngIf="userForm.controls['number'].hasError('minlength')"
+                class="mt-2 text-sm text-red-600 "> Number should contains 8</div>
+
+            </div>
+          </div>
+          <div class="flex -mx-3">
+            <div class="w-1/2 px-3 ">
+            <label for="educationLevel" class="block text-[#1d2736] font-medium mb-2 text-sm">
+              educationLevel<span class="text-red-500">*</span>
+            </label>
 
             <select name="educationLevel" id="educationLevel" formControlName="educationLevel"
               class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
@@ -109,22 +281,24 @@
           </div>
           </div>
           <div>
-            <label for="uploadFile1"
-            class="bg-white text-center rounded w-auto  py-2 px-2 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 mx-auto font-[sans-serif] m-2">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-8 mb-6 fill-gray-400" viewBox="0 0 24 24">
-              <path
-                d="M22 13a1 1 0 0 0-1 1v4.213A2.79 2.79 0 0 1 18.213 21H5.787A2.79 2.79 0 0 1 3 18.213V14a1 1 0 0 0-2 0v4.213A4.792 4.792 0 0 0 5.787 23h12.426A4.792 4.792 0 0 0 23 18.213V14a1 1 0 0 0-1-1Z"
-                data-original="#000000" />
-              <path
-                d="M6.707 8.707 11 4.414V17a1 1 0 0 0 2 0V4.414l4.293 4.293a1 1 0 0 0 1.414-1.414l-6-6a1 1 0 0 0-1.414 0l-6 6a1 1 0 0 0 1.414 1.414Z"
-                data-original="#000000" />
-            </svg>
-            <p class="text-gray-400 font-semibold text-sm">Drag & Drop or <span class="text-[#d97a07]">Choose resume</span> to
-              upload</p>
-            <input type="file" id='uploadFile1' class="hidden"  accept=".pdf" (change)="onFileSelected($event)" required>
-            <p class="text-xs text-gray-400 mt-2">PDF is Allowed.</p>
-          </label>
+              <label for="uploadFile1"
+                     class="bg-white text-center rounded w-auto py-2 px-2 flex flex-col items-center justify-center cursor-pointer border-2 border-gray-300 mx-auto font-[sans-serif] m-2">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-8 mb-6 fill-gray-400" viewBox="0 0 24 24">
+                  <path
+                    d="M22 13a1 1 0 0 0-1 1v4.213A2.79 2.79 0 0 1 18.213 21H5.787A2.79 2.79 0 0 1 3 18.213V14a1 1 0 0 0-2 0v4.213A4.792 4.792 0 0 0 5.787 23h12.426A4.792 4.792 0 0 0 23 18.213V14a1 1 0 0 0-1-1Z"
+                    data-original="#000000" />
+                  <path
+                    d="M6.707 8.707 11 4.414V17a1 1 0 0 0 2 0V4.414l4.293 4.293a1 1 0 0 0 1.414-1.414l-6-6a1 1 0 0 0-1.414 0l-6 6a1 1 0 0 0 1.414 1.414Z"
+                    data-original="#000000" />
+                </svg>
+                <p class="text-gray-400 font-semibold text-sm">Drag & Drop or <span class="text-[#d97a07]">Choose resume</span> to
+                  upload</p>
+                <input type="file" id="uploadFile1" class="hidden" accept=".pdf" (change)="onFileSelected($event)" required>
+                <p class="text-xs text-gray-400 mt-2">PDF is Allowed.</p>
+                <p>{{selectedFile.name}}</p>
+              </label>
           </div>
+          
           
           <button type="submit"
             class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign
@@ -138,3 +312,5 @@
     </div>
   </div>
 </section>
+
+-->

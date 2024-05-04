@@ -1,9 +1,19 @@
 <div>
-<button (click)="Submit()">submit</button>
-<div *ngFor="let problem of problems">
-    <app-user-code [problem]="problem" (formGroupValue)="handleProblemGroupValue($event)"></app-user-code>
-</div>
-  <div *ngFor="let quiz of quizzes">
-    <app-user-quiz [quiz]="quiz" (formGroupValue)="handleFormGroupValue($event)"></app-user-quiz>
+  <button (click)="Submit()">Submit</button>
+  <div>
+    <!-- Display current exercise -->
+    <div *ngIf="exercises.length > 0">
+      <!-- Assuming 'exercise' is the variable representing the current exercise -->
+      <ng-container *ngIf="currentExerciseIndex >= 0 && currentExerciseIndex < exercises.length">
+        <!-- Render the current exercise -->
+        <ng-container *ngIf="exercises[currentExerciseIndex].type === 'quiz'">
+          <app-user-quiz [quiz]="exercises[currentExerciseIndex]" (formGroupValue)="handleFormGroupValue($event)"></app-user-quiz>
+        </ng-container>
+        <ng-container *ngIf="exercises[currentExerciseIndex].type === 'problem'">
+          <app-user-code [problem]="exercises[currentExerciseIndex]" (formGroupValue)="handleProblemGroupValue($event)"></app-user-code>
+        </ng-container>
+      </ng-container>
+    </div>
   </div>
-</div>
+  
+  

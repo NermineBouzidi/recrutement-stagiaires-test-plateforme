@@ -15,7 +15,10 @@ export class SigninComponent {
  isSubmitted :boolean=false;
  userForm :FormGroup;
  errorMessage: string;
+ showPassword: boolean = false;
+
  alertMessage: string = 'Login successful.';
+ 
  rememberMe = false;
   constructor (private http : AuthService, private router:Router,private fb: FormBuilder , private toastr : ToastrService){
     this.loginObj=new login;
@@ -27,6 +30,8 @@ export class SigninComponent {
 
  // Add this method to your component class
 togglePasswordVisibility(inputId: string): void {
+  this.showPassword = !this.showPassword;
+
   const input = document.getElementById(inputId) as HTMLInputElement;
   input.type = input.type === 'password' ? 'text' : 'password';
 }

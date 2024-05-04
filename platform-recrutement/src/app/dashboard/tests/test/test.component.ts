@@ -28,6 +28,7 @@ export class TestComponent {
   selectedProblemId :string = null;
   isDialogOpen: boolean = false;
   isShowDialog :boolean=false;
+  test :any;
   quizForm :FormGroup;
   problemForm :FormGroup;
   trueFalseForm :FormGroup;
@@ -90,15 +91,15 @@ export class TestComponent {
   }
  // return tests
  
-  openDialog() {
-    
+  openDialog(test) {
+    this.test=test;
+
     this.isDialogOpen = true;
   }
 
   closeDialog() {
-    this.isDialogOpen = false;
-    this.quizForm.reset();
-    this.selectedQuizId=null;
+      this.isDialogOpen = false;
+    
   }
 
  

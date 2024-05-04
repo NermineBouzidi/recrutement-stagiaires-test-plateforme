@@ -16,10 +16,12 @@
         <div class="">
           <div class="flex mb-6">
             <div class="w-1/2 mr-2">
-              <label class="block text-[#1d2736] montserrat-bold mb-2">
+              <label class="block text-[#1d2736] montserrat-medium mb-2">
                 Category
+                <span class="text-red-500">*</span>
               </label>
-              <select id="category" formControlName="category"
+              
+              <select id="category" formControlName="category" [(ngModel)]="selectedCategory" 
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
                 >
                 <option value="WEB_DEVELOPMENT">Web Development</option>
@@ -33,9 +35,11 @@
 
             </div>
             <div class="w-1/2 ml-2">
-              <label class="block text-[#1d2736] montserrat-bold mb-2">
+              <label class="block text-[#1d2736] montserrat-medium mb-2">
                 Passing Percentage
+                <span class="text-red-500">*</span>
               </label>
+             
               <input type="number" id="passingPercentage" formControlName="passingPercentage"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5">
               <div
@@ -46,11 +50,12 @@
             </div>
           </div>
           <div class="flex mb-4 ">
-            <div class="flex flex-col w-1/2 border-r border-gray-400 ">
-              <label class="block text-[#1d2736] montserrat-bold mb-2">
-                Quizzes:</label>
+            <div class="flex flex-col w-1/2 border-r border-gray-400 "> 
+                <label class="block text-[#1d2736] montserrat-medium mb-2">
+                  Quizzes<span class="text-red-500">*</span>
+                </label>
               <div formArrayName="quizzes" class="h-64 overflow-y-auto">
-                <div *ngFor="let quiz of quizzes; let i = index">
+                <div *ngFor="let quiz of filteredQuizzes; let i = index">
                   <div class="mb-2 ">
                     <input type="checkbox" id="checkBox{{i}}" [value]="quiz.id"
                       (change)="toggleQuizSelection($event, quiz)" class="hidden peer">
@@ -77,9 +82,11 @@
 
             </div>
             <div class="flex flex-col w-1/2 pl-4">
-              <label class="block text-[#1d2736] montserrat-bold mb-2">Problems:</label>
-              <div formArrayName="problems" class="h-64 overflow-y-auto">
-                <div *ngFor="let problem of problems; let j = index">
+              <label class="block text-[#1d2736] montserrat-medium mb-2">
+                Problems<span class="text-red-500">*</span>
+              </label>             
+               <div formArrayName="problems" class="h-64 overflow-y-auto">
+                <div *ngFor="let problem of filteredProblems; let j = index">
                   <div class="mb-2">
                     <input
                       type="checkbox"

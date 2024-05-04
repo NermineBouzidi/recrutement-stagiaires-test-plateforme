@@ -31,4 +31,22 @@ export class RapportComponent {
 getInitials(firstName: String, lastName: String): string {
   return `${firstName.charAt(0).toUpperCase()}${lastName.charAt(0).toUpperCase()}`;
 }
+acceptUser(id : any){
+  this.http.acceptCandidat(id).subscribe(
+    ()=>{
+      alert("email send suuccesssfully")
+      this.loadRapports();
+
+    }
+  )
+}
+rejectUser(id : any){
+  this.http.rejectCandidat(id).subscribe(
+    ()=>{
+      alert("email send suuccesssfully")
+      this.loadRapports();
+
+    }
+  )
+}
 }

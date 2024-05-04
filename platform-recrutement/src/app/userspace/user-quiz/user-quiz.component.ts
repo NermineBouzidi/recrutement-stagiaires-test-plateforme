@@ -22,21 +22,12 @@ export class UserQuizComponent {
   isTestCompleted: boolean = false; 
   counter = 120; // Counter in seconds
   displayTime: string;
-  
+   remainingMinutes: number = 0;
+  remainingSeconds: number = 0;
   quizAnswerForm: FormGroup;
 
   constructor(private http :UserspaceService,private Http :AuthService,private fb: FormBuilder){
-     timer(1000, 1000) // Initial delay 1 second and interval countdown also 1 second
-      .pipe(
-        takeWhile(() => this.counter > 0),
-        tap(() => {
-          this.counter--;
-          this.displayTime = this.secondsToHHMMSS(this.counter);
-        })
-      )
-      .subscribe(() => {
-        // Add your more code
-      });
+    
       this.quizAnswerForm = this.fb.group({
         quiz: [null],
         trueFalseAnswer: [null],
@@ -44,7 +35,28 @@ export class UserQuizComponent {
         points: [null],
       });
   }
-  
+  ngOnInit() {
+    this.loadQuiz();
+    this.startTimer()
+  }
+  startTimer(): void {
+    let totalSeconds = this.quiz.duration // Set initial time (e.g., 60 seconds)
+
+    const timer = setInterval(() => {
+      if (totalSeconds > 0) {
+        totalSeconds--; // Decrease remaining time every second
+        this.remainingMinutes = Math.floor(totalSeconds / 60);
+        this.remainingSeconds = totalSeconds % 60;
+      } else {
+        clearInterval(timer); // Stop the timer when time is up
+        this.emitFormGroupValue(); // Submit the form when timer ends
+        // Handle what should happen next (e.g., move to the next quiz)
+      }
+    }, 1000); // Timer runs every second (1000 milliseconds)
+  }
+  formatTime(time: number): string {
+    return time < 10 ? '0' + time : time.toString();
+  }
   private minutesToHHMMSS(minutes: number): string {
     const hours = Math.floor(minutes / 60);
     const remainingMinutes = minutes % 60;
@@ -69,9 +81,7 @@ export class UserQuizComponent {
     return `${hoursStr}:${minutesStr}:${secondsStr}`;
   }
 
-  ngOnInit() {
-    this.loadQuiz();
-  }
+ 
   loadQuiz() {
     const token = this.Http.getToken();
     this.http.getAssinedTest(token).subscribe((data:any)=>{
@@ -115,9 +125,9 @@ export class UserQuizComponent {
     this.multipleChoiceAnswersArray.removeAt(index);
   }
   
-  emitFormGroupValue(quizAnswerForm) {
+  emitFormGroupValue() {
     const questionType = this.quiz.questionType;
-    const quiz= quizAnswerForm.value;
+    const quiz= this.quizAnswerForm.value;
     const transformedquiz = {id:this.quiz.id};
     const transformedAnswers = quiz.multipleChoiceAnswers.map(Id => ({ id: Id }));
     let transformedPoints= 0;

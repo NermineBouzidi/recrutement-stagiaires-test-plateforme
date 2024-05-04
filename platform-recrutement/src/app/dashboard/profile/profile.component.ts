@@ -17,6 +17,10 @@ export class ProfileComponent {
   profileForm: FormGroup;
   passwordForm :FormGroup;
   passwordChangeError:string;
+  showCurrentPassword : boolean=false
+  showConfirmPassword : boolean=false
+  showNewPassword : boolean=false
+
 
   constructor(private http :AdminService, private fb: FormBuilder, private Http :AuthService){
     this.profileForm = this.fb.group({
@@ -97,6 +101,16 @@ getInitials(firstName: String, lastName: String): string {
 togglePasswordVisibility(inputId: string): void {
   const input = document.getElementById(inputId) as HTMLInputElement;
   input.type = input.type === 'password' ? 'text' : 'password';
+  if (inputId === 'currentPassword') {
+    this.showCurrentPassword = !this.showCurrentPassword;
+  }else if (inputId === 'confirmPassword') {
+    this.showConfirmPassword  = !this.showConfirmPassword ;
+  }else{
+    this.showNewPassword = !this.showNewPassword;
+
+  }
+
+  
 }
 
 }

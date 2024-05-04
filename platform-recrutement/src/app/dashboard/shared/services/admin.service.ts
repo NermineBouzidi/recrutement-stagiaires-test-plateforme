@@ -125,4 +125,12 @@ getUserProfileFromToken(token: string) {
     return this.http.put(this.baseURI + `/api/test/problemAnswers-points/${testSubmissionId}`, updatedPoints,{ observe: 'response' ,responseType: 'text'});
 
   }
+
+  //After rapport
+  acceptCandidat(id:String){
+    return this.http.put(this.baseURI + `/api/test/accept/${id}`,{});
+  }
+  rejectCandidat(id:String){
+    return this.http.put(this.baseURI + `/api/test/reject/${id}`,{});
+  }
 }

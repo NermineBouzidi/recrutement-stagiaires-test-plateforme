@@ -19,6 +19,8 @@ export class UserCodeComponent {
   counter = 120; // Counter in seconds
   displayTime: string;
   output : [any];
+  remainingMinutes: number = 0;
+  remainingSeconds: number = 0;
   selectedLanguage: string ; // Default language
   codeMirrorOptions: any = {
     mode: "text/x-java",
@@ -44,6 +46,7 @@ export class UserCodeComponent {
     this.onLanguageChange();
     this.updateCode();
     this.loadProblems();
+    this.startTimer()
 
   }
   
@@ -65,6 +68,23 @@ export class UserCodeComponent {
         answerText: [''],
         points: [0],
       });
+  }
+  startTimer(): void {
+    let totalSeconds = this.problem.duration *60// Set initial time (e.g., 60 seconds)
+
+    const timer = setInterval(() => {
+      if (totalSeconds > 0) {
+        totalSeconds--; // Decrease remaining time every second
+        this.remainingMinutes = Math.floor(totalSeconds / 60);
+        this.remainingSeconds = totalSeconds % 60;
+      } else {
+        clearInterval(timer); // Stop the timer when time is up
+        // Handle what should happen next (e.g., move to the next quiz)
+      }
+    }, 1000); // Timer runs every second (1000 milliseconds)
+  }
+  formatTime(time: number): string {
+    return time < 10 ? '0' + time : time.toString();
   }
   private minutesToMMSS(minutes: number): string {
     if (isNaN(minutes) || minutes < 0) {

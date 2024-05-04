@@ -100,11 +100,11 @@
               
             </td>
             <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
-                {{ rapport.score }}
+                {{ rapport.score }} /{{rapport.passingPoints}}
               </td>
             <td class="border-grey-light border hover:bg-gray-100 p-3">
 
-              <button class="text-[#907A9A] hover:text-[#3D3D62]">
+              <button class="text-[#907A9A] hover:text-[#3D3D62]" (click)="acceptUser(rapport.user?.id)" >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
@@ -116,7 +116,7 @@
                   />
                 </svg>
               </button>
-              <button class="text-[#907A9A] hover:text-[#3D3D62]">
+              <button class="text-[#907A9A] hover:text-[#3D3D62]"  (click)="rejectUser(rapport.user?.id)" >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"

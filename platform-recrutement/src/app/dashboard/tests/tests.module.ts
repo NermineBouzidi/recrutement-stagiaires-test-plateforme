@@ -8,6 +8,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AddProblemComponent } from './add-problem/add-problem.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { QuillModule } from 'ngx-quill';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { AddQuizComponent } from './add-quiz/add-quiz.component';
 
 
 @NgModule({
@@ -15,6 +17,7 @@ import { QuillModule } from 'ngx-quill';
     AddTestComponent,
     UiTestComponent,
     AddProblemComponent,
+    AddQuizComponent,
   ],
   imports: [
     CommonModule,
@@ -23,8 +26,8 @@ import { QuillModule } from 'ngx-quill';
     ReactiveFormsModule,
     FormsModule,
     NgMultiSelectDropDownModule,
-    QuillModule
-
+    QuillModule,
+    NgSelectModule
     
   ]
 })

@@ -7,20 +7,19 @@
   <div class="flex items-center justify-center ">
     <div class="container bg-white p-8">
       <div class="flex justify-end">
-          <button (click)="openDialog()"
-          
-            class="text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2.5 text-center inline-flex ">
-            <a  routerLink="/dashboard/test/add-test" routerLinkActive="active" >
+        <button class="text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2.5 flex">
+          <a routerLink="/dashboard/test/add-test" routerLinkActive="active" class="flex items-center space-x-1">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
               <path fill-rule="evenodd"
                 d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
                 clip-rule="evenodd" />
             </svg>
-
-            Add
-            </a>
-          </button>
-        </div>
+            <span>Add</span>
+          </a>
+        </button>
+      </div>
+      
+  
           <div class=" items-center justify-center mt-5 mb-4">
           <table class="bg-white rounded-lg overflow-hidden w-full">
             <thead class="text-[#1d2736]">
@@ -54,7 +53,7 @@
         
                 <td
                   class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
-                  <button>
+                  <button (click)="openDialog(test)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                       <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
                       <path fill-rule="evenodd"
@@ -94,36 +93,50 @@
     </div>
   </div>
 
-  <div  class="fixed z-10 inset-0 overflow-y-auto">
+  <div *ngIf="isDialogOpen" class="fixed z-10 inset-0 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen">
-      <!-- Background overlay -->
       <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
   
-      <!-- Modal container -->
-      <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-        <!-- Modal header -->
-        <div class="px-6 py-4 bg-gray-800 text-white flex justify-between items-center">
-          <h5 class="text-lg font-bold">Add User</h5>
-          <button  class="text-gray-300 hover:text-gray-100 focus:outline-none">
+      <div class="bg-white rounded-lg shadow-xl transform transition-all sm:max-w-lg sm:w-full p-6">
+        <div class="flex justify-end items-center ">
+          <button class="text-gray-400 hover:text-gray-600 focus:outline-none" (click)="closeDialog()">
             <svg class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
             </svg>
           </button>
         </div>
-      <div class="mb-4">
-        <p><span class="font-semibold">Score:</span> <span id="testScore"></span></p>
-        <p><span class="font-semibold">Difficulty Level:</span> <span id="testDifficulty"></span></p>
-        <p><span class="font-semibold">Passing Score:</span> <span id="testPassingScore"></span></p>
-        <p><span class="font-semibold">Duration:</span> <span id="testDifficulty"></span></p>
-        <p><span class="font-semibold">Quizzes:</span> <span id="testDifficulty"></span></p>
-        <p><span class="font-semibold">Problems:</span> <span id="testDifficulty"></span></p>
+          <div class="text-lg montserrat-bold text-[#1d2736] text-center border-b border-gray-200 p-4">Test Information</div>
 
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-5">
+  
+          <div>
+            <p class="montserrat">Category:</p>
+            <p class="montserrat-semi">{{ test.category }}</p>
 
+            <p class="montserrat">Duration:</p>
+            <p class="montserrat-semi">{{ test.totalDuration }} Minutes</p> 
+            <p class="montserrat">Score:</p>
+            <p class="montserrat-semi">{{ test.totalPoints }}</p>
+          
+           
 
-        <!-- Add more details here as needed -->
-      </div>
-      <div class="text-right">
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded focus:outline-none" >Close</button>
-      </div>
+            <p class="montserrat">Quizzes:</p>
+            <p class="montserrat-semi">{{ test.numberOfQuizzes }}</p>
+          </div>
+  
+          <div>
+            <p class="montserrat">Difficulty Level:</p>
+            <p class="montserrat-semi">{{ test.difficultyLevel }}</p>
+            <p class="montserrat">Passing Percentages:</p>
+            <p class="montserrat-semi">{{ test.passingPercentage }}</p>
+            <p class="montserrat">Passing Points:</p>
+            <p class="montserrat-semi">{{ test.passingPoints }}</p>
+            <p class="montserrat">Problems:</p>
+            <p class="montserrat-semi">{{ test.numberOfProblems }}</p>
+          </div>
+        </div>
+  
+        </div>
     </div>
   </div>
+  

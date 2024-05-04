@@ -15,14 +15,17 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
 export class UserTestComponent {
   test: any = {};
   quizzes: any[];
+  problems: any[];
+
+  exercises: any[];
+
   quizzesAnswers: any[] = []; // Array to store form group values
   problemAnswers: any[] = []; // Array to store form group values
-  problems: any[];
   currentQuizIndex: number = 0;
   currentProblemIndex: number = 0;
-  showQuizzes: boolean = true;
-  showProblems: boolean = false;
-  showSubmitButton: boolean = false;
+  currentIndex = 0; // Index to keep track of the current item
+  currentExerciseIndex = 0; // Variable to keep track of the current exercise
+
   constructor (private router :Router,private http :UserspaceService,private Http :AuthService, private toastr : ToastrService){}
   diasbleBack(): void {
     // Disable browser navigation
@@ -34,6 +37,7 @@ export class UserTestComponent {
     
     this.diasbleBack();
     this.loadTest();
+    
   }
   loadTest(){
     const token = this.Http.getToken();
@@ -41,40 +45,40 @@ export class UserTestComponent {
       this.test=data;
       this.quizzes= shuffle(data.test?.quizzes);
       this.problems= shuffle(data.test?.problems);
-      })
+      this.exercises= shuffle([
+        ...data.test?.quizzes.map(quiz => ({ ...quiz, type: 'quiz' })),
+        ...data.test?.problems.map(problem => ({ ...problem, type: 'problem' }))
+      ]);
+      console.log(this.exercises)
+ })
 
   }
+
+
+
+
+
   handleFormGroupValue(value: any) {
+    this.currentExerciseIndex++;
     this.quizzesAnswers.push(value); // Add the form group value to the array
     console.log('Quizzes:', this.quizzesAnswers); // Optional: Log the array
   }
   handleProblemGroupValue(value: any) {
+    this.currentExerciseIndex++;
+
     this.problemAnswers.push(value); // Add the form group value to the array
     console.log('Problems:', this.problemAnswers); // Optional: Log the array
   }
   g
   receiveFormGroupValue(formGroupValue: FormGroup) {
+    this.currentExerciseIndex++;
+
     // Handle the received form group value here
     console.log('Form Group Value:', formGroupValue);
     // Send the value to the API or perform other actions
   }
  
-  submit(){
-    this.http.setQuizAnswers(this.test.id,this.quizzesAnswers).subscribe(response => {
-      console.log('Quiz answers submitted successfully:', response);
-      // Handle successful submission (e.g., display a confirmation message)
-    }, error => {
-      console.error('Error submitting quiz answers:', error);
-      // Handle errors (e.g., display an error message)
-    });
-    this.http.setProblemAnswers(this.test.id,this.problemAnswers).subscribe(response => {
-      console.log('Problem answers submitted successfully:', response);
-      // Handle successful submission (e.g., display a confirmation message)
-    }, error => {
-      console.error('Error submitting problem answers:', error);
-      // Handle errors (e.g., display an error message)
-    });
-  }
+
   Submit() {
     const submissionAnswers: any = {
       quizAnswers: this.quizzesAnswers,
@@ -94,19 +98,8 @@ export class UserTestComponent {
         }
       );
   }
-  ShowProblems() {
-    this.showQuizzes = false;
-    this.showProblems = true;
-  }
+ 
 
-  showNextProblem() {
-    this.currentProblemIndex++;
-    if (this.currentProblemIndex >= this.problems.length) {
-      // All problems completed, show submit button
-      this.showProblems = false;
-      this.showSubmitButton = true;
-    }
-  }
 }
 function shuffle(array: any[]) {
   let currentIndex = array.length;

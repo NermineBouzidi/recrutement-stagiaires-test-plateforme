@@ -12,7 +12,7 @@ const routes: Routes = [
   { path: "", component: TestComponent }, // Make this the default route for '/dashboard/test'
   { path: "add-test", component: AddTestComponent}, 
   { path: "preview", component: TestPreviewComponent}, 
-  {path:"add-problem", component:AddProblemComponent}
+  //{path:"add-problem", component:AddProblemComponent}
 
 
 ];
