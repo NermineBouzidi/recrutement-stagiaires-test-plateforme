@@ -1,0 +1,20 @@
+<div  class="fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen">
+      <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+  
+      <div class="bg-white rounded-lg shadow-xl transform transition-all sm:max-w-lg sm:w-full p-8"> 
+         <div class="text-xl montserrat-700 text-[#1d2736] ">Are you sure? </div>
+  
+          <div class="py-6 text-gray-700 montserrat-semi">
+            <p>The {{message}} {{itemId}} will be <span class="text-red-700" >deleted.</span> This action cannot be undone.</p>
+          </div>
+  
+          <!-- Modal footer -->
+          <div class=" flex justify-end">
+            <button (click)="cancelAction()" class="px-4 py-2 mr-2 text-[#1d2736] bg-white border border-[#1d2736] rounded-lg focus:outline-none sm:mr-4">Cancel</button>
+            <button (click)="confirmAction()" class="px-4 py-2 text-white bg-[#1d2736] rounded-lg hover:bg-red-700 focus:outline-none sm:px-6">Yes,I'm sure</button>
+          </div>
+  
+        </div>
+    </div>
+  </div>

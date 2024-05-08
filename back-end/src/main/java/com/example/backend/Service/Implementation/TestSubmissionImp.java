@@ -8,27 +8,32 @@ import com.example.backend.Repository.*;
 import com.example.backend.Service.TestSubmissionService;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class TestSubmissionImp implements TestSubmissionService {
+    private final String FOLDER_PATH="C:/Users/nermi/Documents/Code/";
+
     @Autowired
     TestSubmissionRepository testSubmissionRepository;
     @Autowired
-    ProblemAnswerRepository problemAnswerRepository;
+    private UserRepository userRepository;
     @Autowired
-    QuizAnswerRepository quizAnswerRepository;
+    private JavaMailSender javaMailSender;
+    @Value("${spring.mail.username}")
+    private String fromEmail;
     @Autowired
-    ProblemRepository problemRepository;
-    @Autowired
-    QuizRepository quizRepository;
+    private ProblemRepository problemRepository;
 
     public void assignTestToUser(Test test, User user) {
         TestSubmission testSubmission = new TestSubmission();
@@ -128,6 +133,11 @@ public class TestSubmissionImp implements TestSubmissionService {
 
         testSubmission.setQuizAnswers(new ArrayList<>(quizAnswers)); // Update list (avoid modification issues)    }
         for (ProblemAnswer answer : problemAnswers) {
+            //String language = "java";
+           // System.out.println(answer.getProblem());
+           // String code = answer.getAnswerText();
+            //Problem problem =
+            //CreateFile(answer);
             answer.setTestSubmission(testSubmission); // Set association
         }
         testSubmission.setTestSubmissionDate(LocalDateTime.now());
@@ -136,12 +146,125 @@ public class TestSubmissionImp implements TestSubmissionService {
         return testSubmissionRepository.save(testSubmission);
     }
 
+
+    public String acceptUser (long id ){
+
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+
+            if (userOptional.isPresent()) {
+                User user =userOptional.get();
+                String email = user.getEmail();
+                TestSubmission testSubmission = testSubmissionRepository.findByUser(user);
+                testSubmission.setStatus("Passed");
+                testSubmissionRepository.save(testSubmission);
+                SimpleMailMessage message = new SimpleMailMessage();
+                String acceptanceMessage = String.format(
+                        "Dear %s %s,%n%n"
+                                + "Congratulations! We are thrilled to inform you that you have successfully passed the technical test%n%n"
+                                + "You are now a part of our internship program. Below are the details to access your account and start taking the tests:%n%n"
+                                + "If you have any questions or need assistance, feel free to contact us at %s .%n%n"
+                                + "We look forward to having you on board!%n%n"
+                                + "Best regards,%n"
+                                + "The Testing Intern Platform Team",
+                        user.getFirstname(), user.getLastName(), email,fromEmail);
+                message.setTo(email);
+                message.setSubject("Application Update: Internship at Testing Intern Platform");
+                message.setText(acceptanceMessage);
+                message.setFrom(fromEmail);
+                javaMailSender.send(message);
+                return "email send successfully";
+            } else {
+                return "User not found with id ";
+
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+    }
+
+    public String rejectUser (long id ){
+
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+
+            if (userOptional.isPresent()) {
+                User user =userOptional.get();
+
+                TestSubmission testSubmission = testSubmissionRepository.findByUser(user);
+                testSubmission.setStatus("Failed");
+                testSubmissionRepository.save(testSubmission);
+                String email = user.getEmail();
+                String rejectionMessage = String.format(
+                        "Dear %s %s,%n%n"
+                                + "Thank you Thank you for participating in the technical test at Testing Intern Platform.We appreciate the time and effort you invested in completing the assessment%n%n"
+                                +"After careful evaluation, we regret to inform you that your application has not been selected for further consideration. While your skills and experience are valued, we have decided not to move forward with your application at this time..%n%n"
+                                + "We appreciate your interest in joining our team and encourage you to apply for future opportunities. Your skills and experience are commendable, and we wish you the best in your future endeavors.%n%n"
+                                + "If you have any questions or would like feedback on your application, please feel free to contact us at %s .%n%n"
+                                + "Thank you for your understanding.%n%n"
+                                + "Best regards,%n"
+                                + "The Testing Intern Platform Team",
+                        user.getFirstname(), user.getLastName() ,fromEmail);
+                SimpleMailMessage message = new SimpleMailMessage();
+                message.setTo(email);
+                message.setFrom(fromEmail);
+                message.setSubject("Application Update: Internship at Testing Intern Platform");
+                message.setText(rejectionMessage);
+                javaMailSender.send(message);
+                return "email send successfully";
+            } else {
+                return "User not found with id ";
+
+            }
+        } catch (Exception e){
+            throw new RuntimeException(e);
+        }
+
+    }
+
+    @Override
+    public String CreateFile(ProblemAnswer answer) {
+        String language = answer.getProblem().getLanguage();
+        createFileForLanguage(answer.getAnswerText(),language);
+        return  "suucess";
+
+    }
+
+        private void createFileForLanguage(String code, String language) {
+            String fileExtension;
+            switch (language.toLowerCase()) {
+                case "java":
+                    fileExtension = ".java";
+                    break;
+                case "python":
+                    fileExtension = ".py";
+                    break;
+                case "javascript":
+                    fileExtension = ".js";
+                    break;
+                default:
+                    // Handle unsupported languages or default behavior
+                    System.out.println("Unsupported language: " + language);
+                    return; // Exit the method if language is unsupported
+            }
+            String uniqueId = UUID.randomUUID().toString();
+            String fileName = uniqueId + fileExtension; // Example file name: code.java, code.python, etc.
+
+            try {
+                File file = new File(FOLDER_PATH,fileName);
+                FileWriter writer = new FileWriter(file);
+                writer.write(code);
+                writer.close();
+                System.out.println("File created: " + file.getAbsolutePath());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
     @Override
     public void analyzeProblemAnswer(ProblemAnswer answer) {
         String code= answer.getAnswerText();
         String language =answer.getProblem().getLanguage();
 
     }
-
-
 }

@@ -22,11 +22,10 @@ export class AddProblemComponent {
   ngOnInit() {
     this.problemForm = this.fb.group({
       title: ['', [Validators.required]],
+      difficulty: ['', [Validators.required]],
       language: ['',Validators.required],
       description:  ['',Validators.required],
       category: ['', [Validators.required]],
-      input:  ['',Validators.required],
-      output:  ['',Validators.required],
       duration:  ['',Validators.required ],
       points:  ['',Validators.required]
   });
@@ -44,7 +43,7 @@ export class AddProblemComponent {
           console.log("Response:", response); // Log the entire response for debugging
           if (response.body && response.body.includes("Problem added successfully")) {
             this.toastr.showToas("added succefully")
-  
+            this.router.navigateByUrl("/dashboard/problem-quiz");
             // Redirect to a new page or perform any other actions after successful registration
           } else {
             alert("failed");

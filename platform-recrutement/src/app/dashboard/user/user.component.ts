@@ -1,7 +1,7 @@
 import { DatePipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { User } from 'src/app/models/Users';
+import { User } from 'src/app/shared/models/Users';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AdminService } from '../shared/services/admin.service';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
@@ -56,15 +56,7 @@ export class UserComponent {
   closeDialog() {
     this.isDialogOpen = false;
   }
-  deleteUser(id:any){
-    this.http.deleteUser(id).subscribe(
-      ()=>{
-        alert("test deleted successfully")
-        this.loadUsers();
-      }
-
-    )
-  }
+  
 
   acceptUser(id : any){
     this.http.accept(id).subscribe(

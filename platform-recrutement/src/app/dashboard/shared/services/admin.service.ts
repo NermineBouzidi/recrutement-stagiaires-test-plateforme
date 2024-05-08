@@ -1,9 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { Quiz } from 'src/app/models/Quiz';
-import { Test } from 'src/app/models/Test';
-import { User } from 'src/app/models/Users';
+import { Quiz } from 'src/app/shared/models/Quiz';
+import { Test } from 'src/app/shared/models/Test';
+import { User } from 'src/app/shared/models/Users';
 import { environment } from 'src/environments/environment';
 
 @Injectable({

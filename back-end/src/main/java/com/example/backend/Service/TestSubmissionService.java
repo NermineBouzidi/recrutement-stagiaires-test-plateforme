@@ -16,5 +16,9 @@ public interface TestSubmissionService {
     TestSubmission setAnswers(long id,List<QuizAnswer> quizAnswers,List<ProblemAnswer> problemAnswers);
     void analyzeProblemAnswer(ProblemAnswer answer) ;
 
+    String acceptUser (long id );
+     String rejectUser (long id );
+     String CreateFile (ProblemAnswer answer);
+
 
     }

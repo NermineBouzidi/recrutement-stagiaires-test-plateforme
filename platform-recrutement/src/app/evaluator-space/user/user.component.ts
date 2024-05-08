@@ -2,7 +2,7 @@ import { DatePipe } from '@angular/common';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { AdminService } from 'src/app/dashboard/shared/services/admin.service';
-import { User } from 'src/app/models/Users';
+import { User } from 'src/app/shared/models/Users';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 

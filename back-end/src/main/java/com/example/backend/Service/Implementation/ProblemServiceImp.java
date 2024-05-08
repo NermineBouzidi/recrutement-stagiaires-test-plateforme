@@ -72,12 +72,7 @@ public class ProblemServiceImp implements ProblemService {
         if (problem.getDescription() != null) {
             existingProblem.setDescription(problem.getDescription());
         }
-        if (problem.getInput() != null) {
-            existingProblem.setInput(problem.getInput());
-        }
-        if (problem.getOutput() != null) {
-            existingProblem.setOutput(problem.getOutput());
-        }
+
         if (problem.getPoints() != 0) {
             existingProblem.setPoints(problem.getPoints());
         }

@@ -2,10 +2,10 @@ import { Component } from '@angular/core';
 import { AdminService } from '../../shared/services/admin.service';
 import { SigninComponent } from 'src/app/signin/signin.component';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Test } from 'src/app/models/Test';
+import { Test } from 'src/app/shared/models/Test';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { Quiz } from 'src/app/models/Quiz';
+import { Quiz } from 'src/app/shared/models/Quiz';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 @Component({
   selector: 'app-test',
@@ -33,6 +33,8 @@ export class TestComponent {
   problemForm :FormGroup;
   trueFalseForm :FormGroup;
   multiChoiceForm :FormGroup;
+  isDeleteConfirmationModalOpen = false;
+  selectedTestId :number =null;
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService) {
     for(let i:number=1; i<=100;i++){
       this.quizs.push(i as never);
@@ -364,8 +366,17 @@ loadTest(){
     this.tests = data;
   })
 }
-//  -------------------preview --------------------------------
+//  -------------------confirm delete --------------------------------
 
+openDeleteConfirmationModal(id: number) {
+  this.selectedTestId =id;
+   this.isDeleteConfirmationModalOpen = true;
+ }
+ onCloseModal(){
+   this.isDeleteConfirmationModalOpen = false;
+ 
+ }
 
+ 
 
 }

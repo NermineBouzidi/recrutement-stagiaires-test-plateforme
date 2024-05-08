@@ -72,7 +72,7 @@
                     </svg>
                     </a>
                   </button>
-                  <button (click)="deleteTest(test.id)">
+                  <button (click)="openDeleteConfirmationModal(test.id)">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                       <path fill-rule="evenodd"
                         d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
@@ -83,8 +83,10 @@
               </tr>
             </tbody>
           </table>
-          <pagination-controls (pageChange)="p = $event"></pagination-controls>
-        
+          <div class="flex justify-end">
+            <pagination-controls class="my-4" (pageChange)="p = $event" previousLabel="" nextLabel="">
+            </pagination-controls>
+        </div>        
         </div>
      
       </div>
@@ -139,4 +141,13 @@
         </div>
     </div>
   </div>
-  
+
+  <!------delete confirmation model-->
+  <app-confirmation-modal
+  *ngIf="isDeleteConfirmationModalOpen"
+  [message]="'item'"
+  [itemId]="selectedTestId"
+  (confirm)="deleteTest(selectedTestId)"
+  (cancel)="onCloseModal()">
+</app-confirmation-modal>
+<!--------------------Problem------------------------->

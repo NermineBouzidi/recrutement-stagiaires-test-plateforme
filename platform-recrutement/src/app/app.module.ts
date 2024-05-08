@@ -16,10 +16,11 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NgxMaskDirective, NgxMaskPipe, provideNgxMask } from 'ngx-mask';
 import { CommonModule } from '@angular/common';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
-import { AlertComponent } from './alert/alert.component';
+import { AlertComponent } from './shared/Components/shared/alert/alert.component';
 import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuillModule } from 'ngx-quill';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { ConfirmationModalComponent } from './shared/Components/shared/confirmation-modal/confirmation-modal.component';
 
 @NgModule({
   declarations: [

@@ -7,7 +7,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../shared/services/auth.service';
-import { User } from '../models/Users';
+import { User } from '../shared/models/Users';
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ToastrService } from '../shared/services/toastr.service';
 

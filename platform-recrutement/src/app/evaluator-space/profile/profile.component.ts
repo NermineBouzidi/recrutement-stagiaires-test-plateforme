@@ -2,7 +2,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from 'src/app/dashboard/shared/services/admin.service';
-import { User } from 'src/app/models/Users';
+import { User } from 'src/app/shared/models/Users';
 import { AuthService } from 'src/app/shared/services/auth.service';
 
 @Component({

@@ -118,5 +118,13 @@ export class TestSubmissionComponent {
     }
   );
 }
+
+getColor(choice: any ,userAnswers): string {
+  const matchingAnswer = userAnswers.find(answer => answer.id === choice.id);
+  if (matchingAnswer) {
+    return matchingAnswer.correct ? 'text-green-500 bg-green-50 hover:bg-green-100' : 'text-red-500 bg-red-50 hover:bg-red-100';
+  }
+  return 'white'; // Default color for unselected choices
+}
 }
 

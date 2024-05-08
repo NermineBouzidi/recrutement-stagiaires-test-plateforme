@@ -1,7 +1,7 @@
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { User } from 'src/app/models/Users';
+import { User } from 'src/app/shared/models/Users';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { AdminService } from '../shared/services/admin.service';
 

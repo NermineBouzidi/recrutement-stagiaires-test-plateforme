@@ -4,6 +4,7 @@ import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.LoginResponse;
 import com.example.backend.Entity.*;
 import com.example.backend.Entity.Enum.TestCategory;
+import com.example.backend.Repository.ProblemAnswerRepository;
 import com.example.backend.Repository.TestRepository;
 import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
@@ -49,6 +50,8 @@ public class AuthController {
     private AuthenticationManager authenticationManager;
     @Autowired
     TestSubmissionRepository testSubmissionRepository;
+    @Autowired
+    ProblemAnswerRepository problemAnswerRepository;
 
 
     @PostMapping("/signup")
@@ -61,7 +64,7 @@ public class AuthController {
                                          @RequestParam String specializations,
                                          @RequestPart("file") MultipartFile file) {
 
-        User user = new User(firstname, lastName, email, number, educationLevel, linkedinUrl,specializations);
+        User user = new User(firstname, lastName, email, number, educationLevel, linkedinUrl, specializations);
         String s = userService.signup(user, file);
         if (s.equals("Registration successful")) {
             return ResponseEntity.ok("Registration successful");
@@ -120,6 +123,7 @@ public class AuthController {
         return ResponseEntity.ok(userRepository.findByEmail(jwtUtils.getUsername(token)));
 
     }
+
     @PostMapping("/addMultiple")
     public ResponseEntity<?> addMultipleChoiceQuestion(@RequestBody MultipleChoiceQuestion questionDTO) {
         try {
@@ -129,11 +133,13 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @PostMapping("/truefalse")
     public ResponseEntity<?> addTrueFalse(@RequestBody TrueFalseQuestion questionDTO) {
         TrueFalseQuestion question = quizService.addTrueFlase(questionDTO);
         return ResponseEntity.ok(question);
     }
+
     @PostMapping("/addQuiz")
     public ResponseEntity<String> addTest(@RequestBody Quiz quiz) {
         String s = quizService.AddQuiz(quiz);
@@ -143,35 +149,40 @@ public class AuthController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
 
     }
+
     @PutMapping("/updateTrueFalse/{id}")
-    public ResponseEntity<?> updateTrueFalse(@PathVariable long id,@RequestBody TrueFalseQuestion quiz) {
+    public ResponseEntity<?> updateTrueFalse(@PathVariable long id, @RequestBody TrueFalseQuestion quiz) {
         try {
-            quizService.updateTrueFalse(id,quiz);
+            quizService.updateTrueFalse(id, quiz);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @GetMapping("/getQuiz/{id}")
-    public  ResponseEntity<Quiz> getQuiz(@PathVariable long id){
+    public ResponseEntity<Quiz> getQuiz(@PathVariable long id) {
         return quizService.getQuiz(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
+
     @GetMapping("/getAllQuiz")
     public ResponseEntity<List<Quiz>> getAllQuiz() {
-        List <Quiz> quizzes =quizService.getAllQuiz();
+        List<Quiz> quizzes = quizService.getAllQuiz();
         return new ResponseEntity<>(quizzes, HttpStatus.OK);
     }
+
     @PostMapping("addTest")
     public ResponseEntity<String> createTest(@RequestBody Test test) {
         try {
-            Test savedTest=testService.addTest(test);
-            return ResponseEntity.ok("Test added successfully"+savedTest);
+            Test savedTest = testService.addTest(test);
+            return ResponseEntity.ok("Test added successfully" + savedTest);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
+
     @GetMapping("/getAllTest")
     public ResponseEntity<List<Test>> getAllTests() {
         List<Test> tests = testService.getAllTests();
@@ -187,6 +198,7 @@ public class AuthController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PutMapping("/problemAnswers-points/{id}")
     public ResponseEntity<TestSubmission> updateProblemAnswerPoints(@PathVariable Long id, @RequestBody Map<Long, Integer> updatedPoints) {
         Optional<TestSubmission> testSubmissionOptional = testSubmissionRepository.findById(id);
@@ -214,5 +226,19 @@ public class AuthController {
         return ResponseEntity.ok(testSubmission);
     }
 
+    @PostMapping("/createFiles")
+    public String crete() {
+        ProblemAnswer problemAnswer1= new ProblemAnswer();
+        problemAnswer1.setAnswerText(" hello everyone");
+        return testSubmissionService.CreateFile(problemAnswer1);
+    }
+
+    @PostMapping("/crrer/{id}")
+    public void get(@PathVariable long id){
+        Optional<ProblemAnswer> problemAnswer =problemAnswerRepository.findById(id);
+        ProblemAnswer problemAnswer1 = problemAnswer.get();
+        testSubmissionService.CreateFile(problemAnswer1);
+    }
 
 }
+

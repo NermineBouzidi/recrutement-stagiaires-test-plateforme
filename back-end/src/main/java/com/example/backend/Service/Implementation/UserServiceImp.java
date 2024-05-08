@@ -15,6 +15,7 @@ import jakarta.transaction.Transactional;
 import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -27,6 +28,7 @@ import java.nio.file.Files;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,6 +64,45 @@ public class UserServiceImp implements UserService {
         }
 
     }
+    @Override
+    public String addEvaluator (User user ){
+        if (userRepository.findByEmail(user.getEmail()) != null) {
+            return "user already exists ";
+        }  else {
+            User evaluator = new User();
+            evaluator.setFirstname(user.getFirstname());
+            evaluator.setLastName(user.getLastName());
+            evaluator.setEmail(user.getEmail());
+            evaluator.setNumber(user.getNumber());
+            String generatedPassword = PasswordGenerator.generateRandomPassword();
+            evaluator.setPassword(passwordEncoder.encode(generatedPassword));
+            evaluator.setRole(Role.ROLE_EVALUATOR);
+            userRepository.save(evaluator);
+            String Message = String.format(
+                    "Dear %s %s,%n%n"
+                            + "This email confirms that you have been added as an evaluator to Testing Intern Platform by an administrator.%n%n"
+                            + "Use the following credentials to log in to the application:%n%n"
+                            + "Username: %s %n"
+                            + "Password: %s %n"
+                            + "Best regards,%n"
+                            + "The Testing Intern Platform Team",
+                    user.getFirstname(), user.getLastName(),user.getEmail(),generatedPassword );
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setTo(user.getEmail());
+            message.setFrom(fromEmail);
+            message.setSubject("Welcome to Testing Intern Platform as an Evaluator! ");
+            message.setText(Message);
+            try {
+                javaMailSender.send(message);
+                return "Registration successful. Email sent successfully.";
+            } catch (MailException e) {
+                return "Registration successful, but failed to send email.";
+            }
+
+        }
+    }
+
+    @Override
     public String addUser (User user ){
 
         if (userRepository.findByEmail(user.getEmail())!=null){
@@ -77,8 +118,7 @@ public class UserServiceImp implements UserService {
                     user.getLinkedinUrl(),
                     user.getSpecializations()
             );
-            use.setRole(user.getRole());
-            use.setPassword(passwordEncoder.encode(user.getPassword()));
+            use.setRole(Role.ROLE_EVALUATOR);
             userRepository.save(use);
             return "Registration successful";
         }
@@ -133,7 +173,10 @@ public class UserServiceImp implements UserService {
     }
 
     public String signup (User user ,MultipartFile file ) {
-        String filePath = FOLDER_PATH + file.getOriginalFilename();
+        String randomString = UUID.randomUUID().toString();
+
+        String uniqueFileName = randomString + "_" + file.getOriginalFilename();
+        String filePath = FOLDER_PATH + uniqueFileName;
 
         if (userRepository.findByEmail(user.getEmail()) != null) {
             return "user already exists ";
@@ -333,5 +376,6 @@ public class UserServiceImp implements UserService {
             throw new RuntimeException(e);
         }
     }
+
 
 }

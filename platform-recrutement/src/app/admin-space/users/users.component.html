@@ -1,78 +1,90 @@
 <div class="py-12">
-    <div class="text-2xl montserrat-semi text-gray-800 mt-0">Welcome</div>
-    <div class="text-4xl montserrat-extra text-[#1d2736]  mb-0">Dashboard-Users List</div>
-    <div class="montserrat text-gray-800 mt-0">{{usersNumber}} users found</div>
+  <div class="text-2xl montserrat-semi text-gray-800 mt-0">Welcome</div>
+  <div class="text-4xl montserrat-extra text-[#1d2736]  mb-0">Dashboard-Users List</div>
+  <div class="montserrat text-gray-800 mt-0">{{usersNumber}} users found</div>
 </div>
 <div class="flex items-center justify-center ">
-    <div class="container bg-white p-8">
-        <div class="mb-4 justify-between flex">
-            <input type="text" class="border border-gray-300 rounded-lg p-2" placeholder="Search users..." [(ngModel)]="searchText">
-            <button (click)="openModal()"
-            class="text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center ">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
-              <path fill-rule="evenodd"
-                d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
-                clip-rule="evenodd" />
-            </svg>
+  <div class="container bg-white p-8">
+    <div class="mb-4 justify-between flex">
+      <input type="text" class="border border-gray-300 rounded-lg p-2" placeholder="Search users..."
+      [(ngModel)]="searchText">
+      <select [(ngModel)]="selectedRole" class="border border-gray-300 rounded-lg p-2">
+        <option value="">Tous les rôles</option>
+        <option value="ROLE_EVALUATOR">Évaluateur</option>
+        <option value="ROLE_USER">Candidat</option>
+      </select>
+      <button (click)="openModal()"
+        class="text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-3 py-2 text-center inline-flex items-center ">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-5 h-5">
+          <path fill-rule="evenodd"
+            d="M12 3.75a.75.75 0 0 1 .75.75v6.75h6.75a.75.75 0 0 1 0 1.5h-6.75v6.75a.75.75 0 0 1-1.5 0v-6.75H4.5a.75.75 0 0 1 0-1.5h6.75V4.5a.75.75 0 0 1 .75-.75Z"
+            clip-rule="evenodd" />
+        </svg>
 
-            Add
-          </button>
-          </div>
-        
-          <!-- Filter by role select dropdown -->      
-        <table class="bg-white rounded-lg overflow-hidden w-full">
-            <!-- Table headers -->
-            <thead class="text-[#1d2736]">
-                <!-- Table row -->
-                <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-                    <!-- Table headers -->
-                    <th class="p-3 text-left  "></th>
-                    <th class="p-3 text-left ">Name</th>
-                    <th class="p-3 text-left ">Role</th>
-                    <th class="p-3 text-left ">Mobile</th>
-                    <th class="p-3 text-left ">Email</th>
-                    <th class="p-3 text-left  ">Actions</th>
-                </tr>
-            </thead>
-            <!-- Table body -->
-            <tbody class="flex-1 sm:flex-none">
-                <!-- Table rows -->
-                <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 montserrat-semi"
-                    *ngFor="let user of filteredUsers | paginate : { itemsPerPage: 5, currentPage: p }; let i = index">
-                    <!-- Display user details -->
-                    <td class="initials-circle">{{ getInitials(user.firstname, user.lastName) }}</td>
-                    <td class="  hover:bg-gray-100 p-3">{{ user.firstname }} {{ user.lastName }}</td>
-                    <td class="  hover:bg-gray-100 p-3 truncate">{{ user.role }}</td>
-                    <td class="  hover:bg-gray-100 p-3">{{ user.number }}</td>
-                    <td class="  hover:bg-gray-100 p-3">{{ user.email}}</td>
-                    <td class="  hover:bg-gray-100 p-4 flex justify-center items-center relative">
-                        <!-- User actions -->
-                        <button (click)="openUpdateModal(user)">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
-                            <path d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z" />
-                            <path d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z" />
-                          </svg>
-                        </button>
-                          <button (click)="openDeleteConfirmationModal(user.id)">
-                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
-                            <path d="M2 3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3Z" />
-                            <path fill-rule="evenodd" d="M13 6H3v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6ZM5.72 7.47a.75.75 0 0 1 1.06 0L8 8.69l1.22-1.22a.75.75 0 1 1 1.06 1.06L9.06 9.75l1.22 1.22a.75.75 0 1 1-1.06 1.06L8 10.81l-1.22 1.22a.75.75 0 0 1-1.06-1.06l1.22-1.22-1.22-1.22a.75.75 0 0 1 0-1.06Z" clip-rule="evenodd" />
-                          </svg>
-                        </button>
-                          
-                                                    
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    
-        <!-- Pagination -->
-        <div class="flex justify-end">
-            <pagination-controls class="my-4" (pageChange)="p = $event" previousLabel="" nextLabel="">
-            </pagination-controls>
-        </div>
+        Add
+      </button>
     </div>
-    
+
+    <!-- Filter by role select dropdown -->
+    <table class="bg-white rounded-lg overflow-hidden w-full">
+      <!-- Table headers -->
+      <thead class="text-[#1d2736]">
+        <!-- Table row -->
+        <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+          <!-- Table headers -->
+          <th class="p-3 text-left  "></th>
+          <th class="p-3 text-left ">Name</th>
+          <th class="p-3 text-left ">Role</th>
+          <th class="p-3 text-left ">Mobile</th>
+          <th class="p-3 text-left ">Email</th>
+          <th class="p-3 text-left  ">Actions</th>
+        </tr>
+      </thead>
+      <!-- Table body -->
+      <tbody class="flex-1 sm:flex-none">
+        <!-- Table rows -->
+        <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 montserrat-semi"
+          *ngFor="let user of filteredUsers | paginate : { itemsPerPage: 5, currentPage: p }; let i = index">
+          <!-- Display user details -->
+          <td class="initials-circle">{{ getInitials(user.firstname, user.lastName) }}</td>
+          <td class="  hover:bg-gray-100 p-3">{{ user.firstname }} {{ user.lastName }}</td>
+          <td class="  hover:bg-gray-100 p-3 truncate"> {{ user.role === 'ROLE_EVALUATOR' ? 'Evaluator' : user.role ===
+            'ROLE_USER' ? 'Candidat' : 'Unknown Role' }}
+          </td>
+          <td class="  hover:bg-gray-100 p-3">{{ user.number }}</td>
+          <td class="  hover:bg-gray-100 p-3">{{ user.email}}</td>
+          <td class="  hover:bg-gray-100 p-4 flex justify-center items-center relative">
+            <!-- User actions -->
+            <button (click)="openUpdateModal(user)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                <path
+                  d="M13.488 2.513a1.75 1.75 0 0 0-2.475 0L6.75 6.774a2.75 2.75 0 0 0-.596.892l-.848 2.047a.75.75 0 0 0 .98.98l2.047-.848a2.75 2.75 0 0 0 .892-.596l4.261-4.262a1.75 1.75 0 0 0 0-2.474Z" />
+                <path
+                  d="M4.75 3.5c-.69 0-1.25.56-1.25 1.25v6.5c0 .69.56 1.25 1.25 1.25h6.5c.69 0 1.25-.56 1.25-1.25V9A.75.75 0 0 1 14 9v2.25A2.75 2.75 0 0 1 11.25 14h-6.5A2.75 2.75 0 0 1 2 11.25v-6.5A2.75 2.75 0 0 1 4.75 2H7a.75.75 0 0 1 0 1.5H4.75Z" />
+              </svg>
+            </button>
+            <button (click)="openDeleteConfirmationModal(user.id)">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 16" fill="currentColor" class="w-4 h-4">
+                <path d="M2 3a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3Z" />
+                <path fill-rule="evenodd"
+                  d="M13 6H3v6a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V6ZM5.72 7.47a.75.75 0 0 1 1.06 0L8 8.69l1.22-1.22a.75.75 0 1 1 1.06 1.06L9.06 9.75l1.22 1.22a.75.75 0 1 1-1.06 1.06L8 10.81l-1.22 1.22a.75.75 0 0 1-1.06-1.06l1.22-1.22-1.22-1.22a.75.75 0 0 1 0-1.06Z"
+                  clip-rule="evenodd" />
+              </svg>
+            </button>
+
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Pagination -->
+    <div class="flex justify-end">
+      <pagination-controls class="my-4" (pageChange)="p = $event" previousLabel="" nextLabel="">
+      </pagination-controls>
+    </div>
+  </div>
+
 </div>
 
   
@@ -282,7 +294,7 @@
   </div>
   
   <!---->
-  <div  class="fixed z-10 inset-0 overflow-y-auto">
+  <div *ngIf="isOpen" class="fixed z-10 inset-0 overflow-y-auto">
     <div class="flex items-center justify-center min-h-screen">
       <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
   
@@ -300,10 +312,10 @@
   
         <!-- Modal body -->
           <!-- User form -->
-          <form [formGroup]="userForm" (submit)="addUser()" class="space-y-4 mt-4">
+          <form [formGroup]="userForm"  class="space-y-4 mt-6">
             <div class="flex flex-col md:flex-row md:space-x-4">
               <div class="flex-1">
-                <label class="block  text-[#1d2736] text-sm montserrat-semi mb-2" for="firstName">First Name
+                <label class="block  text-[#1d2736] text-sm poppins mb-2" for="firstName">First Name
                   <span class="text-red-500">*</span>
                 </label>
                         <input type="text" name="firstname" id="firstname" formControlName="firstname"
@@ -333,7 +345,7 @@
               </div>
             </div>
             <div>
-                <label class="block  text-[#1d2736] text-sm montserrat-semi mb-2" for="email">Email
+                <label class="block  text-[#1d2736] text-sm poppins mb-2" for="email">Email
                   <span class="text-red-500">*</span>
                 </label>
                 <input type="email" name="email" id="email" formControlName="email"
@@ -348,95 +360,30 @@
                       </div>
                     </div>
             </div>
+          
             <div>
-                <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">Password</label>
-                <div class="relative">
-                <input type="password" name="password" id="password" placeholder="••••••••••"
-                formControlName="password"
-                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 " required="">
-                <button type="button" class="absolute inset-y-0 right-0 pr-3 flex items-center"
-             >
-                <svg class="flex-shrink-0 size-3.5 text-gray-400 dark:text-neutral-600" width="24" height="24"
-                  viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                  stroke-linejoin="round">
-                  <path class="hs-password-active:hidden" d="M9.88 9.88a3 3 0 1 0 4.24 4.24" />
-                  <path class="hs-password-active:hidden"
-                    d="M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68" />
-                  <path class="hs-password-active:hidden"
-                    d="M6.61 6.61A13.526 13.526 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61" />
-                  <line class="hs-password-active:hidden" x1="2" x2="22" y1="2" y2="22" />
-                  <path class="hidden hs-password-active:block" d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-                  <circle class="hidden hs-password-active:block" cx="12" cy="12" r="3" />
-                </svg>
-              </button>
-            </div>
-            </div>
-            <div class="flex flex-col md:flex-row md:space-x-4">
-                <div class="flex-1">
-                    <label class="block  text-[#1d2736] text-sm montserrat-semi mb-2" for="number">Phone Number
+                    <label class="block  text-[#1d2736] text-sm poppins mb-2" for="number">Phone Number
                       <span class="text-red-500">*</span>
                     </label>
                     <input type="text" name="number" id="number" formControlName="number"
                       class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
                       placeholder="12 345 678" required="" mask="00 000 000" >
                       <div *ngIf="userForm.controls['number'].touched || userForm.controls['number'].dirty ||isSubmitted">
-                          <div *ngIf="userForm.controls['number'].hasError('required')"
-                            class="mt-2 text-sm text-red-600 "> This field is required</div>
-                          <div *ngIf="userForm.controls['number'].hasError('minlength')"
-                            class="mt-2 text-sm text-red-600 "> Number should contains 8</div>
-            
-                        </div>
-                </div>
-                <div class="flex-1">
-                    <label for="role" class="block mb-2 text-sm font-medium text-gray-900 ">Role</label>
-            
-                    <select name="role" id="role" formControlName="role"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
-                      <option value="ROLE_USER">User</option>
-                      <option value="ROLE_EVALUATOR">Evaluator</option>
-                    </select>
-                    <div *ngIf="userForm.controls['role'].touched || userForm.controls['role'].dirty ||isSubmitted">
-                        <div *ngIf="userForm.controls['role'].hasError('required')"
+                        <div *ngIf="userForm.controls['number'].hasError('required')"
                           class="mt-2 text-sm text-red-600 "> This field is required</div>
-                    </div>
-                </div>
+                        <div *ngIf="userForm.controls['number'].hasError('minlength')"
+                          class="mt-2 text-sm text-red-600 "> Number should contains 8</div>
+                          <div *ngIf="userForm.controls['number'].hasError('maxlength')"
+                          class="mt-2 text-sm text-red-600 "> Number should contains 8</div>
+                      </div>
+              
             </div>
-                <div *ngIf="userForm.get('role').value === 'ROLE_USER'">
-                    <div class="flex flex-col md:flex-row md:space-x-4">
-                        <div class="flex-1">
-                            <label for="educationLevel" class="block mb-2 text-sm font-medium text-gray-900 ">Education Level</label>
-      
-                  <select name="educationLevel" id="educationLevel" formControlName="educationLevel"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
-                  <option>Bac+3</option>
-                    <option>Bac+5</option>
-                  </select>
-                 
-                </div>
-                <div class="flex-1">
-                    <label for="specializations" class="block mb-2 text-sm font-medium text-gray-900 ">Specializations</label>
-      
-                  <select name="specializations" id="specializations" formControlName="specializations"
-                  class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
-                  <option value="WEB_DEVELOPMENT" >Web Development</option>
-                    <option value="MOBILE_DEVELOPMENT">Mobile Development</option>
-                    <option value="DATA_SCIENCE">Data Science</option>
-                  </select>
-                 
-                </div>
-                </div>
-                <div>
-                    <label for="linkedinUrl" class="block mb-2 text-sm font-medium text-gray-900 ">Linkedin Profile</label>
-                    <input type="text" name="linkedinUrl" id="linkedinUrl" formControlName="linkedinUrl"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 "
-                      placeholder="http://www.linkedin.com/in/yourusername" required="">
-                  </div>
-              </div>
+                
 
             <!-- Add more form fields here -->
-            <div class="flex justify-end mt-4">
-              <button type="button" (click)="closeModal()" class="px-4 py-2 mr-2 text-gray-600 bg-white rounded-lg focus:outline-none">Cancel</button>
-              <button type="submit" (click)="addUser()" class="px-4 py-2 text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none">Add User</button>
+            <div class="flex justify-end mt-6">
+              <button (click)="closeModal()" class="px-4 py-2 mr-2 text-[#1d2736] bg-white border border-[#1d2736] rounded-lg focus:outline-none sm:mr-4">Cancel</button>
+              <button (click)="addUser()" class="px-4 py-2 text-white bg-[#1d2736] rounded-lg hover:bg-red-700 focus:outline-none sm:px-6">Add User</button>
             </div>
           </form>
       </div>

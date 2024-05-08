@@ -17,6 +17,7 @@ import { AngularEditorModule } from '@kolkov/angular-editor';
 import { QuillModule } from 'ngx-quill';
 import { TestPreviewComponent } from './tests/test-preview/test-preview.component';
 import { ProblemAndQuizComponent } from './problem-and-quiz/problem-and-quiz.component';
+import { SharedModule } from '../shared/Components/shared/shared.module';
 
 
 @NgModule({
@@ -30,6 +31,7 @@ import { ProblemAndQuizComponent } from './problem-and-quiz/problem-and-quiz.com
     RapportComponent,
     TestPreviewComponent,
     ProblemAndQuizComponent,
+    
   ],
   imports: [
     CommonModule,
@@ -40,7 +42,9 @@ import { ProblemAndQuizComponent } from './problem-and-quiz/problem-and-quiz.com
     AngularEditorModule,
     HttpClientModule,
     QuillModule,
-    DatePipe
+    DatePipe,
+    SharedModule
+    
 
   ],
   providers: [DatePipe]

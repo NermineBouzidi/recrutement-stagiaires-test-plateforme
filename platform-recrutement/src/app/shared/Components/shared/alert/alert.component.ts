@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ToastrService } from '../shared/services/toastr.service';
+import { ToastrService } from '../../../services/toastr.service';
 import { mergeScan } from 'rxjs';
 
 @Component({

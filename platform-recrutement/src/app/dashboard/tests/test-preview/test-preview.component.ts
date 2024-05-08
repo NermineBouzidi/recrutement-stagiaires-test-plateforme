@@ -8,6 +8,7 @@ import { AdminService } from '../../shared/services/admin.service';
   styleUrls: ['./test-preview.component.scss']
 })
 export class TestPreviewComponent {
+  
   quiz: any;
   problem: any;
   isQuiz :boolean=false;

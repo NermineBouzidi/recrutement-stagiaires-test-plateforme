@@ -11,11 +11,13 @@ import { UiTestComponent } from './tests/ui-test/ui-test.component';
 import { UiRapportsComponent } from './rapports/ui-rapports/ui-rapports.component';
 import { ProblemAndQuizComponent } from './problem-and-quiz/problem-and-quiz.component';
 import { AddProblemComponent } from './tests/add-problem/add-problem.component';
+import { AddQuizComponent } from './add-quiz/add-quiz.component';
 
 const routes: Routes = [
    {path:"user",component :UserComponent},
    {path:"problem-quiz" , component:ProblemAndQuizComponent},
    {path:"problem-quiz/add-problem", component:AddProblemComponent},
+   {path:"problem-quiz/add-quiz", component:AddQuizComponent},
 
    {path:"test",component :UiTestComponent,
    loadChildren: () => import('./tests/tests.module').then((m)=> m.TestsModule)

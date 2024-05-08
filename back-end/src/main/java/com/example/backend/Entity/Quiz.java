@@ -17,11 +17,14 @@ import java.util.List;
 public class Quiz  {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    long id ;
-    String title ;
+    private long id ;
+    private String difficulty ;
+    private String title;
     private String question ;
     private Integer duration ;
     private Integer points ;
+    private List<String> category;
+
     public String getQuestionType() {
       return this.getClass().getSimpleName();
 

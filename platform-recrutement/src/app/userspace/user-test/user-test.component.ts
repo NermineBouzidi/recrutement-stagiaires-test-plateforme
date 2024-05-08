@@ -37,6 +37,8 @@ export class UserTestComponent {
     
     this.diasbleBack();
     this.loadTest();
+    this.Submit();
+   
     
   }
   loadTest(){
@@ -50,6 +52,7 @@ export class UserTestComponent {
         ...data.test?.problems.map(problem => ({ ...problem, type: 'problem' }))
       ]);
       console.log(this.exercises)
+      
  })
 
   }
@@ -62,20 +65,28 @@ export class UserTestComponent {
     this.currentExerciseIndex++;
     this.quizzesAnswers.push(value); // Add the form group value to the array
     console.log('Quizzes:', this.quizzesAnswers); // Optional: Log the array
+    if (this.currentExerciseIndex === this.exercises.length) {
+      this.Submit();
+    }
+
   }
   handleProblemGroupValue(value: any) {
     this.currentExerciseIndex++;
 
     this.problemAnswers.push(value); // Add the form group value to the array
     console.log('Problems:', this.problemAnswers); // Optional: Log the array
+    if (this.currentExerciseIndex === this.exercises.length) {
+      this.Submit();
+    }
   }
-  g
+  
   receiveFormGroupValue(formGroupValue: FormGroup) {
     this.currentExerciseIndex++;
 
     // Handle the received form group value here
     console.log('Form Group Value:', formGroupValue);
     // Send the value to the API or perform other actions
+   
   }
  
 
@@ -84,6 +95,7 @@ export class UserTestComponent {
       quizAnswers: this.quizzesAnswers,
       problemAnswers: this.problemAnswers
     };
+    
     this.http.setAnswers(this.test.id,submissionAnswers)
       .subscribe(
         response => {
@@ -97,6 +109,7 @@ export class UserTestComponent {
           // Handle errors (e.g., display an error message)
         }
       );
+    
   }
  
 

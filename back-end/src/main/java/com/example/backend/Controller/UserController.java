@@ -171,6 +171,15 @@ public class UserController {
 
         }
     }
+    @PostMapping("/addEvaluator")
+    public ResponseEntity<?> addEvaluator(@RequestBody User user) {
+        String s = userService.addEvaluator(user);
+        if (s.equals("Registration successful. Email sent successfully.")) {
+            return ResponseEntity.ok("Registration successful. Email sent successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(s);
+        }
+    }
 
     @GetMapping("/user-registrations")
     public ResponseEntity<List<UserRegistrationData>> getUserRegistrations() {

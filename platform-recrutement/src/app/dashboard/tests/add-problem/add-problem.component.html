@@ -34,6 +34,21 @@
                 <div class="flex mb-4">
                     <div class="w-1/2 mr-2">
                         <label class="block text-[#1d2736] montserrat-medium mb-2">
+                            Difficulty<span class="text-red-500">*</span>
+                        </label>
+                        <select name="difficulty" id="difficulty" formControlName="difficulty"
+                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                                <option>Easy</option>
+                                <option>Medium</option>
+                                <option>Hard</option>
+                            </select>
+                          <div *ngIf="problemForm.controls['difficulty'].touched || problemForm.controls['difficulty'].dirty || isSubmitted">
+                            <div *ngIf="problemForm.controls['difficulty'].hasError('required')"
+                                 class="mt-2 text-sm text-red-600 "> This field is required</div>
+                          </div> 
+                    </div>
+                    <div class="w-1/2 ml-2">
+                          <label class="block text-[#1d2736] montserrat-medium mb-2">
                             Language<span class="text-red-500">*</span>
                           </label>
                         <select name="language" id="language" formControlName="language"
@@ -48,22 +63,22 @@
                                  class="mt-2 text-sm text-red-600 "> This field is required</div>
                           </div>
                     </div>
-                    <div class="w-1/2 ml-2">
-                        <label class="block text-[#1d2736] montserrat-medium mb-2">
-                            Category<span class="text-red-500">*</span>
-                          </label>
-                       <select name="language" id="language" formControlName="category" multiple
-                            class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
-                            <option value="WEB_DEVELOPMENT">Web Development</option>
-                            <option value="MOBILE_DEVELOPMENT">Mobile Development</option>
-                            <option value="DATA_SCIENCE">Data Science</option>
-                        </select>
-                        <div *ngIf="problemForm.controls['category'].touched || problemForm.controls['category'].dirty ||isSubmitted">
-                            <div *ngIf="problemForm.controls['category'].hasError('required')"
-                                 class="mt-2 text-sm text-red-600 "> This field is required</div>
-                          </div>
-                    </div>
                 </div>
+                <div class="mb-4 w-1/2">
+                    <label class="block text-[#1d2736] montserrat-medium mb-2">
+                        Category<span class="text-red-500">*</span>
+                      </label>
+                   <select name="language" id="language" formControlName="category" multiple
+                        class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 ">
+                        <option value="WEB_DEVELOPMENT">Web Development</option>
+                        <option value="MOBILE_DEVELOPMENT">Mobile Development</option>
+                        <option value="DATA_SCIENCE">Data Science</option>
+                    </select>
+                    <div *ngIf="problemForm.controls['category'].touched || problemForm.controls['category'].dirty ||isSubmitted">
+                        <div *ngIf="problemForm.controls['category'].hasError('required')"
+                             class="mt-2 text-sm text-red-600 "> This field is required</div>
+                      </div>
+                 </div>
                
                 <div class="flex mb-4">
                     <div class="w-1/2 mr-2">
@@ -104,21 +119,7 @@
                                  class="mt-2 text-sm text-red-600 "> This field is required</div>
                           </div> 
                      </div>
-                    <div class="flex mb-4">
-                        <div class="w-1/2 mr-2">
-                            <label for="questionText" class="block text-[#1d2736] montserrat-medium mb-2">Input</label>
-                            <input type="text" formControlName="input"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                required="">
-                                
-                        </div>
-                        <div class="w-1/2 ml-2">
-                            <label for="questionText" class="block text-[#1d2736] montserrat-medium mb-2">Output</label>
-                            <input type="text" formControlName="output"
-                                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5"
-                                required="">
-                        </div>
-                    </div>
+                    
                     
                    
                     <!-- Submit button -->

@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { User } from 'src/app/models/Users';
+import { User } from 'src/app/shared/models/Users';
 import { UserDTO } from 'src/app/signup/signup.component';
 
 @Injectable({

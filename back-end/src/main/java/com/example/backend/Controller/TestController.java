@@ -189,4 +189,30 @@ public class TestController {
         testSubmission = testSubmissionRepository.save(testSubmission);
         return ResponseEntity.ok(testSubmission);
     }
+
+    @PutMapping("/accept/{id}")
+    public ResponseEntity<Void> accept(@PathVariable long id) {
+        if (id == 0 || id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        String s = testSubmissionService.acceptUser(id);
+        if (s.equals("email send successfully")) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
+
+    @PutMapping("/reject/{id}")
+    public ResponseEntity<Void> reject(@PathVariable long id) {
+        if (id == 0 || id <= 0) {
+            return ResponseEntity.badRequest().build();
+        }
+        String s = testSubmissionService.rejectUser(id);
+        if (s.equals("email send successfully")) {
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
+    }
 }

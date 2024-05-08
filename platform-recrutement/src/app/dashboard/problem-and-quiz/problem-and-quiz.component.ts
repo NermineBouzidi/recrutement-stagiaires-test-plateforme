@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { AdminService } from '../shared/services/admin.service';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
-import { Quiz } from 'src/app/models/Quiz';
+import { Quiz } from 'src/app/shared/models/Quiz';
 
 @Component({
   selector: 'app-problem-and-quiz',
@@ -12,6 +12,7 @@ import { Quiz } from 'src/app/models/Quiz';
   styleUrls: ['./problem-and-quiz.component.scss']
 })
 export class ProblemAndQuizComponent {
+[x: string]: any;
   p:any =0;
   quizs: any[] = [];
   tests: any[] = [];
@@ -23,8 +24,8 @@ export class ProblemAndQuizComponent {
   quiz :Quiz;
   option :any[]=[];
   quizShow :Quiz;
-  selectedQuizId :string = null;
-  selectedProblemId :string = null;
+  selectedQuizId :number = null;
+  selectedProblemId :number = null;
   isDialogOpen: boolean = false;
   isShowDialog :boolean=false;
   quizForm :FormGroup;
@@ -32,6 +33,9 @@ export class ProblemAndQuizComponent {
   trueFalseForm :FormGroup;
   multiChoiceForm :FormGroup;
   isSubmitted: boolean = false;
+  isDeleteConfirmationModalOpen = false;
+
+
 
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService) {
     for(let i:number=1; i<=100;i++){
@@ -235,15 +239,7 @@ addProblem(problemForm){
     
   }
 }
-deleteProblem(id :any){
-  this.http.deleteProblem(id).subscribe(
-    ()=>{
-      this.toastr.showToas("test deleted succefully succefully")
-      this.loadProblems();
-    }
 
-  )
-}
 deleteTest(id :any){
   this.http.deleteTest(id).subscribe(
     ()=>{
@@ -339,16 +335,7 @@ addMulti(multipleChoiceForm){
     
   }
 }
-//----------------------- delete quiz --------------------------
-deleteQuiz(id :any){
-  this.http.deleteQuiz(id).subscribe(
-    ()=>{
-      alert("quiz deleted successfully")
-      this.loadQuiz();
-    }
 
-  )
-}
 //---------------------load problems-------------------------------
 loadProblems(){
   this.isSubmitted = false;
@@ -373,7 +360,46 @@ loadTest(){
   })
 }
 //  -------------------preview --------------------------------
+ 
+/////////confirm delete 
+openDeleteConfirmationModal(id: number) {
+ this.selectedProblemId =id;
+  this.isDeleteConfirmationModalOpen = true;
+}
+onCloseModal(){
+  this.isDeleteConfirmationModalOpen = false;
 
+}
+//------------------delete
+deleteProblem(id :any){
+  this.http.deleteProblem(id).subscribe(
+    ()=>{
+      this.toastr.showToas("test deleted succefully succefully")
+      this.isDeleteConfirmationModalOpen = false;
+      this.loadProblems();
+    }
+
+  )
+}
+//----------------------- delete quiz --------------------------
+deleteQuiz(id :any){
+  this.http.deleteQuiz(id).subscribe(
+    ()=>{
+      alert("quiz deleted successfully")
+      this.loadQuiz();
+    }
+
+  )
+}
+handleDelete(id: number ) {
+  if (this.currentSection === 'problems') {
+    this.deleteProblem(id);
+  } else if (this.currentSection === 'quizzes') {
+    this.deleteQuiz(id);
+  }
+  // Close the modal after handling the delete action
+  this.isDeleteConfirmationModalOpen = false;
+}
 
 
 }

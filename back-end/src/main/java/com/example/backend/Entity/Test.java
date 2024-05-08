@@ -19,7 +19,9 @@ public class Test {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id ;
    // @Enumerated(EnumType.STRING)
+    private String title ;
     private String category;
+    private String createdBy;
     @ManyToMany
     @JoinTable(name = "test_quizzes",
             joinColumns = @JoinColumn(name = "test_id"),
@@ -48,14 +50,20 @@ public class Test {
     }
     public int getTotalDuration() {
         int totalDuration = 0;
+
+        // Add durations of problems (assuming each problem duration is in minutes)
         for (Problem problem : problems) {
             totalDuration += problem.getDuration();
         }
+
+        // Add durations of quizzes (assuming each quiz duration is in seconds, convert to minutes)
         for (Quiz quiz : quizzes) {
-            totalDuration += quiz.getDuration();
+            totalDuration += quiz.getDuration() / 60; // Convert seconds to minutes
         }
+
         return totalDuration;
     }
+
     public String getDifficultyLevel(){
         int totalPoints = getTotalPoints();
         int totalDuration = getTotalDuration();
@@ -69,6 +77,17 @@ public class Test {
             return "Advanced";
         }
     }
+    public int getPassingPoints() {
+        double passingPointsPercentage = (double) passingPercentage / 100.0;
+        return (int) Math.ceil(getTotalPoints() * passingPointsPercentage);
+    }
+    public int getNumberOfQuizzes() {
+        return quizzes.size();
+    }
+    public int getNumberOfProblems() {
+        return problems.size();
+    }
+
 
 
 }

@@ -3,7 +3,7 @@ import { AdminService } from '../shared/services/admin.service';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { HttpErrorResponse } from '@angular/common/http';
-import { User } from 'src/app/models/Users';
+import { User } from 'src/app/shared/models/Users';
 
 @Component({
   selector: 'app-users',
@@ -29,12 +29,7 @@ export class UsersComponent {
       firstname: new FormControl('', [Validators.required ,Validators.pattern(/^[a-zA-Z ]+$/)]),
       lastName: new FormControl('', [Validators.required,Validators.pattern(/^[a-zA-Z ]+$/)]),
       email: new FormControl('', [Validators.required, Validators.email]),
-      linkedinUrl: new FormControl(''),
-      password:new FormControl("",[Validators.required]),
-      role: new FormControl('', [Validators.required ]),
-      number: new FormControl('', [Validators.minLength(8),Validators.maxLength(8)]),
-      educationLevel: new FormControl('' ),
-      specializations: new FormControl(''),
+      number: new FormControl('', [ Validators.required,Validators.minLength(8),Validators.maxLength(8)]),
     });
     for(let i:number=1; i<=100;i++){
       this.data.push(i as never);
@@ -51,6 +46,16 @@ export class UsersComponent {
           this.data=data
           this.usersNumber= this.data.length;
   })
+  }
+    get filteredUsers(): any[] {
+    return this.data.filter(user => {
+      // Check if the search text matches the user's name, role, or email
+      return user.firstname.toLowerCase().includes(this.searchText.toLowerCase()) ||
+             user.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+             user.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
+             user.email.toLowerCase().includes(this.searchText.toLowerCase()) ;
+
+    });
   }
   //------------------delete user
   deleteUser(id:any){
@@ -79,27 +84,21 @@ export class UsersComponent {
         firstname: user.firstname,
         lastName: user.lastName,
         email: user.email,
-        linkedinUrl: user.linkedinUrl,
-        password: '', // Clear password field or set it to null if you don't want to update it
-        role: user.role,
-        number: user.number,
-        educationLevel: user.educationLevel,
-        specializations: user.specializations
     });
     this.isOpen = true;
 }
   //------------add user ------------------
   addUser() {
     this.isSubmitted = true;
-    const user :User=this.userForm.value
    if (this.userForm.valid) {
+    const user :User=this.userForm.value
     const transformedNumber = this.formatNumber(this.userForm.get('number').value);
     const finalUser = { ...user, number: transformedNumber};
-      this.http.createUser(user).subscribe((res: any) => {
-
-          if (  res.body &&  res.body.includes("Registration successful")) {
+      this.http.createEvaluator(finalUser).subscribe((res: any) => {
+          if (  res.body &&  res.body.includes("Registration successful. Email sent successfully.")) {
             this.loadUsers()
             this.closeModal()
+            this.isSubmitted=false;
             this.toast.showToas("added successfull")
             // Redirect to a new page or perform any other actions after successful registration
           } else {
@@ -120,15 +119,7 @@ export class UsersComponent {
       );
     } 
   }
-  get filteredUsers(): any[] {
-    return this.data.filter(user => {
-      // Check if the search text matches the user's name, role, or email
-      return user.firstname.toLowerCase().includes(this.searchText.toLowerCase()) ||
-             user.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-             user.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
-             user.email.toLowerCase().includes(this.searchText.toLowerCase());
-    });
-  }
+
   openModal() {
     this.isOpen = true;
   }

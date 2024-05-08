@@ -16,6 +16,7 @@ export class AddTestComponent {
   quizzes: any[] = [];
   problems: any[] = [];
   selectedCategory: string = '';
+  totalDuration  = 0;
 
 
   
@@ -24,7 +25,8 @@ export class AddTestComponent {
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef,private route: ActivatedRoute){
     this.testForm = this.fb.group({
       category: ['', [Validators.required]],
-      difficultyLevel:[''],
+      title:[''],
+      createdBy:[''],
       passingPercentage: [null,Validators.required],
       quizzes: this.fb.array([]),
       problems: this.fb.array([])
@@ -79,9 +81,13 @@ toggleQuizSelection(event: Event, quiz: any): void {
 
   if (isChecked) {
     this.quizzess.push(this.fb.control(quiz.id));
+    this.totalDuration += Math.floor( quiz.duration /60 );
+
   } else {
     const index = this.quizzess.controls.findIndex((control: FormControl) => control.value === quiz.id);
     this.quizzess.removeAt(index);
+    this.totalDuration -= Math.floor( quiz.duration /60 );
+
   }
   this.cdr.detectChanges();
 
@@ -95,9 +101,13 @@ toggleProblemSelection(event: Event, problem: any): void {
 
   if (isChecked) {
     this.problemss.push(this.fb.control(problem.id));
+    this.totalDuration += problem.duration ;
+
   } else {
     const index = this.problemss.controls.findIndex((control: FormControl) => control.value === problem.id);
     this.problemss.removeAt(index);
+    this.totalDuration -= problem.duration ;
+
   }
 }
 

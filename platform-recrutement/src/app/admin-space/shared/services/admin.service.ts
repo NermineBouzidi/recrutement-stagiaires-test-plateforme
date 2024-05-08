@@ -1,7 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User } from 'src/app/models/Users';
+import { User } from 'src/app/shared/models/Users';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -29,9 +29,8 @@ export class AdminService {
   deleteUser(id: any) {
     return this.http.delete(this.baseURI + `/api/user/deleteUser/${id}`)
   }
-  createUser(user :User){
-    return this.http.post(this.baseURI + `/api/user/addUser`, user,{ observe: 'response' ,responseType: 'text'});
-
+  createEvaluator(user :User){
+    return this.http.post(this.baseURI + `/api/user/addEvaluator`, user,{ observe: 'response' ,responseType: 'text'});
   } 
   getUserRegistrationData(){
     return this.http.get<any[]>(this.baseURI + `/api/user/user-registrations-by-month`);

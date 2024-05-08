@@ -9,7 +9,7 @@ import { AddProblemComponent } from './add-problem/add-problem.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { QuillModule } from 'ngx-quill';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { AddQuizComponent } from './add-quiz/add-quiz.component';
+import { AddQuizComponent } from '../add-quiz/add-quiz.component';
 
 
 @NgModule({

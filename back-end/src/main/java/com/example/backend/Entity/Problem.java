@@ -8,6 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+import java.util.Set;
+
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
@@ -18,10 +21,10 @@ public class Problem {
     private long  id ;
     private String title;
     private String language;
+    private String difficulty ;
     private int duration;
     private String description;
-    private String input;
-    private String output;
     private int points;
+    private List<String> category;
 
 }
