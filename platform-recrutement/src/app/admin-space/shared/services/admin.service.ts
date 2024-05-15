@@ -32,8 +32,8 @@ export class AdminService {
   createEvaluator(user :User){
     return this.http.post(this.baseURI + `/api/user/addEvaluator`, user,{ observe: 'response' ,responseType: 'text'});
   } 
-  getUserRegistrationData(){
-    return this.http.get<any[]>(this.baseURI + `/api/user/user-registrations-by-month`);
+  getUserRegistrationData(year:number){
+    return this.http.get<any[]>(this.baseURI + `/api/dash/user-registrations-by-month/${year}`);
 
   }
   getDashboardCounts(): Observable<DashboardCounts> {

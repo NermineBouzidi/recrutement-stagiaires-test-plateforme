@@ -3,6 +3,7 @@ package com.example.backend.Controller;
 import com.example.backend.DTO.LoginDTO;
 import com.example.backend.DTO.LoginResponse;
 import com.example.backend.Entity.*;
+import com.example.backend.Entity.Enum.Role;
 import com.example.backend.Entity.Enum.TestCategory;
 import com.example.backend.Repository.ProblemAnswerRepository;
 import com.example.backend.Repository.TestRepository;
@@ -23,9 +24,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
@@ -240,5 +244,16 @@ public class AuthController {
         testSubmissionService.CreateFile(problemAnswer1);
     }
 
+    @GetMapping("/year/{y}")
+    public Map<Month, Long> getusers(@PathVariable int y){
+            List<User> userRegistrations = userRepository.findByRole(Role.ROLE_USER);
+            return userRegistrations.stream()
+                    .filter(user -> user.getRegistrationDate().getYear() == y)
+                    .collect(Collectors.groupingBy(
+                            user -> user.getRegistrationDate().getMonth(),
+                            Collectors.counting())
+                    );
+
+    }
 }
 

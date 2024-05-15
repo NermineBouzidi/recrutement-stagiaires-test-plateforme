@@ -23,18 +23,15 @@ public class BackEndApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BackEndApplication.class, args);
 	}
-
-	/*@Bean
+/*	@Bean
 	public CommandLineRunner commandLineRunner() {
 		return args -> {
 			// Create and save an admin user during application startup
-			LocalDateTime februaryRegistrationDate = LocalDateTime.of(2024, Month.JANUARY, 1, 0, 0); // Assuming the registration date is February 1st, 2024
 			User adminUser = new User();
 			adminUser.setFirstname("User");
 			adminUser.setLastName("User");
-			adminUser.setEmail("user132@example.com");
-			adminUser.setRole(Role.ROLE_USER);
-			adminUser.setRegistrationDate(februaryRegistrationDate);
+			adminUser.setEmail("exal12@example.com");
+			adminUser.setRole(Role.ROLE_EVALUATOR);
 			adminUser.setPassword(passwordEncoder.encode("admin"));
 			userRepository.save(adminUser);
 		};

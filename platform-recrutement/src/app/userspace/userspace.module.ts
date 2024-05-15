@@ -9,7 +9,6 @@ import { RouterModule } from '@angular/router';
 import { UserCodeComponent } from './user-code/user-code.component';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 import { UserQuizComponent } from './user-quiz/user-quiz.component';
-import { DurationToTimerPipe } from './shared/services/duration-to-timer.pipe';
 import { TestCompletionComponent } from './test-completion/test-completion.component';
 
 
@@ -19,7 +18,6 @@ import { TestCompletionComponent } from './test-completion/test-completion.compo
     UserTestComponent,
     UserCodeComponent,
     UserQuizComponent,
-    DurationToTimerPipe,
     TestCompletionComponent
   ],
   imports: [

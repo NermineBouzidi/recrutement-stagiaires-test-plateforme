@@ -37,8 +37,7 @@ public class TestController {
     TestSubmissionRepository testSubmissionRepository;
     @Autowired
     UserRepository userRepository;
-    @Autowired
-    TestRepository testRepository;
+
     @GetMapping("/getAllQuiz")
     public ResponseEntity<List<Quiz>> getAllQuiz() {
         List <Quiz> quizzes =quizService.getAllQuiz();
@@ -95,124 +94,17 @@ public class TestController {
             return ResponseEntity.notFound().build();
         }
     }
-    @PostMapping("/assign-test")
-    public ResponseEntity<String> assignTest(@RequestBody Map<String, Long> requestBody) {
-        Long testId = requestBody.get("testId");
-        Long userId = requestBody.get("userId");
 
-        if (testId != null && userId != null) {
-            // Fetch the Test and User objects from their respective repositories
-            Test test = testRepository.findById(testId).orElse(null);
-            User user = userRepository.findById(userId).orElse(null);
 
-            if (test != null && user != null) {
-                // Assign the test to the user
-                testSubmissionService.assignTestToUser(test, user);
-                return ResponseEntity.ok("Test assigned successfully.");
-            } else {
-                return ResponseEntity.badRequest().body("Invalid test or user ID.");
-            }
-        } else {
-            return ResponseEntity.badRequest().body("Missing testId or userId in the request.");
-        }
-    }
-    @PostMapping("/assignTest/{userId}")
-    public ResponseEntity<String> assignTest(@PathVariable long userId) {
-        if (userId <= 0) {
-            return ResponseEntity.badRequest().body("Invalid user ID.");
-        }
 
-        User user = userRepository.findById(userId).orElse(null);
 
-        if (user == null) {
-            return ResponseEntity.badRequest().body("User not found with ID: " + userId);
-        }
-
-        Test test = testService.findRandomTestByCategory(user.getSpecializations());
-
-        if (test != null) {
-            testSubmissionService.assignTestToUser(test, user);
-            return ResponseEntity.ok("Test assigned successfully.");
-        } else {
-            return ResponseEntity.badRequest().body("No test available for user's specialization.");
-        }
-    }
-
-    @GetMapping("/getAllTestSubmission")
-    public ResponseEntity<List<TestSubmission>> getAllTestSubmissions() {
-        List<TestSubmission>testSubmissions = testSubmissionRepository.findAll();
-        return new ResponseEntity<>(testSubmissions, HttpStatus.OK);
-    }
-    @GetMapping("/getAnswers/{testSubmissionId}")
-    public ResponseEntity<?> getAnswersByTestSubmission(@PathVariable Long testSubmissionId) {
-        TestSubmission testSubmission = testSubmissionRepository.findById(testSubmissionId)
-                .orElseThrow(() -> new IllegalArgumentException("TestSubmission not found with id: " + testSubmissionId));
-
-        List<ProblemAnswer> problemAnswers = testSubmission.getProblemAnswers();
-        List<QuizAnswer> quizAnswers = testSubmission.getQuizAnswers();
-
-        Map<String, Object> response = new HashMap<>();
-        response.put("problemAnswers", problemAnswers);
-        response.put("quizAnswers", quizAnswers);
-
-        return new ResponseEntity<>(response, HttpStatus.OK);
-    }
     @PutMapping("/set-points/{id}")
     public ResponseEntity<TestSubmission> setPoints(@PathVariable Long id, @RequestBody List<ProblemAnswer> problemAnswers) {
         TestSubmission testSubmission = testSubmissionService.setProblemAnswers(id, problemAnswers);
         return ResponseEntity.ok(testSubmission);
     }
 
-    @PutMapping("/problemAnswers-points/{id}")
-    public ResponseEntity<TestSubmission> updateProblemAnswerPoints(@PathVariable Long id, @RequestBody Map<Long, Integer> updatedPoints) {
-        Optional<TestSubmission> testSubmissionOptional = testSubmissionRepository.findById(id);
-        if (testSubmissionOptional.isEmpty()) {
-            return ResponseEntity.notFound().build();
-        }
 
-        TestSubmission testSubmission = testSubmissionOptional.get();
-        boolean anyUpdates = false; // Flag to track if any updates happened
 
-        for (ProblemAnswer problemAnswer : testSubmission.getProblemAnswers()) {
-            Long problemAnswerId = problemAnswer.getId();
-            Integer newPoints = updatedPoints.get(problemAnswerId);
-            if (newPoints != null) {
-                problemAnswer.setPoints(newPoints);
-                anyUpdates = true; // Update flag if a point is updated
-            }
-        }
 
-        if (!anyUpdates) {
-            return ResponseEntity.noContent().build(); // No updates, return 204 No Content
-        }
-
-        testSubmission = testSubmissionRepository.save(testSubmission);
-        return ResponseEntity.ok(testSubmission);
-    }
-
-    @PutMapping("/accept/{id}")
-    public ResponseEntity<Void> accept(@PathVariable long id) {
-        if (id == 0 || id <= 0) {
-            return ResponseEntity.badRequest().build();
-        }
-        String s = testSubmissionService.acceptUser(id);
-        if (s.equals("email send successfully")) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
-    @PutMapping("/reject/{id}")
-    public ResponseEntity<Void> reject(@PathVariable long id) {
-        if (id == 0 || id <= 0) {
-            return ResponseEntity.badRequest().build();
-        }
-        String s = testSubmissionService.rejectUser(id);
-        if (s.equals("email send successfully")) {
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
 }

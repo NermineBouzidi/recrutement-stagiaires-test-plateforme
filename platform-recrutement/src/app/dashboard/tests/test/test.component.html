@@ -25,10 +25,10 @@
             <thead class="text-[#1d2736]">
               <tr class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
                 <th class="p-3 text-left">Category</th>
-                <th class="p-3 text-left">Difficulty Level</th>
                 <th class="p-3 text-left">Duration</th>
                 <th class="p-3 text-left">Total Points</th>
                 <th class="p-3 text-left">Passing Percentages</th>
+                <th class="p-3 text-left">State</th>
                 <th class="p-3 text-left" width="110px">Actions</th>
               </tr>
             </thead>
@@ -37,9 +37,7 @@
               let test of tests | paginate : { itemsPerPage: 5, currentPage: p }
             ">
                 <td class="border-grey-light border hover:bg-gray-100 p-3">
-                  {{ test.category }}
-                </td>
-                <td class="border-grey-light border hover:bg-gray-100 p-3" >{{test.difficultyLevel}}
+                  {{ test.category ==='WEB_DEVELOPMENT' ? 'web development' :test.category ==='MOBILE_DEVELOPMENT'?'mobile development':test.category ==='DATA_SCIENCE'?' data science' :""}}
                 </td>
                 <td class="border-grey-light border hover:bg-gray-100 p-3">
                   {{ test.totalDuration }}
@@ -50,7 +48,8 @@
                 <td class="border-grey-light border hover:bg-gray-100 p-3">
                   {{ test.passingPercentage }}
                 </td>
-        
+                <td class="border-grey-light border hover:bg-gray-100 p-3" >{{test.status}}
+                </td>
                 <td
                   class="border-grey-light border hover:bg-gray-100 p-3 text-red-400 hover:text-red-600 hover:font-medium cursor-pointer">
                   <button (click)="openDialog(test)">
@@ -62,8 +61,8 @@
                     </svg>
                   </button>
   
-                  <button >
-                    <a [routerLink]="['/dashboard/test/add-test', { test:test.id}]" routerLinkActive="active">
+                  <button [disabled]="test.status==='Active'" class="disabled:text-gray-300 disabled:cursor-not-allowed" >
+                    <a [routerLink]="['/dashboard/test/add-test', { test:test.id}]" routerLinkActive="active" >
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                       <path
                         d="m5.433 13.917 1.262-3.155A4 4 0 0 1 7.58 9.42l6.92-6.918a2.121 2.121 0 0 1 3 3l-6.92 6.918c-.383.383-.84.685-1.343.886l-3.154 1.262a.5.5 0 0 1-.65-.65Z" />
@@ -72,7 +71,7 @@
                     </svg>
                     </a>
                   </button>
-                  <button (click)="openDeleteConfirmationModal(test.id)">
+                  <button (click)="openDeleteConfirmationModal(test.id)" [disabled]="test.status==='Active'" class="disabled:text-gray-300 disabled:cursor-not-allowed">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
                       <path fill-rule="evenodd"
                         d="M10 18a8 8 0 1 0 0-16 8 8 0 0 0 0 16ZM6.75 9.25a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Z"
@@ -150,4 +149,4 @@
   (confirm)="deleteTest(selectedTestId)"
   (cancel)="onCloseModal()">
 </app-confirmation-modal>
-<!--------------------Problem------------------------->
+<!--------------------------------------------->

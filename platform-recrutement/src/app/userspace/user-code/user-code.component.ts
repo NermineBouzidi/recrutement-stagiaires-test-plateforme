@@ -45,7 +45,6 @@ export class UserCodeComponent {
     console.log(this.query);
     this.onLanguageChange();
     this.updateCode();
-    this.loadProblems();
     this.startTimer()
 
   }
@@ -149,15 +148,7 @@ export class UserCodeComponent {
     console.log(this.output);
     
   }
-  loadProblems(){
-    this.http.getAllProblem().subscribe((data:any)=>{
-      this.problems=data;
-      this.problemNumber=data.length;
-      this.selectedLanguage = this.problems[0].language;
-      this.onLanguageChange();
-
-    })
-  }
+  
   nextProblem() {
     if (this.currentProblem < this.problems.length ) {
       this.selectedLanguage = this.problems[this.currentProblem].language;

@@ -54,3 +54,7 @@ body {
 .dropdown-menu-top {
   bottom: 100%; /* Position the menu above the button */
 }
+
+.my-pagination ::ng-deep .ngx-pagination .current {
+  background: #1d2736;
+}

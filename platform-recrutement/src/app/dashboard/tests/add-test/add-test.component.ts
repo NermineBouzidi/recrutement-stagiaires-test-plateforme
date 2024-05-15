@@ -17,6 +17,8 @@ export class AddTestComponent {
   problems: any[] = [];
   selectedCategory: string = '';
   totalDuration  = 0;
+  evaluators: any[]; // Define an array to store evaluator data
+  isPassedDuration : boolean =false;  
 
 
   
@@ -25,8 +27,8 @@ export class AddTestComponent {
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef,private route: ActivatedRoute){
     this.testForm = this.fb.group({
       category: ['', [Validators.required]],
-      title:[''],
-      createdBy:[''],
+      title:['',[Validators.required]],
+      createdBy:['',[Validators.required]],
       passingPercentage: [null,Validators.required],
       quizzes: this.fb.array([]),
       problems: this.fb.array([])
@@ -35,7 +37,10 @@ export class AddTestComponent {
   this.loadProblem();
   const testId = this.route.snapshot.paramMap.get('test');
   this.getTestById(testId);
+  this.getAllEvaluator();
+ 
   }
+  
  
 
 switchMode(modeName: string) {
@@ -119,8 +124,10 @@ submit(testForm){
 
 addTest(testForm){
   this.isSubmitted = true;
-
-  if(testForm.valid){
+  if (this.totalDuration>120){ 
+    this.isPassedDuration =true
+}
+  if(testForm.valid && !this.isPassedDuration){
     const test= testForm.value;
     const transformedProblems = test.problems.map(problemId => ({ id: problemId }));
     const transformedQuizzes = test.quizzes.map(quizId => ({ id: quizId }));
@@ -169,5 +176,9 @@ getTestById(testId: any) {
 }
 
 
-
+getAllEvaluator(){
+  this.http.getAllEvaluator().subscribe((data: any) => {
+    this.evaluators = data;
+  })
+}
 }

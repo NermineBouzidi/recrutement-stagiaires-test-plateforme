@@ -10,6 +10,7 @@ import com.example.backend.Entity.User;
 import com.example.backend.Repository.TestRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Security.JwtUtils;
+import com.example.backend.Service.EvaluatorService;
 import com.example.backend.Service.TestService;
 import com.example.backend.Service.TestSubmissionService;
 import com.example.backend.Service.UserService;
@@ -23,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -35,6 +37,8 @@ public class UserController {
     @Autowired
     private UserService userService;
     @Autowired
+    private EvaluatorService evaluatorService;
+    @Autowired
     private UserRepository userRepository;
     @Autowired
     TestService testService;
@@ -42,6 +46,7 @@ public class UserController {
     TestRepository testRepository;
     @Autowired
     TestSubmissionService testSubmissionService;
+
     @Autowired
     JwtUtils jwtUtils;
 
@@ -173,7 +178,7 @@ public class UserController {
     }
     @PostMapping("/addEvaluator")
     public ResponseEntity<?> addEvaluator(@RequestBody User user) {
-        String s = userService.addEvaluator(user);
+        String s = evaluatorService.addEvaluator(user);
         if (s.equals("Registration successful. Email sent successfully.")) {
             return ResponseEntity.ok("Registration successful. Email sent successfully.");
         } else {
@@ -201,17 +206,14 @@ public class UserController {
         return ResponseEntity.ok(userRegistrationsData);
     }
 
-    @GetMapping("/user-registrations-by-month")
-    public ResponseEntity<Map<Month, Long>> getUserRegistrationsByMonth() {
-        Map<Month, Long> registrationsByMonth = userRepository.countByMonthOfRegistration(); // Assuming a custom method in UserRepository
-        return ResponseEntity.ok(registrationsByMonth);
-    }
 
-    @GetMapping("/counts")
+
+
+ /*   @GetMapping("/counts")
     public ResponseEntity<DashboardCounts> getDashboardCounts() {
         DashboardCounts counts = userService.getDashboardCounts();
         return ResponseEntity.ok(counts);
-    }
+    }*/
 
     @PostMapping("/assign-test-and-notify")
     public ResponseEntity<String> assignTestAndNotify(@RequestBody Map<String, Long> requestBody) {
@@ -237,6 +239,11 @@ public class UserController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error occurred: " + e.getMessage());
         }
+    }
+
+    @GetMapping("/getAllEvaluator")
+    public List<User> getEvaluator() {
+        return evaluatorService.getAllEvaluator();
     }
 
 

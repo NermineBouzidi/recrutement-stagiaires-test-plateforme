@@ -21,8 +21,8 @@ const routes: Routes = [
   { path: 'login', component: SigninComponent },
   { path: 'register', component: SignupComponent }, 
   {
-    path: 'dashboard',canActivate:[UserGuard],
-   data: { requiredRole: 'ROLE_EVALUATOR' },
+    path: 'dashboard',//canActivate:[UserGuard],
+  // data: { requiredRole: 'ROLE_EVALUATOR' },
     component: UidashboardComponent,
     loadChildren: () => import('./dashboard/dashboard.module').then((m)=> m.DashboardModule)
 
@@ -40,8 +40,8 @@ const routes: Routes = [
     loadChildren: () => import('./evaluator-space/evaluator-space.module').then((m)=> m.EvaluatorSpaceModule)
   },
   {
-    path:'admin-space', //canActivate:[UserGuard],
-    //data: { requiredRole: 'ROLE_ADMIN' },
+    path:'admin-space', canActivate:[UserGuard],
+    data: { requiredRole: 'ROLE_ADMIN' },
     component: AdminLayoutComponent,
     loadChildren: () => import('./admin-space/admin-space.module').then((m)=> m.AdminSpaceModule)
   },

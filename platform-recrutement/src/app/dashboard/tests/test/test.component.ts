@@ -239,6 +239,7 @@ deleteProblem(id :any){
   this.http.deleteProblem(id).subscribe(
     ()=>{
       this.toastr.showToas("test deleted succefully succefully")
+
       this.loadProblems();
     }
 
@@ -248,6 +249,8 @@ deleteTest(id :any){
   this.http.deleteTest(id).subscribe(
     ()=>{
       this.toastr.showToas("test deleted succefully succefully")
+      this.isDeleteConfirmationModalOpen = false;
+
       this.loadTest();
     }
 

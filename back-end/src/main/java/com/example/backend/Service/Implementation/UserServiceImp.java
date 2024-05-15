@@ -38,7 +38,7 @@ public class UserServiceImp implements UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
     @Autowired
-   private JavaMailSender javaMailSender;
+    private JavaMailSender javaMailSender;
     @Autowired
     TestSubmissionRepository testSubmissionRepository;
     @Autowired
@@ -47,7 +47,7 @@ public class UserServiceImp implements UserService {
     @Value("${spring.mail.username}")
     private String fromEmail;
 
-    private final String FOLDER_PATH="C:/Users/nermi/Documents/CVs/";
+    private final String FOLDER_PATH="C:/Users/nermi/Documents/pfe/CVs/";
   //  @Autowired
     //private AuthenticationManager authenticationManager;
 
@@ -64,43 +64,7 @@ public class UserServiceImp implements UserService {
         }
 
     }
-    @Override
-    public String addEvaluator (User user ){
-        if (userRepository.findByEmail(user.getEmail()) != null) {
-            return "user already exists ";
-        }  else {
-            User evaluator = new User();
-            evaluator.setFirstname(user.getFirstname());
-            evaluator.setLastName(user.getLastName());
-            evaluator.setEmail(user.getEmail());
-            evaluator.setNumber(user.getNumber());
-            String generatedPassword = PasswordGenerator.generateRandomPassword();
-            evaluator.setPassword(passwordEncoder.encode(generatedPassword));
-            evaluator.setRole(Role.ROLE_EVALUATOR);
-            userRepository.save(evaluator);
-            String Message = String.format(
-                    "Dear %s %s,%n%n"
-                            + "This email confirms that you have been added as an evaluator to Testing Intern Platform by an administrator.%n%n"
-                            + "Use the following credentials to log in to the application:%n%n"
-                            + "Username: %s %n"
-                            + "Password: %s %n"
-                            + "Best regards,%n"
-                            + "The Testing Intern Platform Team",
-                    user.getFirstname(), user.getLastName(),user.getEmail(),generatedPassword );
-            SimpleMailMessage message = new SimpleMailMessage();
-            message.setTo(user.getEmail());
-            message.setFrom(fromEmail);
-            message.setSubject("Welcome to Testing Intern Platform as an Evaluator! ");
-            message.setText(Message);
-            try {
-                javaMailSender.send(message);
-                return "Registration successful. Email sent successfully.";
-            } catch (MailException e) {
-                return "Registration successful, but failed to send email.";
-            }
 
-        }
-    }
 
     @Override
     public String addUser (User user ){
@@ -320,13 +284,7 @@ public class UserServiceImp implements UserService {
         } else
             throw new IOException("user not found");
     }
-    @Override
-    public DashboardCounts getDashboardCounts() {
-        Long usersCount = userRepository.countByRole(Role.ROLE_USER);
-        Long testsSubmittedCount = testSubmissionRepository.count();
-        Long totalTestsCount = testRepository.count();
-        return new DashboardCounts(usersCount, testsSubmittedCount, totalTestsCount);
-    }
+
     public String assignTestAndNotifyUser(long userId, Test test) {
         try {
             Optional<User> userOptional = userRepository.findById(userId);

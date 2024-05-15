@@ -24,9 +24,7 @@ public interface UserService {
     String rejectUser (long id );
     byte[] getResume (long id) throws IOException;
     public void changePassword(Long userId, String currentPassword, String newPassword, String confirmPassword)throws IOException ;
-    DashboardCounts getDashboardCounts();
     String assignTestAndNotifyUser(long userId, Test test) ;
-     String addEvaluator (User user );
 
 
     }

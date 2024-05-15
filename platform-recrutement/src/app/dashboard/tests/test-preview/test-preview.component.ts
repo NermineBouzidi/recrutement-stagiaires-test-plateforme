@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AdminService } from '../../shared/services/admin.service';
 
@@ -8,30 +8,14 @@ import { AdminService } from '../../shared/services/admin.service';
   styleUrls: ['./test-preview.component.scss']
 })
 export class TestPreviewComponent {
-  
-  quiz: any;
-  problem: any;
-  isQuiz :boolean=false;
-  isProblem :boolean=false;
+  @Input() item: any;
+  @Input() isQuiz: boolean;
+  @Output() cancel: EventEmitter<void> = new EventEmitter<void>();
 
-  constructor(private route: ActivatedRoute,private http: AdminService){
-    const quizId = this.route.snapshot.paramMap.get('quiz');
-    const problemId = this.route.snapshot.paramMap.get('problem');
 
-    this.getQuiz(quizId);
-    this.getProblem(problemId);
-  }
+  constructor() { }
 
-  getQuiz(quizId :any){
-    this.http.getQuizById(quizId).subscribe((res)=>{
-      this.isQuiz=true;
-       this.quiz=res;
-    })
-  }
-  getProblem(problemId :any){
-    this.http.getProblemById(problemId).subscribe((res)=>{
-      this.isProblem=true;
-       this.problem=res;
-    })
+  cancelAction() {
+    this.cancel.emit();
   }
 }

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { timer, takeWhile, tap } from 'rxjs';
 import { AuthService } from 'src/app/shared/services/auth.service';
 import { UserspaceService } from '../shared/services/userspace.service';
-import { DurationToTimerPipe } from '../shared/services/duration-to-timer.pipe';
+import { DurationToTimerPipe } from '../../shared/services/duration-to-timer.pipe';
 import { FormGroup, FormBuilder, Validators, FormArray, FormControl } from '@angular/forms';
 
 @Component({

@@ -35,7 +35,7 @@ export class UserHomeComponent {
       this.fullname = name.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 
     }
-    this.loadTest();
+  this.loadTest();
   }
   loadTest(){
     const token = this.Http.getToken();

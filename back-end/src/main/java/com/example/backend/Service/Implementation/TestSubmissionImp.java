@@ -22,10 +22,12 @@ import java.util.*;
 
 @Service
 public class TestSubmissionImp implements TestSubmissionService {
-    private final String FOLDER_PATH="C:/Users/nermi/Documents/Code/";
+    private final String FOLDER_PATH="C:/Users/nermi/Documents/pfe/Code/";
 
     @Autowired
     TestSubmissionRepository testSubmissionRepository;
+    @Autowired
+    TestRepository testRepository;
     @Autowired
     private UserRepository userRepository;
     @Autowired
@@ -42,6 +44,8 @@ public class TestSubmissionImp implements TestSubmissionService {
         testSubmission.setAcceptedDate(LocalDateTime.now());
         testSubmission.setStatus("Pending");
         // You can set other attributes such as score and isPassed as needed
+        test.setStatus("Active");
+        testRepository.save(test);
         testSubmissionRepository.save(testSubmission);
     }
 
@@ -130,7 +134,6 @@ public class TestSubmissionImp implements TestSubmissionService {
             }
 
         }
-
         testSubmission.setQuizAnswers(new ArrayList<>(quizAnswers)); // Update list (avoid modification issues)    }
         for (ProblemAnswer answer : problemAnswers) {
             //String language = "java";

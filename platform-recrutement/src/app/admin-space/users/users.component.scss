@@ -6,7 +6,7 @@
   .initials-circle {
     width: 35px;
     height: 35px;
-    background-color: rgb(75 85 99);
+    background-color: #4b5563;
     color: rgb(156 163 175);;
     font-size: 14px;
     font-family: sans-serif;
@@ -17,7 +17,10 @@
     border: 1px solid #ccc; /* Thin grey border */
     box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1); /* Little shadow */
   }
-  
+
+  .my-pagination ::ng-deep .ngx-pagination .current {
+    background: #1d2736;
+  }
  
   
  

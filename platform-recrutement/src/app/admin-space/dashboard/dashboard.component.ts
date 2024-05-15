@@ -10,22 +10,31 @@ import { AdminService, DashboardCounts } from '../shared/services/admin.service'
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
+  public userRegistrationChart: any;
+
   registrationsData: any;
   public Chart: any;
-  names: string[];
+  selectedYear: number = new Date().getFullYear(); // Initialize with current year
+  years: number[] = [2024, 2023, 2022]; // Example list of years
   counts: DashboardCounts = { usersCount: 0, testsSubmittedCount: 0, totalTestsCount: 0 };
 
-  constructor( private http :AdminService) {
-    this.loadCounts();
+  constructor(private http: AdminService) {}
 
-  }
   ngOnInit() {
     this.fetchRegistrationsData();
-    this.createChart();
-    this.createCharte();
+    this.loadCounts();
   }
+  //load counts
+  loadCounts(){
+    this.http.getDashboardCounts().subscribe(
+      (data:any) => {
+        this.counts=data;
+      }
+    )
+  }
+
   fetchRegistrationsData() {
-    this.http.getUserRegistrationData().subscribe(
+    this.http.getUserRegistrationData(this.selectedYear).subscribe(
       data => {
         this.registrationsData = data;
         this.createChart();
@@ -35,60 +44,58 @@ export class DashboardComponent {
       }
     );
   }
-  createChart() {
-    const months = Object.keys(this.registrationsData);
-    const counts = Object.values(this.registrationsData);    
-    const ctx = document.getElementById('userRegistrationChart') as HTMLCanvasElement;
-        const userRegistrationChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: months,
-                datasets: [{
-                    label: 'New User Registrations',
-                    data: counts,
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Fill color
-                    borderColor: 'rgba(54, 162, 235, 1)', // Line color
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-  }
-  createCharte() { 
-    const ctx = document.getElementById('lineChart') as HTMLCanvasElement;
-        const userRegistrationChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-              labels : ['Jan', 'Feb', 'Mar', 'Apr', 'May'],
-              datasets: [{
-                    label: 'Line Registrations',
-                    data: [50, 60, 40, 70, 30],
-                    backgroundColor: 'rgba(54, 162, 235, 0.2)', // Fill color
-                    borderColor: 'rgba(54, 162, 235, 1)', // Line color
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
-        });
-  }
 
-  loadCounts(){
-    this.http.getDashboardCounts()
-    .subscribe(counts => 
-      this.counts = counts);
-   }
-      
-    
+  onYearChange(event: any) {
+    this.selectedYear = event.target.value;
+    this.fetchRegistrationsData();
+  }
+  
+
+  createChart() {
+    if (!this.registrationsData) return; // Ensure registrationsData is available
+    const allMonths = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE',
+                     'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+
+    const months = Object.keys(this.registrationsData);
+    const counts = Object.values(this.registrationsData);
+    const monthData = this.registrationsData; // No need to separate keys/values
+
+    // Combine all months with corresponding counts (fill zeros for missing months)
+    const combinedData = allMonths.map(month => monthData[month] || 0);
+
+    console.log("counts", counts,"combined",combinedData);
+    const ctx = document.getElementById('userRegistrationChart') as HTMLCanvasElement;
+  
+    // Destroy existing chart if it exists
+    if (this.userRegistrationChart) {
+      this.userRegistrationChart.destroy();
+    }
+  
+    // Create new chart
+    this.userRegistrationChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels: allMonths,
+        datasets: [{
+          label: 'Candidats Registration',
+          data: combinedData,
+          backgroundColor: 'rgba(54, 162, 235, 0.2)', // Fill color
+          borderColor: 'rgba(54, 162, 235, 1)', // Line color
+          borderWidth: 2
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            ticks: {
+              precision: 0
+            }
+          }
+        }
+      }
+    });
+  }
+  
+ 
 }

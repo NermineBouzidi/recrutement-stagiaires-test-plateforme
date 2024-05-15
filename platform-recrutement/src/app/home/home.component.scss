@@ -1,0 +1,40 @@
+.checkbox-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.checkbox-container input[type="checkbox"] {
+  opacity: 0; /* Hide the actual checkbox */
+  width: 0;
+  height: 0;
+}
+
+.checkbox-container label {
+  position: relative;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.checkbox-container label:hover {
+  border-color: green;
+}
+
+.checkbox-container input[type="checkbox"]:checked + label {
+  border-color: green;
+  background-color: #e0ffe0; /* Light green background on check */
+}
+
+.checkbox-container .checkbox-title {
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.checkbox-container .checkbox-info span {
+  margin-right: 10px;
+}
+
+

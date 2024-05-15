@@ -105,7 +105,7 @@ getUserProfileFromToken(token: string) {
   }
   assignTest(testId: any, userId: any){
     const requestBody = { testId, userId };
-    return this.http.post(this.baseURI + `/api/test/assign-test`, requestBody,{ observe: 'response' ,responseType: 'text'});
+    return this.http.post(this.baseURI + `/api/test-submission/assign-test`, requestBody,{ observe: 'response' ,responseType: 'text'});
   }
   getTestByCategory(category:any){
     return this.http.get<any[]>(this.baseURI + `/api/test/category/${category}`);
@@ -116,21 +116,25 @@ getUserProfileFromToken(token: string) {
 
   }
   getAllRapport(){
-    return this.http.get<any[]>(this.baseURI + `/api/test/getAllTestSubmission`);
+    return this.http.get<any[]>(this.baseURI + `/api/test-submission/getAllTestSubmission`);
   }
   getAllAnswers(testSubmissionId:any){
-    return this.http.get<any[]>(this.baseURI + `/api/test/getAnswers/${testSubmissionId}`);
+    return this.http.get<any[]>(this.baseURI + `/api/test-submission/getAnswers/${testSubmissionId}`);
   }
   setPoints(testSubmissionId:any,updatedPoints: any){
-    return this.http.put(this.baseURI + `/api/test/problemAnswers-points/${testSubmissionId}`, updatedPoints,{ observe: 'response' ,responseType: 'text'});
+    return this.http.put(this.baseURI + `/api/test-submission/problemAnswers-points/${testSubmissionId}`, updatedPoints,{ observe: 'response' ,responseType: 'text'});
 
   }
 
   //After rapport
   acceptCandidat(id:String){
-    return this.http.put(this.baseURI + `/api/test/accept/${id}`,{});
+    return this.http.put(this.baseURI + `/api/test-submission/accept/${id}`,{});
   }
   rejectCandidat(id:String){
-    return this.http.put(this.baseURI + `/api/test/reject/${id}`,{});
+    return this.http.put(this.baseURI + `/api/test-submission/reject/${id}`,{});
+  }
+
+  getAllEvaluator() {
+    return this.http.get<any[]>(this.baseURI + `/api/user/getAllEvaluator`);
   }
 }

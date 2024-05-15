@@ -16,12 +16,14 @@ export class UsersComponent {
   usersNumber:number ;
   data: any[] = [];
   searchText: string = ''; // Property to store the search text
-  selectedRole: string = '';
+  selectedRole: string = 'ALL';
   userForm: FormGroup;
   isSubmitted: boolean = false;
   userExist: boolean = false;
-  selectedUserId: number;
+  selectedUser: User;
   isDeleteConfirmationModalOpen = false;
+  user :User;
+  isViewModelOpen :boolean=false;
 
 
   constructor (private http: AdminService,  private toast :ToastrService, private fb: FormBuilder,){
@@ -35,10 +37,12 @@ export class UsersComponent {
       this.data.push(i as never);
     }
     this.loadUsers();
+    console.log(this.selectedRole)
   }
   getInitials(firstName: String, lastName: String): string {
     return `${firstName.charAt(0).toLowerCase()}${lastName.charAt(0).toLowerCase()}`;
   }
+  
   // ------------load users---------------
   loadUsers(){
     this.http.getAllUsers().subscribe(
@@ -47,16 +51,23 @@ export class UsersComponent {
           this.usersNumber= this.data.length;
   })
   }
+  
     get filteredUsers(): any[] {
-    return this.data.filter(user => {
-      // Check if the search text matches the user's name, role, or email
-      return user.firstname.toLowerCase().includes(this.searchText.toLowerCase()) ||
-             user.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
-             user.role.toLowerCase().includes(this.searchText.toLowerCase()) ||
-             user.email.toLowerCase().includes(this.searchText.toLowerCase()) ;
+  return this.data.filter(user => {
+    // Combine search text and role filtering with logical AND
+    const searchTermMatch =
+      user.firstname.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      user.lastName.toLowerCase().includes(this.searchText.toLowerCase()) ||
+      user.email.toLowerCase().includes(this.searchText.toLowerCase());
 
-    });
-  }
+    // Apply role filter only if selectedRole has a value
+    const roleMatch = this.selectedRole === 'ALL' || user.role.toLowerCase() === this.selectedRole.toLowerCase();
+
+    // Return users matching both search and role (if applicable)
+    return searchTermMatch && roleMatch;
+  });
+}
+
   //------------------delete user
   deleteUser(id:any){
     this.http.deleteUser(id).subscribe(
@@ -67,10 +78,11 @@ export class UsersComponent {
 
     )
   }
-  openDeleteConfirmationModal(userId: number) {
-    this.selectedUserId = userId;
+  openDeleteConfirmationModal(user) {
+    this.selectedUser = user;
     this.isDeleteConfirmationModalOpen = true;
   }
+ 
 
   // Function to close the delete confirmation modal
   onCloseModal() {
@@ -78,16 +90,23 @@ export class UsersComponent {
     this.loadUsers();
   }
   
-  openUpdateModal(user: User) {
-    // Populate the form fields with the user's data
-    this.userForm.patchValue({
-        firstname: user.firstname,
-        lastName: user.lastName,
-        email: user.email,
-    });
-    this.isOpen = true;
-}
+  openViewModel(user){
+    this.user=user;
+    this.isViewModelOpen =true;
+  }
+  onCloseViewModel(){
+    this.isViewModelOpen=false;
+  }
   //------------add user ------------------
+  formatNumber(input: string): string {
+    const numericValue = input.replace(/\D/g, '');
+    if (numericValue.length > 0) {
+      const formattedValue = numericValue.match(/(\d{1,2})(\d{1,3})(\d{1,3})/);
+      return formattedValue.slice(1).join(' ');
+    } else {
+      return '';
+    }
+  }
   addUser() {
     this.isSubmitted = true;
    if (this.userForm.valid) {
@@ -129,13 +148,5 @@ export class UsersComponent {
     this.isOpen = false;
 
   }
-  formatNumber(input: string): string {
-    const numericValue = input.replace(/\D/g, '');
-    if (numericValue.length > 0) {
-      const formattedValue = numericValue.match(/(\d{1,2})(\d{1,3})(\d{1,3})/);
-      return formattedValue.slice(1).join(' ');
-    } else {
-      return '';
-    }
-  }
+ 
 }

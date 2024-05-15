@@ -31,6 +31,7 @@ public class TestServiceImpl implements TestService {
         if (test.getPassingPercentage() <= 0 ) {
         throw new IllegalArgumentException("Passing Percentage must be positive");
         }
+        test.setStatus("Inactive");
         List<Quiz> existingQuizzes = quizRepository.findAllById(test.getQuizzes().stream().map(Quiz::getId).collect(Collectors.toList()));
         test.setQuizzes(existingQuizzes);
         return testRepository.save(test);

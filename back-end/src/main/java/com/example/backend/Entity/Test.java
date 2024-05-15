@@ -22,6 +22,8 @@ public class Test {
     private String title ;
     private String category;
     private String createdBy;
+    private String status;
+
     @ManyToMany
     @JoinTable(name = "test_quizzes",
             joinColumns = @JoinColumn(name = "test_id"),

@@ -10,6 +10,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { QuillModule } from 'ngx-quill';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { AddQuizComponent } from '../add-quiz/add-quiz.component';
+import { DurationToTimerPipe } from 'src/app/shared/services/duration-to-timer.pipe';
 
 
 @NgModule({
@@ -18,6 +19,9 @@ import { AddQuizComponent } from '../add-quiz/add-quiz.component';
     UiTestComponent,
     AddProblemComponent,
     AddQuizComponent,
+    DurationToTimerPipe
+    
+    
   ],
   imports: [
     CommonModule,
@@ -27,7 +31,8 @@ import { AddQuizComponent } from '../add-quiz/add-quiz.component';
     FormsModule,
     NgMultiSelectDropDownModule,
     QuillModule,
-    NgSelectModule
+    NgSelectModule,
+    
     
   ]
 })

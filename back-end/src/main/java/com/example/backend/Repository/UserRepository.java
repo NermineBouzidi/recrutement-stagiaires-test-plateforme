@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.Month;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -16,11 +17,13 @@ public interface UserRepository extends JpaRepository <User , Long> {
 
 
     List<User> findByRole(Role role);
+    //List<User> findByRegistrationDate();
 
     // Count user registrations by month
     default Map<Month, Long> countByMonthOfRegistration() {
         // Fetch user registrations from the database
         List<User> userRegistrations = findByRole(Role.ROLE_USER);
+
 
         // Group user registrations by month and count registrations for each month
 

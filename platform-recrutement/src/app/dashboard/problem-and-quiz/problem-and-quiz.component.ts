@@ -34,7 +34,9 @@ export class ProblemAndQuizComponent {
   multiChoiceForm :FormGroup;
   isSubmitted: boolean = false;
   isDeleteConfirmationModalOpen = false;
-
+  isPreviewOpen:boolean=false;
+  selectedItem:any;
+  isQuiz:boolean;
 
 
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService) {
@@ -401,5 +403,16 @@ handleDelete(id: number ) {
   this.isDeleteConfirmationModalOpen = false;
 }
 
+openPreview(item:any,isQuiz:boolean){
+  this.isPreviewOpen=true;
+  this.selectedItem=item;
+  this.isQuiz=isQuiz;
+
+  console.log(this.isPreviewOpen,this.selectedItem,isQuiz)
+
+}
+closePreview(){
+  this.isPreviewOpen=false;
+}
 
 }

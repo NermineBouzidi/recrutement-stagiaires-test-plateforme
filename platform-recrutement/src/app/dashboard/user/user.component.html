@@ -27,7 +27,8 @@
                         <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.firstname }} {{ user.lastName
                             }}</td>
                         <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ user.email }}</td>
-                        <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.specializations }}</td>
+                        
+                        <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.specializations ==='WEB_DEVELOPMENT' ? 'web development' :user.specializations ==='MOBILE_DEVELOPMENT'?'mobile development':user.specializations ==='DATA_SCIENCE'?' data science' :""}}</td>
                         <td class="border-grey-light border hover:bg-gray-100 p-3">{{ formatDate(user.registrationDate)
                             }}</td>
                         <td class="border-grey-light border hover:bg-gray-100 p-3 ">
@@ -111,9 +112,13 @@
         </div>
           <div class="text-lg montserrat-bold text-[#1d2736] text-center border-b border-gray-200 p-4">User Information</div>
           <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <div class="initials-circle">{{ getInitials( user.firstname , user.lastName) }}</div>
-
-            <h1 class=" poppins-regular">{{ user.firstname }} {{ user.lastName }}</h1>
+            <div class="flex ">
+                <div class="initials-circle">{{ getInitials( user.firstname , user.lastName) }}</div>
+        
+                <div class="flex items-center">
+                  <h1 class="text-[#1d2736] poppins-regular px-8">{{ user.firstname }} {{ user.lastName }}</h1>
+                </div>
+              </div>
 
             <div class="flex items-center space-x-1 text-gray-600">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
