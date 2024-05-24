@@ -12,6 +12,7 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent {
+  
   p:any =0;
   data: any[] = [];
   file :any;
@@ -70,7 +71,7 @@ export class UserComponent {
   rejectUser(id : any){
     this.http.reject(id).subscribe(
       ()=>{
-        alert("email send suuccesssfully")
+        this.toast.showToas("email send successfully");
         this.loadUsers();
 
       }
@@ -112,6 +113,19 @@ assignTest(testId:any, userId:any){
   this.http.assignTest(testId,userId).subscribe((response) => {
     console.log('Test assigned successfully:', response);
     this.toast.showToas("test assigned successfully");
+    
+    // Handle success (e.g., trigger a notification or update UI)
+  },
+  (error: HttpErrorResponse) => {
+    console.error('Error assigning test:', error);
+    // Handle errors (e.g., display error messages)
+  })
+}
+assignTestandAccept(userId:number){
+  this.http.assignTestandAceept(userId).subscribe((response) => {
+    console.log('Test assigned successfully:', response);
+    this.toast.showToas("test assigned successfully");
+    this.loadUsers();
     
     // Handle success (e.g., trigger a notification or update UI)
   },

@@ -46,7 +46,7 @@
                         </div>
                        
                     </div>
-                    <div class="flex items-center justify-between">
+                   <!--- <div class="flex items-center justify-between">
                         <div class="flex items-start">
                             <div class="flex items-center h-5">
                               <input id="remember" aria-describedby="remember" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 " required=""            (change)="toggleRememberMe()">
@@ -57,7 +57,7 @@
                             </div>
                         </div>
                         <a href="#" class="text-sm font-medium text-[#d97a07] hover:underline ">Forgot password?</a>
-                    </div>
+                    </div>-->
                     <div *ngIf="errorMessage" class="mt-2 text-sm text-red-600 ">{{ errorMessage }}</div>
 
                     <button type="submit" class="w-full text-white border bg-[#1d2736] hover:bg-transparent hover:text-[#1d2736] hover:border-[#1d2736] focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center ">Sign in</button>

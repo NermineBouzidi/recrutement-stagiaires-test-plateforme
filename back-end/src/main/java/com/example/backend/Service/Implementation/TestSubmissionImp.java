@@ -10,8 +10,11 @@ import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.crossstore.ChangeSetPersister;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -31,6 +34,8 @@ public class TestSubmissionImp implements TestSubmissionService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
     private JavaMailSender javaMailSender;
     @Value("${spring.mail.username}")
     private String fromEmail;
@@ -43,6 +48,7 @@ public class TestSubmissionImp implements TestSubmissionService {
         testSubmission.setUser(user);
         testSubmission.setAcceptedDate(LocalDateTime.now());
         testSubmission.setStatus("Pending");
+        testSubmission.setEvaluated(false);
         // You can set other attributes such as score and isPassed as needed
         test.setStatus("Active");
         testRepository.save(test);
@@ -159,7 +165,7 @@ public class TestSubmissionImp implements TestSubmissionService {
                 User user =userOptional.get();
                 String email = user.getEmail();
                 TestSubmission testSubmission = testSubmissionRepository.findByUser(user);
-                testSubmission.setStatus("Passed");
+                testSubmission.setStatus("Passed and Notified ");
                 testSubmissionRepository.save(testSubmission);
                 SimpleMailMessage message = new SimpleMailMessage();
                 String acceptanceMessage = String.format(
@@ -195,7 +201,7 @@ public class TestSubmissionImp implements TestSubmissionService {
                 User user =userOptional.get();
 
                 TestSubmission testSubmission = testSubmissionRepository.findByUser(user);
-                testSubmission.setStatus("Failed");
+                testSubmission.setStatus("Failed and Notified");
                 testSubmissionRepository.save(testSubmission);
                 String email = user.getEmail();
                 String rejectionMessage = String.format(
@@ -270,4 +276,70 @@ public class TestSubmissionImp implements TestSubmissionService {
         String language =answer.getProblem().getLanguage();
 
     }
+    @Override
+    public ResponseEntity<String> acceptAndAssign(Long userId) {
+        if (userId == null) {
+            return ResponseEntity.badRequest().body("Missing userId in the request.");
+        }
+
+        Optional<User> userOptional = userRepository.findById(userId);
+        if (!userOptional.isPresent()) {
+            return ResponseEntity.badRequest().body("Invalid user ID.");
+        }
+        User user = userOptional.get();
+
+        List<Test> availableTests = testRepository.findByCategory(user.getSpecializations());
+        if (availableTests.isEmpty()) {
+            return ResponseEntity.badRequest().body("No available tests to assign.");
+        }
+
+        Test randomTest = availableTests.get(new Random().nextInt(availableTests.size()));
+        assignTestToUser(randomTest, user);
+
+        boolean emailSent = acceptUserInscription(userId);
+        if (emailSent) {
+            return ResponseEntity.ok("User accepted, password sent by email, and test assigned successfully.");
+        } else {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Test assigned, but failed to send email.");
+        }
+    }
+
+    public boolean acceptUserInscription(long id) {
+        try {
+            Optional<User> userOptional = userRepository.findById(id);
+            if (userOptional.isPresent()) {
+                User user = userOptional.get();
+                String email = user.getEmail();
+                String generatedPassword = PasswordGenerator.generateRandomPassword();
+                user.setPassword(passwordEncoder.encode(generatedPassword));
+                user.setStatus("Accepted");
+                userRepository.save(user);
+
+                SimpleMailMessage message = new SimpleMailMessage();
+                String acceptanceMessage = String.format(
+                        "Dear %s %s,%n%n" +
+                                "Congratulations! We are pleased to inform you that your application at Testing Intern Platform has been accepted.%n%n" +
+                                "You are now a part of our internship program. Below are the details to access your account and start taking the tests:%n%n" +
+                                "Username: %s %n" +
+                                "Password: %s%n" +
+                                "Please log in to our platform using the provided credentials and follow the instructions to begin your journey with us.%n%n" +
+                                "If you have any questions or need assistance, feel free to contact us at %s.%n%n" +
+                                "We look forward to having you on board!%n%n" +
+                                "Best regards,%n" +
+                                "The Testing Intern Platform Team",
+                        user.getFirstname(), user.getLastName(), email, generatedPassword, fromEmail);
+                message.setTo(email);
+                message.setSubject("Application Update: Internship at Testing Intern Platform");
+                message.setText(acceptanceMessage);
+                message.setFrom(fromEmail);
+                javaMailSender.send(message);
+                return true;  // Email sent successfully
+            } else {
+                return false;  // User not found
+            }
+        } catch (Exception e) {
+            return false;  // Exception occurred while sending email
+        }
+    }
+
 }

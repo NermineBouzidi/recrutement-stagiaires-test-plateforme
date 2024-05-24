@@ -124,7 +124,9 @@ export class UserQuizComponent {
   removeMultipleChoiceAnswer(index: number) {
     this.multipleChoiceAnswersArray.removeAt(index);
   }
-  
+  isChoiceSelected(choiceId: number): boolean {
+    return this.multipleChoiceAnswersArray.value.includes(choiceId);
+  }
   emitFormGroupValue() {
     const questionType = this.quiz.questionType;
     const quiz= this.quizAnswerForm.value;
@@ -135,6 +137,7 @@ export class UserQuizComponent {
     const correctChoices = this.quiz.choices?.filter((choice: any) => choice.correct)?.map((choice: any) => choice.id) || [];
     
     if (questionType === 'MultipleChoiceQuestion') {
+      console.log("selected choices",quiz.multipleChoiceAnswers,"correct choices",correctChoices)
     if (this.doArraysHaveSameElements(quiz.multipleChoiceAnswers,correctChoices)){
         transformedPoints = this.quiz.points; // Full points for correct True/False
 

@@ -34,7 +34,7 @@ export class TestComponent {
   trueFalseForm :FormGroup;
   multiChoiceForm :FormGroup;
   isDeleteConfirmationModalOpen = false;
-  selectedTestId :number =null;
+  selectedTest :any =null;
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService) {
     for(let i:number=1; i<=100;i++){
       this.quizs.push(i as never);
@@ -371,8 +371,8 @@ loadTest(){
 }
 //  -------------------confirm delete --------------------------------
 
-openDeleteConfirmationModal(id: number) {
-  this.selectedTestId =id;
+openDeleteConfirmationModal(test:any) {
+  this.selectedTest =test;
    this.isDeleteConfirmationModalOpen = true;
  }
  onCloseModal(){

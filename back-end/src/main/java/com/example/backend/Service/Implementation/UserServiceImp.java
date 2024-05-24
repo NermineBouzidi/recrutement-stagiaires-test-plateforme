@@ -90,6 +90,13 @@ public class UserServiceImp implements UserService {
 
     public String deleteUser (long id){
         if (userRepository.existsById(id)) {
+            User user = userRepository.findById(id)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found with id: " + id));
+            if (user.getRole().equals(Role.ROLE_USER)){
+                TestSubmission testSubmission = testSubmissionRepository.findByUser(user);
+                testSubmissionRepository.delete(testSubmission);
+
+            }
             userRepository.deleteById(id);
             return "succes";
         } else {

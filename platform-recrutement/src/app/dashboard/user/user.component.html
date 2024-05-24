@@ -18,7 +18,6 @@
                         <th class="p-3 text-left">Registration Date</th>
                         <th class="p-3 text-left">Status</th>
                         <th class="p-3 text-left" width="110px">Actions</th>
-                        <th class="p-3 text-left">Test</th>
                     </tr>
                 </thead>
                 <tbody class="flex-1 sm:flex-none">
@@ -28,7 +27,7 @@
                             }}</td>
                         <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{ user.email }}</td>
                         
-                        <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.specializations ==='WEB_DEVELOPMENT' ? 'web development' :user.specializations ==='MOBILE_DEVELOPMENT'?'mobile development':user.specializations ==='DATA_SCIENCE'?' data science' :""}}</td>
+                        <td class="border-grey-light border hover:bg-gray-100 p-3">{{ user.specializations ==='WEB_DEVELOPMENT' ? 'Web Development' :user.specializations ==='MOBILE_DEVELOPMENT'?'Mobile Development':user.specializations ==='DATA_SCIENCE'?' Data Science' :""}}</td>
                         <td class="border-grey-light border hover:bg-gray-100 p-3">{{ formatDate(user.registrationDate)
                             }}</td>
                         <td class="border-grey-light border hover:bg-gray-100 p-3 ">
@@ -46,43 +45,49 @@
                                 {{ user.status }}
                             </span>
                         </td>
-                        <td
-                            class="border-grey-light border hover:bg-gray-100 p-4 flex justify-center items-center relative">
-                            <button type="button"
-                                class="text-gray-700 hover:text-gray-500 focus:outline-none focus:ring-4 focus:ring-offset-2 focus:ring-blue-500 font-medium rounded-lg text-sm  inline-flex items-center "
-                                [ngClass]="{ 'dropdown-open': isDropDownOpenArray[i] }" (click)="toggleDropdown(i)">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
-                                    class="w-5 h-5">
-                                    <path fill-rule="evenodd"
-                                        d="M8.34 1.804A1 1 0 0 1 9.32 1h1.36a1 1 0 0 1 .98.804l.295 1.473c.497.144.971.342 1.416.587l1.25-.834a1 1 0 0 1 1.262.125l.962.962a1 1 0 0 1 .125 1.262l-.834 1.25c.245.445.443.919.587 1.416l1.473.294a1 1 0 0 1 .804.98v1.361a1 1 0 0 1-.804.98l-1.473.295a6.95 6.95 0 0 1-.587 1.416l.834 1.25a1 1 0 0 1-.125 1.262l-.962.962a1 1 0 0 1-1.262.125l-1.25-.834a6.953 6.953 0 0 1-1.416.587l-.294 1.473a1 1 0 0 1-.98.804H9.32a1 1 0 0 1-.98-.804l-.295-1.473a6.957 6.957 0 0 1-1.416-.587l-1.25.834a1 1 0 0 1-1.262-.125l-.962-.962a1 1 0 0 1-.125-1.262l.834-1.25a6.957 6.957 0 0 1-.587-1.416l-1.473-.294A1 1 0 0 1 1 10.68V9.32a1 1 0 0 1 .804-.98l1.473-.295c.144-.497.342-.971.587-1.416l-.834-1.25a1 1 0 0 1 .125-1.262l.962-.962A1 1 0 0 1 5.38 3.03l1.25.834a6.957 6.957 0 0 1 1.416-.587l.294-1.473ZM13 10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                                        clip-rule="evenodd" />
-                                </svg>
+                       <td class="  hover:bg-gray-100 p-4 flex justify-center items-center relative text-[#4b5563] border-grey-light border">
+                            <!-- User actions -->
+                            <button >
+                                <a (click)="openDialog(user.id)" >
+                              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" class="w-5 h-5">
+                                <path d="M10 12.5a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                                <path fill-rule="evenodd" d="M.664 10.59a1.651 1.651 0 0 1 0-1.186A10.004 10.004 0 0 1 10 3c4.257 0 7.893 2.66 9.336 6.41.147.381.146.804 0 1.186A10.004 10.004 0 0 1 10 17c-4.257 0-7.893-2.66-9.336-6.41ZM14 10a4 4 0 1 1-8 0 4 4 0 0 1 8 0Z" clip-rule="evenodd" />
+                              </svg>
+                                </a>
                             </button>
+            
+                            <button class="text-[#4B5563] hover:text-[#3D3D62]"  >
+                                <a (click)="assignTestandAccept(user.id)" >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  fill="currentColor"
+                                  class="md:w-5 md:h-5 w-4 h-4"
+                                >
+                                  <path
+                                    d="M7.493 18.5c-.425 0-.82-.236-.975-.632A7.48 7.48 0 0 1 6 15.125c0-1.75.599-3.358 1.602-4.634.151-.192.373-.309.6-.397.473-.183.89-.514 1.212-.924a9.042 9.042 0 0 1 2.861-2.4c.723-.384 1.35-.956 1.653-1.715a4.498 4.498 0 0 0 .322-1.672V2.75A.75.75 0 0 1 15 2a2.25 2.25 0 0 1 2.25 2.25c0 1.152-.26 2.243-.723 3.218-.266.558.107 1.282.725 1.282h3.126c1.026 0 1.945.694 2.054 1.715.045.422.068.85.068 1.285a11.95 11.95 0 0 1-2.649 7.521c-.388.482-.987.729-1.605.729H14.23c-.483 0-.964-.078-1.423-.23l-3.114-1.04a4.501 4.501 0 0 0-1.423-.23h-.777ZM2.331 10.727a11.969 11.969 0 0 0-.831 4.398 12 12 0 0 0 .52 3.507C2.28 19.482 3.105 20 3.994 20H4.9c.445 0 .72-.498.523-.898a8.963 8.963 0 0 1-.924-3.977c0-1.708.476-3.305 1.302-4.666.245-.403-.028-.959-.5-.959H4.25c-.832 0-1.612.453-1.918 1.227Z"
+                                  />
+                                </svg>
+                                </a>
+                              </button>
+                              <button class="text-[#4B5563] hover:text-[#3D3D62]"   >
+                                <a (click)="rejectUser(user.id)" >
+                                <svg
+                                  xmlns="http://www.w3.org/2000/svg"
+                                  viewBox="0 0 24 24"
+                                  fill="currentColor"
+                                  class="w-5 h-5"
+                                >
+                                  <path
+                                    d="M15.73 5.5h1.035A7.465 7.465 0 0 1 18 9.625a7.465 7.465 0 0 1-1.235 4.125h-.148c-.806 0-1.534.446-2.031 1.08a9.04 9.04 0 0 1-2.861 2.4c-.723.384-1.35.956-1.653 1.715a4.499 4.499 0 0 0-.322 1.672v.633A.75.75 0 0 1 9 22a2.25 2.25 0 0 1-2.25-2.25c0-1.152.26-2.243.723-3.218.266-.558-.107-1.282-.725-1.282H3.622c-1.026 0-1.945-.694-2.054-1.715A12.137 12.137 0 0 1 1.5 12.25c0-2.848.992-5.464 2.649-7.521C4.537 4.247 5.136 4 5.754 4H9.77a4.5 4.5 0 0 1 1.423.23l3.114 1.04a4.5 4.5 0 0 0 1.423.23ZM21.669 14.023c.536-1.362.831-2.845.831-4.398 0-1.22-.182-2.398-.52-3.507-.26-.85-1.084-1.368-1.973-1.368H19.1c-.445 0-.72.498-.523.898.591 1.2.924 2.55.924 3.977a8.958 8.958 0 0 1-1.302 4.666c-.245.403.028.959.5.959h1.053c.832 0 1.612-.453 1.918-1.227Z"
+                                  />
+                                </svg>
+                                </a>
+                              </button>
+                          </td>
+                  
 
-                            <!-- Dropdown menu -->
-                            <div class="absolute left-0 top-full z-[150] bg-white border border-gray-300 rounded-md shadow-md dropdown-menu"
-                                *ngIf="isDropDownOpenArray[i]">
-                                <ul class="py-1 text-sm text-gray-700">
-                                    <li class="hover:bg-gray-100">
-                                        <a (click)="openDialog(user.id)" class="block px-4 py-2">View</a>
-                                    </li>
-                                    <li class="hover:bg-gray-100">
-                                        <a (click)="acceptUser(user.id)" class="block px-4 py-2">Accept</a>
-                                    </li>
-                                    <li class="hover:bg-gray-100">
-                                        <a (click)="rejectUser(user.id)" class="block px-4 py-2">Reject</a>
-                                    </li>
-                                    
-                                </ul>
-                            </div>
-                        </td>
-
-                        <td class="border-grey-light border hover:bg-gray-100 p-3 relative">
-                            <button
-                                class="px-4 py-1 bg-blue-500 text-white rounded-md shadow-md transition-colors duration-300 ease-in-out disabled:bg-gray-300 disabled:cursor-not-allowed"
-                                (click)="openTest(user.specializations,user.id)"
-                                [disabled]="isButtonDisabled(user.status)">Add</button>
-                        </td>
+                     
 
                     </tr>
                 </tbody>
@@ -262,7 +267,7 @@
     </div>
 </div> -->
 
-<!----------------------------------Test------------------------------------------>
+<!----------------------------------Test-----------------------------------------
 <div *ngIf="isTestOpen" class="w-full min-h-screen fixed top-0 left-0" style="background: rgba(0, 0, 0, 0.5);">
     <div class="flex flex-col items-center min-h-screen justify-center ml-14  px-6 py-12 mx-auto  lg:py-0">
         <div class="w-full bg-white rounded-lg shadow  md:mt-0 sm:max-w-md xl:p-0  ">
@@ -280,7 +285,7 @@
                 <div class="p-6 space-y-4 md:space-y-6 sm:p-8 ">
                     <div *ngFor="let test of tests">
                         <div class="border border-gray-300 rounded-lg p-2 border-l-4  mb-2 hover:border-[#d97a07] ">
-                            <!-- Checkbox -->
+                            <!-- Checkbox --
                             <div class="mb-2 ">
                                 <span class="items-center">
                                     <input type="radio" [value]="test.id" [(ngModel)]="selectedTestId">
@@ -291,13 +296,13 @@
                                     </label>
                                 </span>
                             </div>
-                            <!-- Difficulty level and time in minutes -->
+                            <!-- Difficulty level and time in minutes --
                             <div class="flex justify-end  w-full mr-2">
                                 <div class="flex ">
-                                    <!-- Difficulty level -->
+                                    <!-- Difficulty level --
                                     <span class="text-xs font-semibold  mr-2">Points: {{test.totalPoints}}</span>
                                     <span class="text-xs font-semibold  mr-2">{{test.passingPercentage}}%</span>
-                                    <!-- Time in minutes -->
+                                    <!-- Time in minutes --
                                     <span class="text-xs text-gray-700">Time: {{test.totalDuration}}mins</span>
                                 </div>
                             </div>
@@ -316,4 +321,4 @@
 
         </div>
     </div>
-</div>
+</div> -->

@@ -12,6 +12,8 @@ export class RapportComponent {
   rapportsNumber :number;
   p:any =0;
   data: any[] = [];
+  selectedTestStatus: string = 'ALL';
+
   constructor (private http: AdminService, private datePipe: DatePipe, private toast :ToastrService ){}
 
   ngOnInit(){
@@ -25,6 +27,19 @@ export class RapportComponent {
          this.rapportsNumber= this.data.length;
  })
  } 
+ get filteredRapports(): any[] {
+  return this.data.filter(user => {
+    // Combine search text and role filtering with logical AND
+    console.log(user.evaluated)
+    const matchesTestStatus = this.selectedTestStatus === 'ALL' || 
+      (this.selectedTestStatus === 'EVALUATED' && user.evaluated) || 
+      (this.selectedTestStatus === 'PENDING' && !user.evaluated);
+
+   return matchesTestStatus
+
+  });
+}
+
  formatDate(date: any): string {
   return this.datePipe.transform(date, 'MMMM d, y');
 }

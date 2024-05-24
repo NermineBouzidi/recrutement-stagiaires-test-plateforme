@@ -32,12 +32,24 @@ export class AdminService {
   createEvaluator(user :User){
     return this.http.post(this.baseURI + `/api/user/addEvaluator`, user,{ observe: 'response' ,responseType: 'text'});
   } 
-  getUserRegistrationData(year:number){
+  getUserRegistrationByMonth(year:number){
     return this.http.get<any[]>(this.baseURI + `/api/dash/user-registrations-by-month/${year}`);
 
   }
+  getUserRegistrationByCategory(year:number){
+    return this.http.get<any[]>(this.baseURI + `/api/dash/user-registrations-by-category/${year}`);
+
+  }
+  getUserStatusBycategory(year:number){
+    return this.http.get<any[]>(this.baseURI + `/api/dash/user-status-by-category/${year}`);
+
+  }
   getDashboardCounts(): Observable<DashboardCounts> {
-    return this.http.get<DashboardCounts>(this.baseURI +`/api/user/counts`);
+    return this.http.get<DashboardCounts>(this.baseURI +`/api/dash/counts`);
+  }
+  getTestCreationByMonth(year:number){
+    return this.http.get<any[]>(this.baseURI + `/api/dash/tests-by-month/${year}`);
+
   }
 }
 export interface DashboardCounts {

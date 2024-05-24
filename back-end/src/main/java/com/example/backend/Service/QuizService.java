@@ -19,5 +19,6 @@ public interface QuizService {
 
     String updateQuiz(long id,Quiz quiz);
     Optional<Quiz> getQuiz(long id);
+     String updateMultiChoice(long id, MultipleChoiceQuestion quiz) ;
 
 }

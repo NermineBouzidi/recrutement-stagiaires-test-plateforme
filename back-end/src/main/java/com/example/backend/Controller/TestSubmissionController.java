@@ -12,6 +12,7 @@ import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
@@ -99,7 +100,12 @@ public class TestSubmissionController {
         if (!anyUpdates) {
             return ResponseEntity.noContent().build(); // No updates, return 204 No Content
         }
-
+        testSubmission.setEvaluated(true);
+        if (testSubmission.getScore()== testSubmission.getTest().getPassingPoints()){
+            testSubmission.setStatus("Passed");
+        } else {
+            testSubmission.setStatus("Failed");
+        }
         testSubmission = testSubmissionRepository.save(testSubmission);
         return ResponseEntity.ok(testSubmission);
     }
@@ -148,7 +154,11 @@ public class TestSubmissionController {
     }
 
 
+    @PostMapping("/accept-and-assign-test/{userId}")
+    public ResponseEntity<String> acceptAndAssignTest(@PathVariable Long userId) {
+        return testSubmissionService.acceptAndAssign(userId);
 
+    }
 
 
 

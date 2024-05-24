@@ -9,6 +9,7 @@ import com.example.backend.Service.TestService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -32,6 +33,8 @@ public class TestServiceImpl implements TestService {
         throw new IllegalArgumentException("Passing Percentage must be positive");
         }
         test.setStatus("Inactive");
+        test.setCreatedAt(LocalDateTime.now());
+
         List<Quiz> existingQuizzes = quizRepository.findAllById(test.getQuizzes().stream().map(Quiz::getId).collect(Collectors.toList()));
         test.setQuizzes(existingQuizzes);
         return testRepository.save(test);

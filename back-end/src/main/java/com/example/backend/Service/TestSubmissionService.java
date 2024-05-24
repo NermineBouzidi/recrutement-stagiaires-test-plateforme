@@ -3,6 +3,7 @@ package com.example.backend.Service;
 import com.example.backend.DTO.ProblemAnswerDTO;
 import com.example.backend.DTO.QuizAnswerDTO;
 import com.example.backend.Entity.*;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
@@ -19,6 +20,8 @@ public interface TestSubmissionService {
     String acceptUser (long id );
      String rejectUser (long id );
      String CreateFile (ProblemAnswer answer);
+    ResponseEntity<String > acceptAndAssign(Long userId);
+
 
 
     }

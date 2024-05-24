@@ -83,6 +83,9 @@ getUserProfileFromToken(token: string) {
   }
   getProblemById(id:any){
     return this.http.get(this.baseURI + `/api/quiz/getProblem/${id}`);
+  }
+  updateProblem(id:any,problem:any){
+    return this.http.put(this.baseURI + `/api/quiz/updateProblem/${id}`, problem,{ observe: 'response' ,responseType: 'text'});
 
   }
   addTrueFalse(quiz:any){
@@ -91,6 +94,7 @@ getUserProfileFromToken(token: string) {
   updateTrueFalse(id:any ,quiz :Quiz){
     return this.http.put(this.baseURI + `/api/quiz/updateTrueFalse/${id}`, quiz,{ observe: 'response' ,responseType: 'text'});
   }
+  
   addMultipleChoice(quiz:any){
     return this.http.post(this.baseURI + `/api/quiz/addMulti`, quiz,{ observe: 'response' ,responseType: 'text'});
   }
@@ -107,14 +111,20 @@ getUserProfileFromToken(token: string) {
     const requestBody = { testId, userId };
     return this.http.post(this.baseURI + `/api/test-submission/assign-test`, requestBody,{ observe: 'response' ,responseType: 'text'});
   }
+  assignTestandAceept(userId:number){
+    return  this.http.post(this.baseURI + `/api/test-submission/accept-and-assign-test/${userId}`,{ observe: 'response' ,responseType: 'text'});
+  }
   getTestByCategory(category:any){
     return this.http.get<any[]>(this.baseURI + `/api/test/category/${category}`);
 
   }
   getTestById(id:any){
     return this.http.get<any[]>(this.baseURI + `/api/test/getTest/${id}`);
-
   }
+  updateTest(id :any,test:any){
+    return this.http.put(this.baseURI + `/api/test/updateTest/${id}`, test,{ observe: 'response' ,responseType: 'text'});
+
+}
   getAllRapport(){
     return this.http.get<any[]>(this.baseURI + `/api/test-submission/getAllTestSubmission`);
   }

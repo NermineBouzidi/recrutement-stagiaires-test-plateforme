@@ -26,6 +26,7 @@ public class TestSubmission{
     private User user;
     private Integer score;
     private String status;
+    private boolean isEvaluated;
     private LocalDateTime testSubmissionDate;
     private LocalDateTime acceptedDate;
     @OneToMany(mappedBy = "testSubmission", cascade = CascadeType.ALL,fetch = FetchType.EAGER)

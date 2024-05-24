@@ -12,7 +12,9 @@
         <div>
             <button class="bg-[#0D2E4D] text-white px-4 py-2 rounded mr-2 " (click)="submitPoints()" type="submit"
            >Save</button>
-            <button  class="bg-[#5B7DB1] text-white px-4 py-2 rounded">Cancel</button>
+            <button  class="bg-[#5B7DB1] text-white px-4 py-2 rounded">
+                <a routerLink="/dashboard/rapport" routerLinkActive="active">
+                    Cancel</a></button>
           </div>
         </div>
 
@@ -105,8 +107,8 @@
             <div *ngFor="let answer of quizzes">
                 <div class="bg-gray-200 rounded-lg px-8 py-4 shadow-md mb-3">
                     <div class="flex justify-between">
-                        <div class="montserrat-semi text-gray-800 mb-2 " [innerHTML]="answer.quiz?.question"></div>
-                        <div class="flex items-center">
+                        <div class="montserrat-700 text-gray-800 w-4/5 " [innerHTML]="answer.quiz?.question"></div>
+                        <div class="flex items-center w-1/5 justify-end">
                             <div class="text-[#1d2736] montserrat-semi ">Points</div>
                             <div class="text-[#1d2736] montserrat-semi px-3">{{answer.points}}</div>
                             <div class=" text-[#1d2736] montserrat-semi ">/ {{answer.quiz?.points}}</div>    
@@ -123,9 +125,7 @@
                             <span class="flex-1 ms-3 whitespace-nowrap">{{ choice.text }}</span>
                         </li>
                     </ul>
-                    <ul  *ngFor="let choic of answer.multipleChoiceAnswers; let i = index">
-                        <li class="flex items-center p-3 text-base rounded-lg group mb-2 text-green-500 bg-green-50 hover:bg-green-100">{{choic.text}}</li>
-                    </ul>
+                  
 
 
                 </div>

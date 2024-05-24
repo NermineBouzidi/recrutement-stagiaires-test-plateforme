@@ -209,11 +209,7 @@ public class UserController {
 
 
 
- /*   @GetMapping("/counts")
-    public ResponseEntity<DashboardCounts> getDashboardCounts() {
-        DashboardCounts counts = userService.getDashboardCounts();
-        return ResponseEntity.ok(counts);
-    }*/
+
 
     @PostMapping("/assign-test-and-notify")
     public ResponseEntity<String> assignTestAndNotify(@RequestBody Map<String, Long> requestBody) {

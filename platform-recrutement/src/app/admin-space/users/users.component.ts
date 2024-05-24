@@ -72,7 +72,7 @@ export class UsersComponent {
   deleteUser(id:any){
     this.http.deleteUser(id).subscribe(
       ()=>{
-        this.toast.showToas("test deleted successfully")
+        this.toast.showToas("User deleted successfully")
         this.onCloseModal()
       }
 

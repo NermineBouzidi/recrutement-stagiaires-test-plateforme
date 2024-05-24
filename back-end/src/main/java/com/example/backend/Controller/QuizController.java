@@ -87,9 +87,9 @@ public class QuizController {
     }
 
     @PutMapping("/updateQuiz/{id}")
-    public ResponseEntity<?> updateQuiz(@PathVariable long id,@RequestBody Quiz quiz) {
+    public ResponseEntity<?> updateQuiz(@PathVariable long id,@RequestBody MultipleChoiceQuestion quiz) {
         try {
-            quizService.updateQuiz(id,quiz);
+            quizService.updateMultiChoice(id,quiz);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());

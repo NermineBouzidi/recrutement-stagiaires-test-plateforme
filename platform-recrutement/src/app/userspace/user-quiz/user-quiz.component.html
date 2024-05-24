@@ -22,17 +22,17 @@
 
           <div *ngIf="quiz.questionType === 'MultipleChoiceQuestion'">
             <div formArrayName="multipleChoiceAnswers">
-            <ul class="my-4 space-y-3" *ngFor="let choice of quiz.choices; let i = index">
-              <li 
-              
-                [class.selected]="userAnswers.get(currentQuestion) === choice.text"
-                class="flex items-center p-3 text-base text-gray-900 rounded-lg bg-gray-50 hover:bg-[#FFCB63] group hover:shadow ">
-                <input type="checkbox" id="checkBox"  [value]="choice.id"
-                (change)="toggleQuizSelection($event, choice)"  >
+              <div class="my-4 space-y-3" *ngFor="let choice of quiz.choices; let i = index">
+                  <input type="checkbox" id="checkBox{{i}}"[value]="choice.id"  [checked]="isChoiceSelected(quiz.id)"
+                  (change)="toggleQuizSelection($event, choice)"class="hidden peer">
+                  <label for="checkBox{{i}}"
+                  class="flex items-center justify-between w-auto p-3   text-base text-gray-900  bg-gray-50  rounded-lg cursor-pointer   peer-checked:bg-[#FFCB63] hover:bg-[#e0ffe0]  "
+                 >
 
-                <span class="flex-1 ms-3 whitespace-nowrap">{{ choice.text }}</span>
-              </li>
-            </ul>
+                {{ choice.text }}
+                  </label>
+              </div>
+          
             </div>
           </div>
           <div *ngIf="quiz.questionType === 'TrueFalseQuestion'">
@@ -54,17 +54,7 @@
         </div>
       </div>
     </div>
-    <div class="p-6 space-y-4 md:space-y-6 sm:p-8" *ngIf="isTestCompleted">
-      <div class="text-red ">
-        Your Score: {{ score }} / {{ data.length }}
-      </div>
-      <div class="mt-4 flex flex-wrap justify-center gap-4">
-
-        <a class="block w-full rounded border border-[#d97a07] bg-[#d97a07] px-12 py-3 text-sm font-medium text-white hover:bg-transparent hover:text-[#a94f33] sm:w-auto"
-          routerLink="/user/code" routerLinkActive="active">
-          code </a>
-      </div>
-    </div>
+    
 
 
 </section>

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component } from '@angular/core';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AdminService } from '../../shared/services/admin.service';
-import { HttpResponse } from '@angular/common/http';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 
@@ -15,30 +15,30 @@ export class AddTestComponent {
   isSubmitted: boolean = false;
   quizzes: any[] = [];
   problems: any[] = [];
-  selectedCategory: string = '';
+  selectedCategory: string = 'All';
+  selectedTestId :string=null;
   totalDuration  = 0;
   evaluators: any[]; // Define an array to store evaluator data
   isPassedDuration : boolean =false;  
-
-
-  
-
   testForm :FormGroup;
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef,private route: ActivatedRoute){
     this.testForm = this.fb.group({
       category: ['', [Validators.required]],
       title:['',[Validators.required]],
       createdBy:['',[Validators.required]],
-      passingPercentage: [null,Validators.required],
+      passingPercentage: [null,[Validators.required,Validators.max(100)]],
       quizzes: this.fb.array([]),
       problems: this.fb.array([])
   });
   this.loadQuiz();
   this.loadProblem();
-  const testId = this.route.snapshot.paramMap.get('test');
-  this.getTestById(testId);
+  this.selectedTestId = this.route.snapshot.paramMap.get('test');
+  if(this.selectedTestId){
+    this.getTestById(this.selectedTestId);
+
+  }
   this.getAllEvaluator();
- 
+  
   }
   
  
@@ -62,17 +62,18 @@ loadProblem() {
 
 ///// filtrage 
 get filteredProblems(): any[] {
-  return this.problems.filter(problem => {
-    // Check if the search text matches the user's name, role, or email
-    return problem.category !== null && problem.category.includes(this.selectedCategory);
-  });
-}
+  return this.selectedCategory === 'All'
+  ? this.problems // Display all quizzes if 'ALL' is selected
+  : this.problems.filter(problem => problem.category !== null && problem.category.includes(this.selectedCategory));
+};
+  
+
 get filteredQuizzes(): any[] {
-  return this.quizzes.filter(quiz => {
-    // Check if the search text matches the user's name, role, or email
-    return quiz.category !== null && quiz.category.includes(this.selectedCategory);
-  });
-}
+  return this.selectedCategory === 'All'
+      ? this.quizzes // Display all quizzes if 'ALL' is selected
+      : this.quizzes.filter(quiz => quiz.category !== null && quiz.category.includes(this.selectedCategory));
+  };
+
 
 // ------------------
 get problemss (){
@@ -101,6 +102,10 @@ isQuizSelected(quizId: number): boolean {
   return this.quizzess.value.includes(quizId);
 }
 
+
+isProblemSelected(problemId: number): boolean {
+  return this.testForm.get('problems').value.includes(problemId);
+}
 toggleProblemSelection(event: Event, problem: any): void {
   const isChecked = (event.target as HTMLInputElement).checked;
 
@@ -126,7 +131,9 @@ addTest(testForm){
   this.isSubmitted = true;
   if (this.totalDuration>120){ 
     this.isPassedDuration =true
-}
+ } else{
+  this.isPassedDuration = false
+ }
   if(testForm.valid && !this.isPassedDuration){
     const test= testForm.value;
     const transformedProblems = test.problems.map(problemId => ({ id: problemId }));
@@ -135,7 +142,17 @@ addTest(testForm){
     const finalTest = { ...test, problems: transformedProblems, quizzes: transformedQuizzes };
 
     console.log(finalTest);
-
+    if (this.selectedTestId) {
+      this.http.updateTest(this.selectedTestId, finalTest).subscribe(
+        (response: HttpResponse<any>) => {
+          this.toastr.showToas("updated successfully");
+          this.router.navigateByUrl("/dashboard/test");
+        },
+        (error: HttpErrorResponse) => {
+          console.error('Error updating quiz:', error);
+        }
+      );
+    }else{
     this.http.addTest(finalTest).subscribe(
       (response: HttpResponse<any>) => {
         console.log("Response:", response); // Log the entire response for debugging
@@ -148,6 +165,7 @@ addTest(testForm){
           alert("failed");
         }
       })
+    }
     
   }
 }
@@ -158,7 +176,7 @@ getTestById(testId: any) {
     // Mark selected quizzes as checked
     this.quizzess.clear();
     this.problemss.clear();
-
+   
     // Mark selected quizzes as checked
     const selectedQuizzes = data.quizzes;
     selectedQuizzes.forEach(quiz=> {
@@ -170,8 +188,7 @@ getTestById(testId: any) {
     selectedProblems.forEach(problem => {
         this.problemss.push(this.fb.control(problem.id));
       });
-
-    console.log("api:", data, "form:", this.testForm);
+      this.totalDuration =data.totalDuration;
   });
 }
 

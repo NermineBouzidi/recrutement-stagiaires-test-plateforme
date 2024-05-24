@@ -182,6 +182,41 @@ if(quiz.getPoints()!=null){
 
         return "Quiz updated successfully";
     }
+    @Override
+    public String updateMultiChoice(long id, MultipleChoiceQuestion quiz) {
+        if (id <0) {
+            throw new IllegalArgumentException("Quiz ID cannot be negative");
+        }
+        if (quiz == null) {
+            throw new IllegalArgumentException("Quiz object cannot be null");
+        }
+        Quiz existingQuiz = quizRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Problem not found with id: " + id));
+        MultipleChoiceQuestion multiQuiz = (MultipleChoiceQuestion) quiz;
+
+        if (quiz.getTitle()!=null){
+            existingQuiz.setTitle(quiz.getTitle());
+        }
+        if (quiz.getQuestion()!=null){
+            existingQuiz.setQuestion(quiz.getQuestion());
+        }
+       /* if(quiz.getQuestionType()!=null){
+            existingQuiz.setQuestionType(quiz.getQuestionType());
+        }*/
+        if (quiz.getDuration()!=null){
+            existingQuiz.setDuration(quiz.getDuration());
+        }
+        if(quiz.getPoints()!=null){
+            existingQuiz.setPoints(quiz.getPoints());
+
+        }
+       if(quiz.getChoices()!=null){
+        multiQuiz.setChoices(quiz.getChoices());
+        }
+        quizRepository.save(existingQuiz);
+
+        return "Quiz updated successfully";
+    }
 
 
     @Override

@@ -45,15 +45,7 @@ export class ProblemAndQuizComponent {
     }
   }
   ngOnInit() {
-    this.problemForm = this.fb.group({
-      title: ['', [Validators.required]],
-      language: [''],
-      description: [''],
-      input: [''],
-      output: [''],
-      duration: [''],
-      points: [''],
-  });
+  
   this.trueFalseForm = this.fb.group({
     title: ['', [Validators.required]],
     question: ['',Validators.required],
@@ -62,29 +54,16 @@ export class ProblemAndQuizComponent {
     points: ['',Validators.required],
     correctAnswer:['',Validators.required]
   })
-    this.multiChoiceForm= this.fb.group({
-      title: ['', [Validators.required]],
-      question: ['',Validators.required],
-      duration: ['',Validators.required],
-      category: ['',Validators.required],
-      points: ['',Validators.required],
-      choices: this.fb.array([this.createOptionFormGroup()]),
-
-    })
+   
  
    
     this.loadQuiz();
     this.loadProblems();
-    this.loadTest();
+   
 
 
   }
-  createOptionFormGroup(): FormGroup {
-    return this.fb.group({
-      text: [''], // Initialize as an empty FormControl
-      correct: [false]
-    });
-  }
+ 
   
 
  
@@ -94,9 +73,7 @@ export class ProblemAndQuizComponent {
  // Toggle editing mode for an option
 
 
-  removeOption(index: number) {
-    this.choices.removeAt(index);
-  }
+  
  // return tests
  
   openDialog() {
@@ -137,79 +114,21 @@ export class ProblemAndQuizComponent {
     this.isShowDialog= false;
   }
  
-  get choices() {
-    return this.multiChoiceForm.get('choices') as FormArray;
-  }
+  
 
   // Getter for easier access in the template
  
 
-  addOption() {
-    if (this.choices.length < 4) {
-      this.choices.push(this.createOptionFormGroup());
-    }
-  }
+ 
   
   
-  removeOptions(index: number) {
-    this.choices.removeAt(index);
-  }
-  
+ 
  
   
 
 
 
-  addQuiz(quizForm){
-    if (quizForm.valid){
-      const quiz: Quiz = {
-        title: quizForm.get('title').value,
-        question: quizForm.get('question').value,
-        questionType: quizForm.get('questionType').value,
-        choices: quizForm.get('choices').value,
-        answers: quizForm.get('answers').value,
-      };
-    if(this.selectedQuizId){
-      this.http.updateQuiz(this.selectedQuizId,quiz).subscribe(
-        (response: HttpResponse<any>) => {
-        console.log("Response:", response); // Log the entire response for debugging
-        if (response.body && response.body.includes("quiz updated successfully")) {
-          alert("quiz updated successfully");
-          this.closeDialog();
-          this.loadQuiz();
-          // Redirect to a new page or perform any other actions after successful registration
-        } else {
-          alert("failed");
-        }
-      })
-     }else{
-      this.http.addQuiz(quiz).subscribe(
-      (response: HttpResponse<any>) => {
-        console.log("Response:", response); // Log the entire response for debugging
   
-        if (response.body && response.body.includes("quiz added successfully")) {
-          alert("quiz added successfully");
-          this.closeDialog();
-          this.loadQuiz();
-          // Redirect to a new page or perform any other actions after successful registration
-        } else {
-          alert("failed");
-        }
-      },
-      (error: HttpErrorResponse) => {
-        console.error("Error:", error);
-  
-        if (error.status === 400 && error.error === "quiz existe") {
-          alert("user already exists wi");
-        } else {
-          alert("An error occurred ");
-        }
-      }
-
-    )}
-
-  }
-}
 submit(formdata :any){
   console.log(formdata);
 }
@@ -224,119 +143,13 @@ switchMode(modeName: string) {
 }
 
 // -------------------------------Problem------------------------------------------ 
-addProblem(problemForm){
-  if(problemForm.valid){
-    const problem= problemForm.value;
-    this.http.addProblem(problem).subscribe(
-      (response: HttpResponse<any>) => {
-        console.log("Response:", response); // Log the entire response for debugging
-        if (response.body && response.body.includes("Problem added successfully")) {
-          this.toastr.showToas("added succefully")
 
-          // Redirect to a new page or perform any other actions after successful registration
-        } else {
-          alert("failed");
-        }
-      })
-    
-  }
-}
 
-deleteTest(id :any){
-  this.http.deleteTest(id).subscribe(
-    ()=>{
-      this.toastr.showToas("test deleted succefully succefully")
-      this.loadTest();
-    }
 
-  )
-}
-openUpdateProblem(problem :any){
-  this.selectedProblemId = problem.id;
-  this.currentMode ="addProblem";
-  const selectedTest =problem;
-  this.problemForm.patchValue(selectedTest);
-}
-//-----------------------------------------True False --------------------------------
-addTrueFalse(trueFalseForm){
-  this.isSubmitted = true;
-  if(trueFalseForm.valid){
-    const quiz= trueFalseForm.value;
-    if(this.selectedQuizId){
-      this.http.updateTrueFalse(this.selectedQuizId,quiz).subscribe(
-        (response: HttpResponse<any>) => {
-       console.log(response);
-       this.toastr.showToas("updated succefully")
-       this.currentMode="show";
-       this.loadQuiz();
-        },
-        (error :HttpErrorResponse)=>{
-          console.error('Error updating True/False question:', error);
-  
-        })
-     }else{
-    this.http.addTrueFalse(quiz).subscribe(
-      (response: HttpResponse<any>) => {
-        this.toastr.showToas("added succefully")
-        this.currentMode="show";
-        this.loadQuiz();
-      },
-      (error :HttpErrorResponse)=>{
-        console.error('Error updating True/False question:', error);
-      }
-      
-      )
-      
-    }
-    
-  }
-}
-openUpdateTrueFalse(quiz :any){
-  this.selectedQuizId = quiz.id;
-  this.currentMode ="truefalse";
-  const selectedTest =quiz;
-  this.trueFalseForm.patchValue(selectedTest);
-}
-openUpdateMultipleChoice(quiz :any){
-  this.selectedQuizId = quiz.id;
-  this.currentMode ="multiple";
-  const selectedTest =quiz;
-  this.multiChoiceForm.patchValue(selectedTest);
-}
+
+
 // -----------------------------------Multiple choice ---------------------------
-addMulti(multipleChoiceForm){
-  this.isSubmitted = true;
-  if(multipleChoiceForm.valid){
-    const quiz= multipleChoiceForm.value;
-    if(this.selectedQuizId){
-      this.http.updateTrueFalse(this.selectedQuizId,quiz).subscribe(
-        (response: HttpResponse<any>) => {
-       console.log(response);
-       alert("updated successfully");
-       console.log(quiz);
-       this.currentMode="show";
-       this.loadQuiz();
-        },
-        (error :HttpErrorResponse)=>{
-          console.error('Error updating True/False question:', error);
-  
-        })
-     }else{
-    this.http.addMultipleChoice(quiz).subscribe(
-      (response: HttpResponse<any>) => {
-        this.currentMode="show";
-        this.loadQuiz();
-      },
-      (error :HttpErrorResponse)=>{
-        console.error('Error updating True/False question:', error);
-      }
-      
-      )
-      
-    }
-    
-  }
-}
+
 
 //---------------------load problems-------------------------------
 loadProblems(){
@@ -356,11 +169,7 @@ loadQuiz() {
     this.quizNumber=data.length;
   })
 }
-loadTest(){
-  this.http.getAllTest().subscribe((data: any) => {
-    this.tests = data;
-  })
-}
+
 //  -------------------preview --------------------------------
  
 /////////confirm delete 

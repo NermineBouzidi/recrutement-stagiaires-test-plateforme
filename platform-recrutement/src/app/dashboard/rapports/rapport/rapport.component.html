@@ -9,12 +9,20 @@
 </div>
 <div class="flex items-center justify-center">
   <div class="h-full container bg-white p-8">
+    <div class="mb-4">
+      <select [(ngModel)]="selectedTestStatus" class="border border-gray-300 rounded-lg text-sm py-2 ">
+        <option value="ALL">Filter test status</option>
+  <option value="EVALUATED">Evaluated</option>
+  <option value="PENDING">Pending</option>
+      </select>
+    </div>
     <body class="flex items-center justify-center mt-5 mb-4">
       <table class="bg-white rounded-lg overflow-hidden w-full">
         <thead class="text-[#1d2736]">
           <tr
             class="bg-white flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0"
-          >
+          > 
+          <th class="p-3 text-left"></th>
             <th class="p-3 text-left">User</th>
             <th class="p-3 text-left">Email</th>
             <th class="p-3 text-left">Specializations</th>
@@ -30,10 +38,32 @@
           <tr
             class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0 montserrat-semi"
             *ngFor="
-              let rapport of data
+              let rapport of filteredRapports
                 | paginate : { itemsPerPage: 5, currentPage: p }
             "
           >
+          <td class="border-grey-light border hover:bg-gray-100 p-3 text-[#dddddd]">
+            <span
+            class="flex"
+            [ngClass]="{
+              'text-[#20c997]': rapport.evaluated ,
+            }"
+            
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 16 16"
+              fill="currentColor"
+              class="w-4 h-4"
+            >
+              <path
+                fill-rule="evenodd"
+                d="M15 8c0 .982-.472 1.854-1.202 2.402a2.995 2.995 0 0 1-.848 2.547 2.995 2.995 0 0 1-2.548.849A2.996 2.996 0 0 1 8 15a2.996 2.996 0 0 1-2.402-1.202 2.995 2.995 0 0 1-2.547-.848 2.995 2.995 0 0 1-.849-2.548A2.996 2.996 0 0 1 1 8c0-.982.472-1.854 1.202-2.402a2.995 2.995 0 0 1 .848-2.547 2.995 2.995 0 0 1 2.548-.849A2.995 2.995 0 0 1 8 1c.982 0 1.854.472 2.402 1.202a2.995 2.995 0 0 1 2.547.848c.695.695.978 1.645.849 2.548A2.996 2.996 0 0 1 15 8Zm-3.291-2.843a.75.75 0 0 1 .135 1.052l-4.25 5.5a.75.75 0 0 1-1.151.043l-2.25-2.5a.75.75 0 1 1 1.114-1.004l1.65 1.832 3.7-4.789a.75.75 0 0 1 1.052-.134Z"
+                clip-rule="evenodd"
+              />
+            </svg>
+          </span>             
+        </td>
             <td class="border-grey-light border hover:bg-gray-100 p-3">
                <span class="initials-circle">{{ getInitials( rapport.user?.firstname , rapport.user?.lastName) }} </span>
                 </td>
@@ -41,17 +71,21 @@
               {{ rapport.user?.email }}
             </td>
             <td class="border-grey-light border hover:bg-gray-100 p-3">
-              {{ rapport.user?.specializations }}
+              {{ rapport.user?.specializations  ==='WEB_DEVELOPMENT' ? 'web development' :rapport.user?.specializations  ==='MOBILE_DEVELOPMENT'?'mobile development':rapport.user?.specializations  ==='DATA_SCIENCE'?' data science' :''}}
+
             </td>
             <td class="border-grey-light border hover:bg-gray-100 p-3">
               <span
                 class="flex"
                 [ngClass]="{
                   'text-[#ff9800]': rapport.status === 'Timed Out',
-                  'text-[#dddddd]': rapport.status === 'Pending',
+                  'text-[#ff9801]': rapport.status === 'Pending',
                   'text-[#4caf50]': rapport.status === 'Passed',
                   'text-[#f44336]': rapport.status === 'Failed',
-                   'text-[#20c997]' : rapport.status === 'Submitted',
+                  'text-[#50be54]': rapport.status === 'Passed and Notified ',
+                  'text-[#f02113]': rapport.status === 'Failed and Notified',
+
+
                 }"
               >
                 <svg
@@ -100,7 +134,7 @@
               
             </td>
             <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
-                {{rapport.score}}/{{rapport.passingPoints}}
+                {{rapport.score}}/{{rapport.test?.passingPoints}}
               </td>
             <td class="border-grey-light border hover:bg-gray-100 p-3">
 

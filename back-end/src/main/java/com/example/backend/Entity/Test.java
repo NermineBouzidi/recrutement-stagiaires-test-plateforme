@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +24,8 @@ public class Test {
     private String category;
     private String createdBy;
     private String status;
+    private LocalDateTime createdAt;
+
 
     @ManyToMany
     @JoinTable(name = "test_quizzes",
