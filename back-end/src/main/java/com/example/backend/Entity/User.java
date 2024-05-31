@@ -1,19 +1,13 @@
 package com.example.backend.Entity;
 
 import com.example.backend.Entity.Enum.Role;
-import com.example.backend.Entity.Enum.TestCategory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.lang.NonNull;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.List;
 
 @Entity
 @Data
@@ -42,19 +36,6 @@ public class User  {
     private Role role;
 
 
-
-
-
-   /* public User(String firstname, String lastName, String email, int number, String educationLevel,String linkedinUrl ){
-        this.firstname = firstname;
-        this.lastName = lastName;
-        this.email = email;
-        this.number = number;
-        this.educationLevel = educationLevel;
-        this.password = PasswordGenerator.generateRandomPassword();
-        this.linkedinUrl=linkedinUrl;
-
-    }*/
 
    public User( String firstname, String lastName, String email, String number, String educationLevel, String linkedinUrl, String specializations ) {
        this.firstname = firstname;

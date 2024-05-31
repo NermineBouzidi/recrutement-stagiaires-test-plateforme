@@ -48,16 +48,7 @@ login(email, password, rememberMe :boolean) {
             return response;
         }));
 }
-/*
-login(email, password) {
-    return this.http.post<User>(this.baseURI + `/api/auth/login`, { email, password })
-        .pipe(map(user => {
-            // store user details and jwt token in local storage to keep user logged in between page refreshes
-            sessionStorage.setItem('user', JSON.stringify(user));
-            this.userSubject.next(user);
-            return user;
-        }));
-}*/
+
 
 logout() {
     // remove user from local storage and set current user to null

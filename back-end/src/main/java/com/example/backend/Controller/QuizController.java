@@ -17,13 +17,12 @@ import java.util.Optional;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-@Secured("hasRole('ADMIN','EVALUATOR')")
+@Secured("hasRole('EVALUATOR')")
 @RequestMapping("/api/quiz")
 public class QuizController {
     @Autowired
     QuizService quizService;
-    @Autowired
-    ProblemService problemService;
+
     @PostMapping("/addQuiz")
     public ResponseEntity<String> addTest(@RequestBody Quiz quiz) {
         String s = quizService.AddQuiz(quiz);
@@ -102,42 +101,5 @@ public class QuizController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    //------------------------Problems -------------------------------------
-    @PostMapping("addProblem")
-    public ResponseEntity<String> createProblem(@RequestBody Problem problem) {
-        try {
-            Problem savedProblem=problemService.addProblem(problem);
-            return ResponseEntity.ok("Problem added successfully");
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-    @PutMapping("/updateProblem/{problemId}")
-    public ResponseEntity<?> updateProblem(@PathVariable Long problemId, @RequestBody Problem problem) {
-        try {
-            Problem updatedProblem = problemService.updateProblem(problemId, problem);
-            return new ResponseEntity<>(updatedProblem, HttpStatus.OK);
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-    @DeleteMapping("/deleteProblem/{problemId}")
-    public ResponseEntity<?> deleteProblem(@PathVariable long problemId) {
-        try {
-            problemService.deleteProblem(problemId);
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT); // No content to return on successful deletion
-        } catch (IllegalArgumentException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-    @GetMapping("/getProblem/{problemId}")
-    public ResponseEntity<Problem> getProblemById(@PathVariable Long problemId) {
-        Optional<Problem> optionalProblem = problemService.getProblemById(problemId);
-        return optionalProblem.map(problem -> new ResponseEntity<>(problem, HttpStatus.OK)).orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
-    }
-    @GetMapping("/getAllProblem")
-    public ResponseEntity<List<Problem>> getAllProblems() {
-        List<Problem> problems = problemService.getAllProblems();
-        return new ResponseEntity<>(problems, HttpStatus.OK);
-    }
+
 }

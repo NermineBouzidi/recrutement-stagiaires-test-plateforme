@@ -23,6 +23,8 @@ export class UserComponent {
   isTestOpen :boolean=false;
   tests: any[] = [];
   selectedTestId: number;
+  selectedUserStatus :string = 'ALL';
+
     constructor (private http: AdminService, private datePipe: DatePipe, private toast :ToastrService ){
     for(let i:number=1; i<=100;i++){
       this.data.push(i as never);
@@ -47,6 +49,18 @@ export class UserComponent {
           this.data=data
           this.usersNumber= this.data.length;
   })
+  }
+
+  get filteredUsers(): any[] {
+    return this.data.filter(user => {
+      const matchesUserStatus = this.selectedUserStatus === 'ALL' || 
+      (this.selectedUserStatus === 'REJECTED' && user.status.toLowerCase().includes(this.selectedUserStatus.toLowerCase())) || 
+      (this.selectedUserStatus === 'ACCEPTED' && user.status.toLowerCase().includes(this.selectedUserStatus.toLowerCase())) || 
+      (this.selectedUserStatus === 'PENDING' && user.status.toLowerCase().includes(this.selectedUserStatus.toLowerCase()));
+  
+
+      return matchesUserStatus;
+    });
   }
   openDialog(id:any){
      this.isDialogOpen=true;

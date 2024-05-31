@@ -73,19 +73,19 @@ getUserProfileFromToken(token: string) {
   }
   ///--------------------Problems
   getAllProblem(){
-    return this.http.get<any[]>(this.baseURI + `/api/quiz/getAllProblem`);
+    return this.http.get<any[]>(this.baseURI + `/api/problem/getAllProblem`);
   }
   addProblem(problem :any){
-    return this.http.post(this.baseURI + `/api/quiz/addProblem`, problem,{ observe: 'response' ,responseType: 'text'});
+    return this.http.post(this.baseURI + `/api/problem/addProblem`, problem,{ observe: 'response' ,responseType: 'text'});
   }
   deleteProblem(id : any) {
-    return this.http.delete(this.baseURI + `/api/quiz/deleteProblem/${id}`)
+    return this.http.delete(this.baseURI + `/api/problem/deleteProblem/${id}`)
   }
   getProblemById(id:any){
-    return this.http.get(this.baseURI + `/api/quiz/getProblem/${id}`);
+    return this.http.get(this.baseURI + `/api/problem/getProblem/${id}`);
   }
   updateProblem(id:any,problem:any){
-    return this.http.put(this.baseURI + `/api/quiz/updateProblem/${id}`, problem,{ observe: 'response' ,responseType: 'text'});
+    return this.http.put(this.baseURI + `/api/problem/updateProblem/${id}`, problem,{ observe: 'response' ,responseType: 'text'});
 
   }
   addTrueFalse(quiz:any){

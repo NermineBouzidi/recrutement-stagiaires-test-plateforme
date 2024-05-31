@@ -1,20 +1,19 @@
-import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
 import { AdminService } from '../shared/services/admin.service';
+import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
-  selector: 'app-add-quiz',
-  templateUrl: './add-quiz.component.html',
-  styleUrls: ['./add-quiz.component.scss']
+  selector: 'app-add-quiz-true-false',
+  templateUrl: './add-quiz-true-false.component.html',
+  styleUrls: ['./add-quiz-true-false.component.scss']
 })
-export class AddQuizComponent {
-  multiChoiceForm: FormGroup;
+export class AddQuizTrueFalseComponent {
+  trueFalseForm :FormGroup;
   selectedQuizId: string = null;
   isSubmitted: boolean = false;
-
   constructor(
     private http: AdminService,
     private fb: FormBuilder,
@@ -24,52 +23,27 @@ export class AddQuizComponent {
   ) {}
 
   ngOnInit() {
-    this.multiChoiceForm = this.fb.group({
+    this.trueFalseForm = this.fb.group({
       title: ['', [Validators.required]],
       question: ['', Validators.required],
       difficulty: ['', [Validators.required]],
       duration: ['', Validators.required],
       category: ['', Validators.required],
       points: ['', Validators.required],
-      choices: this.fb.array([this.createOptionFormGroup()]), // Initialize with an empty option
-    });
+      correctAnswer:['',Validators.required]
+    })
 
     this.selectedQuizId = this.route.snapshot.paramMap.get('quiz');
     if (this.selectedQuizId) {
       this.getQuizById(this.selectedQuizId);
     }
   }
-
-  createOptionFormGroup(): FormGroup {
-    return this.fb.group({
-      text: [''], // Initialize as an empty FormControl
-      correct: [false]
-    });
-  }
-
-  get choices() {
-    return this.multiChoiceForm.get('choices') as FormArray;
-  }
-
-  removeOption(index: number) {
-    this.choices.removeAt(index);
-  }
-
-  addOption() {
-    if (this.choices.length < 4) {
-      this.choices.push(this.createOptionFormGroup());
-    }
-  }
-
- 
-
-  //---------------------add multichoice------------------------------
   onSubmit(multipleChoiceForm) {
     this.isSubmitted = true;
     if (multipleChoiceForm.valid) {
       const quiz = multipleChoiceForm.value;
       if (this.selectedQuizId) {
-        this.http.updateQuiz(this.selectedQuizId, quiz).subscribe(
+        this.http.updateTrueFalse(this.selectedQuizId, quiz).subscribe(
           (response: HttpResponse<any>) => {
             this.toastr.showToas("updated successfully");
             this.router.navigateByUrl("/dashboard/problem-quiz");
@@ -79,7 +53,7 @@ export class AddQuizComponent {
           }
         );
       } else {
-        this.http.addMultipleChoice(quiz).subscribe(
+        this.http.addTrueFalse(quiz).subscribe(
           (response: HttpResponse<any>) => {
             this.toastr.showToas("added successfully");
             this.router.navigateByUrl("/dashboard/problem-quiz");
@@ -92,18 +66,10 @@ export class AddQuizComponent {
     }
   }
 
-//-----------------get quiz------------------------------  
   getQuizById(quizId: any) {
     this.http.getQuizById(quizId).subscribe((data: any) => {
-      this.multiChoiceForm.patchValue(data); // Patch form with quiz data
+      this.trueFalseForm.patchValue(data); // Patch form with quiz data
 
-      this.choices.clear(); // Clear existing choices
-      data.choices.forEach(choice => {
-        this.choices.push(this.fb.group({
-          text: [choice.text],
-          correct: [choice.correct]
-        }));
-      });
     });
   }
 }

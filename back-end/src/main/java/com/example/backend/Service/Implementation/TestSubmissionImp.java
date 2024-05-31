@@ -25,7 +25,6 @@ import java.util.*;
 
 @Service
 public class TestSubmissionImp implements TestSubmissionService {
-    private final String FOLDER_PATH="C:/Users/nermi/Documents/pfe/Code/";
 
     @Autowired
     TestSubmissionRepository testSubmissionRepository;
@@ -231,44 +230,7 @@ public class TestSubmissionImp implements TestSubmissionService {
 
     }
 
-    @Override
-    public String CreateFile(ProblemAnswer answer) {
-        String language = answer.getProblem().getLanguage();
-        createFileForLanguage(answer.getAnswerText(),language);
-        return  "suucess";
 
-    }
-
-        private void createFileForLanguage(String code, String language) {
-            String fileExtension;
-            switch (language.toLowerCase()) {
-                case "java":
-                    fileExtension = ".java";
-                    break;
-                case "python":
-                    fileExtension = ".py";
-                    break;
-                case "javascript":
-                    fileExtension = ".js";
-                    break;
-                default:
-                    // Handle unsupported languages or default behavior
-                    System.out.println("Unsupported language: " + language);
-                    return; // Exit the method if language is unsupported
-            }
-            String uniqueId = UUID.randomUUID().toString();
-            String fileName = uniqueId + fileExtension; // Example file name: code.java, code.python, etc.
-
-            try {
-                File file = new File(FOLDER_PATH,fileName);
-                FileWriter writer = new FileWriter(file);
-                writer.write(code);
-                writer.close();
-                System.out.println("File created: " + file.getAbsolutePath());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
 
     @Override
     public void analyzeProblemAnswer(ProblemAnswer answer) {

@@ -36,7 +36,8 @@ public class SecurityConfig  {
                 .requestMatchers("/api/test/**").hasAnyRole("ADMIN","EVALUATOR")
                 .requestMatchers("/api/user-test/**").hasRole("USER")
                 .requestMatchers("/api/user/**").hasAnyRole("ADMIN","EVALUATOR")
-                .requestMatchers("/api/quiz/**").hasAnyRole("ADMIN","EVALUATOR")
+                .requestMatchers("/api/quiz/**").hasAnyRole("EVALUATOR")
+                .requestMatchers("/api/problem/**").hasAnyRole("EVALUATOR")
                 .requestMatchers("/api/test-submission/**").hasRole("EVALUATOR")
                 .requestMatchers("/api/test-dash/**").hasRole("ADMIN")
 

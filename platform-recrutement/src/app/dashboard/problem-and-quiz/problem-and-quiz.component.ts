@@ -30,7 +30,6 @@ export class ProblemAndQuizComponent {
   isShowDialog :boolean=false;
   quizForm :FormGroup;
   problemForm :FormGroup;
-  trueFalseForm :FormGroup;
   multiChoiceForm :FormGroup;
   isSubmitted: boolean = false;
   isDeleteConfirmationModalOpen = false;
@@ -46,14 +45,7 @@ export class ProblemAndQuizComponent {
   }
   ngOnInit() {
   
-  this.trueFalseForm = this.fb.group({
-    title: ['', [Validators.required]],
-    question: ['',Validators.required],
-    duration: ['',Validators.required],
-    category: ['',Validators.required],
-    points: ['',Validators.required],
-    correctAnswer:['',Validators.required]
-  })
+
    
  
    
@@ -97,12 +89,7 @@ export class ProblemAndQuizComponent {
     this.testForm.patchValue(selectedTest);
 
   })*/
-  openUpdateDialog(quiz :any){
-    this.selectedQuizId = quiz.id;
-    this.currentMode ="truefalse";
-    const selectedTest =quiz;
-    this.trueFalseForm.patchValue(selectedTest);
-  }
+
 
   openShowDialog(id :any){
     this.isShowDialog=true;
@@ -185,7 +172,7 @@ onCloseModal(){
 deleteProblem(id :any){
   this.http.deleteProblem(id).subscribe(
     ()=>{
-      this.toastr.showToas("test deleted succefully succefully")
+      this.toastr.showToas("Problem deleted succefully succefully")
       this.isDeleteConfirmationModalOpen = false;
       this.loadProblems();
     }
@@ -196,7 +183,7 @@ deleteProblem(id :any){
 deleteQuiz(id :any){
   this.http.deleteQuiz(id).subscribe(
     ()=>{
-      alert("quiz deleted successfully")
+      this.toastr.showToas("Quiz deleted succefully succefully")
       this.loadQuiz();
     }
 

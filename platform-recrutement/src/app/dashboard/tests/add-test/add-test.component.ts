@@ -11,7 +11,6 @@ import { ToastrService } from 'src/app/shared/services/toastr.service';
   styleUrls: ['./add-test.component.scss']
 })
 export class AddTestComponent {
-  currentMode:String ="type";
   isSubmitted: boolean = false;
   quizzes: any[] = [];
   problems: any[] = [];
@@ -35,7 +34,6 @@ export class AddTestComponent {
   this.selectedTestId = this.route.snapshot.paramMap.get('test');
   if(this.selectedTestId){
     this.getTestById(this.selectedTestId);
-
   }
   this.getAllEvaluator();
   
@@ -43,31 +41,28 @@ export class AddTestComponent {
   
  
 
-switchMode(modeName: string) {
-  this.currentMode = modeName;
-  this.cdr.detectChanges();
 
-}
-//loading
+//------------load quizzes-------------------------
 loadQuiz() {
   this.http.getAllQuiz().subscribe((data: any) => {
     this.quizzes = data;
   })
 }
+//-----------------load problems -----------------------
 loadProblem() {
   this.http.getAllProblem().subscribe((data: any) => {
     this.problems = data;
   })
 }
 
-///// filtrage 
+//----------------------- filter problems--------------------------------
 get filteredProblems(): any[] {
   return this.selectedCategory === 'All'
   ? this.problems // Display all quizzes if 'ALL' is selected
   : this.problems.filter(problem => problem.category !== null && problem.category.includes(this.selectedCategory));
 };
   
-
+//------------------filter quizzes---------------------------------
 get filteredQuizzes(): any[] {
   return this.selectedCategory === 'All'
       ? this.quizzes // Display all quizzes if 'ALL' is selected
@@ -75,10 +70,7 @@ get filteredQuizzes(): any[] {
   };
 
 
-// ------------------
-get problemss (){
-  return this.testForm.get('problems') as FormArray;
-}
+// ------------------quizzes--------------------------------------
 get quizzess (){
   return this.testForm.get('quizzes') as FormArray;
 }
@@ -102,9 +94,9 @@ isQuizSelected(quizId: number): boolean {
   return this.quizzess.value.includes(quizId);
 }
 
-
-isProblemSelected(problemId: number): boolean {
-  return this.testForm.get('problems').value.includes(problemId);
+//------------------------problems
+get problemss (){
+  return this.testForm.get('problems') as FormArray;
 }
 toggleProblemSelection(event: Event, problem: any): void {
   const isChecked = (event.target as HTMLInputElement).checked;
@@ -120,13 +112,11 @@ toggleProblemSelection(event: Event, problem: any): void {
 
   }
 }
-
-//-------------submit button -----
-submit(testForm){
-  const test= testForm.value;
-  console.log(test);
+isProblemSelected(problemId: number): boolean {
+  return this.testForm.get('problems').value.includes(problemId);
 }
 
+//-------------add test ----------------------- -----
 addTest(testForm){
   this.isSubmitted = true;
   if (this.totalDuration>120){ 
@@ -169,6 +159,8 @@ addTest(testForm){
     
   }
 }
+
+//----------------------get test ----------------------------------------------------
 getTestById(testId: any) {
   this.http.getTestById(testId).subscribe((data: any) => {
     this.testForm.patchValue(data); // Patch form with test data

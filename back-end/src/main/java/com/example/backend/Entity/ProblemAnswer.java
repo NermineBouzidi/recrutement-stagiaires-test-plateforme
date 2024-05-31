@@ -24,4 +24,7 @@
         @JoinColumn(name = "test-submission_id")
         @JsonBackReference // Use this annotation to prevent infinite recursion
         private TestSubmission testSubmission;
+
+        @OneToOne(cascade = CascadeType.ALL ,orphanRemoval = true)// Enable orphan removal
+        SonarQubeAnalysis sonarQubeAnalysis;
     }

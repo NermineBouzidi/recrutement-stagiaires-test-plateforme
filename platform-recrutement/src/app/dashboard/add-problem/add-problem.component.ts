@@ -2,7 +2,7 @@ import { ChangeDetectorRef, Component, ViewEncapsulation } from '@angular/core';
 import {  FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'src/app/shared/services/toastr.service';
-import { AdminService } from '../../shared/services/admin.service';
+import { AdminService } from '../shared/services/admin.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -15,8 +15,6 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 export class AddProblemComponent {
   problemForm :FormGroup;
   isSubmitted: boolean = false;
-  dropdownList = [];
-  selectedItems = [];
   selectedProblemId: string = null;
 
   constructor(private http: AdminService ,private fb :FormBuilder,private router :Router,private toastr : ToastrService,private cdr: ChangeDetectorRef,private route: ActivatedRoute){}
@@ -35,7 +33,8 @@ export class AddProblemComponent {
     this.getProblemById(this.selectedProblemId);
   }
 }
-  
+
+//------------------------- add problems-------------------------
   addProblem(){
     this.isSubmitted = true;
     if(this.problemForm.valid){
@@ -68,7 +67,7 @@ export class AddProblemComponent {
       
       
     }
-  
+ //---------------------get problem ------------------------- 
   getProblemById(problemId: any) {
     this.http.getProblemById(problemId).subscribe((data: any) => {
       this.problemForm.patchValue(data); // Patch form with quiz data

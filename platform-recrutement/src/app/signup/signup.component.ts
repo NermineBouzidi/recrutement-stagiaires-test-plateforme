@@ -40,11 +40,7 @@ export class SignupComponent {
   }
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
- /*   const formData = new FormData();
-    formData.append('file', this.selectedFile);
-    this.h.post("http://localhost:8080/api/auth/addFile",formData).subscribe((res: any)=>{
-      console.log(res)
-    })*/
+
   }
   formatNumber(input: string): string {
     const numericValue = input.replace(/\D/g, '');
@@ -55,12 +51,7 @@ export class SignupComponent {
       return '';
     }
   }
-  onFileChange(event: any): void {
-    const file = event.target.files[0];
-    if (file) {
-      this.userForm.controls['resume'].setValue(file.name); // Set filename for display
-    }
-  }
+  
   
   
  

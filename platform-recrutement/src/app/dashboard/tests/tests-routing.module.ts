@@ -4,7 +4,7 @@ import { UiTestComponent } from './ui-test/ui-test.component';
 import { AddTestComponent } from './add-test/add-test.component';
 import { TestComponent } from './test/test.component';
 import { TestPreviewComponent } from './test-preview/test-preview.component';
-import { AddProblemComponent } from './add-problem/add-problem.component';
+import { AddProblemComponent } from '../add-problem/add-problem.component';
 
 
 const routes: Routes = [

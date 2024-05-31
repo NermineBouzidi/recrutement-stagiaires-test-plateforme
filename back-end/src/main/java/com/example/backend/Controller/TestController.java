@@ -1,8 +1,6 @@
 package com.example.backend.Controller;
 
 import com.example.backend.Entity.*;
-import com.example.backend.Entity.Enum.TestCategory;
-import com.example.backend.Repository.TestRepository;
 import com.example.backend.Repository.TestSubmissionRepository;
 import com.example.backend.Repository.UserRepository;
 import com.example.backend.Service.ProblemService;
@@ -15,9 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController

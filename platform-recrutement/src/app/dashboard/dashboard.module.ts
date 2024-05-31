@@ -18,6 +18,7 @@ import { QuillModule } from 'ngx-quill';
 import { TestPreviewComponent } from './tests/test-preview/test-preview.component';
 import { ProblemAndQuizComponent } from './problem-and-quiz/problem-and-quiz.component';
 import { SharedModule } from '../shared/Components/shared/shared.module';
+import { AddQuizTrueFalseComponent } from './add-quiz-true-false/add-quiz-true-false.component';
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { SharedModule } from '../shared/Components/shared/shared.module';
     RapportComponent,
     TestPreviewComponent,
     ProblemAndQuizComponent,
+    AddQuizTrueFalseComponent,
     
     
   ],

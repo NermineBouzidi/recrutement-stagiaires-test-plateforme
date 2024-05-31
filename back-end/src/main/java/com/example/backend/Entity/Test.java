@@ -1,6 +1,5 @@
 package com.example.backend.Entity;
 
-import com.example.backend.Entity.Enum.TestCategory;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

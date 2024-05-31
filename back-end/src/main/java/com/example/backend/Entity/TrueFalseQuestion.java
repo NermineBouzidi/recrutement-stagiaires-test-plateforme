@@ -17,8 +17,4 @@ import java.util.List;
 public class TrueFalseQuestion extends Quiz {
 
     private boolean correctAnswer;
-   /* public List<String> getAnswerOptions() {
-        return Arrays.asList("True", "False");
-    }*/
-    // Getters, setters, and constructor (omitted for brevity)
 }

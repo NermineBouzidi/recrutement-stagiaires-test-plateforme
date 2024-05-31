@@ -62,7 +62,7 @@ public class UserTestSubmissionImpl implements UserTestSubmission {
             answer.setTestSubmission(testSubmission); // Set association
         }
         testSubmission.setTestSubmissionDate(LocalDateTime.now());
-        testSubmission.setStatus("Submitted");
+        testSubmission.setStatus("Pending");
         testSubmission.setProblemAnswers(problemAnswers); // Update list
         return testSubmissionRepository.save(testSubmission);
     }

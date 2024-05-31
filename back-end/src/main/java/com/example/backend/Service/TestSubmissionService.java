@@ -19,7 +19,6 @@ public interface TestSubmissionService {
 
     String acceptUser (long id );
      String rejectUser (long id );
-     String CreateFile (ProblemAnswer answer);
     ResponseEntity<String > acceptAndAssign(Long userId);
 
 

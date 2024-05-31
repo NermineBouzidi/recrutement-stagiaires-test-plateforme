@@ -51,7 +51,7 @@ export class UsersComponent {
           this.usersNumber= this.data.length;
   })
   }
-  
+  //---------------------filter users--------------------
     get filteredUsers(): any[] {
   return this.data.filter(user => {
     // Combine search text and role filtering with logical AND
@@ -68,36 +68,40 @@ export class UsersComponent {
   });
 }
 
-  //------------------delete user
+  //------------------delete user-------------------------------------
   deleteUser(id:any){
     this.http.deleteUser(id).subscribe(
       ()=>{
         this.toast.showToas("User deleted successfully")
-        this.onCloseModal()
+        this.closeDeleteConfirmationModal()
       }
 
     )
   }
+    // Function to open the delete confirmation modal
   openDeleteConfirmationModal(user) {
     this.selectedUser = user;
     this.isDeleteConfirmationModalOpen = true;
   }
- 
-
   // Function to close the delete confirmation modal
-  onCloseModal() {
+  closeDeleteConfirmationModal() {
     this.isDeleteConfirmationModalOpen = false;
     this.loadUsers();
   }
-  
+
+
+  ///--------------------view user ---------------------------------
+  // funcion to open the view model
   openViewModel(user){
     this.user=user;
     this.isViewModelOpen =true;
   }
+    // funcion to close the view model
   onCloseViewModel(){
     this.isViewModelOpen=false;
   }
-  //------------add user ------------------
+
+  // ----------format numver function---------------------
   formatNumber(input: string): string {
     const numericValue = input.replace(/\D/g, '');
     if (numericValue.length > 0) {
@@ -107,6 +111,7 @@ export class UsersComponent {
       return '';
     }
   }
+    //------------add user ------------------
   addUser() {
     this.isSubmitted = true;
    if (this.userForm.valid) {
@@ -138,11 +143,11 @@ export class UsersComponent {
       );
     } 
   }
-
+//function to open add evaluator model
   openModal() {
     this.isOpen = true;
   }
-
+//function to close add evaluator model
   closeModal() {
     this.userForm.reset();
     this.isOpen = false;

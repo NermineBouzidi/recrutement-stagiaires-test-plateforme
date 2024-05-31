@@ -9,12 +9,21 @@
 </div>
 <div class="flex items-center justify-center">
   <div class="h-full container bg-white p-8">
-    <div class="mb-4">
+    <div class="mb-4 justify-between flex">
+      <div class="" >
+      <select [(ngModel)]="selectedUserStatus" class="border border-gray-300 rounded-lg text-sm py-2 mr-2 ">
+        <option value="ALL">Filter user status</option>
+  <option value="PENDING">Pending</option>
+  <option value="PASSED">Passed</option>
+  <option value="FAILED">Failed</option>
+
+      </select>
       <select [(ngModel)]="selectedTestStatus" class="border border-gray-300 rounded-lg text-sm py-2 ">
         <option value="ALL">Filter test status</option>
   <option value="EVALUATED">Evaluated</option>
   <option value="PENDING">Pending</option>
       </select>
+      </div>
     </div>
     <body class="flex items-center justify-center mt-5 mb-4">
       <table class="bg-white rounded-lg overflow-hidden w-full">

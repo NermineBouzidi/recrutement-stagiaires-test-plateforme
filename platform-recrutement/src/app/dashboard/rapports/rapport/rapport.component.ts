@@ -13,6 +13,7 @@ export class RapportComponent {
   p:any =0;
   data: any[] = [];
   selectedTestStatus: string = 'ALL';
+  selectedUserStatus :string = 'ALL';
 
   constructor (private http: AdminService, private datePipe: DatePipe, private toast :ToastrService ){}
 
@@ -34,8 +35,11 @@ export class RapportComponent {
     const matchesTestStatus = this.selectedTestStatus === 'ALL' || 
       (this.selectedTestStatus === 'EVALUATED' && user.evaluated) || 
       (this.selectedTestStatus === 'PENDING' && !user.evaluated);
-
-   return matchesTestStatus
+      const matchesUserStatus = this.selectedUserStatus === 'ALL' || 
+      (this.selectedUserStatus === 'PASSED' && user.status.toLowerCase().includes(this.selectedUserStatus.toLowerCase())) || 
+      (this.selectedUserStatus === 'FAILED' && user.status.toLowerCase().includes(this.selectedUserStatus.toLowerCase())) || 
+      (this.selectedUserStatus === 'PENDING' && user.status.toLowerCase().includes(this.selectedUserStatus.toLowerCase()));
+   return matchesTestStatus && matchesUserStatus ;
 
   });
 }
